@@ -2,10 +2,10 @@
 #      Main Configs       #
 # ----------------------- #
 
-url: http://yoursite.com
-title: My Octopress Blog
-subtitle: A blogging framework for hackers.
-author: Your Name
+url: http://subdigital.github.com
+title: subdigital
+subtitle: You're doing it wrong.
+author: Ben Scheirman
 simple_search: http://google.com/search
 
 # RSS / Email (optional) subscription links (change if using something like Feedburner)
@@ -48,7 +48,7 @@ default_asides: [asides/recent_posts.html, asides/twitter.html, asides/delicious
 # ----------------------- #
 
 # Twitter
-twitter_user:
+twitter_user: subigital
 twitter_tweet_count: 4
 twitter_show_replies: false
 twitter_follow_button: true
@@ -64,7 +64,7 @@ pinboard_user:
 pinboard_count: 3
 
 # Delicious
-delicious_user:
+delicious_user: subdigital
 delicious_count: 3
 
 # Disqus Comments
