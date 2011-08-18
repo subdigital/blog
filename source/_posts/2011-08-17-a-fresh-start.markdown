@@ -6,7 +6,11 @@ comments: true
 categories: 
 ---
 
-So I'm giving this [Octopress|http://octopress.org] think the old college try.  It is labelled
-as a "blogging framework for Hackers."
+So I've been thinking of ditching the traditional blog for a while now.  My [current blog](http://flux88.com) is hosted on WordPress, which 
+is powerful enough, however it always seems like a hassle to maintain.
 
+This time I'm going in a completely new direction.  This blog is powered by [Octopress](http://octopress.org) (which uses [Jekyll](https://github.com/mojombo/jekyll) as the engine.
 
+Posts are composed in Markdown (I'm using vim to write this) and the blog is then deployed to a git repository for publishing.
+
+Will it make me blog more?  I hope so, but only time will tell!
