@@ -3,7 +3,7 @@ layout: post
 title: "My Vim Journey"
 date: 2011-08-17 23:53
 comments: true
-categories: 
+categories: vim
 ---
 
 For my Rails work, I've largely leaned on [TextMate](http://macromates.org).  It's used by many Rubyists, looks sexy,
