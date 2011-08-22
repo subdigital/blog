@@ -78,12 +78,13 @@ In Command Mode:
 
 - Press `h`, `j`, `k`, `l` to move the cursor around.  It will feel weird, but you start to appreciate not 
   lifting your hand off of the home row to reach for the arrow keys.
-- Press `gg` to go to the end of a document, `G` to go to the top of
+- Press `G` to go to the end of a document, `gg` to go to the top of
   the document.
 - Press `i` to go to insert mode at the current position
-- Press `a` to "append" content at the end of the current line
-- Type `cw` ("change word") to replace the current word and go into
-  insert mode
+- Press `I` to insert at the beginning of the line
+- Press `a` to "append" content after the cursor
+- Press `A` to "append" content at the end of a line
+- Type `cw` ("change word") to replace the current word and go into insert mode
 - Type `dta` to ("delete 'til the letter a") in a line
 
 In Insert Mode:
@@ -114,7 +115,7 @@ don't mind running a script blindly (I don't recommend it) you can
 simply run:
 
 ```
-curl https://raw.github.com/carlhuda/janus/master/bootstrap.sh -o - | sh
+    curl https://raw.github.com/carlhuda/janus/master/bootstrap.sh -o - | sh
 ```
 
 More explicit instructions for the paranoid can be found on [the github
