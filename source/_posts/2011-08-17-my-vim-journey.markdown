@@ -149,9 +149,10 @@ file.
 
 Open up that file (`:edit ~/.gvimrc`) and add the following commands:
 
-```vim
-:colorscheme github
-:set guifont=Menlo:h14
+```
+colorscheme github
+
+set guifont=Menlo:h14
 ```
 
 Feel free to tweak this to contain your favorite color scheme & font.
