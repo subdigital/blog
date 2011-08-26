@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Is Rails Exempt?"
-date: 2011-08-26 21:37
+date: 2011-08-26 07:58
 comments: true
 categories: ruby, rails
 ---
