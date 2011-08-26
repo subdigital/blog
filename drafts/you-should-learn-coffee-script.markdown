@@ -17,4 +17,15 @@ If you don't know what I'm talking about them you've probably never
 compared The Complete Javascript Reference to Javascript: The Good
 Parts.
 
+{% img  /images/javascript_the_good_parts.jpg %}
+
+One of the goals of CoffeeScript is to generate JavaScript that bakes in
+good practices.  The built-in equality operator (`==`) leverages the
+strict equality in JavaScript (`===`). Everything is wrapped in a
+functional scope so that you're not bleeding into the global namespace. 
+
+Writing JavaScript the right way is hard.
+
+
+
 
