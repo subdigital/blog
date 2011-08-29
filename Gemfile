@@ -3,7 +3,6 @@ source "http://rubygems.org"
 group :development do 
   gem 'rake'
   gem 'rack'
-  gem 'rack-rewrite'
   gem 'jekyll'
   gem 'rdiscount'
   gem 'pygments.rb'
@@ -15,4 +14,5 @@ group :development do
   gem 'stringex'
 end
 
+gem 'rack-rewrite'
 gem 'sinatra', '1.2.6'
