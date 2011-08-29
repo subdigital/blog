@@ -1,0 +1,8 @@
+--- 
+layout: post
+title: SqlExpress connection under Remote Desktop
+date: 2006-1-8
+comments: true
+link: false
+---
+<p>While developing a small website this week I ran across an unusual error.&nbsp; </p><p>When on my lapop, I generally remote into my desktop PC because it has Visual Studio and all the tools I need.</p><p>I decided to use a SqlExpress file as the database, since there won&rsquo;t be much data for the application.&nbsp; This worked for about 2 weeks until I got this error upon opening a connection:</p><p><!--StartFragment --><span><i><strong>Failed to generate a user instance of SQL Server due to a failure in starting the process for the user instance. The connection will be closed.</strong></i></span></p><p><span>This error has to do with the fact that I am using remote desktop to develop.&nbsp; When I access a file-based sql express database, the data is actually copied locally, which is why it takes so long to start up.&nbsp; </span></p><p><span><a href="http://blogs.advantaje.com/blog/kevin/Net/?permalink=SQLExpress-Problems.html" target="_blank">Kevin Jones</a> says:</span></p><p><span><em>SQLExpress creates a directory per user in "c:\Documents and Settings\[user]\Local Settings\Application Data\Microsoft\Microsoft SQL Server Data\SQLEXPRESS" that it uses to store information. Deleting this directory has fixed both of my problems. </em></span></p><p><span>I&rsquo;ll update this with my results.</span></p><p style="'background-color:" lemonchiffon; border: 1px solid goldenrod; display: block;'><span><strong>Update:&nbsp; </strong>It worked!&nbsp; How weird.&nbsp; This fix definitely looks temporary but it&rsquo;s working for me so far.</p></span>

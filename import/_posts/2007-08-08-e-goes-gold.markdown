@@ -1,0 +1,8 @@
+--- 
+layout: post
+title: e Goes Gold
+date: 2007-8-8
+comments: true
+link: false
+---
+<div><p>My favorite text editor for HTML, CSS, JavaScript, Ruby/Rails, etc development just announced its 1.0 stable release.&nbsp; The beta versions were very good and I rarely ran into issues.</p><p></p><p>If you aren’t using e, you should check it out:</p><p><img src="/images/image001___.jpg" alt="e"  border="0" /></p><p>If you’re like me and jealous of the Mac crowd who gets to use TextMate ( /drool ) then this is the best alternative for Windows.&nbsp; (I hear there is a Linux version coming soon).</p><p></p><p>But if you’re not privy to what coolness awaits you, allow me to tantalize you with some e-excellence:</p><ul><li>Keep looking up the exact doctype syntax?&nbsp; Type <strong>doctype&lt;TAB&gt;</strong> and a context menu appears allowing you to select your doctype (XHTML 1.0 Transitional for example).&nbsp; &nbsp;(And you <strong>should be using a doctype</strong> header).</li><li>Type head&lt;TAB&gt;, it creates the header section for you, places the cursor right where you put the title, press &lt;TAB&gt; again and you're ready to enter scripts and style sheets.</li><li>Want more?Try link, style, body, div, table, ul li ... the list goes on. </li></ul><p>These are just the HTML bundles.There are a crap-ton of bundles that already exist for TextMate, and they are supported with e.</p><p>So head on over to <a href="http://www.e-texteditor.com/" target="_blank">http://www.e-texteditor.com</a> and pick up a trial copy.If you like it, consider buying it.The time you save will surpass the measly $35 you spent in no time.time.</p><div class="bjtags">Tags:<a rel="tag" href="http://technorati.com/tag/Tools">Tools</a></div></div>

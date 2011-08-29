@@ -1,0 +1,8 @@
+--- 
+layout: post
+title: HDNUG
+date: 2005-6-17
+comments: true
+link: false
+---
+<div style="clear:both;"></div>I attended my first Houston Dot Net User Group meeting last night.It was a lot larger than I originally thought.Judging by their <a href="http://www.hdnug.org">crappy website</a> I would have never thought that they have been around for 3 years.I estimated about 120 people attended the meeting, which they said was their largest turn-out ever.<br /><br />Anyway, I enjoyed the presentation on Enterprise Library, but more enjoyed talking to my old buddy Moe Al-Kazzaz!I haven't seen him since he graduated from UH last year.<br /><br />I also heard that Venkat is going to be speaking at HDNUG in August.Save me a seat for that talk!<div style="clear:both; padding-bottom: 0.25em;"></div>

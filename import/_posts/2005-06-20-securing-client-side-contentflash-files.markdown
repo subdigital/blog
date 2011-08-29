@@ -1,0 +1,8 @@
+--- 
+layout: post
+title: Securing client-side content:Flash files
+date: 2005-6-20
+comments: true
+link: false
+---
+<div style="clear: both;"></div>I came across this little pickle aboutsecurity and flash files. Basically since Flash is a wide openstandard, anyone can easily grab your swf file and decompile it.Obfuscation works a little bit here, but a determined little bastardcould eventually modify your source.<br><br>Of course someone could also just run your flash movie from their own server.<br><br>I came up with this little security table for some suggested guidelines in protecting our flash component.<br><br><table class="tablefix" border="1"><tbody><tr><td style="background-color: rgb(51, 68, 51); color: White;" colspan="2" align="center"><b>Flash Security</b></td></tr><tr><td><b>Threat</b></td><td><b>Suggested response</b></td></tr><tr></tr><tr><td>File could be stolen and hosted on another server</td><td>Comeup with an dynamic encrypted key system-- the malicous users would haveto know the scheme to get the file to unlock -- this is not 100%</td></tr><tr><td>File could be hotlinked from another server</td><td>flashfile will only allow paths from the same domain as the swf resides...this will ensure that no one will be able to hijack our swf and loadtheir own XML file</td></tr><tr><td>File could be decompiled</td><td>Obfuscate the code</td></tr></tbody></table><br><br>Whatworries me is that none of these are 100% safeguards. They will deterthe average evil-doer, but anyone smart &amp; determined enough couldget steal our file and modify it.<br><br>Does anyone have any suggestions on improving what I have above?<div style="clear: both; padding-bottom: 0.25em;"></div>

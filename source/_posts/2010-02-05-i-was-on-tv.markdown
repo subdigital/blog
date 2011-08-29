@@ -1,0 +1,8 @@
+--- 
+layout: post
+title: I was on TV!
+date: 2010-2-5
+comments: true
+link: false
+---
+<p>In case you missed it, I was interviewed by Channel 39 News here in Houston about iPhone app security.&#160; The interview lasted about 15 minutes and we mostly talked about the dangers of jailbreaking &amp; leaving the SSH service running with the default user &amp; password.&#160; You can’t really tell that from the video, as they snipped out all the technical parts :).</p>  <p>The best part is that <a href="http://pockettabs.com" target="_blank">Pocket Tabs</a> got some airtime!</p>  <p>Anyway, here it is!</p>  <p>&#160;<embed type="application/x-shockwave-flash" salign="l" flashvars="&amp;titleAvailable=true&amp;playerAvailable=true&amp;searchAvailable=false&amp;shareFlag=N&amp;singleURL=http://kiah.vidcms.trb.com/alfresco/service/edge/content/7ff9fa86-e4bb-456f-99e0-cbdd9d422cce&amp;propName=kiah.com&amp;hostURL=http://www.39online.com&amp;swfPath=http://kiah.vid.trb.com/player/&amp;omAccount=tribglobal&amp;omnitureServer=39online.com" allowscriptaccess="always" allowfullscreen="true" menu="true" name="PaperVideoTest" bgcolor="#ffffff" devicefont="false" wmode="transparent" scale="showall" loop="true" play="true" pluginspage="http://www.macromedia.com/go/getflashplayer" quality="high" src="http://kiah.vid.trb.com/player/PaperVideoTest.swf" align="middle" height="450" width="300"></embed> </p>  <p><em>(if you're reading this in an RSS reader, you might have to click-through to see it)</em></p>

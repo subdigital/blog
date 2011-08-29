@@ -1,0 +1,8 @@
+--- 
+layout: post
+title: Sark acquired by Sogeti
+date: 2007-3-5
+comments: true
+link: false
+---
+<p>Many of you have already heard the news, but my company, <a title="Sark" href="http://www.sark.com/" target="_blank">Software Architects</a>, was recently acquired by <a title="Sogeti UC" href="http://www.us.sogeti.com/" target="_blank">Sogeti</a>.</p><p>My only real prior knowledge of Sogeti was that I knew that <a title="Tim's blog" href="http://www.timrayburn.net/" target="_blank">Tim Rayburn</a> worked at the Dallas office.</p><p>It&rsquo;s hard to know what to expect at first.&nbsp; Most&nbsp;seem to think it&rsquo;s an exciting change, probably because we will be introduced to a lot of new clients and have one of the largest Microsoft consultancies in Houston (among&nbsp;other cities).&nbsp; I sincerely hope that the culture that I love here will not be disturbed.&nbsp; Sark stands out among a number of similar companies here in Houston, largely because they have fun company meetings (open bar!), a great training program, you&rsquo;re paid to get certifications, they have a great library and will order books if you need them.&nbsp; We&rsquo;re reimbursed for tolls and parking as well.</p><p>It is my hope that these things do not fall through the cracks as we make the transition to becoming &ldquo;Sogetians&rdquo; (<em>ahh&hellip; just doesn&rsquo;t have the same ring to it!)</em>.</p><p>We&rsquo;re ramping up to integrate everything this month, mostly moving&nbsp;Sarks over to the Sogeti infrastructure.&nbsp; March will definitely be an interesting month, that&rsquo;s for sure.</p><div class="bjtags">Tags:<a rel="tag" href="http://technorati.com/tag/Sogeti">Sogeti</a></div>

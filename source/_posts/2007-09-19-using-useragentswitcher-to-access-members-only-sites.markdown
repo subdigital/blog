@@ -1,0 +1,8 @@
+--- 
+layout: post
+title: Using UserAgentSwitcher to Access Members Only Sites
+date: 2007-9-19
+comments: true
+link: false
+---
+Ever gone to a site that you found via google that seems to have the EXACT answer to the problem you are looking for?&nbsp; Then you click on the link and you are shown a page that basically says "You must be a member to access this article."<br><br>I can't stand sites like this.&nbsp; In addition, they are in clear violation of Google's TOS, and they should get dropped from indexing unless the open up the content.&nbsp; <br><br><i>Why are they in violation of Google's TOS, you ask?</i>&nbsp; Well basically they are sniffing for googlebot (or any other web crawler) and serving up real content to them.&nbsp; The data gets indexed, the site's PageRank goes up and the site starts showing high up in the google search results.&nbsp; But when you or I access the page, we get a different page, telling us that we should pay them money to see the content.<br><br>So if you want to give these sites a big middle finger, go download the <a href="http://addons.mozilla.org/firefox/addon/59">user agent switcher Firefox extension</a>.&nbsp; Then add the googlebot useragent to the list.&nbsp; You can get a huge list of commun useragents <a href="http://techpatterns.com/forums/about304.html">here</a>.<br><br>Now, find a site that blocks articles to non-members, such as this one:<br><br><img src="http://flux88.com/uploads/using-useragent-switcher1.png"><br><br>Change your user agent like so....<br><br><img src="http://flux88.com/uploads/using-useragent-switcher2.png"><br><br>And refresh.&nbsp; <font size="-1">Voilà!</font> you're in!<br><br><img src="http://flux88.com/uploads/using-useragent-switcher3.png"><br><p></p>

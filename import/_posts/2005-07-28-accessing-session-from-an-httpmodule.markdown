@@ -1,0 +1,8 @@
+--- 
+layout: post
+title: Accessing Session from an HttpModule
+date: 2005-7-28
+comments: true
+link: false
+---
+<p>Today I wanted to extend my NHibernate implementation to allow formulti-page transactions for certain operations (that I control) andkeep with the cleaner ISession-per-HttpRequest pattern for everythingelse.</p><p>To do that I had to modify my HttpModule to allow for this check,but I had no access to the SessionState here.&nbsp; Why is that?</p><p>Here’s what I was doing in my HttpModule:</p><p></p><div id="code">{% codeblock %}public void Init(HttpApplication application)<br><br>{ <br> <span class="comments">//add event handlers<br></span>&nbsp;application.BeginRequest += new EventHandler(context_BeginRequest);<br>&nbsp;application.EndRequest += new EventHandler(context_EndRequest); <br>}{% endcodeblock %}</div><p></p><p>I was creating and disconnecting my ISession object inside of thosemethods. The problem is that SessionState is not loaded until after theBeginRequest had fired and before the EndRequest had fired.(specifically it is accessibly after the AcquireRequestState event).So, changing my code to this worked:<br><br></p><div id="code">{% codeblock %}public void Init(HttpApplication application) <br>{ <br>application.PreRequestHandlerExecute += new EventHandler(application_PreRequestHandlerExecute); <br>application.PostRequestHandlerExecute += new EventHandler(application_PostRequestHandlerExecute); <br>}{% endcodeblock %}</div><p></p><p>Also, I saw some people online incorrectly suggesting that oneimplement the IRequiresSessionState or IReadOnlySessionStateinterfaces, but if you read the docs, those are marker interfaces forHttpHandlers only. </p>

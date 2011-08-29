@@ -1,0 +1,8 @@
+--- 
+layout: post
+title: Pocket Tabs Now Available on The App Store
+date: "2009-11-24"
+comments: true
+link: false
+---
+<p><a href="http://pockettabs.com">Pocket Tabs</a>, an application to help you find and save tablature for your iPhone or iPod Touch is now available on the App Store!</p>  <p><a href="http://flux88.com/files/media/image/WindowsLiveWriter/PocketTabsNowAvailableonTheAppStore_D3B3/logo_2.jpg"><img src="/images/logo_thumb_.jpg" alt="logo"  height="229"  /></a> </p>  <p>It took just over 5 weeks to get it approved, but it was worth the wait.</p>  <p>What can you do with it?&#160; With Pocket Tabs you can:</p>  <ul>   <li>Search for hundreds of tabs submitted by users at <a href="http://pockettabs.com">http://pockettabs.com</a></li>    <li>Save the tabs to your device</li>    <li>Submit your own tabs to <a href="http://pockettabs.com">http://pockettabs.com</a></li>    <li>View your tabs anywhere, anytime</li>    <li>Turn on Auto-Scrolling for hands-free operation</li>    <li>Email tabs to your friends</li> </ul>  <p><a href="itms://itunes.apple.com/us/app/pocket-tabs/id337473125?mt=8"><img src="/images/appStoreBadge_3_.png" alt="appStoreBadge"  height="61"  /></a> </p>  <p><em>Click on the image above to launch iTunes and take you directly to it.</em></p>  <p><strong>If you download the app, please submit a review!</strong></p>  <p></p>  <p>To celebrate the launch, I’d like to hold a little contest.&#160; I’ll give a free Pocket Tabs coupon to the first person who can answer this music trivia correctly:</p>  <h4><em>What lies in the whispering winds?</em></h4>  <p>(nobody said it would be a <em>hard</em> question!)&#160; Be sure to include your email address in the comment so that I can send you the coupon.</p>

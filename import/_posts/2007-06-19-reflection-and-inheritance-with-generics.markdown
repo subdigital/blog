@@ -1,0 +1,8 @@
+--- 
+layout: post
+title: Reflection and Inheritance with Generics
+date: 2007-6-19
+comments: true
+link: false
+---
+<p>I was working on some <a href="http://subsonicproject.com/" target="_blank">SubSonic</a> entities today and I wanted to access some of the properties of the generated classes, not knowing which database objects will exist.</p><p>Basically&nbsp;I wanted to write a utility method that would pull out all of the ActiveRecord&lt;T&gt; types in a given assembly.</p><p>This was my first attempt:</p><p>`{% codeblock %}public static Type[] GetActiveRecordTypes(Assembly assembly){	List&lt;Type&gt; types = new List&lt;Type&gt;();	foreach (Type type in assembly.GetTypes())	{		if(type.IsSubClassOf( <b>typeof(ActiveRecord&lt;__WHAT_GOES_HERE_?__&gt;)</b> )			types.Add(type);	}	return types.ToArray();}{% endcodeblock %}`<p>The part in bold is where I got stuck. Sticking in `type` there doesn't work. It won't compile.&nbsp; I wouldn't let that stop me, so I created a temporary solution like this:</p><p>`if(type.BaseType.Name.Contains("ActiveRecord")) { ... }`</p><p>This works, but it's a hack and it's brittle. I asked a few friends and <a href="http://analog-man.blogspot.com/" target="_blank">Gary DeReese</a> came to my rescue with the following code:</p><p>`{% codeblock %}Type baseType = type.BaseType;if(baseType.IsGenericType &amp;&amp; 	baseType.GetGenericType() == typeof(ActiveRecord&lt;&gt;) &amp;&amp;	baseType.GetGenericParameter()[0] == type) { ... }{% endcodeblock %}`<p></p><p>It's good to have smart friends you can reach out to in times like this where you just aren't thinking about the problem the way the framework wants you to. Thanks Gary! </p>
