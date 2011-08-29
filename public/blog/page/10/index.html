@@ -119,7 +119,7 @@
   <div class="entry-content"><p>I&#8217;m finally able to install .NET 3.5 and run Visual Studio 2008 at my client.&nbsp; Yeah, yeah,&nbsp; &#8221;<em>Welcome to 2008</em>&#8221; I can hear you say.&nbsp; &#8220;You&#8217;re just in time for VS 2010!&#8221;&nbsp; I know&#8230; but big ships turn slowly :)</p>
 
 
-<p> <p>Anyway, when installing Visual Studio 2008 I was promptly greeted with a slew of errors.&nbsp; Checking the log yielded this not very helpful statement:</p> <blockquote> <p><em>[02/02/09,13:53:22] Microsoft Visual Studio Web Authoring Component: [2] Error code 5 for this component means &#8220;Access is denied.</em></p></blockquote> <p>The knowledge base article it linked to was less than helpful as well.&nbsp; A colleague asked me to crack open McAfee&#8217;s logs and sure enough&#8230; we found this in there:</p> <blockquote> <p><em>2/2/2009&nbsp;&nbsp;&nbsp; 1:41:20 PM&nbsp;&nbsp;&nbsp; Blocked by Access Protection ru&nbsp;&nbsp;&nbsp; ZZZ\user&nbsp;&nbsp;&nbsp;&nbsp; d:\wcu\webdesignercore\WebDesignerCore.EXE&nbsp;&nbsp;&nbsp; C:\7912618bc3a93fed0bab\autorun.inf&nbsp;&nbsp;&nbsp; User-defined Rules:Autorun_inf&nbsp;&nbsp;&nbsp; Action blocked : Create<br>2/2/2009&nbsp;&nbsp;&nbsp; 1:53:22 PM&nbsp;&nbsp;&nbsp; Blocked by Access Protection rule&nbsp;&nbsp;&nbsp;&nbsp; ZZZ\user d:\wcu\webdesignercore\WebDesignerCore.EXE&nbsp;&nbsp;&nbsp; C:\e300576fb9ee95c7e7e9c2cb\autorun.inf&nbsp;&nbsp;&nbsp; User-defined Rules:Autorun_inf&nbsp;&nbsp;&nbsp; Action blocked : Create<br>2/2/2009&nbsp;&nbsp;&nbsp; 2:02:08 PM&nbsp;&nbsp;&nbsp; Blocked by Access Protection rule&nbsp;&nbsp;&nbsp;&nbsp; ZZZ\user d:\wcu\webdesignercore\WebDesignerCore.EXE&nbsp;&nbsp;&nbsp; C:\9e98c3f777aff7da331d68c05065b5\autorun.inf&nbsp;&nbsp;&nbsp; User-defined Rules:Autorun_inf&nbsp;&nbsp;&nbsp; Action blocked : Create</em></p></blockquote> <p>That is three separate installation attempts that failed.&nbsp; Luckily my account had the ability to disable the sometimes-annoying-file-blocking-thingy in McAfee Enterprise.</p> <p><img src="/images/mcaffee-file-access-dialog_3_.png" alt="mcaffee-file-access-dialog"  border="0" /> </p> <p>If you&#8217;re getting this error, try disabling that guy to install Visual Studio.&nbsp; Don&#8217;t forget to turn it back on though, or the corp network security guys with shotguns might visit your desk wondering why a worm installed on your machine was sending out emails to everyone in the company with a vulgar photo&#8230;</p> <p>Hope this saves someone the 30 minutes it cost me today!</p></p>
+<p> <p>Anyway, when installing Visual Studio 2008 I was promptly greeted with a slew of errors.&nbsp; Checking the log yielded this not very helpful statement:</p> <blockquote> <p><em>[02/02/09,13:53:22] Microsoft Visual Studio Web Authoring Component: [2] Error code 5 for this component means &#8220;Access is denied.</em></p></blockquote> <p>The knowledge base article it linked to was less than helpful as well.&nbsp; A colleague asked me to crack open McAfee&#8217;s logs and sure enough&#8230; we found this in there:</p> <blockquote> <p><em>2/2/2009&nbsp;&nbsp;&nbsp; 1:41:20 PM&nbsp;&nbsp;&nbsp; Blocked by Access Protection ru&nbsp;&nbsp;&nbsp; ZZZ\user&nbsp;&nbsp;&nbsp;&nbsp; d:\wcu\webdesignercore\WebDesignerCore.EXE&nbsp;&nbsp;&nbsp; C:\7912618bc3a93fed0bab\autorun.inf&nbsp;&nbsp;&nbsp; User-defined Rules:Autorun_inf&nbsp;&nbsp;&nbsp; Action blocked : Create<br>2/2/2009&nbsp;&nbsp;&nbsp; 1:53:22 PM&nbsp;&nbsp;&nbsp; Blocked by Access Protection rule&nbsp;&nbsp;&nbsp;&nbsp; ZZZ\user d:\wcu\webdesignercore\WebDesignerCore.EXE&nbsp;&nbsp;&nbsp; C:\e300576fb9ee95c7e7e9c2cb\autorun.inf&nbsp;&nbsp;&nbsp; User-defined Rules:Autorun_inf&nbsp;&nbsp;&nbsp; Action blocked : Create<br>2/2/2009&nbsp;&nbsp;&nbsp; 2:02:08 PM&nbsp;&nbsp;&nbsp; Blocked by Access Protection rule&nbsp;&nbsp;&nbsp;&nbsp; ZZZ\user d:\wcu\webdesignercore\WebDesignerCore.EXE&nbsp;&nbsp;&nbsp; C:\9e98c3f777aff7da331d68c05065b5\autorun.inf&nbsp;&nbsp;&nbsp; User-defined Rules:Autorun_inf&nbsp;&nbsp;&nbsp; Action blocked : Create</em></p></blockquote> <p>That is three separate installation attempts that failed.&nbsp; Luckily my account had the ability to disable the sometimes-annoying-file-blocking-thingy in McAfee Enterprise.</p> <p><img src="/images/mcaffee-file-access-dialog_3.png" alt="mcaffee-file-access-dialog"  border="0" /> </p> <p>If you&#8217;re getting this error, try disabling that guy to install Visual Studio.&nbsp; Don&#8217;t forget to turn it back on though, or the corp network security guys with shotguns might visit your desk wondering why a worm installed on your machine was sending out emails to everyone in the company with a vulgar photo&#8230;</p> <p>Hope this saves someone the 30 minutes it cost me today!</p></p>
 </div>
   <footer>
     <a rel="full-article" href="/blog/2009/02/access-denied-on-microsoft-visual-studio-web-authoring-component/">Read on &rarr;</a>
@@ -150,7 +150,7 @@
 
 
   <div class="entry-content"><p><br />
-<img src="/images/zen-garden_.jpg"  style="float:left; margin-right:10px; margin-bottom:10px;"  /> I&#8217;m proud to announce that I&#8217;m organizing a Houston ALT.NET Open Spaces conference April 3rd - 5th, 2009. The open space will be facilitated by <a href="http://www.stevenlist.com/">Doc List</a>.</p>
+<img src="/images/zen-garden.jpg"  style="float:left; margin-right:10px; margin-bottom:10px;"  /> I&#8217;m proud to announce that I&#8217;m organizing a Houston ALT.NET Open Spaces conference April 3rd - 5th, 2009. The open space will be facilitated by <a href="http://www.stevenlist.com/">Doc List</a>.</p>
 
 
 <p>You can take a look at the <a href="http://houston.altnetconf.com/home">conference website</a>&nbsp;&nbsp;to see more details, and I&#8217;ll open registration soon. I&#8217;m not entirely sure about the cap on attendance yet, but I&#8217;m probably going to limit it to 70-80 to keep costs down.</p>
@@ -221,11 +221,11 @@
   <div class="entry-content"><p>I&#8217;m writing this post on my new hackintosh - that is - OS X Leopard running on PC hardware. So far the system is pretty stable and I&#8217;m liking it a lot.</p>
 
 
-<p><img src="/images/IMG_0734_.jpg"  alt="IMG_0734.JPG"  /></p>
+<p><img src="/images/IMG_0734.jpg"  alt="IMG_0734.JPG"  /></p>
 
 
 <p><br />
-<img src="/images/leopard_.png"  alt="osx desktop"  /></p>
+<img src="/images/leopard.png"  alt="osx desktop"  /></p>
 
 
 <p>Running OS X on PC hardware isn&#8217;t always easy, I just happened to have the lucky mix of hardware that pretty much just works. The motherboard is the most critical determining factor.</p>
@@ -290,13 +290,13 @@ You can get this at an Apple store, ebay, craigslist, or the usual places. I fou
 <h2>Getting 3D Graphics working</h2>
 
 
-<p>Upon booting the first time the graphics were sluggish and it could only run at 10204x768. There are a number of posts on the topic of video drivers, the problem is some of them are dated. NVinject worked for my 10.5.2 Kalyway install, but did not work for the 10.5.6 retail. Instead I had to use EFI Studio (found in the v4.4 package from earlier) and selected the 8600 GT 512 MB item.<img src="/images/efistudio_.png"  alt="efistudio.png"  /></p>
+<p>Upon booting the first time the graphics were sluggish and it could only run at 10204x768. There are a number of posts on the topic of video drivers, the problem is some of them are dated. NVinject worked for my 10.5.2 Kalyway install, but did not work for the 10.5.6 retail. Instead I had to use EFI Studio (found in the v4.4 package from earlier) and selected the 8600 GT 512 MB item.<img src="/images/efistudio.png"  alt="efistudio.png"  /></p>
 
 
 <p>Then I clicked &#8220;Add Device&#8221; which brought up this window:</p>
 
 
-<p><img src="/images/efistudio2_.png"  alt="efistudio2.png"  /></p>
+<p><img src="/images/efistudio2.png"  alt="efistudio2.png"  /></p>
 
 
 <p>Then click &#8220;write to com.apple.Boot.plist&#8221;, reboot and you&#8217;re good! To get sound working I had to install the <a href="http://forum.insanelymac.com/index.php?act=attach&#38;type=post&#38;id=20698">ALC888 kext</a>.</p>
@@ -337,11 +337,11 @@ You can get this at an Apple store, ebay, craigslist, or the usual places. I fou
 
 
 <p><br />
-<img src="/images/about-this-mac_.png"  alt="about-this-mac.png"  /></p>
+<img src="/images/about-this-mac.png"  alt="about-this-mac.png"  /></p>
 
 
 <p><br />
-<img src="/images/about-this-mac2_.png"  alt="about-this-mac2.png"  /></p>
+<img src="/images/about-this-mac2.png"  alt="about-this-mac2.png"  /></p>
 
 
 <p>If I were to build a Mac Pro from apple.com with these specs, <strong>it would cost near $3000!</strong></p>
@@ -399,7 +399,7 @@ You can get this at an Apple store, ebay, craigslist, or the usual places. I fou
   <div class="entry-content"><p>Thanks to HDNUG for inviting me to speak again.&nbsp; I always enjoy it.&nbsp; The crowd was a little thin this time around, but I think that&#8217;s because the website wasn&#8217;t updated with the meeting information in time.</p>
 
 
-<p> <p>I spoke about latest updates to the ASP.NET MVC Framework, and did some off-the-cuff coding to demonstrate the features.&nbsp; I didn&#8217;t get a chance to touch on a few subjects, but all in all I think it was well received.</p> <p>I made the point early on that ASP.NET MVC is an option, and that not everyone would get it.&nbsp; That&#8217;s fine!&nbsp; It&#8217;s meant for a specific type of developer who cares deeply about certain things, namely control over HTML, URLS, tight integration with HTTP and Javascript, and ajax.&nbsp; And who can possibly leave out better separation of concerns &amp; testability.</p> <p><img src="/images/mvc-an-option_3_.png" alt="mvc-an-option"  border="0" /> </p> <p>There were certainly folks in the camp that didn&#8217;t get it in the audience.&nbsp; I hope that I adequately represented what MVC is and how it works well on ASP.NET.</p> <p>You can <a href="http://benscheirman.googlecode.com/svn/trunk/presentations/hdnug%20%2001-2009/hdnug%2009.pptx" target="_blank">download the slides for the talk</a>, however I am unable to post the code because it references a private release that I cannot distribute.&nbsp; As soon as the RC becomes available, I&#8217;ll post the code online.</p></p>
+<p> <p>I spoke about latest updates to the ASP.NET MVC Framework, and did some off-the-cuff coding to demonstrate the features.&nbsp; I didn&#8217;t get a chance to touch on a few subjects, but all in all I think it was well received.</p> <p>I made the point early on that ASP.NET MVC is an option, and that not everyone would get it.&nbsp; That&#8217;s fine!&nbsp; It&#8217;s meant for a specific type of developer who cares deeply about certain things, namely control over HTML, URLS, tight integration with HTTP and Javascript, and ajax.&nbsp; And who can possibly leave out better separation of concerns &amp; testability.</p> <p><img src="/images/mvc-an-option_3.png" alt="mvc-an-option"  border="0" /> </p> <p>There were certainly folks in the camp that didn&#8217;t get it in the audience.&nbsp; I hope that I adequately represented what MVC is and how it works well on ASP.NET.</p> <p>You can <a href="http://benscheirman.googlecode.com/svn/trunk/presentations/hdnug%20%2001-2009/hdnug%2009.pptx" target="_blank">download the slides for the talk</a>, however I am unable to post the code because it references a private release that I cannot distribute.&nbsp; As soon as the RC becomes available, I&#8217;ll post the code online.</p></p>
 </div>
   <footer>
     <a rel="full-article" href="/blog/2009/01/last-night-at-hdnug/">Read on &rarr;</a>
@@ -462,10 +462,10 @@ You can get this at an Apple store, ebay, craigslist, or the usual places. I fou
   </header>
 
 
-  <div class="entry-content"><p><a href="http://flux88.com/files/media/image/WindowsLiveWriter/HoustonALT.NETGeekDinnerJanuary7th_805B/63782302_e7b67dd102_m_2.jpg"><img src="/images/63782302_e7b67dd102_m_thumb_.jpg" alt="63782302_e7b67dd102_m"  border="0" /></a> </p>
+  <div class="entry-content"><p><a href="http://flux88.com/files/media/image/WindowsLiveWriter/HoustonALT.NETGeekDinnerJanuary7th_805B/63782302_e7b67dd102_m_2.jpg"><img src="/images/63782302_e7b67dd102_m_thumb.jpg" alt="63782302_e7b67dd102_m"  border="0" /></a> </p>
 
 
-<p> <p>Now that the holidays are coming to a close, it&#8217;s time to get back in the grind.&nbsp; That means community, baby!&nbsp; </p> <p>We&#8217;re going to hold our semi-monthly casual Houston ALT.NET Geek Dinner at Freebird&#8217;s World Burrito near 59 &amp; Shepherd.&nbsp; If you haven&#8217;t eaten a Freebird&#8217;s burrito then you&#8217;re in for a treat.&nbsp; They&#8217;re huge and delicious.&nbsp; <em>(Veggie burritos are certainly available for you herbivores out there).</em></p> <table cellspacing="0" cellpadding="2" width="447" border="0"> <tbody> <tr> <td valign="top" width="116"><strong>When?</strong></td> <td valign="top" width="329">Wednesday Jan 07th, 2008 @ 6:00pm<br><a href="https://www.google.com/calendar/event?action=TEMPLATE&amp;tmeid=b3FnYmw1NTkyb2RjYjEzcmtqbzlxdDEwNG8gc3ViZGlnaXRhbEBt&amp;tmsrc=c3ViZGlnaXRhbEBnbWFpbC5jb20" target="_blank"><img src="/images/gc_button1_en__.gif"  border="0" /></a> </td></tr> <tr> <td valign="top" width="116"><strong>Where?</strong></td> <td valign="top" width="329"><a href="http://freebirds.com/" target="_blank">Freebirds</a> (<a href="http://maps.google.com/maps?f=q&amp;hl=en&amp;geocode=&amp;q=3745+Greenbriar,+Houston&amp;sll=37.0625,-95.677068&amp;sspn=55.148262,79.101563&amp;ie=UTF8&amp;ll=29.732772,-95.41244&amp;spn=0.007472,0.009656&amp;z=17&amp;g=3745+Greenbriar,+Houston&amp;iwloc=addr" target="_blank">map</a>)</td></tr></tbody></table> <p><em></em>&nbsp;<br>Hopefully <em>somebody</em> will join me for a beer this time!</p> <p>Some topics that have been suggested:</p> <ul> <li>Oxite Aftermath</li> <li>ASP.NET MVC</li> <li>DDD Discussion</li> <li>RIA Frameworks</li> <li>DI / IoC Frameworks</li> <li>Survey:&nbsp; What are you doing to be/promote agile where you work?</li> <li>Mentoring</li> <li>The agile wall &amp; pull systems</li> <li>Cloud Computing</li> <li>DSLs</li></ul> <p>We&#8217;ll have to trim that list otherwise we&#8217;ll be there all night.&nbsp; Tell your friends, blog about it, whatever you have to do, but <em>get your co-workers out here!</em>&nbsp; Making connections in the community is a great way to becoming a better developer.</p></p>
+<p> <p>Now that the holidays are coming to a close, it&#8217;s time to get back in the grind.&nbsp; That means community, baby!&nbsp; </p> <p>We&#8217;re going to hold our semi-monthly casual Houston ALT.NET Geek Dinner at Freebird&#8217;s World Burrito near 59 &amp; Shepherd.&nbsp; If you haven&#8217;t eaten a Freebird&#8217;s burrito then you&#8217;re in for a treat.&nbsp; They&#8217;re huge and delicious.&nbsp; <em>(Veggie burritos are certainly available for you herbivores out there).</em></p> <table cellspacing="0" cellpadding="2" width="447" border="0"> <tbody> <tr> <td valign="top" width="116"><strong>When?</strong></td> <td valign="top" width="329">Wednesday Jan 07th, 2008 @ 6:00pm<br><a href="https://www.google.com/calendar/event?action=TEMPLATE&amp;tmeid=b3FnYmw1NTkyb2RjYjEzcmtqbzlxdDEwNG8gc3ViZGlnaXRhbEBt&amp;tmsrc=c3ViZGlnaXRhbEBnbWFpbC5jb20" target="_blank"><img src="/images/gc_button1_en.gif"  border="0" /></a> </td></tr> <tr> <td valign="top" width="116"><strong>Where?</strong></td> <td valign="top" width="329"><a href="http://freebirds.com/" target="_blank">Freebirds</a> (<a href="http://maps.google.com/maps?f=q&amp;hl=en&amp;geocode=&amp;q=3745+Greenbriar,+Houston&amp;sll=37.0625,-95.677068&amp;sspn=55.148262,79.101563&amp;ie=UTF8&amp;ll=29.732772,-95.41244&amp;spn=0.007472,0.009656&amp;z=17&amp;g=3745+Greenbriar,+Houston&amp;iwloc=addr" target="_blank">map</a>)</td></tr></tbody></table> <p><em></em>&nbsp;<br>Hopefully <em>somebody</em> will join me for a beer this time!</p> <p>Some topics that have been suggested:</p> <ul> <li>Oxite Aftermath</li> <li>ASP.NET MVC</li> <li>DDD Discussion</li> <li>RIA Frameworks</li> <li>DI / IoC Frameworks</li> <li>Survey:&nbsp; What are you doing to be/promote agile where you work?</li> <li>Mentoring</li> <li>The agile wall &amp; pull systems</li> <li>Cloud Computing</li> <li>DSLs</li></ul> <p>We&#8217;ll have to trim that list otherwise we&#8217;ll be there all night.&nbsp; Tell your friends, blog about it, whatever you have to do, but <em>get your co-workers out here!</em>&nbsp; Making connections in the community is a great way to becoming a better developer.</p></p>
 </div>
   <footer>
     <a rel="full-article" href="/blog/2008/12/houston-alt-net-geek-dinner-january-7th/">Read on &rarr;</a>
@@ -495,7 +495,7 @@ You can get this at an Apple store, ebay, craigslist, or the usual places. I fou
   </header>
 
 
-  <div class="entry-content"><p>&#160;<img src="/images/image0_6_.jpg" alt="sonogram"  border="0"  /></p>
+  <div class="entry-content"><p>&#160;<img src="/images/image0_6.jpg" alt="sonogram"  border="0"  /></p>
 
 </div>
   <footer>
@@ -526,7 +526,7 @@ You can get this at an Apple store, ebay, craigslist, or the usual places. I fou
   </header>
 
 
-  <div class="entry-content"><p><a href="http://www.msdndevcon.com"><img src="/images/clip_image001_3_.gif" border="0"  title="clip_image001"  /></a></p>
+  <div class="entry-content"><p><a href="http://www.msdndevcon.com"><img src="/images/clip_image001_3.gif" border="0"  title="clip_image001"  /></a></p>
 
 
 <h5>I&#8217;ll be speaking at the upcoming <a href="http://www.msdndevcon.com">MSDN Developer Conference</a> in Houston (on December 9th) and in Dallas (January 26th).&nbsp; The topics will be similar to what was covered at the PDC this year, so if you weren&#8217;t able to attend, be sure to check this out.</h5>

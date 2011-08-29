@@ -168,16 +168,16 @@
 <p>Today I started digging.&nbsp; Windows correctly sees my drive size as 69.2GB, and reports that I only have 3.15GB free.&nbsp; That must mean that ~65GB are in use.&nbsp; However, <a href="http://www.jgoodies.com/freeware/jdiskreport/" target="_blank">JDiskReport</a> (and WinDirStat) is showing that only 24gb are in use.</p>
 
 
-<p><img src="/images/explorer_2Ddrive_2Dspace_small_.jpg" alt="Explorer-drive-space"  border="0"  /></p>
+<p><img src="/images/explorer_2Ddrive_2Dspace_small.jpg" alt="Explorer-drive-space"  border="0"  /></p>
 
 
-<p><img src="/images/jdisk_2Dreport_small_.jpg" alt="Jdisk-report"  border="0"  /></p>
+<p><img src="/images/jdisk_2Dreport_small.jpg" alt="Jdisk-report"  border="0"  /></p>
 
 
 <p>I ran <strong>chkdsk</strong> to get a raw view of the drive&nbsp;(and to see if there are any errors) and everything came out clean.&nbsp; It reports that I have 15gb free!</p>
 
 
-<p><img src="/images/chkdsk_2Ddrive_2Dspace_small_.jpg" alt="Chkdsk-drive-space"  border="0"  /></p>
+<p><img src="/images/chkdsk_2Ddrive_2Dspace_small.jpg" alt="Chkdsk-drive-space"  border="0"  /></p>
 
 
 <p>Defrag is scheduled to run weekly and windows tells me that it doesn&rsquo;t need a defrag.&nbsp; At this point I&rsquo;m wondering whether the drive is faulty or do I just need to reformat this drive&hellip; (I&rsquo;d rather not do this, of course)</p>
@@ -287,13 +287,13 @@
 <p>We have our page:</p>
 
 
-<p><a href="http://www.flux88.com/uploads/photo_2Dsearch_2Dform.png"><img src="/images/photo_2Dsearch_2Dform_thumb_.jpg" hspace="10"  border="0"  /></a></p>
+<p><a href="http://www.flux88.com/uploads/photo_2Dsearch_2Dform.png"><img src="/images/photo_2Dsearch_2Dform_thumb.jpg" hspace="10"  border="0"  /></a></p>
 
 
 <p>if you search for &ldquo;flowers&rdquo;, you are taken to another action (physically) that shows you the results:</p>
 
 
-<p><a href="http://www.flux88.com/uploads/photo_2Dsearch_2Dresults.png"><img src="/images/photo_2Dsearch_2Dresults_thumb_.jpg" hspace="10"  border="0"  /></a></p>
+<p><a href="http://www.flux88.com/uploads/photo_2Dsearch_2Dresults.png"><img src="/images/photo_2Dsearch_2Dresults_thumb.jpg" hspace="10"  border="0"  /></a></p>
 
 
 <p>Now let&rsquo;s assume that you want this to happen with ajax.&nbsp; We&rsquo;d like the results to be displayed directly on the same page as the query.</p>
@@ -322,7 +322,7 @@
 <p>This is pretty basic ajax stuff in jquery.&nbsp; The only thing different that I am doing here is notifying the controller that this is an ajax call, so that we may make it behave a little differently.&nbsp; After all, we don&rsquo;t want it to return a full html document&hellip; we only want the images!</p><p>That&rsquo;s the essense of issue #2.&nbsp; If we revisit our controller action, we can make the following change:</p>
 <div><figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
 </pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>[ControllerAction]&lt;span class="kwrd">public&lt;/span> &lt;span class="kwrd">void&lt;/span> Find(&lt;span class="kwrd">string&lt;/span> query, &lt;b>&lt;span class="kwrd">bool&lt;/span>? ajax&lt;/b>){ var flickr = &lt;span class="kwrd">new&lt;/span> Flickr(ConfigurationManager.AppSettings[&lt;span class="str">"flickr.api.key"&lt;/span>]);var photos = flickr.PhotosSearch(query, TagMode.AnyTag, query, 40, 1);ViewData[&lt;span class="str">"query"&lt;/span>] = query;ViewData[&lt;span class="str">"photos"&lt;/span>] = photos;&lt;b>&lt;span class="kwrd">if&lt;/span>(ajax.HasValue &amp;&amp; ajax.Value){RenderView(&lt;span class="str">"_images"&lt;/span>, photos);}&lt;span class="kwrd">else&lt;/span>{RenderView(&lt;span class="str">"results"&lt;/span>);}&lt;/b> }</div></code></pre></td></tr></table></div></figure></div>
-<p>We&rsquo;ve added an optional parameter for the action to check for.&nbsp; There are a number of other ways you might accomplish the same thing by embedding this into the controller itself.&nbsp; You could make a convention that allows a base Controller class set an IsAjax boolean property to true if it detects this variable in form variables or querystring.&nbsp; Whatever you find the cleanest.</p><p>And, Here is our new form!</p><p><a href="http://www.flux88.com/uploads/photo_2Dsearch_2Dajax.png"><img src="/images/photo_2Dsearch_2Dajax_thumb_.jpg" hspace="10"  border="0"  /></a></p><p>You couldn&rsquo;t see it in that still image, but there was an animated ajax indicator, and a nice slide down effect on the photo div.&nbsp; If you turn off javascript, the whole thing still works.</p><p>This entire process is basically what you get with UpdatePanel.&nbsp; The same techniques are used to accomplish partial page rendering.&nbsp; Granted, UpdatePanel works slightly different (it&rsquo;s parts of the same page that get updated) but you could easily return a full html document from the action and snip out the html you want to update.&nbsp; Or you might have a specific ViewFactory that knows to only serialize HTML starting with an element root.</p><p>With some conventions and a tiny bit of javascript, you could easily achieve partial page rendering with out any fuss.&nbsp; Plus you get to work with jquery, which is much mor enjoyable than ASP.NET AJAX.</p><p><strong>UPDATE:&nbsp; Download the code below.&nbsp; You&rsquo;ll need your own flickr api key (you can get one instantly from flickr.com).&nbsp; Place it in the web.config.</strong></p><p><a href="http://www.flux88.com/uploads/PhotoSearch.zip" target="_blank">PhotoSearch.zip (124 KB)</a>.&nbsp; </p>
+<p>We&rsquo;ve added an optional parameter for the action to check for.&nbsp; There are a number of other ways you might accomplish the same thing by embedding this into the controller itself.&nbsp; You could make a convention that allows a base Controller class set an IsAjax boolean property to true if it detects this variable in form variables or querystring.&nbsp; Whatever you find the cleanest.</p><p>And, Here is our new form!</p><p><a href="http://www.flux88.com/uploads/photo_2Dsearch_2Dajax.png"><img src="/images/photo_2Dsearch_2Dajax_thumb.jpg" hspace="10"  border="0"  /></a></p><p>You couldn&rsquo;t see it in that still image, but there was an animated ajax indicator, and a nice slide down effect on the photo div.&nbsp; If you turn off javascript, the whole thing still works.</p><p>This entire process is basically what you get with UpdatePanel.&nbsp; The same techniques are used to accomplish partial page rendering.&nbsp; Granted, UpdatePanel works slightly different (it&rsquo;s parts of the same page that get updated) but you could easily return a full html document from the action and snip out the html you want to update.&nbsp; Or you might have a specific ViewFactory that knows to only serialize HTML starting with an element root.</p><p>With some conventions and a tiny bit of javascript, you could easily achieve partial page rendering with out any fuss.&nbsp; Plus you get to work with jquery, which is much mor enjoyable than ASP.NET AJAX.</p><p><strong>UPDATE:&nbsp; Download the code below.&nbsp; You&rsquo;ll need your own flickr api key (you can get one instantly from flickr.com).&nbsp; Place it in the web.config.</strong></p><p><a href="http://www.flux88.com/uploads/PhotoSearch.zip" target="_blank">PhotoSearch.zip (124 KB)</a>.&nbsp; </p>
 
 </div>
   <footer>
@@ -353,7 +353,7 @@
   </header>
 
 
-  <div class="entry-content"><p><img src="/images/palermo_cover150_.jpg" hspace="20"  border="0"  />The cat is out of the bag now!&nbsp; I&rsquo;m writing a book on ASP.NET MVC for Manning Press entitled ASP.NET MVC in Action.&nbsp; I really thrilled to be part of this along with my co-authors <a href="http://jeffreypalermo.com/" target="_blank">Jeffrey Palermo</a> and <a href="http://daveverwer.com/" target="_blank">Dave Verwer</a>.</p>
+  <div class="entry-content"><p><img src="/images/palermo_cover150.jpg" hspace="20"  border="0"  />The cat is out of the bag now!&nbsp; I&rsquo;m writing a book on ASP.NET MVC for Manning Press entitled ASP.NET MVC in Action.&nbsp; I really thrilled to be part of this along with my co-authors <a href="http://jeffreypalermo.com/" target="_blank">Jeffrey Palermo</a> and <a href="http://daveverwer.com/" target="_blank">Dave Verwer</a>.</p>
 
 
 <p>So far 3 chapters are available on <a href="http://manning.com/palermo/" target="_blank">Manning&rsquo;s Early Access Program</a>.&nbsp; We&rsquo;d love to hear your feedback on the book so far.</p>
@@ -547,7 +547,7 @@
   <div class="entry-content"><p>This is just ridiculous:</p>
 
 
-<p><img src="/images/vs_2Dcontext_2Dmenu_.png" hspace="10"  border="0"  /></p>
+<p><img src="/images/vs_2Dcontext_2Dmenu.png" hspace="10"  border="0"  /></p>
 
 
 <p>I could seriously eliminate about 10&ndash;12 items from there <strong>and never miss them again</strong>.&nbsp; For the others that I use occasionally, they would be better served on a top menu, not when I right-click.&nbsp; All of the source control things should be grouped in a sub-menu or something, because this thing is just way too crowded.</p>

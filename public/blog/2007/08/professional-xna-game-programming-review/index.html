@@ -113,7 +113,7 @@
   </header>
 
 
-<div class="entry-content"><p><img src="/images/xna_2Dbook_.jpg" hspace="10"  border="0"  />I just finished reading Professional <a href="http://www.amazon.com/Professional-XNA-Game-Programming-Windows/dp/0470126779/ref=pd_bbs_sr_1/104-8400577-8532738?ie=UTF8&amp;s=books&amp;qid=1188482950&amp;sr=8-1">XNA Game Development</a> by <a href="http://abi.exdream.com/">Benjamin Nitchske</a>.&nbsp; It was my first attempt at using the XNA Framework.&nbsp; I have some experience with DirectX, as I have been tinkering with it since version 5. Most of my work has been with the Managed DirectX bits for .NET 1.1. I found it to be much easier and readable than C++, just because of the language differences.</p>
+<div class="entry-content"><p><img src="/images/xna_2Dbook.jpg" hspace="10"  border="0"  />I just finished reading Professional <a href="http://www.amazon.com/Professional-XNA-Game-Programming-Windows/dp/0470126779/ref=pd_bbs_sr_1/104-8400577-8532738?ie=UTF8&amp;s=books&amp;qid=1188482950&amp;sr=8-1">XNA Game Development</a> by <a href="http://abi.exdream.com/">Benjamin Nitchske</a>.&nbsp; It was my first attempt at using the XNA Framework.&nbsp; I have some experience with DirectX, as I have been tinkering with it since version 5. Most of my work has been with the Managed DirectX bits for .NET 1.1. I found it to be much easier and readable than C++, just because of the language differences.</p>
 
 
 <p>XNA takes that next productivity leap and really allows you to hit the ground running.&nbsp; You start out with a game loop (complete with elapsed time already calculated for you), a graphics device already setup, and a managed content pipeline for imported models, sounds, and textures.&nbsp; Things like graphics memory getting lost when you alt-tab are already handled for you.</p>
@@ -134,7 +134,7 @@
 <p>Let me give you a hard example of how bad the code is.&nbsp; At one point he is talking about how he handles car physics, which was very interesting.&nbsp; Then I saw the class diagram where he implemented it.&nbsp; It looked something like this: </p>
 
 
-<p><img src="/images/carPhysics_2Dcrap_small_.jpg" alt="CarPhysics-crap"  border="0"  /></p>
+<p><img src="/images/carPhysics_2Dcrap_small.jpg" alt="CarPhysics-crap"  border="0"  /></p>
 
 
 <p>What!?!? So `ChaseCamera` inherits from `CarPhysics` which in turn inherits from `Player?`&nbsp; Sounds like an object model from the Twilight Zone. This is pure junk as an object model, and is really only there because the CarPhysics object needs to know details about what the player is doing, and indeed so does the camera. But that doesn&#8217;t mean you should break all rules of OO just to achieve a hack that works.&nbsp; I was so appalled by this I almost didn&#8217;t finish the book.</p>

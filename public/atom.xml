@@ -4,7 +4,7 @@
   <title>Fickle Bits</title>
   <link href="http://benscheirman.com/atom.xml" rel="self"/>
   <link href="http://benscheirman.com/"/>
-  <updated>2011-08-28T16:01:57-05:00</updated>
+  <updated>2011-08-28T21:42:00-05:00</updated>
   <id>http://benscheirman.com/</id>
   <author>
     <name>Ben Scheirman</name>
@@ -608,7 +608,7 @@ of features. Just epic content, that's it!&lt;/p&gt;
 &lt;h3&gt;August 20th, 2011&lt;/h3&gt;
 
 
-&lt;p&gt;&lt;img src=&quot;http://benscheirman.com/images/logo_____.jpg&quot; style=&quot;float:right; margin: 25px;&quot;   /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://benscheirman.com/images/logo__.jpg&quot; style=&quot;float:right; margin: 25px;&quot;   /&gt;&lt;/p&gt;
 
 &lt;p&gt;Houston Code Camp is a free day of sessions relating to software development. The event is free to attend, but registration is required.&lt;/p&gt;
 
@@ -675,26 +675,8 @@ This step might be all you need, but in my case I needed to follow the next step
 
 
 &lt;p&gt;I have two subprojects, each of which symlink their build output to a build/current folder. This makes it easy to add a non-recursive library search path reference for similar reasons. I also want to copy headers into this folder so there's always a deterministic location to find the headers, regardless of the platform &amp;amp; configuration we're building for.&lt;br /&gt;
-So I added a Run Script build phase to do this work for me:&lt;br /&gt;&lt;/p&gt;
-
-&lt;div&gt;&lt;figure role=code&gt;&lt;figcaption&gt;&lt;span&gt;lang:shell &lt;/span&gt;&lt;/figcaption&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;table cellpadding=&quot;0&quot; cellspacing=&quot;0&quot;&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre class=&quot;line-numbers&quot;&gt;&lt;span class='line'&gt;1&lt;/span&gt;
-&lt;span class='line'&gt;2&lt;/span&gt;
-&lt;span class='line'&gt;3&lt;/span&gt;
-&lt;span class='line'&gt;4&lt;/span&gt;
-&lt;span class='line'&gt;5&lt;/span&gt;
-&lt;span class='line'&gt;6&lt;/span&gt;
-&lt;span class='line'&gt;7&lt;/span&gt;
-&lt;/pre&gt;&lt;/td&gt;&lt;td class='code' width='100%'&gt;&lt;pre&gt;&lt;code class=''&gt;&lt;div class='line'&gt;# Symlink build output to a common directory for easy referencing in other projects
-&lt;/div&gt;&lt;div class='line'&gt;rm -rf &quot;$BUILD_DIR/current&quot;
-&lt;/div&gt;&lt;div class='line'&gt;ln -s &quot;$BUILT_PRODUCTS_DIR&quot; &quot;$BUILD_DIR/current&quot;
-&lt;/div&gt;&lt;div class='line'&gt;
-&lt;/div&gt;&lt;div class='line'&gt;# Copy headers to a shared location
-&lt;/div&gt;&lt;div class='line'&gt;mkdir -p &quot;$BUILD_DIR/current/headers&quot;
-&lt;/div&gt;&lt;div class='line'&gt;for file in `find . -name &quot;*.h&quot;`; do cp $file &quot;$BUILD_DIR/current/headers/&quot;; done;&lt;/div&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;&lt;/figure&gt;&lt;/div&gt;
-
-
-&lt;p&gt;The line is a bash for loop that copies all the header files in any subfolder &amp;amp; flattens it out for a single headers folder reference.&lt;br /&gt;&lt;/p&gt;
+So I added a Run Script build phase to do this work for me:&lt;br /&gt;
+Liquid error: ClassNotFound: no lexer for alias 'shell' foundThe line is a bash for loop that copies all the header files in any subfolder &amp;amp; flattens it out for a single headers folder reference.&lt;br /&gt;&lt;/p&gt;
 
 &lt;h2&gt;Step 3: Add the new common header search paths&lt;/h2&gt;
 
@@ -713,7 +695,7 @@ So I added a Run Script build phase to do this work for me:&lt;br /&gt;&lt;/p&gt
 &lt;br /&gt;
 
 
-&lt;p&gt;&lt;img src=&quot;http://benscheirman.com/images/Xcode4_.png&quot;  alt=&quot;Xcode.png&quot;  /&gt;&lt;br /&gt;
+&lt;p&gt;&lt;img src=&quot;http://benscheirman.com/images/Xcode4.png&quot;  alt=&quot;Xcode.png&quot;  /&gt;&lt;br /&gt;
 As soon as I did that, my code lit up like a Christmas tree! Symbols were recognized, code was highlighted, and best of all... code completion resumed.&lt;br /&gt;
 Here's to hoping the Xcode 4 continues to be improved. In the meantime, hope this fix saves you the headache I've been having.&lt;/p&gt;
 </content>
@@ -734,7 +716,7 @@ Here's to hoping the Xcode 4 continues to be improved. In the meantime, hope thi
 
 
 &lt;p&gt;&lt;br /&gt;
-&lt;img src=&quot;http://benscheirman.com/images/Xcode3_.png&quot;  alt=&quot;Xcode.png&quot;  /&gt;&lt;/p&gt;
+&lt;img src=&quot;http://benscheirman.com/images/Xcode3.png&quot;  alt=&quot;Xcode.png&quot;  /&gt;&lt;/p&gt;
 
 
 &lt;p&gt;With the errors &lt;i&gt;&lt;b&gt;No Packager exists for the type of archive&lt;/b&gt;&lt;/i&gt; and &lt;i&gt;&lt;b&gt;This kind of archive cannot be signed&lt;/b&gt;&lt;/i&gt;.&lt;/p&gt;
@@ -747,7 +729,7 @@ Here's to hoping the Xcode 4 continues to be improved. In the meantime, hope thi
 
 
 &lt;p&gt;&lt;br /&gt;
-&lt;img src=&quot;http://benscheirman.com/images/Xcode2_.png&quot;  alt=&quot;Xcode.png&quot;  /&gt;&lt;/p&gt;
+&lt;img src=&quot;http://benscheirman.com/images/Xcode2.png&quot;  alt=&quot;Xcode.png&quot;  /&gt;&lt;/p&gt;
 
 
 &lt;p&gt;If you right-click on this build, and select &quot;Reveal in Finder&quot; you'll see the files are .xcarchive files. Right click on that and select &quot;Show Package Contents&quot; to see what I'm talking about. If you see a usr/lib/mystaticlibary.a file, then read on for the fix.&lt;/p&gt;
@@ -756,14 +738,14 @@ Here's to hoping the Xcode 4 continues to be improved. In the meantime, hope thi
 &lt;p&gt;You need to tell Xcode 4 &lt;b&gt;not&lt;/b&gt; to &quot;install&quot; the static libraries. For each of the static library targets, select them in Xcode 4, and under Build Settings, search for &quot;Skip Install&quot;. Set that flag to YES. I had to do this to both of the static libraries I include in my project.&lt;/p&gt;
 
 
-&lt;p&gt;&lt;img src=&quot;http://benscheirman.com/images/Xcode1_.png&quot;  alt=&quot;Xcode1.png&quot;  /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://benscheirman.com/images/Xcode1.png&quot;  alt=&quot;Xcode1.png&quot;  /&gt;&lt;/p&gt;
 
 
 &lt;p&gt;Once that's done, your app should show a normal icon again &amp;amp; have the ability to export to IPA just like before. Yay!&lt;/p&gt;
 
 
 &lt;p&gt;&lt;br /&gt;
-&lt;img src=&quot;http://benscheirman.com/images/Xcode_.png&quot;  alt=&quot;Xcode.png&quot;  /&gt;&lt;/p&gt;
+&lt;img src=&quot;http://benscheirman.com/images/Xcode.png&quot;  alt=&quot;Xcode.png&quot;  /&gt;&lt;/p&gt;
 
 
 &lt;p&gt;Huge thanks to &lt;a href=&quot;http://stackoverflow.com/questions/5265292/xcode-4-create-ipa-file-instead-of-xcarchive&quot;&gt;this stackoverflow question&lt;/a&gt; for pointing me in the right direction.&lt;/p&gt;
@@ -806,7 +788,7 @@ Here's to hoping the Xcode 4 continues to be improved. In the meantime, hope thi
 
 &lt;p&gt;&lt;br /&gt;
 &lt;a href=&quot;http://houstoncodecamp.com&quot; target=&quot;_blank&quot;&gt;
-&lt;img src=&quot;http://benscheirman.com/images/logo____.jpg&quot;  alt=&quot;logo.jpg&quot;  /&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;img src=&quot;http://benscheirman.com/images/logo_.jpg&quot;  alt=&quot;logo.jpg&quot;  /&gt;&lt;/a&gt;&lt;/p&gt;
 
 
 &lt;h4&gt;Call for speakers&lt;/h4&gt;
@@ -1431,8 +1413,7 @@ You might be saying, &lt;em&gt;&quot;What the hell are all these gems for?!?!&qu
 
 
 
-&lt;div&gt;&lt;figure role=code&gt;&lt;figcaption&gt;&lt;span&gt;lang:ruby &lt;/span&gt;&lt;/figcaption&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;table cellpadding=&quot;0&quot; cellspacing=&quot;0&quot;&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre class=&quot;line-numbers&quot;&gt;&lt;span class='line'&gt;1&lt;/span&gt;
+&lt;div&gt;&lt;figure role=code&gt; &lt;div class=&quot;highlight&quot;&gt;&lt;table cellpadding=&quot;0&quot; cellspacing=&quot;0&quot;&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre class=&quot;line-numbers&quot;&gt;&lt;span class='line'&gt;1&lt;/span&gt;
 &lt;span class='line'&gt;2&lt;/span&gt;
 &lt;span class='line'&gt;3&lt;/span&gt;
 &lt;span class='line'&gt;4&lt;/span&gt;
@@ -1440,14 +1421,15 @@ You might be saying, &lt;em&gt;&quot;What the hell are all these gems for?!?!&qu
 &lt;span class='line'&gt;6&lt;/span&gt;
 &lt;span class='line'&gt;7&lt;/span&gt;
 &lt;span class='line'&gt;8&lt;/span&gt;
-&lt;/pre&gt;&lt;/td&gt;&lt;td class='code' width='100%'&gt;&lt;pre&gt;&lt;code class=''&gt;&lt;div class='line'&gt;Spork.prefork do&amp;lt;br /&gt;  ENV[&quot;RAILS_ENV&quot;] ||= 'test'&amp;lt;br /&gt;&amp;lt;br /&gt;
-&lt;/div&gt;&lt;div class='line'&gt;  require 'rails/mongoid'
-&lt;/div&gt;&lt;div class='line'&gt;  Spork.trap_class_method(Rails::Mongoid, :load_models)
+&lt;/pre&gt;&lt;/td&gt;&lt;td class='code' width='100%'&gt;&lt;pre&gt;&lt;code class='ruby'&gt;&lt;div class='line'&gt;&lt;span class=&quot;no&quot;&gt;Spork&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;prefork&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;br&lt;/span&gt;&lt;span class=&quot;sr&quot;&gt; /&amp;gt;  ENV[&amp;quot;RAILS_ENV&amp;quot;] ||= &amp;#39;test&amp;#39;&amp;lt;br /&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;br&lt;/span&gt;&lt;span class=&quot;sr&quot;&gt; /&amp;gt;&lt;/span&gt;
+&lt;/div&gt;&lt;div class='line'&gt;&lt;span class=&quot;sr&quot;&gt;  require &amp;#39;rails/mon&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;goid&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;&lt;/span&gt;
+&lt;/div&gt;&lt;div class='line'&gt;&lt;span class=&quot;s1&quot;&gt;  Spork.trap_class_method(Rails::Mongoid, :load_models)&lt;/span&gt;
 &lt;/div&gt;&lt;div class='line'&gt;
-&lt;/div&gt;&lt;div class='line'&gt;  # Now load our environment
-&lt;/div&gt;&lt;div class='line'&gt;  require File.expand_path(&quot;../../config/environment&quot;, __FILE__)
-&lt;/div&gt;&lt;div class='line'&gt;  require 'rspec/rails' 
-&lt;/div&gt;&lt;div class='line'&gt;  ...&lt;/div&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;&lt;/figure&gt;&lt;/div&gt;
+&lt;/div&gt;&lt;div class='line'&gt;&lt;span class=&quot;s1&quot;&gt;  # Now load our environment&lt;/span&gt;
+&lt;/div&gt;&lt;div class='line'&gt;&lt;span class=&quot;s1&quot;&gt;  require File.expand_path(&amp;quot;../../config/environment&amp;quot;, __FILE__)&lt;/span&gt;
+&lt;/div&gt;&lt;div class='line'&gt;&lt;span class=&quot;s1&quot;&gt;  require &amp;#39;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;rspec&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;rails&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;&amp;#39;&lt;/span&gt;
+&lt;/div&gt;&lt;div class='line'&gt;  &lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;
+&lt;/div&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;&lt;/figure&gt;&lt;/div&gt;
 
 
 
@@ -1481,8 +1463,7 @@ You might be saying, &lt;em&gt;&quot;What the hell are all these gems for?!?!&qu
 
 &lt;p&gt;&lt;em&gt;MyTableViewController.h&lt;/em&gt;&lt;/p&gt;
 
-&lt;div&gt;&lt;figure role=code&gt;&lt;figcaption&gt;&lt;span&gt;lang:objc &lt;/span&gt;&lt;/figcaption&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;table cellpadding=&quot;0&quot; cellspacing=&quot;0&quot;&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre class=&quot;line-numbers&quot;&gt;&lt;span class='line'&gt;1&lt;/span&gt;
+&lt;div&gt;&lt;figure role=code&gt; &lt;div class=&quot;highlight&quot;&gt;&lt;table cellpadding=&quot;0&quot; cellspacing=&quot;0&quot;&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre class=&quot;line-numbers&quot;&gt;&lt;span class='line'&gt;1&lt;/span&gt;
 &lt;span class='line'&gt;2&lt;/span&gt;
 &lt;span class='line'&gt;3&lt;/span&gt;
 &lt;span class='line'&gt;4&lt;/span&gt;
@@ -1491,21 +1472,21 @@ You might be saying, &lt;em&gt;&quot;What the hell are all these gems for?!?!&qu
 &lt;span class='line'&gt;7&lt;/span&gt;
 &lt;span class='line'&gt;8&lt;/span&gt;
 &lt;span class='line'&gt;9&lt;/span&gt;
-&lt;/pre&gt;&lt;/td&gt;&lt;td class='code' width='100%'&gt;&lt;pre&gt;&lt;code class=''&gt;&lt;div class='line'&gt;@interface MyTableViewController : UITableViewController {
-&lt;/div&gt;&lt;div class='line'&gt;    NSArray *items;
-&lt;/div&gt;&lt;div class='line'&gt;}
+&lt;/pre&gt;&lt;/td&gt;&lt;td class='code' width='100%'&gt;&lt;pre&gt;&lt;code class='objc'&gt;&lt;div class='line'&gt;&lt;span class=&quot;k&quot;&gt;@interface&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;MyTableViewController&lt;/span&gt; : &lt;span class=&quot;nc&quot;&gt;UITableViewController&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+&lt;/div&gt;&lt;div class='line'&gt;    &lt;span class=&quot;n&quot;&gt;NSArray&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;items&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;/div&gt;&lt;div class='line'&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
 &lt;/div&gt;&lt;div class='line'&gt;
-&lt;/div&gt;&lt;div class='line'&gt;@property (nonatomic, retain) NSArray *items;
+&lt;/div&gt;&lt;div class='line'&gt;&lt;span class=&quot;k&quot;&gt;@property&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;nonatomic&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;retain&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;NSArray&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;items&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
 &lt;/div&gt;&lt;div class='line'&gt;
-&lt;/div&gt;&lt;div class='line'&gt;- (void)somethingChanged;
+&lt;/div&gt;&lt;div class='line'&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;somethingChanged&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
 &lt;/div&gt;&lt;div class='line'&gt;
-&lt;/div&gt;&lt;div class='line'&gt;@end&lt;/div&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;&lt;/figure&gt;&lt;/div&gt;
+&lt;/div&gt;&lt;div class='line'&gt;&lt;span class=&quot;k&quot;&gt;@end&lt;/span&gt;
+&lt;/div&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;&lt;/figure&gt;&lt;/div&gt;
 
 
 &lt;p&gt;&lt;em&gt;MyTableViewController.m&lt;/em&gt;&lt;/p&gt;
 
-&lt;div&gt;&lt;figure role=code&gt;&lt;figcaption&gt;&lt;span&gt;lang:objc &lt;/span&gt;&lt;/figcaption&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;table cellpadding=&quot;0&quot; cellspacing=&quot;0&quot;&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre class=&quot;line-numbers&quot;&gt;&lt;span class='line'&gt;1&lt;/span&gt;
+&lt;div&gt;&lt;figure role=code&gt; &lt;div class=&quot;highlight&quot;&gt;&lt;table cellpadding=&quot;0&quot; cellspacing=&quot;0&quot;&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre class=&quot;line-numbers&quot;&gt;&lt;span class='line'&gt;1&lt;/span&gt;
 &lt;span class='line'&gt;2&lt;/span&gt;
 &lt;span class='line'&gt;3&lt;/span&gt;
 &lt;span class='line'&gt;4&lt;/span&gt;
@@ -1526,27 +1507,28 @@ You might be saying, &lt;em&gt;&quot;What the hell are all these gems for?!?!&qu
 &lt;span class='line'&gt;19&lt;/span&gt;
 &lt;span class='line'&gt;20&lt;/span&gt;
 &lt;span class='line'&gt;21&lt;/span&gt;
-&lt;/pre&gt;&lt;/td&gt;&lt;td class='code' width='100%'&gt;&lt;pre&gt;&lt;code class=''&gt;&lt;div class='line'&gt;@implementation MyTableViewController
-&lt;/div&gt;&lt;div class='line'&gt;- (void)viewDidLoad {
-&lt;/div&gt;&lt;div class='line'&gt;    [super viewDidLoad];
-&lt;/div&gt;&lt;div class='line'&gt;    //using the ivar
-&lt;/div&gt;&lt;div class='line'&gt;    items = [[NSArray arrayWithObjects:@&quot;Item 1&quot;, @&quot;Item 2&quot;, nil] retain];
-&lt;/div&gt;&lt;div class='line'&gt;    //using the property
-&lt;/div&gt;&lt;div class='line'&gt;    self.items = [NSArray arrayWithObjects:@&quot;Item 1&quot;, @&quot;Item 2&quot;, nil];}
+&lt;/pre&gt;&lt;/td&gt;&lt;td class='code' width='100%'&gt;&lt;pre&gt;&lt;code class='objc'&gt;&lt;div class='line'&gt;&lt;span class=&quot;k&quot;&gt;@implementation&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;MyTableViewController&lt;/span&gt;
+&lt;/div&gt;&lt;div class='line'&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;viewDidLoad&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+&lt;/div&gt;&lt;div class='line'&gt;    &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;super&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;viewDidLoad&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
+&lt;/div&gt;&lt;div class='line'&gt;    &lt;span class=&quot;c1&quot;&gt;//using the ivar&lt;/span&gt;
+&lt;/div&gt;&lt;div class='line'&gt;    &lt;span class=&quot;n&quot;&gt;items&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;NSArray&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;arrayWithObjects:&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;@&amp;quot;Item 1&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;@&amp;quot;Item 2&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;nil&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;retain&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
+&lt;/div&gt;&lt;div class='line'&gt;    &lt;span class=&quot;c1&quot;&gt;//using the property&lt;/span&gt;
+&lt;/div&gt;&lt;div class='line'&gt;    &lt;span class=&quot;n&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;items&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;NSArray&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;arrayWithObjects:&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;@&amp;quot;Item 1&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;@&amp;quot;Item 2&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;nil&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];}&lt;/span&gt;
 &lt;/div&gt;&lt;div class='line'&gt;
-&lt;/div&gt;&lt;div class='line'&gt;- (void)somethingChanged {
-&lt;/div&gt;&lt;div class='line'&gt;    //using the ivar
-&lt;/div&gt;&lt;div class='line'&gt;    [items release];
-&lt;/div&gt;&lt;div class='line'&gt;    items = [[NSArray arrayWithObjects:@&quot;New Item 1&quot;, @&quot;New Item 2&quot;, nil] retain];
-&lt;/div&gt;&lt;div class='line'&gt;    //using the property
-&lt;/div&gt;&lt;div class='line'&gt;    self.items = [NSArray arrayWithObjects:@&quot;New Item 1&quot;, @&quot;New Item 2&quot;, nil];
-&lt;/div&gt;&lt;div class='line'&gt;    [self.tableView reloadData];
-&lt;/div&gt;&lt;div class='line'&gt;}
+&lt;/div&gt;&lt;div class='line'&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;somethingChanged&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+&lt;/div&gt;&lt;div class='line'&gt;    &lt;span class=&quot;c1&quot;&gt;//using the ivar&lt;/span&gt;
+&lt;/div&gt;&lt;div class='line'&gt;    &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;items&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;release&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
+&lt;/div&gt;&lt;div class='line'&gt;    &lt;span class=&quot;n&quot;&gt;items&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;NSArray&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;arrayWithObjects:&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;@&amp;quot;New Item 1&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;@&amp;quot;New Item 2&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;nil&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;retain&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
+&lt;/div&gt;&lt;div class='line'&gt;    &lt;span class=&quot;c1&quot;&gt;//using the property&lt;/span&gt;
+&lt;/div&gt;&lt;div class='line'&gt;    &lt;span class=&quot;n&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;items&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;NSArray&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;arrayWithObjects:&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;@&amp;quot;New Item 1&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;@&amp;quot;New Item 2&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;nil&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
+&lt;/div&gt;&lt;div class='line'&gt;    &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;tableView&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;reloadData&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
+&lt;/div&gt;&lt;div class='line'&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
 &lt;/div&gt;&lt;div class='line'&gt;
-&lt;/div&gt;&lt;div class='line'&gt;- (void)dealloc {
-&lt;/div&gt;&lt;div class='line'&gt;    [items release];
-&lt;/div&gt;&lt;div class='line'&gt;    [super dealloc];
-&lt;/div&gt;&lt;div class='line'&gt;}@end&lt;/div&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;&lt;/figure&gt;&lt;/div&gt;
+&lt;/div&gt;&lt;div class='line'&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dealloc&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+&lt;/div&gt;&lt;div class='line'&gt;    &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;items&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;release&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
+&lt;/div&gt;&lt;div class='line'&gt;    &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;super&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dealloc&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
+&lt;/div&gt;&lt;div class='line'&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;@end&lt;/span&gt;
+&lt;/div&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;&lt;/figure&gt;&lt;/div&gt;
 
 
 &lt;p&gt;Notice that in each use of the ivar, we have to take special care to manage the memory properly. In the first case, we have to make sure to retain the value, because &lt;code&gt;[NSArray arrayWithObjects:]&lt;/code&gt; returns an autoreleased instance. In the second case, we have to make sure and release the first array before assigning it to the second array.&lt;/p&gt;
@@ -1562,45 +1544,45 @@ You might be saying, &lt;em&gt;&quot;What the hell are all these gems for?!?!&qu
 
 &lt;p&gt;&lt;em&gt;NSString+FLUXAdditions.h&lt;/em&gt;&lt;/p&gt;
 
-&lt;div&gt;&lt;figure role=code&gt;&lt;figcaption&gt;&lt;span&gt;lang:objc &lt;/span&gt;&lt;/figcaption&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;table cellpadding=&quot;0&quot; cellspacing=&quot;0&quot;&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre class=&quot;line-numbers&quot;&gt;&lt;span class='line'&gt;1&lt;/span&gt;
+&lt;div&gt;&lt;figure role=code&gt; &lt;div class=&quot;highlight&quot;&gt;&lt;table cellpadding=&quot;0&quot; cellspacing=&quot;0&quot;&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre class=&quot;line-numbers&quot;&gt;&lt;span class='line'&gt;1&lt;/span&gt;
 &lt;span class='line'&gt;2&lt;/span&gt;
 &lt;span class='line'&gt;3&lt;/span&gt;
-&lt;/pre&gt;&lt;/td&gt;&lt;td class='code' width='100%'&gt;&lt;pre&gt;&lt;code class=''&gt;&lt;div class='line'&gt;@interface NSString (FLUXAdditions)
-&lt;/div&gt;&lt;div class='line'&gt;- (BOOL)startsWith:(NSString *)prefix;
-&lt;/div&gt;&lt;div class='line'&gt;@end&lt;/div&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;&lt;/figure&gt;&lt;/div&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;td class='code' width='100%'&gt;&lt;pre&gt;&lt;code class='objc'&gt;&lt;div class='line'&gt;&lt;span class=&quot;k&quot;&gt;@interface&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;NSString&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;(FLUXAdditions)&lt;/span&gt;
+&lt;/div&gt;&lt;div class='line'&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;BOOL&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;startsWith:&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;NSString&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;prefix&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;/div&gt;&lt;div class='line'&gt;&lt;span class=&quot;k&quot;&gt;@end&lt;/span&gt;
+&lt;/div&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;&lt;/figure&gt;&lt;/div&gt;
 
 
 &lt;p&gt;&lt;em&gt;NSString+FLUXAdditions.m&lt;/em&gt;&lt;/p&gt;
 
-&lt;div&gt;&lt;figure role=code&gt;&lt;figcaption&gt;&lt;span&gt;lang:objc &lt;/span&gt;&lt;/figcaption&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;table cellpadding=&quot;0&quot; cellspacing=&quot;0&quot;&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre class=&quot;line-numbers&quot;&gt;&lt;span class='line'&gt;1&lt;/span&gt;
+&lt;div&gt;&lt;figure role=code&gt; &lt;div class=&quot;highlight&quot;&gt;&lt;table cellpadding=&quot;0&quot; cellspacing=&quot;0&quot;&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre class=&quot;line-numbers&quot;&gt;&lt;span class='line'&gt;1&lt;/span&gt;
 &lt;span class='line'&gt;2&lt;/span&gt;
 &lt;span class='line'&gt;3&lt;/span&gt;
 &lt;span class='line'&gt;4&lt;/span&gt;
 &lt;span class='line'&gt;5&lt;/span&gt;
-&lt;/pre&gt;&lt;/td&gt;&lt;td class='code' width='100%'&gt;&lt;pre&gt;&lt;code class=''&gt;&lt;div class='line'&gt;@implementation NSString (FLUXAdditions)
-&lt;/div&gt;&lt;div class='line'&gt;- (BOOL)startsWith:(NSString *)prefix {
-&lt;/div&gt;&lt;div class='line'&gt;return [[self substringToIndex:[prefix length]-1] isEqualTo:prefix];
-&lt;/div&gt;&lt;div class='line'&gt;}
-&lt;/div&gt;&lt;div class='line'&gt;@end&lt;/div&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;&lt;/figure&gt;&lt;/div&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;td class='code' width='100%'&gt;&lt;pre&gt;&lt;code class='objc'&gt;&lt;div class='line'&gt;&lt;span class=&quot;k&quot;&gt;@implementation&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;NSString&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;(FLUXAdditions)&lt;/span&gt;
+&lt;/div&gt;&lt;div class='line'&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;BOOL&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;startsWith:&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;NSString&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;prefix&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+&lt;/div&gt;&lt;div class='line'&gt;&lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;self&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;substringToIndex:&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;prefix&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;length&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;isEqualTo:&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;prefix&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
+&lt;/div&gt;&lt;div class='line'&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/div&gt;&lt;div class='line'&gt;&lt;span class=&quot;k&quot;&gt;@end&lt;/span&gt;
+&lt;/div&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;&lt;/figure&gt;&lt;/div&gt;
 
 
 &lt;p&gt;[box type=&quot;info&quot;]Notice the naming of the filename &amp;amp; the category name. Most people use the + syntax to denote a category on the class they're adding on to. The prefix is also important. If you just name your category &quot;Additions&quot; then it's possible that other libraries you include (or future versions of the SDK) could have the same name, leading to a collision. The common practice is to utilize a company prefix on classes that could be reused by others or that could cause collisions in the future.[/box]
 Now that I have that implemented, all I have to do is include my header file anywhere I want to use this method. You can even do this in a global header file.&lt;/p&gt;
 
-&lt;div&gt;&lt;figure role=code&gt;&lt;figcaption&gt;&lt;span&gt;lang:objc &lt;/span&gt;&lt;/figcaption&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;table cellpadding=&quot;0&quot; cellspacing=&quot;0&quot;&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre class=&quot;line-numbers&quot;&gt;&lt;span class='line'&gt;1&lt;/span&gt;
-&lt;/pre&gt;&lt;/td&gt;&lt;td class='code' width='100%'&gt;&lt;pre&gt;&lt;code class=''&gt;&lt;div class='line'&gt;#import &quot;NSString+FLUXAdditions.h&quot;&lt;/div&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;&lt;/figure&gt;&lt;/div&gt;
+&lt;div&gt;&lt;figure role=code&gt; &lt;div class=&quot;highlight&quot;&gt;&lt;table cellpadding=&quot;0&quot; cellspacing=&quot;0&quot;&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre class=&quot;line-numbers&quot;&gt;&lt;span class='line'&gt;1&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;td class='code' width='100%'&gt;&lt;pre&gt;&lt;code class='objc'&gt;&lt;div class='line'&gt;&lt;span class=&quot;cp&quot;&gt;#import &amp;quot;NSString+FLUXAdditions.h&amp;quot;&lt;/span&gt;
+&lt;/div&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;&lt;/figure&gt;&lt;/div&gt;
 
 
 
 
-&lt;div&gt;&lt;figure role=code&gt;&lt;figcaption&gt;&lt;span&gt;lang:objc &lt;/span&gt;&lt;/figcaption&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;table cellpadding=&quot;0&quot; cellspacing=&quot;0&quot;&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre class=&quot;line-numbers&quot;&gt;&lt;span class='line'&gt;1&lt;/span&gt;
+&lt;div&gt;&lt;figure role=code&gt; &lt;div class=&quot;highlight&quot;&gt;&lt;table cellpadding=&quot;0&quot; cellspacing=&quot;0&quot;&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre class=&quot;line-numbers&quot;&gt;&lt;span class='line'&gt;1&lt;/span&gt;
 &lt;span class='line'&gt;2&lt;/span&gt;
-&lt;/pre&gt;&lt;/td&gt;&lt;td class='code' width='100%'&gt;&lt;pre&gt;&lt;code class=''&gt;&lt;div class='line'&gt;[@&quot;My awesome string&quot; startsWith:@&quot;My&quot;];  //returns YES
-&lt;/div&gt;&lt;div class='line'&gt;[@&quot;My awesome string&quot; startsWith:@&quot;Foo&quot;]; //returns NO;&lt;/div&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;&lt;/figure&gt;&lt;/div&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;td class='code' width='100%'&gt;&lt;pre&gt;&lt;code class='objc'&gt;&lt;div class='line'&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;@&amp;quot;My awesome string&amp;quot;&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;startsWith:&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;@&amp;quot;My&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;  &lt;span class=&quot;c1&quot;&gt;//returns YES&lt;/span&gt;
+&lt;/div&gt;&lt;div class='line'&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;@&amp;quot;My awesome string&amp;quot;&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;startsWith:&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;@&amp;quot;Foo&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;//returns NO;&lt;/span&gt;
+&lt;/div&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;&lt;/figure&gt;&lt;/div&gt;
 
 
 &lt;p&gt;So now that we understand how categories work, how can we utilize this to solve our original problem?&lt;/p&gt;
@@ -1612,13 +1594,13 @@ Now that I have that implemented, all I have to do is include my header file any
 
 &lt;p&gt;&lt;em&gt;MyTableViewController.m&lt;/em&gt;&lt;/p&gt;
 
-&lt;div&gt;&lt;figure role=code&gt;&lt;figcaption&gt;&lt;span&gt;lang:objc &lt;/span&gt;&lt;/figcaption&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;table cellpadding=&quot;0&quot; cellspacing=&quot;0&quot;&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre class=&quot;line-numbers&quot;&gt;&lt;span class='line'&gt;1&lt;/span&gt;
+&lt;div&gt;&lt;figure role=code&gt; &lt;div class=&quot;highlight&quot;&gt;&lt;table cellpadding=&quot;0&quot; cellspacing=&quot;0&quot;&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre class=&quot;line-numbers&quot;&gt;&lt;span class='line'&gt;1&lt;/span&gt;
 &lt;span class='line'&gt;2&lt;/span&gt;
 &lt;span class='line'&gt;3&lt;/span&gt;
-&lt;/pre&gt;&lt;/td&gt;&lt;td class='code' width='100%'&gt;&lt;pre&gt;&lt;code class=''&gt;&lt;div class='line'&gt;@interface MyTableViewController ()
-&lt;/div&gt;&lt;div class='line'&gt;@property (nonatomic, retain) NSArray *items;
-&lt;/div&gt;&lt;div class='line'&gt;@end@implementation MyTableViewController@synthesize items;...@end&lt;/div&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;&lt;/figure&gt;&lt;/div&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;td class='code' width='100%'&gt;&lt;pre&gt;&lt;code class='objc'&gt;&lt;div class='line'&gt;&lt;span class=&quot;k&quot;&gt;@interface&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;MyTableViewController&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;/div&gt;&lt;div class='line'&gt;&lt;span class=&quot;k&quot;&gt;@property&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;nonatomic&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;retain&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;NSArray&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;items&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;/div&gt;&lt;div class='line'&gt;&lt;span class=&quot;k&quot;&gt;@end@implementation&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;MyTableViewController&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;@synthesize&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;items&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;...&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;@end&lt;/span&gt;
+&lt;/div&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;&lt;/figure&gt;&lt;/div&gt;
 
 
 &lt;p&gt;Notice how we declared the category interface directly the implementation file. This works because the .m file will only be loaded once, and since it's inside the .m file, no other classes will ever know it existed. We can remove the property declaration from the header file and everything should work the same.&lt;/p&gt;
@@ -1632,7 +1614,7 @@ Now that I have that implemented, all I have to do is include my header file any
 
 &lt;p&gt;Unfortunately Xcode4 wasn't very smart about telling me what was wrong, instead giving me conflicting error messages:&lt;/p&gt;
 
-&lt;p&gt;&lt;a href=&quot;http://flux88.com/wp-content/uploads/2011/04/xcode4-private-category-error.png&quot;&gt;&lt;img src=&quot;http://benscheirman.com/images/xcode4-private-category-error-tm_.jpg&quot;  height=&quot;124&quot;  /&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;http://flux88.com/wp-content/uploads/2011/04/xcode4-private-category-error.png&quot;&gt;&lt;img src=&quot;http://benscheirman.com/images/xcode4-private-category-error-tm.jpg&quot;  height=&quot;124&quot;  /&gt;&lt;/a&gt;&lt;/p&gt;
 
 &lt;p&gt;This &lt;a href=&quot;http://stackoverflow.com/questions/1052233/iphone-obj-c-anonymous-category-or-private-category/1055213#1055213&quot; target=&quot;_blank&quot;&gt;stack overflow answer&lt;/a&gt; helped explain the difference between the two styles.&lt;/p&gt;
 
@@ -1760,7 +1742,7 @@ Now that I have that implemented, all I have to do is include my header file any
     <link href="http://benscheirman.com/blog/2011/04/book-review-crafting-rails-applications/"/>
     <updated>2011-04-13T00:00:00-05:00</updated>
     <id>http://benscheirman.com/blog/2011/04/book-review-crafting-rails-applications</id>
-    <content type="html">&lt;p&gt;&lt;img src=&quot;http://benscheirman.com/images/capa_crafting_.png&quot;  style=&quot;float:left; margin-right:10px; margin-bottom:10px;&quot;  /&gt;&lt;/p&gt;
+    <content type="html">&lt;p&gt;&lt;img src=&quot;http://benscheirman.com/images/capa_crafting.png&quot;  style=&quot;float:left; margin-right:10px; margin-bottom:10px;&quot;  /&gt;&lt;/p&gt;
 
 &lt;p&gt;I just finished with &lt;a href=&quot;http://www.amazon.com/gp/product/1934356735/ref=as_li_ss_tl?ie=UTF8&amp;amp;tag=flux88com-20&amp;amp;linkCode=as2&amp;amp;camp=1789&amp;amp;creative=390957&amp;amp;creativeASIN=1934356735&quot;&gt;Crafting Rails Applications&lt;/a&gt;&lt;img src=&quot;http://www.assoc-amazon.com/e/ir?t=&amp;amp;l=as2&amp;amp;o=1&amp;amp;a=1934356735&quot; width=&quot;1&quot; height=&quot;1&quot; border=&quot;0&quot; alt=&quot;&quot; style=&quot;border:none !important; margin:0px !important;&quot; /&gt; by &lt;a href=&quot;http://blog.plataformatec.com.br/author/josevalim/&quot;&gt;José Valim&lt;/a&gt;. The book claims to teach Expert Practices for Everyday Rails Development. I didn't find it to be exactly that, however I did enjoy it and I learned a ton.&lt;/p&gt;
 
@@ -1801,7 +1783,7 @@ I tend to prefer RSpec with 1 assertion per test method and many fine-grained me
 
 
 &lt;p&gt;&lt;br /&gt;
-&lt;img src=&quot;http://benscheirman.com/images/mikelee-pirate_.jpg&quot;  alt=&quot;mikelee-pirate&quot;  /&gt;&lt;/p&gt;
+&lt;img src=&quot;http://benscheirman.com/images/mikelee-pirate.jpg&quot;  alt=&quot;mikelee-pirate&quot;  /&gt;&lt;/p&gt;
 
 
 &lt;p&gt;This year he came with a Mariachi outfit on. It's pretty hilarious as nobody expects a keynote speaker to be dressed this way.&lt;/p&gt;
@@ -1822,7 +1804,7 @@ I tend to prefer RSpec with 1 assertion per test method and many fine-grained me
 &lt;p&gt;&lt;a href=&quot;http://vimeo.com/22031658&quot;&gt;Mike Lee - Mariachi Product Engineering&lt;/a&gt; from &lt;a href=&quot;http://vimeo.com/user1579700&quot;&gt;Ben Scheirman&lt;/a&gt; on &lt;a href=&quot;http://vimeo.com&quot;&gt;Vimeo&lt;/a&gt;.&lt;/p&gt;
 
 
-&lt;p&gt;&lt;img src=&quot;http://benscheirman.com/images/mikelee-mariachi_.jpg&quot;  alt=&quot;mikelee-mariachi.jpg&quot;  /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://benscheirman.com/images/mikelee-mariachi.jpg&quot;  alt=&quot;mikelee-mariachi.jpg&quot;  /&gt;&lt;/p&gt;
 
 
 &lt;p&gt;I'll have links to my presentation material soon, but I wanted to share this awesome event. Certainly one for the books!&lt;/p&gt;

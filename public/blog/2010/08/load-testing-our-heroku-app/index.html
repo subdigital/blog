@@ -392,7 +392,7 @@
 
 <p>We slipped a tad on overall throughput (down to 30 reqs/sec) but we still served up all of the requests in a reasonable time without any failures.
 Let&#8217;s check out New Relic &amp; See what it says.
-<img src="/images/newrelic-heroku-testing2_.png"  height="282"  /> In this graph you can see the overall HTTP Throughput (higher is better) against the Heroku backlog depth. The more dynos you have, the quicker your backlog is cleared out, equating to more throughput. You can clearly see that we are now hitting a limit on the throughput we can handle because the queue depth is increasing. We might choose to optimize the site or add another dyno to squeeze some more perf out of this.
+<img src="/images/newrelic-heroku-testing2.png"  height="282"  /> In this graph you can see the overall HTTP Throughput (higher is better) against the Heroku backlog depth. The more dynos you have, the quicker your backlog is cleared out, equating to more throughput. You can clearly see that we are now hitting a limit on the throughput we can handle because the queue depth is increasing. We might choose to optimize the site or add another dyno to squeeze some more perf out of this.
 Also in the image if you were to mouseover on the queue stacks on the website, you&#8217;d see that my peak queue depth was 29. That&#8217;s pretty high, and you can definitely see a cap in the total # of requests that we can serve.
 In the end, I&#8217;m able to pretty reliably say that we can handle a 10k request spike when running on 2 dynos. I&#8217;d suggest more dynos if the client wanted to handle more than that.
 Gotta love tools that make investigation like this easy. Props to Heroku &amp; New Relic.</p>

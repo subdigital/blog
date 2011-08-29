@@ -5,4 +5,4 @@ date: 2009-7-13
 comments: true
 link: false
 ---
-<a href="http://flux88.com/files/media/image/WindowsLiveWriter/Teaser_EA10/pt_2.png"><img src="/images/pt_thumb_.png" alt="pt"  height="203"  /></a>  <p>(coming soon to an iPhone near you…)</p>
+<a href="http://flux88.com/files/media/image/WindowsLiveWriter/Teaser_EA10/pt_2.png"><img src="/images/pt_thumb.png" alt="pt"  height="203"  /></a>  <p>(coming soon to an iPhone near you…)</p>

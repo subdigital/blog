@@ -117,8 +117,7 @@
 
 <p><em>MyTableViewController.h</em></p>
 
-<div><figure role=code><figcaption><span>lang:objc </span></figcaption>
-<div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+<div><figure role=code> <div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
 <span class='line'>2</span>
 <span class='line'>3</span>
 <span class='line'>4</span>
@@ -127,21 +126,21 @@
 <span class='line'>7</span>
 <span class='line'>8</span>
 <span class='line'>9</span>
-</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>@interface MyTableViewController : UITableViewController {
-</div><div class='line'>    NSArray *items;
-</div><div class='line'>}
+</pre></td><td class='code' width='100%'><pre><code class='objc'><div class='line'><span class="k">@interface</span> <span class="nc">MyTableViewController</span> : <span class="nc">UITableViewController</span> <span class="p">{</span>
+</div><div class='line'>    <span class="n">NSArray</span> <span class="o">*</span><span class="n">items</span><span class="p">;</span>
+</div><div class='line'><span class="p">}</span>
 </div><div class='line'>
-</div><div class='line'>@property (nonatomic, retain) NSArray *items;
+</div><div class='line'><span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">retain</span><span class="p">)</span> <span class="n">NSArray</span> <span class="o">*</span><span class="n">items</span><span class="p">;</span>
 </div><div class='line'>
-</div><div class='line'>- (void)somethingChanged;
+</div><div class='line'><span class="o">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">somethingChanged</span><span class="p">;</span>
 </div><div class='line'>
-</div><div class='line'>@end</div></code></pre></td></tr></table></div></figure></div>
+</div><div class='line'><span class="k">@end</span>
+</div></code></pre></td></tr></table></div></figure></div>
 
 
 <p><em>MyTableViewController.m</em></p>
 
-<div><figure role=code><figcaption><span>lang:objc </span></figcaption>
-<div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+<div><figure role=code> <div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
 <span class='line'>2</span>
 <span class='line'>3</span>
 <span class='line'>4</span>
@@ -162,27 +161,28 @@
 <span class='line'>19</span>
 <span class='line'>20</span>
 <span class='line'>21</span>
-</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>@implementation MyTableViewController
-</div><div class='line'>- (void)viewDidLoad {
-</div><div class='line'>    [super viewDidLoad];
-</div><div class='line'>    //using the ivar
-</div><div class='line'>    items = [[NSArray arrayWithObjects:@"Item 1", @"Item 2", nil] retain];
-</div><div class='line'>    //using the property
-</div><div class='line'>    self.items = [NSArray arrayWithObjects:@"Item 1", @"Item 2", nil];}
+</pre></td><td class='code' width='100%'><pre><code class='objc'><div class='line'><span class="k">@implementation</span> <span class="nc">MyTableViewController</span>
+</div><div class='line'><span class="o">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">viewDidLoad</span> <span class="p">{</span>
+</div><div class='line'>    <span class="p">[</span><span class="n">super</span> <span class="n">viewDidLoad</span><span class="p">];</span>
+</div><div class='line'>    <span class="c1">//using the ivar</span>
+</div><div class='line'>    <span class="n">items</span> <span class="o">=</span> <span class="p">[[</span><span class="n">NSArray</span> <span class="nl">arrayWithObjects:</span><span class="s">@&quot;Item 1&quot;</span><span class="p">,</span> <span class="s">@&quot;Item 2&quot;</span><span class="p">,</span> <span class="nb">nil</span><span class="p">]</span> <span class="n">retain</span><span class="p">];</span>
+</div><div class='line'>    <span class="c1">//using the property</span>
+</div><div class='line'>    <span class="n">self</span><span class="p">.</span><span class="n">items</span> <span class="o">=</span> <span class="p">[</span><span class="n">NSArray</span> <span class="nl">arrayWithObjects:</span><span class="s">@&quot;Item 1&quot;</span><span class="p">,</span> <span class="s">@&quot;Item 2&quot;</span><span class="p">,</span> <span class="nb">nil</span><span class="p">];}</span>
 </div><div class='line'>
-</div><div class='line'>- (void)somethingChanged {
-</div><div class='line'>    //using the ivar
-</div><div class='line'>    [items release];
-</div><div class='line'>    items = [[NSArray arrayWithObjects:@"New Item 1", @"New Item 2", nil] retain];
-</div><div class='line'>    //using the property
-</div><div class='line'>    self.items = [NSArray arrayWithObjects:@"New Item 1", @"New Item 2", nil];
-</div><div class='line'>    [self.tableView reloadData];
-</div><div class='line'>}
+</div><div class='line'><span class="o">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">somethingChanged</span> <span class="p">{</span>
+</div><div class='line'>    <span class="c1">//using the ivar</span>
+</div><div class='line'>    <span class="p">[</span><span class="n">items</span> <span class="n">release</span><span class="p">];</span>
+</div><div class='line'>    <span class="n">items</span> <span class="o">=</span> <span class="p">[[</span><span class="n">NSArray</span> <span class="nl">arrayWithObjects:</span><span class="s">@&quot;New Item 1&quot;</span><span class="p">,</span> <span class="s">@&quot;New Item 2&quot;</span><span class="p">,</span> <span class="nb">nil</span><span class="p">]</span> <span class="n">retain</span><span class="p">];</span>
+</div><div class='line'>    <span class="c1">//using the property</span>
+</div><div class='line'>    <span class="n">self</span><span class="p">.</span><span class="n">items</span> <span class="o">=</span> <span class="p">[</span><span class="n">NSArray</span> <span class="nl">arrayWithObjects:</span><span class="s">@&quot;New Item 1&quot;</span><span class="p">,</span> <span class="s">@&quot;New Item 2&quot;</span><span class="p">,</span> <span class="nb">nil</span><span class="p">];</span>
+</div><div class='line'>    <span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">tableView</span> <span class="n">reloadData</span><span class="p">];</span>
+</div><div class='line'><span class="p">}</span>
 </div><div class='line'>
-</div><div class='line'>- (void)dealloc {
-</div><div class='line'>    [items release];
-</div><div class='line'>    [super dealloc];
-</div><div class='line'>}@end</div></code></pre></td></tr></table></div></figure></div>
+</div><div class='line'><span class="o">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">dealloc</span> <span class="p">{</span>
+</div><div class='line'>    <span class="p">[</span><span class="n">items</span> <span class="n">release</span><span class="p">];</span>
+</div><div class='line'>    <span class="p">[</span><span class="n">super</span> <span class="n">dealloc</span><span class="p">];</span>
+</div><div class='line'><span class="p">}</span><span class="k">@end</span>
+</div></code></pre></td></tr></table></div></figure></div>
 
 
 <p>Notice that in each use of the ivar, we have to take special care to manage the memory properly. In the first case, we have to make sure to retain the value, because <code>[NSArray arrayWithObjects:]</code> returns an autoreleased instance. In the second case, we have to make sure and release the first array before assigning it to the second array.</p>
@@ -198,45 +198,45 @@
 
 <p><em>NSString+FLUXAdditions.h</em></p>
 
-<div><figure role=code><figcaption><span>lang:objc </span></figcaption>
-<div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+<div><figure role=code> <div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
 <span class='line'>2</span>
 <span class='line'>3</span>
-</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>@interface NSString (FLUXAdditions)
-</div><div class='line'>- (BOOL)startsWith:(NSString *)prefix;
-</div><div class='line'>@end</div></code></pre></td></tr></table></div></figure></div>
+</pre></td><td class='code' width='100%'><pre><code class='objc'><div class='line'><span class="k">@interface</span> <span class="nc">NSString</span> <span class="nl">(FLUXAdditions)</span>
+</div><div class='line'><span class="o">-</span> <span class="p">(</span><span class="kt">BOOL</span><span class="p">)</span><span class="nl">startsWith:</span><span class="p">(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="n">prefix</span><span class="p">;</span>
+</div><div class='line'><span class="k">@end</span>
+</div></code></pre></td></tr></table></div></figure></div>
 
 
 <p><em>NSString+FLUXAdditions.m</em></p>
 
-<div><figure role=code><figcaption><span>lang:objc </span></figcaption>
-<div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+<div><figure role=code> <div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
 <span class='line'>2</span>
 <span class='line'>3</span>
 <span class='line'>4</span>
 <span class='line'>5</span>
-</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>@implementation NSString (FLUXAdditions)
-</div><div class='line'>- (BOOL)startsWith:(NSString *)prefix {
-</div><div class='line'>return [[self substringToIndex:[prefix length]-1] isEqualTo:prefix];
-</div><div class='line'>}
-</div><div class='line'>@end</div></code></pre></td></tr></table></div></figure></div>
+</pre></td><td class='code' width='100%'><pre><code class='objc'><div class='line'><span class="k">@implementation</span> <span class="nc">NSString</span> <span class="nl">(FLUXAdditions)</span>
+</div><div class='line'><span class="o">-</span> <span class="p">(</span><span class="kt">BOOL</span><span class="p">)</span><span class="nl">startsWith:</span><span class="p">(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="n">prefix</span> <span class="p">{</span>
+</div><div class='line'><span class="k">return</span> <span class="p">[[</span><span class="n">self</span> <span class="nl">substringToIndex:</span><span class="p">[</span><span class="n">prefix</span> <span class="n">length</span><span class="p">]</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="nl">isEqualTo:</span><span class="n">prefix</span><span class="p">];</span>
+</div><div class='line'><span class="p">}</span>
+</div><div class='line'><span class="k">@end</span>
+</div></code></pre></td></tr></table></div></figure></div>
 
 
 <p>[box type=&#8221;info&#8221;]Notice the naming of the filename &amp; the category name. Most people use the + syntax to denote a category on the class they&#8217;re adding on to. The prefix is also important. If you just name your category &#8220;Additions&#8221; then it&#8217;s possible that other libraries you include (or future versions of the SDK) could have the same name, leading to a collision. The common practice is to utilize a company prefix on classes that could be reused by others or that could cause collisions in the future.[/box]
 Now that I have that implemented, all I have to do is include my header file anywhere I want to use this method. You can even do this in a global header file.</p>
 
-<div><figure role=code><figcaption><span>lang:objc </span></figcaption>
-<div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
-</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>#import "NSString+FLUXAdditions.h"</div></code></pre></td></tr></table></div></figure></div>
+<div><figure role=code> <div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+</pre></td><td class='code' width='100%'><pre><code class='objc'><div class='line'><span class="cp">#import &quot;NSString+FLUXAdditions.h&quot;</span>
+</div></code></pre></td></tr></table></div></figure></div>
 
 
 
 
-<div><figure role=code><figcaption><span>lang:objc </span></figcaption>
-<div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+<div><figure role=code> <div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
 <span class='line'>2</span>
-</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>[@"My awesome string" startsWith:@"My"];  //returns YES
-</div><div class='line'>[@"My awesome string" startsWith:@"Foo"]; //returns NO;</div></code></pre></td></tr></table></div></figure></div>
+</pre></td><td class='code' width='100%'><pre><code class='objc'><div class='line'><span class="p">[</span><span class="s">@&quot;My awesome string&quot;</span> <span class="nl">startsWith:</span><span class="s">@&quot;My&quot;</span><span class="p">];</span>  <span class="c1">//returns YES</span>
+</div><div class='line'><span class="p">[</span><span class="s">@&quot;My awesome string&quot;</span> <span class="nl">startsWith:</span><span class="s">@&quot;Foo&quot;</span><span class="p">];</span> <span class="c1">//returns NO;</span>
+</div></code></pre></td></tr></table></div></figure></div>
 
 
 <p>So now that we understand how categories work, how can we utilize this to solve our original problem?</p>
@@ -248,13 +248,13 @@ Now that I have that implemented, all I have to do is include my header file any
 
 <p><em>MyTableViewController.m</em></p>
 
-<div><figure role=code><figcaption><span>lang:objc </span></figcaption>
-<div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+<div><figure role=code> <div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
 <span class='line'>2</span>
 <span class='line'>3</span>
-</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>@interface MyTableViewController ()
-</div><div class='line'>@property (nonatomic, retain) NSArray *items;
-</div><div class='line'>@end@implementation MyTableViewController@synthesize items;...@end</div></code></pre></td></tr></table></div></figure></div>
+</pre></td><td class='code' width='100%'><pre><code class='objc'><div class='line'><span class="k">@interface</span> <span class="nc">MyTableViewController</span> <span class="p">()</span>
+</div><div class='line'><span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">retain</span><span class="p">)</span> <span class="n">NSArray</span> <span class="o">*</span><span class="n">items</span><span class="p">;</span>
+</div><div class='line'><span class="k">@end@implementation</span> <span class="nc">MyTableViewController</span><span class="k">@synthesize</span> <span class="n">items</span><span class="p">;...</span><span class="k">@end</span>
+</div></code></pre></td></tr></table></div></figure></div>
 
 
 <p>Notice how we declared the category interface directly the implementation file. This works because the .m file will only be loaded once, and since it&#8217;s inside the .m file, no other classes will ever know it existed. We can remove the property declaration from the header file and everything should work the same.</p>
@@ -268,7 +268,7 @@ Now that I have that implemented, all I have to do is include my header file any
 
 <p>Unfortunately Xcode4 wasn&#8217;t very smart about telling me what was wrong, instead giving me conflicting error messages:</p>
 
-<p><a href="http://flux88.com/wp-content/uploads/2011/04/xcode4-private-category-error.png"><img src="/images/xcode4-private-category-error-tm_.jpg"  height="124"  /></a></p>
+<p><a href="http://flux88.com/wp-content/uploads/2011/04/xcode4-private-category-error.png"><img src="/images/xcode4-private-category-error-tm.jpg"  height="124"  /></a></p>
 
 <p>This <a href="http://stackoverflow.com/questions/1052233/iphone-obj-c-anonymous-category-or-private-category/1055213#1055213" target="_blank">stack overflow answer</a> helped explain the difference between the two styles.</p>
 

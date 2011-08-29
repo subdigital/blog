@@ -173,13 +173,13 @@
 <p>Running this migration is done like so:</p>
 
 
-<p><img src="/images/rikmigrations_2Dcmd_2Dline_small_.jpg" alt="Rikmigrations-cmd-line"  border="0" /></p>
+<p><img src="/images/rikmigrations_2Dcmd_2Dline_small.jpg" alt="Rikmigrations-cmd-line"  border="0" /></p>
 
 
 <p>Question:&nbsp; How did it know which migrations to run?&nbsp; Answer:&nbsp; They created a table to keep track of it for you…</p>
 
 
-<p><img src="/images/rik_2Dmigrations_2Dmodule_2Dversions_small_.jpg" alt="Rik-migrations-module-versions"  border="0" /></p>
+<p><img src="/images/rik_2Dmigrations_2Dmodule_2Dversions_small.jpg" alt="Rik-migrations-module-versions"  border="0" /></p>
 
 
 <p>The cool thing about RikMigrations is you can have versions of different modules, which could really help if you have unrelated areas of the application that each need their own version.&nbsp; My current project could use something like this to separate unrelated application schemas, while maintaing only a single migration process.</p>
@@ -194,19 +194,19 @@
 <p>Here an example of what this looks like:</p>
 
 
-<p><img src="/images/tarantino_2Dscripts_small_.jpg" alt="Tarantino-scripts"  border="0" /></p>
+<p><img src="/images/tarantino_2Dscripts_small.jpg" alt="Tarantino-scripts"  border="0" /></p>
 
 
 <p>And these files are run using a NAnt task…</p>
 
 
-<p><img src="/images/tarantino_2Dnant_2Dtask_small_.jpg" alt="Tarantino-nant-task"  border="0" /></p>
+<p><img src="/images/tarantino_2Dnant_2Dtask_small.jpg" alt="Tarantino-nant-task"  border="0" /></p>
 
 
 <p>Running this task gives output similar to this:</p>
 
 
-<p><img src="/images/tarantino_2Dcmd_2Dline_small_.jpg" alt="Tarantino-cmd-line"  border="0" /></p>
+<p><img src="/images/tarantino_2Dcmd_2Dline_small.jpg" alt="Tarantino-cmd-line"  border="0" /></p>
 
 
 <p>You can see that it – like RikMigrations – knew that it had already exceuted Versi
@@ -237,7 +237,7 @@ on 1 of the database schema, so it could safely skip the script.&nbsp; This is d
 <p>The API for Migrator.NET isn’t as fluent as RikMigrations, but it did have builtin schema support for SQL Server 2005, which I needed.&nbsp; The Attribute on the class also seemed a lot cleaner than the assembly attribute in RikMigrations.</p>
 
 
-<p><img src="/images/migratordotnet_2Dsyntax_.png" alt="Migratordotnet-syntax"  border="0" /></p>
+<p><img src="/images/migratordotnet_2Dsyntax.png" alt="Migratordotnet-syntax"  border="0" /></p>
 
 
 <p>Running the migrations was easy as well with the Migrator.Console.exe command line utility.&nbsp; The output is nothing new, so I’ll spare you the screenshot.</p>

@@ -162,7 +162,7 @@ color: blue">identity</SPAN>&#8221;<span style="COLOR: blue"> /&gt;</span></p><p
 <p>Some of the remaining things on the list involve querying, so we&rsquo;ll create a class to assist in that.&nbsp; Listed below is the overview of a class called <strong>Repository.</strong>&nbsp;&nbsp; </p>
 
 
-<p><img src="/images/CropperCapture%5B5%5D_small_.jpg" alt="CropperCapture[5]"  border="0"  /></p>
+<p><img src="/images/CropperCapture%5B5%5D_small.jpg" alt="CropperCapture[5]"  border="0"  /></p>
 
 
 <p>Repository takes advantage of generics to avoid a lot of duplicate code.&nbsp; This is a quick implementation of the Repository pattern, you&rsquo;ll find more in-depth implementations in Ayende Rahien&rsquo;s <a href="http://wiki.ayende.com/wiki/index.php?title=Rhino.Commons" target="_blank">Rhino Commons</a>&nbsp;and Dave Donaldson&rsquo;s <a href="http://www.arcware.net/archive/2006/11/09/Sample-Usage-of-NHibernateRepository.aspx" target="_blank">NHibernate Repository</a>.&nbsp; The main point here is that we can abstract 90% of NHibernates functionality in an easy to use class.&nbsp; If we need to do something complex, we can either expose some more methods here, or we can expose the session to the rest of your project.&nbsp; This is a design choice that is really up to you.&nbsp; I generally choose to hide NHibernate from UI developers, especially junior developers.</p>
@@ -211,7 +211,7 @@ e="COLOR: blue">new</span> <span style="COLOR: teal">ApplicationException</span>
 <div style="FONT-SIZE: 9pt; BACKGROUND: white; COLOR: black; FONT-FAMILY: Consolas"><p style="MARGIN: 0px"><span style="COLOR: blue">public</span> <span style="COLOR: blue">override</span> <span style="COLOR: blue">bool</span> CanRentFor(<span style="COLOR: teal">Customer</span> customer)</p><p style="MARGIN: 0px">{</p><p style="MARGIN: 0px">&nbsp; &nbsp; <span style="COLOR: blue">return</span> _gameTitle.Rating &lt;= customer.RentalRestriction;</p><p style="MARGIN: 0px">}</p></div>
 
 
-<p><img src="/images/CropperCapture%5B6%5D_small_.jpg" alt="unit test results"  border="1"  /></p>
+<p><img src="/images/CropperCapture%5B6%5D_small.jpg" alt="unit test results"  border="1"  /></p>
 
 
 <p>For another Item we might create, say <strong>Console</strong>, we can&nbsp;choose to accept the default behavior or write our own.&nbsp; This will ensure that certain customers do not rent items that they are not allowed to rent.</p>

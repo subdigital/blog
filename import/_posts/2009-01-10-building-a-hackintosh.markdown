@@ -6,9 +6,9 @@ comments: true
 link: false
 ---
 <p>I'm writing this post on my new hackintosh - that is - OS X Leopard running on PC hardware. So far the system is pretty stable and I'm liking it a lot.</p>
-<p><img src="/images/IMG_0734_.jpg"  alt="IMG_0734.JPG"  /></p>
+<p><img src="/images/IMG_0734.jpg"  alt="IMG_0734.JPG"  /></p>
 <p><br />
-<img src="/images/leopard_.png"  alt="osx desktop"  /></p>
+<img src="/images/leopard.png"  alt="osx desktop"  /></p>
 <p>Running OS X on PC hardware isn't always easy, I just happened to have the lucky mix of hardware that pretty much just works. The motherboard is the most critical determining factor.</p>
 <h2>My hardware</h2>
 <ul>
@@ -39,9 +39,9 @@ You can get this at an Apple store, ebay, craigslist, or the usual places. I fou
 <p>Once you're in, you can continue to boot to this install using the boot DVD. I was unable to get any bootloaders to work. This utility install will be helpful to fix any problems that arise from tinkering with the main OS.</p>
 <p>From there, I followed this guide which provided me with most of what I needed to get the retail DVD installed, update to 10.5.6, run the postpatch.sh script and reboot. Then I ran the EFI hack which allows you to boot directly into OS X. At this point I set the USB drive to be first priority and viola! Leopard booted.</p>
 <h2>Getting 3D Graphics working</h2>
-<p>Upon booting the first time the graphics were sluggish and it could only run at 10204x768. There are a number of posts on the topic of video drivers, the problem is some of them are dated. NVinject worked for my 10.5.2 Kalyway install, but did not work for the 10.5.6 retail. Instead I had to use EFI Studio (found in the v4.4 package from earlier) and selected the 8600 GT 512 MB item.<img src="/images/efistudio_.png"  alt="efistudio.png"  /></p>
+<p>Upon booting the first time the graphics were sluggish and it could only run at 10204x768. There are a number of posts on the topic of video drivers, the problem is some of them are dated. NVinject worked for my 10.5.2 Kalyway install, but did not work for the 10.5.6 retail. Instead I had to use EFI Studio (found in the v4.4 package from earlier) and selected the 8600 GT 512 MB item.<img src="/images/efistudio.png"  alt="efistudio.png"  /></p>
 <p>Then I clicked "Add Device" which brought up this window:</p>
-<p><img src="/images/efistudio2_.png"  alt="efistudio2.png"  /></p>
+<p><img src="/images/efistudio2.png"  alt="efistudio2.png"  /></p>
 <p>Then click "write to com.apple.Boot.plist", reboot and you're good! To get sound working I had to install the <a href="http://forum.insanelymac.com/index.php?act=attach&#38;type=post&#38;id=20698">ALC888 kext</a>.</p>
 <h2>Installing kexts</h2>
 <p>Installing kexts is basically copying a file to /System/Library/Extensions, fixing up the permissions on the file(s) with</p>
@@ -56,9 +56,9 @@ sudo rm -R /System/Library/Extensions.kextcache<br />sudo rm -R /System/Library/
 <p>I found it easy to automate this process using <a href="http://cheetha.net/">KextHelper</a>.</p>
 <p>At this point I have a fully retail copy of 10.5.6, and I'm a "Mac Pro" in the eyes of Apple. This means (I think) that I can update to future versions with little to no tweaking!</p>
 <p><br />
-<img src="/images/about-this-mac_.png"  alt="about-this-mac.png"  /></p>
+<img src="/images/about-this-mac.png"  alt="about-this-mac.png"  /></p>
 <p><br />
-<img src="/images/about-this-mac2_.png"  alt="about-this-mac2.png"  /></p>
+<img src="/images/about-this-mac2.png"  alt="about-this-mac2.png"  /></p>
 <p>If I were to build a Mac Pro from apple.com with these specs, <strong>it would cost near $3000!</strong></p>
 <h2>Things still to figure out</h2>
 <p>My Microsoft Lifecam v1000 doesn't quite work. I got it to work in iChat for a few minutes, but doesn't work in Photobooth or Skype. This is a minor setback, as I can just buy a supported one.</p>

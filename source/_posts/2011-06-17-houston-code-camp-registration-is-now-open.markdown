@@ -6,7 +6,7 @@ comments: true
 link: false
 ---
 <h2>Houston Code Camp 2011</h2>
-<h3>August 20th, 2011</h3><img src="/images/logo_____.jpg" style="float:right; margin: 25px;"   />
+<h3>August 20th, 2011</h3><img src="/images/logo__.jpg" style="float:right; margin: 25px;"   />
 <p>Houston Code Camp is a free day of sessions relating to software development. The event is free to attend, but registration is required.</p>
 <p>A Code Camp follows these rules:</p>
 <ul>

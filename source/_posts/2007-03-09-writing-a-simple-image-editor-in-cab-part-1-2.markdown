@@ -18,7 +18,7 @@ link: false
 </ul>
 <p>First you need to delete the files&nbsp;that Visual Studio gives you out of the box.&nbsp; We will start from scratch.</p>
 <p>Create a new Form called <strong>ImageEditorShell.cs</strong>.&nbsp; Give it a window title if you like.</p>
-<p><img src="/images/CropperCapture%5B41%5D_small___.jpg" border="1"   /></p>
+<p><img src="/images/CropperCapture%5B41%5D_small_.jpg" border="1"   /></p>
 <p>Create a new class called <strong>ImageEditorApplication.cs</strong>.&nbsp; This will be the entry point for our application.&nbsp; We need to inherit the class from <strong>FormShellApplication&lt;T,K></strong> and give it the type of the root work item and our shell.</p>
 <div style="FONT-SIZE: 8pt; BACKGROUND: white; COLOR: black; FONT-FAMILY: Consolas">
 <p style="MARGIN: 0px"><span style="COLOR: blue">using</span> System;</p>

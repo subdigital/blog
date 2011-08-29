@@ -8,7 +8,7 @@ include REXML
 class WordpressImporter
   attr_reader :test_mode
 
-  def initialize(file_path, test_mode)
+  def initialize(file_path, test_mode = false)
     puts "Initializing with #{file_path}"
     @doc = Document.new File.new(file_path)
     @test_mode = test_mode
@@ -81,6 +81,7 @@ class WordpressImporter
       parts[-2] = parts[-2] << "_"
      filename = parts.join(".")
     end
+
     "_images/#{filename}"
   end
 
@@ -118,6 +119,7 @@ class WordpressImporter
         new_path = fetch_image(url)
         unless new_path.nil?
           new_url = new_path.gsub(/^_/, '/')
+          puts "Correcting image with new url: #{new_url}" and exit(1)
           attribs = "#{before_attributes} #{after_attributes}"
           replacements[image_tag] = "<img src=\"#{new_url}\" #{attribs} />"
         end

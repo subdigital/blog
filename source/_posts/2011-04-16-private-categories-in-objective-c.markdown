@@ -79,7 +79,7 @@ One thing that tripped me up is the name of the private category. When first doi
 
 Unfortunately Xcode4 wasn't very smart about telling me what was wrong, instead giving me conflicting error messages:
 
-<a href="http://flux88.com/wp-content/uploads/2011/04/xcode4-private-category-error.png"><img src="/images/xcode4-private-category-error-tm_.jpg"  height="124"  /></a>
+<a href="http://flux88.com/wp-content/uploads/2011/04/xcode4-private-category-error.png"><img src="/images/xcode4-private-category-error-tm.jpg"  height="124"  /></a>
 
 This <a href="http://stackoverflow.com/questions/1052233/iphone-obj-c-anonymous-category-or-private-category/1055213#1055213" target="_blank">stack overflow answer</a> helped explain the difference between the two styles.
 

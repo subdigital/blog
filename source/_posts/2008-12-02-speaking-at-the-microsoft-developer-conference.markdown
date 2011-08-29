@@ -5,7 +5,7 @@ date: 2008-12-2
 comments: true
 link: false
 ---
-<p><a href="http://www.msdndevcon.com"><img src="/images/clip_image001_3_.gif" border="0"  title="clip_image001"  /></a></p>
+<p><a href="http://www.msdndevcon.com"><img src="/images/clip_image001_3.gif" border="0"  title="clip_image001"  /></a></p>
 <h5>I'll be speaking at the upcoming <a href="http://www.msdndevcon.com">MSDN Developer Conference</a> in Houston (on December 9th) and in Dallas (January 26th).&nbsp; The topics will be similar to what was covered at the PDC this year, so if you weren't able to attend, be sure to check this out.</h5>
 <p>It's just $99 and there'll be some cool prizes for attendees.</p>
 <p><a href="http://www.msdndevcon.com/Pages/sessions.aspx">Check out the session line up</a>&hellip;</p>

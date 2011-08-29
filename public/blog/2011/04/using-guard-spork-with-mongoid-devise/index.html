@@ -193,8 +193,7 @@ You might be saying, <em>&#8220;What the hell are all these gems for?!?!&#8221;<
 
 
 
-<div><figure role=code><figcaption><span>lang:ruby </span></figcaption>
-<div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+<div><figure role=code> <div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
 <span class='line'>2</span>
 <span class='line'>3</span>
 <span class='line'>4</span>
@@ -202,14 +201,15 @@ You might be saying, <em>&#8220;What the hell are all these gems for?!?!&#8221;<
 <span class='line'>6</span>
 <span class='line'>7</span>
 <span class='line'>8</span>
-</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>Spork.prefork do&lt;br />  ENV["RAILS_ENV"] ||= 'test'&lt;br />&lt;br />
-</div><div class='line'>  require 'rails/mongoid'
-</div><div class='line'>  Spork.trap_class_method(Rails::Mongoid, :load_models)
+</pre></td><td class='code' width='100%'><pre><code class='ruby'><div class='line'><span class="no">Spork</span><span class="o">.</span><span class="n">prefork</span> <span class="k">do</span><span class="o">&lt;</span><span class="n">br</span><span class="sr"> /&gt;  ENV[&quot;RAILS_ENV&quot;] ||= &#39;test&#39;&lt;br /</span><span class="o">&gt;&lt;</span><span class="n">br</span><span class="sr"> /&gt;</span>
+</div><div class='line'><span class="sr">  require &#39;rails/mon</span><span class="n">goid</span><span class="s1">&#39;</span>
+</div><div class='line'><span class="s1">  Spork.trap_class_method(Rails::Mongoid, :load_models)</span>
 </div><div class='line'>
-</div><div class='line'>  # Now load our environment
-</div><div class='line'>  require File.expand_path("../../config/environment", __FILE__)
-</div><div class='line'>  require 'rspec/rails' 
-</div><div class='line'>  ...</div></code></pre></td></tr></table></div></figure></div>
+</div><div class='line'><span class="s1">  # Now load our environment</span>
+</div><div class='line'><span class="s1">  require File.expand_path(&quot;../../config/environment&quot;, __FILE__)</span>
+</div><div class='line'><span class="s1">  require &#39;</span><span class="n">rspec</span><span class="o">/</span><span class="n">rails</span><span class="err">&#39;</span>
+</div><div class='line'>  <span class="o">.</span><span class="n">.</span><span class="o">.</span>
+</div></code></pre></td></tr></table></div></figure></div>
 
 
 

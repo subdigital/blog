@@ -131,7 +131,7 @@
 <p>If you look at this dll in reflector, you get something like this:</p>
 
 
-<p><img src="/images/reflector1_.png" alt="Reflector1"  border="0"  /></p>
+<p><img src="/images/reflector1.png" alt="Reflector1"  border="0"  /></p>
 
 
 <p><em>As a side-note, If you haven&rsquo;t ever tried doing this before then you should know that you have to reference the compiled user control classes from the ASP namespace in your pages&hellip; so in this example &lt;cc1:keywordgrid_ascx /&gt; rather than &lt;cc1:KeywordGrid /&gt;.</em></p>
@@ -140,7 +140,7 @@
 <p>This first control worked just fine.&nbsp; It was basically a custom GridView control.&nbsp; Then I added that next control, SelectKeywords.&nbsp; Adding it caused the assembly to crash upon loading, i.e. even when we weren&#8217;t using SelectKeywords it was crashing pages that used KeywordGrid.&nbsp; The error:</p>
 
 
-<p><img src="/images/error1_.png" alt="Error1"  border="0"  /></p>
+<p><img src="/images/error1.png" alt="Error1"  border="0"  /></p>
 
 
 <p>This happened in the constructor of any control in the assembly.&nbsp; Digging a little deeper into the error, I found that this happens when your user control has literal content in it that gets embedded as a Win32 resource file during precompilation.</p>
@@ -149,25 +149,25 @@
 <p>In reflector, this is what it looked like:</p>
 
 
-<p><a href="http://www.flux88.com/uploads/reflector2.png"><img src="/images/reflector2_thumb_.jpg" alt="Reflector2"  border="0"  /></a></p>
+<p><a href="http://www.flux88.com/uploads/reflector2.png"><img src="/images/reflector2_thumb.jpg" alt="Reflector2"  border="0"  /></a></p>
 
 
 <p>When building the control tree, the compiler was embedding literal content as a resource.&nbsp; To try and fix the issue, I started removing literal content.&nbsp; Bit-by-bit I removed some HTML until the error went away.&nbsp; This is what reflector looked like when it was working:</p>
 
 
-<p><a href="http://www.flux88.com/uploads/reflector3.png"><img src="/images/reflector3_thumb_.jpg" alt="Reflector3"  border="0"  /></a></p>
+<p><a href="http://www.flux88.com/uploads/reflector3.png"><img src="/images/reflector3_thumb.jpg" alt="Reflector3"  border="0"  /></a></p>
 
 
 <p>But where is this resource file?&nbsp; Clearly the assembly is referencing <em>some resource file</em> somewhere, right?&nbsp; I peeked into Temporary ASP.NET Files to find the answer.</p>
 
 
-<p><img src="/images/temp_2Daspnet_2Dfiles_.png" alt="Temp-aspnet-files"  border="0"  /></p>
+<p><img src="/images/temp_2Daspnet_2Dfiles.png" alt="Temp-aspnet-files"  border="0"  /></p>
 
 
 <p>If you open this up in Notepad, you&rsquo;ll find your missing literals!</p>
 
 
-<p><img src="/images/notepad_2Dresource_.png" alt="Notepad-resource"  border="0"  /></p>
+<p><img src="/images/notepad_2Dresource.png" alt="Notepad-resource"  border="0"  /></p>
 
 
 <p>For some reason, this file wasn&rsquo;t making it into the final assembly.&nbsp; </p>

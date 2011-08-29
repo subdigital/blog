@@ -22,7 +22,7 @@ if(touch.tapCount == 1) {
 //single tap occurred
 }
 }{% endcodeblock %}
-<p>&nbsp;<a href="http://flux88.com/files/media/image/WindowsLiveWriter/DetectingataponaUITextView_8AB1/uitextview_4.png"><img src="/images/uitextview_thumb_1_.png" height="283"   /></a></p>
+<p>&nbsp;<a href="http://flux88.com/files/media/image/WindowsLiveWriter/DetectingataponaUITextView_8AB1/uitextview_4.png"><img src="/images/uitextview_thumb_1.png" height="283"   /></a></p>
 <p>I wanted to use this on a view that contained a full-screen UITextView.&nbsp;</p>
 <p>Unfortunately, as of the iPhone SDK 3.0, UITextView swallows this event completely.&nbsp; I imagine because of the new feature where you can select text to copy &amp; paste.&nbsp; You can get touchesBegan, touchesMoved, and touchesCancelled, but no touchesEnded.&nbsp; (In fact, the touch actually gets cancelled by the UITextView).&nbsp; Even by subclassing UITextView I could not get this event.</p>
 <p>Luckily I found a work-around.&nbsp; It&rsquo;s not exactly pretty, but it works for me.</p>

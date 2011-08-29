@@ -30,6 +30,6 @@ for file in `find . -name "*.h"`; do cp $file "$BUILD_DIR/current/headers/"; don
 {% endcodeblock %}<br />
 to the more explicit, and more Xcode 4 friendly:<br />
 <br />
-<img src="/images/Xcode4_.png"  alt="Xcode.png"  /><br />
+<img src="/images/Xcode4.png"  alt="Xcode.png"  /><br />
 As soon as I did that, my code lit up like a Christmas tree! Symbols were recognized, code was highlighted, and best of all... code completion resumed.<br />
 Here's to hoping the Xcode 4 continues to be improved. In the meantime, hope this fix saves you the headache I've been having.

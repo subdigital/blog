@@ -5,7 +5,7 @@ date: 2011-4-13
 comments: true
 link: false
 ---
-<img src="/images/capa_crafting_.png"  style="float:left; margin-right:10px; margin-bottom:10px;"  />
+<img src="/images/capa_crafting.png"  style="float:left; margin-right:10px; margin-bottom:10px;"  />
 
 <p>I just finished with <a href="http://www.amazon.com/gp/product/1934356735/ref=as_li_ss_tl?ie=UTF8&amp;tag=flux88com-20&amp;linkCode=as2&amp;camp=1789&amp;creative=390957&amp;creativeASIN=1934356735">Crafting Rails Applications</a><img src="http://www.assoc-amazon.com/e/ir?t=&amp;l=as2&amp;o=1&amp;a=1934356735" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" /> by <a href="http://blog.plataformatec.com.br/author/josevalim/">José Valim</a>. The book claims to teach Expert Practices for Everyday Rails Development. I didn't find it to be exactly that, however I did enjoy it and I learned a ton.</p>
 <h2>The Good</h2>The book flows pretty well. Each chapter contains a challenge or set of related challenges and it's pretty easy to follow along with the code. Each example contains automated tests, and he creates a gem for almost each solution, so that it is easy to see how to modularize things.<br />

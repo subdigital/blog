@@ -6,7 +6,7 @@ comments: true
 link: false
 ---
 <p><br />
-<img src="/images/zen-garden_.jpg"  style="float:left; margin-right:10px; margin-bottom:10px;"  /> I'm proud to announce that I'm organizing a Houston ALT.NET Open Spaces conference April 3rd - 5th, 2009. The open space will be facilitated by <a href="http://www.stevenlist.com/">Doc List</a>.</p>
+<img src="/images/zen-garden.jpg"  style="float:left; margin-right:10px; margin-bottom:10px;"  /> I'm proud to announce that I'm organizing a Houston ALT.NET Open Spaces conference April 3rd - 5th, 2009. The open space will be facilitated by <a href="http://www.stevenlist.com/">Doc List</a>.</p>
 <p>You can take a look at the <a href="http://houston.altnetconf.com/home">conference website</a>&nbsp;&nbsp;to see more details, and I'll open registration soon. I'm not entirely sure about the cap on attendance yet, but I'm probably going to limit it to 70-80 to keep costs down.</p>
 <p>The event will be held at the Microsoft offices in west Houston, and will be in the style of past ALT.NET conferences:</p>
 <ul>

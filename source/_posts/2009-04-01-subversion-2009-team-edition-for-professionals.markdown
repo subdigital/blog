@@ -5,7 +5,7 @@ date: 2009-4-1
 comments: true
 link: false
 ---
-<p><img src="/images/turtle-dragon_.gif" alt="new SVN logo"  style="margin: 0pt 0pt 10px 10px; float: right;"  /></p>
+<p><img src="/images/turtle-dragon.gif" alt="new SVN logo"  style="margin: 0pt 0pt 10px 10px; float: right;"  /></p>
 <p>Today I was on a conference call with an internal Microsoft contact (who I shall not name to protect his livelihood).  Subversion, the popular open source-control client, will announce next week that they are partnering with Microsoft to create an OSS friendly source control provider that leverages many of the benefits of TFS internally.</p>
 <p><cite>&quot;It really makes sense for us.  Microsoft's Team Foundation Source control integrates deeply into the IDE, the only editor that developers need.&quot; </cite> -- a Subversion core developer commented</p>
 <p>One of the higher-ups that helped finalize the deal was overheard saying, &quot;I think this will finally put a nail in the coffin of other source control systems to create one system to rule them all!&quot;</p>

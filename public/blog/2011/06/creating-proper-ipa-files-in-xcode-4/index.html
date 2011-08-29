@@ -123,7 +123,7 @@
 
 
 <p><br />
-<img src="/images/Xcode3_.png"  alt="Xcode.png"  /></p>
+<img src="/images/Xcode3.png"  alt="Xcode.png"  /></p>
 
 
 <p>With the errors <i><b>No Packager exists for the type of archive</b></i> and <i><b>This kind of archive cannot be signed</b></i>.</p>
@@ -136,7 +136,7 @@
 
 
 <p><br />
-<img src="/images/Xcode2_.png"  alt="Xcode.png"  /></p>
+<img src="/images/Xcode2.png"  alt="Xcode.png"  /></p>
 
 
 <p>If you right-click on this build, and select &#8220;Reveal in Finder&#8221; you&#8217;ll see the files are .xcarchive files. Right click on that and select &#8220;Show Package Contents&#8221; to see what I&#8217;m talking about. If you see a usr/lib/mystaticlibary.a file, then read on for the fix.</p>
@@ -145,14 +145,14 @@
 <p>You need to tell Xcode 4 <b>not</b> to &#8220;install&#8221; the static libraries. For each of the static library targets, select them in Xcode 4, and under Build Settings, search for &#8220;Skip Install&#8221;. Set that flag to YES. I had to do this to both of the static libraries I include in my project.</p>
 
 
-<p><img src="/images/Xcode1_.png"  alt="Xcode1.png"  /></p>
+<p><img src="/images/Xcode1.png"  alt="Xcode1.png"  /></p>
 
 
 <p>Once that&#8217;s done, your app should show a normal icon again &amp; have the ability to export to IPA just like before. Yay!</p>
 
 
 <p><br />
-<img src="/images/Xcode_.png"  alt="Xcode.png"  /></p>
+<img src="/images/Xcode.png"  alt="Xcode.png"  /></p>
 
 
 <p>Huge thanks to <a href="http://stackoverflow.com/questions/5265292/xcode-4-create-ipa-file-instead-of-xcarchive">this stackoverflow question</a> for pointing me in the right direction.</p>

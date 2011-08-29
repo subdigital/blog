@@ -134,13 +134,13 @@
 <p>The first control we&#8217;ll examine is the &lt;asp:TextBox /&gt;. It renders as an &lt;input /&gt; HTML element. It requires a &lt;form runat=&#8221;server&#8221;&gt; tag to function, and will be given a generated ID, again which is what we&#8217;re trying to avoid here! Since it is a form field, and the form is required to be runat=&#8221;server&#8221;, it is crippled in its function. Figure 8.1 shows it in action, while Listing 8.1 shows the resulting HTML.</p>
 
 
-<p><img src="/images/figure8_1_.png" alt="figure8_1"  border="0"  />&#160; <br /><strong>Figure 8.1 - The TextBox renders correctly</strong></p>
+<p><img src="/images/figure8_1.png" alt="figure8_1"  border="0"  />&#160; <br /><strong>Figure 8.1 - The TextBox renders correctly</strong></p>
 
 
 <p><strong>Listing 8.2 - The resulting HTML for the TextBox is less than desirable</strong> </p>
 
 
-<p><img src="/images/figure8_2_.png" alt="figure8_2"  border="0"  /> </p>
+<p><img src="/images/figure8_2.png" alt="figure8_2"  border="0"  /> </p>
 
 
 <p>We can see here that the rendered HTML contains a lot of things that we didn&#8217;t ask for. In addition, notice that the form tag has an action attribute that we didn&#8217;t specify. This will prevent the form from submitting to an action that we request. Since a textbox in ASP.NET MVC is as simple as &lt;%= Html.TextBox(&#8220;name&#8221;) %&gt;, the TextBox server control offers no functionality - only baggage - for your ASP.NET MVC views.</p>
@@ -152,13 +152,13 @@
 <p>We can see from our simple text box example that most ASP.NET WebForms input controls have little to offer. However, some of the controls have very functional rendered output. An excellent example is the &lt;asp:Menu /&gt; control. It doesn&#8217;t require or generate any post-backs and it doesn&#8217;t require view state. It simply renders HTML and JavaScript to allow elements to expand and hide on mouse events. Leaving aside that the &lt;asp:Menu /&gt; renders a nasty pile of HTML tables to display properly, it&#8217;s purely a client rendered control, and it works just fine in ASP.NET MVC. Luckily we can fix the poor markup with ASP.NET Control Adapters, which also function in ASP.NET MVC. Figure 8.3 demonstrates the menu control.</p>
 
 
-<p><img src="/images/figure8_3_.png" alt="figure8_3"  border="0"  /> </p>
+<p><img src="/images/figure8_3.png" alt="figure8_3"  border="0"  /> </p>
 
 
 <p><strong>Figure 8.3 - The menu control renders, unfortunately the links require post-backs. More surgery is needed to make it function.</strong></p>
 
 
-<p><img src="/images/figure8_4_.png" alt="figure8_4"  border="0"  /> </p>
+<p><img src="/images/figure8_4.png" alt="figure8_4"  border="0"  /> </p>
 
 
 <p><strong>Figure 8.4 - The horrific markup that is rendered by the Menu control. Stay tuned for a better way.</strong></p>
@@ -199,7 +199,7 @@
 <p>You also have the option of using the DataSource controls such as ObjectDataSource, SqlDataSource, and XmlDataSource. Of course, in doing this you&#8217;ve completely circumvented the MVC pattern and placed all of your data access directly in the view!</p>
 
 
-<p><img src="/images/figure8_5_.png" alt="figure8_5"  border="0"  /> </p>
+<p><img src="/images/figure8_5.png" alt="figure8_5"  border="0"  /> </p>
 
 
 <p><strong>Figure 8.5 - The GridView ren
