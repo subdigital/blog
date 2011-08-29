@@ -15,7 +15,7 @@ You can utilize the $(SOURCE_ROOT) build variable to construct a dynamic path re
 This step might be all you need, but in my case I needed to follow the next step as well...<br />
 <h2>Step 2: Remove the need for recursive searches</h2>I have two subprojects, each of which symlink their build output to a build/current folder. This makes it easy to add a non-recursive library search path reference for similar reasons. I also want to copy headers into this folder so there's always a deterministic location to find the headers, regardless of the platform &amp; configuration we're building for.<br />
 So I added a Run Script build phase to do this work for me:<br />
-{% codeblock lang:shell %}
+{% codeblock %}
 # Symlink build output to a common directory for easy referencing in other projects
 rm -rf "$BUILD_DIR/current"
 ln -s "$BUILT_PRODUCTS_DIR" "$BUILD_DIR/current"
