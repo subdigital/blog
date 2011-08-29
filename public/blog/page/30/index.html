@@ -100,7 +100,7 @@
     
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2006/09/a-journey-with-domain-driven-design-and-nhibernate-part-6/">A Journey With Domain Driven Design (and NHibernate) - Part 6</a></h1>
+      <h1 class="entry-title"><a href="/2006/09/a-journey-with-domain-driven-design-and-nhibernate-part-6/">A Journey With Domain Driven Design (and NHibernate) - Part 6</a></h1>
     
     
       <p class="meta">
@@ -154,7 +154,7 @@ nbsp;</p><p style="margin: 0px;">&nbsp; &nbsp; <span style="color: blue;">try</s
 gin: -moz-initial; -moz-background-inline-policy: -moz-initial; color: black; font-family: Consolas;"><p style="margin: 0px;">[<span style="color: teal;">Test</span>]</p><p style="margin: 0px;"><span style="color: blue;">public</span> <span style="color: blue;">void</span> CanSavePerson()</p><p style="margin: 0px;">{</p><p style="margin: 0px;">&nbsp; &nbsp; <span style="color: blue;">using</span> (<span style="color: teal;">ISession</span> session = <span style="color: teal;">SessionSource</span>.Current.GetSession())</p><p style="margin: 0px;">&nbsp; &nbsp; {</p><p style="margin: 0px;">&nbsp; &nbsp; &nbsp; &nbsp; <span style="color: blue;">using</span> (<span style="color: teal;">ITransaction</span> tx = session.BeginTransaction())</p><p style="margin: 0px;">&nbsp; &nbsp; &nbsp; &nbsp; {</p><p style="margin: 0px;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span style="color: green;">//create a person</span></p><p style="margin: 0px;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span style="color: teal;">Person</span> p = <span style="color: blue;">new</span> <span style="color: teal;">Person</span>(<span style="color: maroon;">&#8220;Bruce&#8221;</span>, <span style="color: maroon;">&#8220;Wayne&#8221;</span>);</p><p style="margin: 0px;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; p.DateOfBirth = <span style="color: blue;">new</span> <span style="color: teal;">DateTime</span>(1972, 6, 2);</p><p style="margin: 0px;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; p.HomePhone = <span style="color: maroon;">&#8220;12345678&#8221;</span>;</p><p style="margin: 0px;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; p.AltPhone = <span style="color: maroon;">&#8220;987675123&#8221;</span>;</p><p style="margin: 0px;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; p.Address.Line1 = <span style="color: maroon;">&#8220;123 Bruce Manor&#8221;</span>;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </p><p style="margin: 0px;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; p.Address.State = <span style="color: maroon;">&#8220;GT&#8221;</span>;</p><p style="margin: 0px;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; p.Address.City = <span style="color: maroon;">&#8220;Gotham&#8221;</span>;</p><p style="margin: 0px;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; p.Address.Zip = <span style="color: maroon;">&#8220;99999&#8221;</span>;</p><p style="margin: 0px;">&nbsp;</p><p style="margin: 0px;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span style="color: green;">//save the person</span></p><p style="margin: 0px;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; session.Save(p);</p><p style="margin: 0px;">&nbsp;</p><p style="margin: 0px;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span style="color: teal;">Assert</span>.IsTrue(p.Id != 0, <span style="color: maroon;">&#8220;Save should give p it&#8217;s primary key&#8221;</span>);</p><p style="margin: 0px;">&nbsp;</p><p style="margin: 0px;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span style="color: teal;">Person</span> pVerify = (<span style="color: teal;">Person</span>)session.Load(<span style="color: blue;">typeof</span>(<span style="color: teal;">Person</span>), p.Id);</p><p style="margin: 0px;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span style="color: teal;">Assert</span>.AreEqual(p, pVerify, <span style="color: maroon;">&#8220;They weren&#8217;t the same&#8221;</span>);</p><p style="margin: 0px;">&nbsp; &nbsp; &nbsp; &nbsp; }</p><p style="margin: 0px;">&nbsp; &nbsp; }</p><p style="margin: 0px;">}</p></div><font face="Georgia" size="2"><p>Here we create a new person object, save it to the database, then call our Load method (which we know works because of the previous test (TDD Purists won’t like this, but I haven’t seen an effective way to test this quickly).&nbsp; Our Person objects (and subsequently, our Address objects) need to overrides the .Equals() method for the last assert to work.&nbsp; As Rocky Lhotka says, let’s be good .NET citizens and override these methods in each of our objects.&nbsp; Lastly, take notice that I’m using NHibernate’s transactions which get rolled back at the end of the test.&nbsp; These don’t share the baggage of TransactionScope objects in the previous test.</p><p>This time we were able to create a mapping file for the Person object.&nbsp; We learned to make sure and set it as an embedded resource so it is recognized by NHibernate.&nbsp; Finally we learned some basic mapping concepts and backed them up with tests.</p><p>Next time we’ll introdude a few more objects and learn to map the relationships with NHibernate.</p><p>As promised, here is the current&nbsp;source code.&nbsp; It contains all of the code written up to this article.&nbsp; Comments and questions are encouraged.</p><div style="margin: 5px; padding: 5px; width: 80%; background-color: aliceblue;"><p><a href="http://www.flux88.com/uploads/Videocracy_06.zip">File Attachment: Videocracy_06.zip (39 KB)</a></p></div><p>&nbsp;<em>If you want to run the tests, you’ll need the <a title="NUnit homepage" href="http://nunit.org/" target="_blank">NUnit Gui</a> or the <a title="TestDriven.NET homepage" href="http://www.testdriven.net/" target="_blank">TestDriven.NET plugin for visual studio</a>.</em></p></font></p>
 </div>
   <footer>
-    <a rel="full-article" href="/blog/2006/09/a-journey-with-domain-driven-design-and-nhibernate-part-6/">Read on &rarr;</a>
+    <a rel="full-article" href="/2006/09/a-journey-with-domain-driven-design-and-nhibernate-part-6/">Read on &rarr;</a>
   </footer>
 
 
@@ -165,7 +165,7 @@ gin: -moz-initial; -moz-background-inline-policy: -moz-initial; color: black; fo
     
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2006/08/i-got-my-coding-horror-sticker-today/">I Got My Coding Horror Sticker Today</a></h1>
+      <h1 class="entry-title"><a href="/2006/08/i-got-my-coding-horror-sticker-today/">I Got My Coding Horror Sticker Today</a></h1>
     
     
       <p class="meta">
@@ -194,7 +194,7 @@ gin: -moz-initial; -moz-background-inline-policy: -moz-initial; color: black; fo
 
 </div>
   <footer>
-    <a rel="full-article" href="/blog/2006/08/i-got-my-coding-horror-sticker-today/">Read on &rarr;</a>
+    <a rel="full-article" href="/2006/08/i-got-my-coding-horror-sticker-today/">Read on &rarr;</a>
   </footer>
 
 
@@ -205,7 +205,7 @@ gin: -moz-initial; -moz-background-inline-policy: -moz-initial; color: black; fo
     
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2006/08/a-year-gone-by/">A Year Gone By</a></h1>
+      <h1 class="entry-title"><a href="/2006/08/a-year-gone-by/">A Year Gone By</a></h1>
     
     
       <p class="meta">
@@ -240,7 +240,7 @@ gin: -moz-initial; -moz-background-inline-policy: -moz-initial; color: black; fo
 
 </div>
   <footer>
-    <a rel="full-article" href="/blog/2006/08/a-year-gone-by/">Read on &rarr;</a>
+    <a rel="full-article" href="/2006/08/a-year-gone-by/">Read on &rarr;</a>
   </footer>
 
 
@@ -251,7 +251,7 @@ gin: -moz-initial; -moz-background-inline-policy: -moz-initial; color: black; fo
     
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2006/08/the-partial-function-in-mochikit/">The Partial Function in MochiKit</a></h1>
+      <h1 class="entry-title"><a href="/2006/08/the-partial-function-in-mochikit/">The Partial Function in MochiKit</a></h1>
     
     
       <p class="meta">
@@ -301,7 +301,7 @@ gin: -moz-initial; -moz-background-inline-policy: -moz-initial; color: black; fo
 
 </div>
   <footer>
-    <a rel="full-article" href="/blog/2006/08/the-partial-function-in-mochikit/">Read on &rarr;</a>
+    <a rel="full-article" href="/2006/08/the-partial-function-in-mochikit/">Read on &rarr;</a>
   </footer>
 
 
@@ -312,7 +312,7 @@ gin: -moz-initial; -moz-background-inline-policy: -moz-initial; color: black; fo
     
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2006/08/presentation-on-next-gen-web-techniques/">Presentation on Next-Gen Web Techniques</a></h1>
+      <h1 class="entry-title"><a href="/2006/08/presentation-on-next-gen-web-techniques/">Presentation on Next-Gen Web Techniques</a></h1>
     
     
       <p class="meta">
@@ -347,7 +347,7 @@ gin: -moz-initial; -moz-background-inline-policy: -moz-initial; color: black; fo
 
 </div>
   <footer>
-    <a rel="full-article" href="/blog/2006/08/presentation-on-next-gen-web-techniques/">Read on &rarr;</a>
+    <a rel="full-article" href="/2006/08/presentation-on-next-gen-web-techniques/">Read on &rarr;</a>
   </footer>
 
 
@@ -358,7 +358,7 @@ gin: -moz-initial; -moz-background-inline-policy: -moz-initial; color: black; fo
     
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2006/08/a-journey-with-domain-driven-design-and-nhibernate-part-5/">A Journey With Domain Driven Design (and NHibernate) - Part 5</a></h1>
+      <h1 class="entry-title"><a href="/2006/08/a-journey-with-domain-driven-design-and-nhibernate-part-5/">A Journey With Domain Driven Design (and NHibernate) - Part 5</a></h1>
     
     
       <p class="meta">
@@ -497,7 +497,7 @@ gin: -moz-initial; -moz-background-inline-policy: -moz-initial; color: black; fo
 
 </div>
   <footer>
-    <a rel="full-article" href="/blog/2006/08/a-journey-with-domain-driven-design-and-nhibernate-part-5/">Read on &rarr;</a>
+    <a rel="full-article" href="/2006/08/a-journey-with-domain-driven-design-and-nhibernate-part-5/">Read on &rarr;</a>
   </footer>
 
 
@@ -508,7 +508,7 @@ gin: -moz-initial; -moz-background-inline-policy: -moz-initial; color: black; fo
     
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2006/08/newshutch-is-my-friend/">Newshutch Is My Friend</a></h1>
+      <h1 class="entry-title"><a href="/2006/08/newshutch-is-my-friend/">Newshutch Is My Friend</a></h1>
     
     
       <p class="meta">
@@ -534,7 +534,7 @@ gin: -moz-initial; -moz-background-inline-policy: -moz-initial; color: black; fo
 
 </div>
   <footer>
-    <a rel="full-article" href="/blog/2006/08/newshutch-is-my-friend/">Read on &rarr;</a>
+    <a rel="full-article" href="/2006/08/newshutch-is-my-friend/">Read on &rarr;</a>
   </footer>
 
 
@@ -545,7 +545,7 @@ gin: -moz-initial; -moz-background-inline-policy: -moz-initial; color: black; fo
     
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2006/08/making-divs-stay-next-to-each-other/">Making DIVs Stay Next to Each Other</a></h1>
+      <h1 class="entry-title"><a href="/2006/08/making-divs-stay-next-to-each-other/">Making DIVs Stay Next to Each Other</a></h1>
     
     
       <p class="meta">
@@ -607,7 +607,7 @@ gin: -moz-initial; -moz-background-inline-policy: -moz-initial; color: black; fo
 
 </div>
   <footer>
-    <a rel="full-article" href="/blog/2006/08/making-divs-stay-next-to-each-other/">Read on &rarr;</a>
+    <a rel="full-article" href="/2006/08/making-divs-stay-next-to-each-other/">Read on &rarr;</a>
   </footer>
 
 
@@ -618,7 +618,7 @@ gin: -moz-initial; -moz-background-inline-policy: -moz-initial; color: black; fo
     
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2006/07/a-journey-with-domain-driven-design-and-nhibernate-part-4/">A Journey With Domain Driven Design (and NHibernate) - Part 4</a></h1>
+      <h1 class="entry-title"><a href="/2006/07/a-journey-with-domain-driven-design-and-nhibernate-part-4/">A Journey With Domain Driven Design (and NHibernate) - Part 4</a></h1>
     
     
       <p class="meta">
@@ -711,7 +711,7 @@ a time!).</p>
 
 </div>
   <footer>
-    <a rel="full-article" href="/blog/2006/07/a-journey-with-domain-driven-design-and-nhibernate-part-4/">Read on &rarr;</a>
+    <a rel="full-article" href="/2006/07/a-journey-with-domain-driven-design-and-nhibernate-part-4/">Read on &rarr;</a>
   </footer>
 
 
@@ -722,7 +722,7 @@ a time!).</p>
     
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2006/07/a-journey-with-nhibernate-and-ddd-part-3/">A Journey With NHibernate (and DDD) - Part 3</a></h1>
+      <h1 class="entry-title"><a href="/2006/07/a-journey-with-nhibernate-and-ddd-part-3/">A Journey With NHibernate (and DDD) - Part 3</a></h1>
     
     
       <p class="meta">
@@ -890,7 +890,7 @@ pan>.AreEqual(2001, superTroopers.Year, <span style="color: maroon;">&#8220;Year
 <p><li><strike>Can create an Employee</strike></li><li><strike>Can create a Customer</strike></li><li><strike>Can create a Video</strike></li><li><strong>Can create a VideoGame</strong></li><li><strong>Can create a Console</strong></li><li><strike>Can create a Movie</strike></li><li><strong>Can create a Game</strong></li><p>Next time we’ll see some more complicated tests.&nbsp; Until then….</p></p>
 </div>
   <footer>
-    <a rel="full-article" href="/blog/2006/07/a-journey-with-nhibernate-and-ddd-part-3/">Read on &rarr;</a>
+    <a rel="full-article" href="/2006/07/a-journey-with-nhibernate-and-ddd-part-3/">Read on &rarr;</a>
   </footer>
 
 
@@ -930,23 +930,23 @@ pan>.AreEqual(2001, superTroopers.Year, <span style="color: maroon;">&#8220;Year
   <ul id="recent_posts">
     
       <li class="post">
-        <a href="/blog/2011/08/vim---could-not-invoke-jslint/">Vim - Could Not Invoke JSLint</a>
+        <a href="/2011/08/vim---could-not-invoke-jslint/">Vim - Could Not Invoke JSLint</a>
       </li>
     
       <li class="post">
-        <a href="/blog/2011/08/is-rails-exempt-from-software-principles/">Is Rails Exempt?</a>
+        <a href="/2011/08/is-rails-exempt-from-software-principles/">Is Rails Exempt?</a>
       </li>
     
       <li class="post">
-        <a href="/blog/2011/08/when-viewwillappear-isnt-called/">When viewWillAppear: Isn&#8217;t Called</a>
+        <a href="/2011/08/when-viewwillappear-isnt-called/">When viewWillAppear: Isn&#8217;t Called</a>
       </li>
     
       <li class="post">
-        <a href="/blog/2011/08/moving-my-blog/">Moving My Blog</a>
+        <a href="/2011/08/moving-my-blog/">Moving My Blog</a>
       </li>
     
       <li class="post">
-        <a href="/blog/2011/08/my-vim-journey/">My Vim Journey</a>
+        <a href="/2011/08/my-vim-journey/">My Vim Journey</a>
       </li>
     
   </ul>

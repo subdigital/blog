@@ -100,7 +100,7 @@
     
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2007/09/putting-your-logic-in-stored-procedures-or-how-to-create-a-maze-of-unescapable-complexity/">Putting Your Logic in Stored Procedures or How to Create a Maze of Unescapable Complexity</a></h1>
+      <h1 class="entry-title"><a href="/2007/09/putting-your-logic-in-stored-procedures-or-how-to-create-a-maze-of-unescapable-complexity/">Putting Your Logic in Stored Procedures or How to Create a Maze of Unescapable Complexity</a></h1>
     
     
       <p class="meta">
@@ -119,7 +119,7 @@
   <div class="entry-content"><p>My friend <a href="http://aspadvice.com/blogs/azamsharp/archive/2007/09/12/Business-Logic-in-Stored-Procedure_2100_-Sometimes-Beneficial.aspx">Azam</a> just hit a nerve.&nbsp; One of my pet peeves is the fact that some people clutch to stored procedures and claim it to be the <b>one place to hold the true state and logic of a system</b>.&nbsp; I have worked with such a DBA, and it was not very fun.<br><br>Anyway, he makes the claim that it is easier to make a tiny change to a stored procedure than to make the change in code, recompile, and upload the new version of the application to the servers.&nbsp; He gives this example:<br><br><blockquote><i>Let&#8217;s say that you have some code to display all the users whoenrolled&nbsp;within the past 7 days. You implement it using some OR Mapperand the domain contains the logic for pulling out the users enrolledwithin the past 7 days. Everything worked fine! Now, the client comesand ask you that he needs to view the users enrolled in the past 14days (Let&#8217;s assume for the sake of discussion that we don&#8217;t have the UIto select the number of days). Now, you have to change the code in thedomain model and then upload the new version of the application.</i></blockquote><br><br>I have to disagree.&nbsp; While the impedance to making a change is usually smaller by updating a stored proc, a change is a change is a change.<br><br>Most production enviornments I have worked in are guarded by a machine-gun weilding fairy with a SOX t-shirt on that won&#8217;t let me run an innocent little script without getting the blood of 14 virgins and my manager&#8217;s approval.&nbsp; So sometimes the actual process of making a change overshadows the change itself.<br><br>2nd, when the next developer goes to review the code, shouldn&#8217;t he/she know EXACTLY where the business logic is?&nbsp; I would argue that the largest cost in this scenario is the maintenance cost of the poor developer who doesn&#8217;t know where to look for a change.&nbsp; It could take an entire day of searching to find out exactly where that rule is being defined.<br><br>If the value in question (the number of days) was identified to be a possible changing value, then place it in a config file so that the application can change on the fly without having to jump through burning hoops of fire.<br><br>Anyway, like I said, this is one of my pet peeves, so if you enjoy working with elegant software, don&#8217;t put logic in your database.&nbsp; Keep it in your domain layer where it belongs.<br><p></p></p>
 </div>
   <footer>
-    <a rel="full-article" href="/blog/2007/09/putting-your-logic-in-stored-procedures-or-how-to-create-a-maze-of-unescapable-complexity/">Read on &rarr;</a>
+    <a rel="full-article" href="/2007/09/putting-your-logic-in-stored-procedures-or-how-to-create-a-maze-of-unescapable-complexity/">Read on &rarr;</a>
   </footer>
 
 
@@ -130,7 +130,7 @@
     
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2007/09/gridview-cell-text-versus-cell-controls-add/">GridView Cell.Text Versus Cell.Controls.Add</a></h1>
+      <h1 class="entry-title"><a href="/2007/09/gridview-cell-text-versus-cell-controls-add/">GridView Cell.Text Versus Cell.Controls.Add</a></h1>
     
     
       <p class="meta">
@@ -167,7 +167,7 @@
 <p>Which happily wipes everything that was previously in the Text property.&nbsp; Ugh.</p>
 </div>
   <footer>
-    <a rel="full-article" href="/blog/2007/09/gridview-cell-text-versus-cell-controls-add/">Read on &rarr;</a>
+    <a rel="full-article" href="/2007/09/gridview-cell-text-versus-cell-controls-add/">Read on &rarr;</a>
   </footer>
 
 
@@ -178,7 +178,7 @@
     
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2007/09/anywhere-fm-its-the-bees-knees/">Anywhere.FM - It&#8217;s the Bee&#8217;s Knees!</a></h1>
+      <h1 class="entry-title"><a href="/2007/09/anywhere-fm-its-the-bees-knees/">Anywhere.FM - It&#8217;s the Bee&#8217;s Knees!</a></h1>
     
     
       <p class="meta">
@@ -197,7 +197,7 @@
   <div class="entry-content"><p>I don&#8217;t know how they do it.&nbsp; Somehow, the most-excellent <a href="http://anywhere.fm">http://anywhere.fm</a> <b>allows you to upload your entire music catalog </b>onto their servers and play it on the web.&nbsp; Their bandwidth costs must be outrageous.<br><br><i>On a side note, isn&#8217;t it weird that these web2.0 startups such as this one or YouTube have the most backwards business model?&nbsp; Let&#8217;s spend an outrageous amount of money and give away our applications, ad-free.&nbsp; I always laugh at the one-liner &#8220;Step 2: Profit!&#8221; but this is even worse than that!&nbsp; I think the business model here is, build a gigantoid (that&#8217;s my word, you can&#8217;t take it) user-base, then hope that google will buy us out.&nbsp; If all else fails we can start injecting subliminal messages to our advertisers.&nbsp; <br><br>&#8220;How I wish, how I wish you were here (with Tylenol).&nbsp; Cuz we&#8217;re just&#8230; two lost souls looking for some Lysol&#8230;. year after year&#8230;.Running over the same old ground, but have we found&#8230;. the same old beers, Wish you were here (with Viagra)&#8221;</i><br><br>The have a pretty usable flash clone of iTunes, and it allows me to listen to my music library wherever I am (which is great for a consultant).&nbsp; Sometimes my Zune runs out of batteries, or sometimes I forget it at home.&nbsp; Anywhere.fm rocks.&nbsp; It&#8217;s the bee&#8217;s knees!<br><br>Here&#8217;s a screenshot of the player:<br><br><img src="http://www.flux88.com/uploads/anywhere-fm.png"><br><br>You can also listen to my library as a radio station by navigating to <a href="http://anywhere.fm/subdigital">http://anywhere.fm/subdigital</a>.&nbsp; Just don&#8217;t make fun of my music :)<br><p></p></p>
 </div>
   <footer>
-    <a rel="full-article" href="/blog/2007/09/anywhere-fm-its-the-bees-knees/">Read on &rarr;</a>
+    <a rel="full-article" href="/2007/09/anywhere-fm-its-the-bees-knees/">Read on &rarr;</a>
   </footer>
 
 
@@ -208,7 +208,7 @@
     
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2007/09/hug-your-dog-today/">Hug Your Dog Today</a></h1>
+      <h1 class="entry-title"><a href="/2007/09/hug-your-dog-today/">Hug Your Dog Today</a></h1>
     
     
       <p class="meta">
@@ -258,7 +258,7 @@
 
 </div>
   <footer>
-    <a rel="full-article" href="/blog/2007/09/hug-your-dog-today/">Read on &rarr;</a>
+    <a rel="full-article" href="/2007/09/hug-your-dog-today/">Read on &rarr;</a>
   </footer>
 
 
@@ -269,7 +269,7 @@
     
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2007/09/im-a-todoist/">I&#8217;m a Todoist</a></h1>
+      <h1 class="entry-title"><a href="/2007/09/im-a-todoist/">I&#8217;m a Todoist</a></h1>
     
     
       <p class="meta">
@@ -319,7 +319,7 @@
 
 </div>
   <footer>
-    <a rel="full-article" href="/blog/2007/09/im-a-todoist/">Read on &rarr;</a>
+    <a rel="full-article" href="/2007/09/im-a-todoist/">Read on &rarr;</a>
   </footer>
 
 
@@ -330,7 +330,7 @@
     
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2007/08/tsk-tsk-tsk-pny-should-be-ashamed-of-themselves/">Tsk, Tsk, Tsk - PNY Should Be Ashamed of Themselves</a></h1>
+      <h1 class="entry-title"><a href="/2007/08/tsk-tsk-tsk-pny-should-be-ashamed-of-themselves/">Tsk, Tsk, Tsk - PNY Should Be Ashamed of Themselves</a></h1>
     
     
       <p class="meta">
@@ -359,7 +359,7 @@
 
 </div>
   <footer>
-    <a rel="full-article" href="/blog/2007/08/tsk-tsk-tsk-pny-should-be-ashamed-of-themselves/">Read on &rarr;</a>
+    <a rel="full-article" href="/2007/08/tsk-tsk-tsk-pny-should-be-ashamed-of-themselves/">Read on &rarr;</a>
   </footer>
 
 
@@ -370,7 +370,7 @@
     
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2007/08/professional-xna-game-programming-review/">Professional XNA Game Programming - Review</a></h1>
+      <h1 class="entry-title"><a href="/2007/08/professional-xna-game-programming-review/">Professional XNA Game Programming - Review</a></h1>
     
     
       <p class="meta">
@@ -423,7 +423,7 @@
 
 </div>
   <footer>
-    <a rel="full-article" href="/blog/2007/08/professional-xna-game-programming-review/">Read on &rarr;</a>
+    <a rel="full-article" href="/2007/08/professional-xna-game-programming-review/">Read on &rarr;</a>
   </footer>
 
 
@@ -434,7 +434,7 @@
     
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2007/08/houstontechfest-2007-was-a-hit/">HoustonTechFest 2007 Was a Hit</a></h1>
+      <h1 class="entry-title"><a href="/2007/08/houstontechfest-2007-was-a-hit/">HoustonTechFest 2007 Was a Hit</a></h1>
     
     
       <p class="meta">
@@ -508,7 +508,7 @@
 
 </div>
   <footer>
-    <a rel="full-article" href="/blog/2007/08/houstontechfest-2007-was-a-hit/">Read on &rarr;</a>
+    <a rel="full-article" href="/2007/08/houstontechfest-2007-was-a-hit/">Read on &rarr;</a>
   </footer>
 
 
@@ -519,7 +519,7 @@
     
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2007/08/e-text-editor-no-such-file-exists-ubygems/">E - Text Editor - No Such File Exists &#8211; Ubygems</a></h1>
+      <h1 class="entry-title"><a href="/2007/08/e-text-editor-no-such-file-exists-ubygems/">E - Text Editor - No Such File Exists &#8211; Ubygems</a></h1>
     
     
       <p class="meta">
@@ -545,7 +545,7 @@
 
 </div>
   <footer>
-    <a rel="full-article" href="/blog/2007/08/e-text-editor-no-such-file-exists-ubygems/">Read on &rarr;</a>
+    <a rel="full-article" href="/2007/08/e-text-editor-no-such-file-exists-ubygems/">Read on &rarr;</a>
   </footer>
 
 
@@ -556,7 +556,7 @@
     
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2007/08/sogeti-is-hiring/">Sogeti Is Hiring</a></h1>
+      <h1 class="entry-title"><a href="/2007/08/sogeti-is-hiring/">Sogeti Is Hiring</a></h1>
     
     
       <p class="meta">
@@ -575,7 +575,7 @@
   <div class="entry-content"><p>My company, <a href="http://www.us.sogeti.com">Sogeti</a>, is always seeking out new candidates.&nbsp; If you&#8217;ve got experience or are just out of college, there is a place for you.<br><br>Currently we have an immediate need for someone to help out on a project.&nbsp; No development experience needed for this role.&nbsp; It would be a great way to get started in a BA, QA, or PM position.&nbsp;&nbsp; This position is in Houston, but I can always help pass the word to one of our other offices as well.<br><br>If you&#8217;re interested, or know of anyone who might be, please send me an email at ben.scheirman <em>AT</em> us.sogeti.com.<br><p></p></p>
 </div>
   <footer>
-    <a rel="full-article" href="/blog/2007/08/sogeti-is-hiring/">Read on &rarr;</a>
+    <a rel="full-article" href="/2007/08/sogeti-is-hiring/">Read on &rarr;</a>
   </footer>
 
 
@@ -615,23 +615,23 @@
   <ul id="recent_posts">
     
       <li class="post">
-        <a href="/blog/2011/08/vim---could-not-invoke-jslint/">Vim - Could Not Invoke JSLint</a>
+        <a href="/2011/08/vim---could-not-invoke-jslint/">Vim - Could Not Invoke JSLint</a>
       </li>
     
       <li class="post">
-        <a href="/blog/2011/08/is-rails-exempt-from-software-principles/">Is Rails Exempt?</a>
+        <a href="/2011/08/is-rails-exempt-from-software-principles/">Is Rails Exempt?</a>
       </li>
     
       <li class="post">
-        <a href="/blog/2011/08/when-viewwillappear-isnt-called/">When viewWillAppear: Isn&#8217;t Called</a>
+        <a href="/2011/08/when-viewwillappear-isnt-called/">When viewWillAppear: Isn&#8217;t Called</a>
       </li>
     
       <li class="post">
-        <a href="/blog/2011/08/moving-my-blog/">Moving My Blog</a>
+        <a href="/2011/08/moving-my-blog/">Moving My Blog</a>
       </li>
     
       <li class="post">
-        <a href="/blog/2011/08/my-vim-journey/">My Vim Journey</a>
+        <a href="/2011/08/my-vim-journey/">My Vim Journey</a>
       </li>
     
   </ul>

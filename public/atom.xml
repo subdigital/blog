@@ -4,7 +4,7 @@
   <title>Fickle Bits</title>
   <link href="http://benscheirman.com/atom.xml" rel="self"/>
   <link href="http://benscheirman.com/"/>
-  <updated>2011-08-28T21:42:00-05:00</updated>
+  <updated>2011-08-28T22:14:03-05:00</updated>
   <id>http://benscheirman.com/</id>
   <author>
     <name>Ben Scheirman</name>
@@ -14,9 +14,9 @@
   
   <entry>
     <title>Vim - Could Not Invoke JSLint</title>
-    <link href="http://benscheirman.com/blog/2011/08/vim---could-not-invoke-jslint/"/>
+    <link href="http://benscheirman.com/2011/08/vim---could-not-invoke-jslint/"/>
     <updated>2011-08-26T08:59:00-05:00</updated>
-    <id>http://benscheirman.com/blog/2011/08/vim---could-not-invoke-jslint</id>
+    <id>http://benscheirman.com/2011/08/vim---could-not-invoke-jslint</id>
     <content type="html">&lt;p&gt;If you're running MacVim with Janus and have upgraded to Lion, you may
 have noticed a little error when you open JavaScript files:&lt;/p&gt;
 
@@ -48,9 +48,9 @@ figuring this out.&lt;/p&gt;
   
   <entry>
     <title>Is Rails Exempt?</title>
-    <link href="http://benscheirman.com/blog/2011/08/is-rails-exempt-from-software-principles/"/>
+    <link href="http://benscheirman.com/2011/08/is-rails-exempt-from-software-principles/"/>
     <updated>2011-08-26T07:58:00-05:00</updated>
-    <id>http://benscheirman.com/blog/2011/08/is-rails-exempt-from-software-principles</id>
+    <id>http://benscheirman.com/2011/08/is-rails-exempt-from-software-principles</id>
     <content type="html">&lt;p&gt;If you've been following the Ruby community recently, you'd notice that
 there's are people calling our Rails (and Rails developers) for treating
 Rails as if it is somehow &lt;em&gt;exempt&lt;/em&gt; from long-standing software
@@ -234,9 +234,9 @@ to rock the boat &amp;amp; try something new.&lt;/p&gt;
   
   <entry>
     <title>When viewWillAppear: Isn't Called</title>
-    <link href="http://benscheirman.com/blog/2011/08/when-viewwillappear-isnt-called/"/>
+    <link href="http://benscheirman.com/2011/08/when-viewwillappear-isnt-called/"/>
     <updated>2011-08-24T10:11:00-05:00</updated>
-    <id>http://benscheirman.com/blog/2011/08/when-viewwillappear-isnt-called</id>
+    <id>http://benscheirman.com/2011/08/when-viewwillappear-isnt-called</id>
     <content type="html">&lt;p&gt;The &lt;code&gt;UIViewController&lt;/code&gt; lifecycle is pretty simple.  &lt;code&gt;viewDidLoad&lt;/code&gt; is
 called when the view is loaded (usually from a XIB) and when the view
 controller's view is about to be displayed &lt;code&gt;viewWillAppear:&lt;/code&gt; gets called
@@ -329,9 +329,9 @@ you'd have to implement this method as well:&lt;/p&gt;
   
   <entry>
     <title>Moving My Blog</title>
-    <link href="http://benscheirman.com/blog/2011/08/moving-my-blog/"/>
+    <link href="http://benscheirman.com/2011/08/moving-my-blog/"/>
     <updated>2011-08-21T00:00:00-05:00</updated>
-    <id>http://benscheirman.com/blog/2011/08/moving-my-blog</id>
+    <id>http://benscheirman.com/2011/08/moving-my-blog</id>
     <content type="html">&lt;p&gt;I've decided to transition over to a new blog.&lt;/p&gt;
 
 
@@ -351,9 +351,9 @@ you'd have to implement this method as well:&lt;/p&gt;
   
   <entry>
     <title>My Vim Journey</title>
-    <link href="http://benscheirman.com/blog/2011/08/my-vim-journey/"/>
+    <link href="http://benscheirman.com/2011/08/my-vim-journey/"/>
     <updated>2011-08-17T23:53:00-05:00</updated>
-    <id>http://benscheirman.com/blog/2011/08/my-vim-journey</id>
+    <id>http://benscheirman.com/2011/08/my-vim-journey</id>
     <content type="html">&lt;p&gt;For my Rails work, I've largely leaned on &lt;a href=&quot;http://macromates.org&quot;&gt;TextMate&lt;/a&gt;.  It's used by many Rubyists, looks sexy,
 and is easily extended.&lt;/p&gt;
 
@@ -578,9 +578,9 @@ sheet.  Pair with someone else who uses Vim.&lt;/p&gt;
   
   <entry>
     <title>A Fresh Start?</title>
-    <link href="http://benscheirman.com/blog/2011/08/a-fresh-start/"/>
+    <link href="http://benscheirman.com/2011/08/a-fresh-start/"/>
     <updated>2011-08-17T23:37:00-05:00</updated>
-    <id>http://benscheirman.com/blog/2011/08/a-fresh-start</id>
+    <id>http://benscheirman.com/2011/08/a-fresh-start</id>
     <content type="html">&lt;p&gt;So I've been thinking of ditching the traditional blog for a while now.  My &lt;a href=&quot;http://flux88.com&quot;&gt;current blog&lt;/a&gt; is powered by WordPress, which
 is powerful enough, however it always seems like a hassle to maintain.
 There are also no fantastic blog editors for the Mac (still).&lt;/p&gt;
@@ -599,9 +599,9 @@ of features. Just epic content, that's it!&lt;/p&gt;
   
   <entry>
     <title>Houston Code Camp Registration is Now Open</title>
-    <link href="http://benscheirman.com/blog/2011/06/houston-code-camp-registration-is-now-open/"/>
+    <link href="http://benscheirman.com/2011/06/houston-code-camp-registration-is-now-open/"/>
     <updated>2011-06-17T00:00:00-05:00</updated>
-    <id>http://benscheirman.com/blog/2011/06/houston-code-camp-registration-is-now-open</id>
+    <id>http://benscheirman.com/2011/06/houston-code-camp-registration-is-now-open</id>
     <content type="html">&lt;h2&gt;Houston Code Camp 2011&lt;/h2&gt;
 
 
@@ -646,9 +646,9 @@ of features. Just epic content, that's it!&lt;/p&gt;
   
   <entry>
     <title>Fixing Xcode 4's Broken Code Completion</title>
-    <link href="http://benscheirman.com/blog/2011/06/fixing-xcode-4s-broken-code-completion/"/>
+    <link href="http://benscheirman.com/2011/06/fixing-xcode-4s-broken-code-completion/"/>
     <updated>2011-06-08T00:00:00-05:00</updated>
-    <id>http://benscheirman.com/blog/2011/06/fixing-xcode-4s-broken-code-completion</id>
+    <id>http://benscheirman.com/2011/06/fixing-xcode-4s-broken-code-completion</id>
     <content type="html">&lt;p&gt;In my continued quest to actually use Xcode 4 full time, I've run into yet another major issue: Xcode 4's code index sometimes gets borked and syntax highlighting &amp;amp; code completion stop working.&lt;/p&gt;
 
 
@@ -703,9 +703,9 @@ Here's to hoping the Xcode 4 continues to be improved. In the meantime, hope thi
   
   <entry>
     <title>Creating Proper IPA Files in Xcode 4</title>
-    <link href="http://benscheirman.com/blog/2011/06/creating-proper-ipa-files-in-xcode-4/"/>
+    <link href="http://benscheirman.com/2011/06/creating-proper-ipa-files-in-xcode-4/"/>
     <updated>2011-06-02T00:00:00-05:00</updated>
-    <id>http://benscheirman.com/blog/2011/06/creating-proper-ipa-files-in-xcode-4</id>
+    <id>http://benscheirman.com/2011/06/creating-proper-ipa-files-in-xcode-4</id>
     <content type="html">&lt;p&gt;Xcode 4 has changed a lot of things. Most of those things are ok, but occasionally I find that I just cannot do something any other way than to use Xcode 3.&lt;/p&gt;
 
 
@@ -755,9 +755,9 @@ Here's to hoping the Xcode 4 continues to be improved. In the meantime, hope thi
   
   <entry>
     <title>Rails Intrigue Video at NHDNUG</title>
-    <link href="http://benscheirman.com/blog/2011/05/rails-intrigue-video-at-nhdnug/"/>
+    <link href="http://benscheirman.com/2011/05/rails-intrigue-video-at-nhdnug/"/>
     <updated>2011-05-31T00:00:00-05:00</updated>
-    <id>http://benscheirman.com/blog/2011/05/rails-intrigue-video-at-nhdnug</id>
+    <id>http://benscheirman.com/2011/05/rails-intrigue-video-at-nhdnug</id>
     <content type="html">&lt;p&gt;I gave a presentation at the North Houston .NET User Group a couple weeks ago entitled &quot;Rails Intrigue&quot;.  My friend, &lt;a href=&quot;http://claudiolassala.wordpress.com/&quot;&gt;Claudio Lassala&lt;/a&gt; recorded it and posted the video on YouTube.&lt;/p&gt;
 
 
@@ -780,9 +780,9 @@ Here's to hoping the Xcode 4 continues to be improved. In the meantime, hope thi
   
   <entry>
     <title>Houston Code Camp - Call for Speakers</title>
-    <link href="http://benscheirman.com/blog/2011/05/houston-code-camp-call-for-speakers/"/>
+    <link href="http://benscheirman.com/2011/05/houston-code-camp-call-for-speakers/"/>
     <updated>2011-05-25T00:00:00-05:00</updated>
-    <id>http://benscheirman.com/blog/2011/05/houston-code-camp-call-for-speakers</id>
+    <id>http://benscheirman.com/2011/05/houston-code-camp-call-for-speakers</id>
     <content type="html">&lt;p&gt;I'm excited to announce the first annual &lt;a href=&quot;http://houstoncodecamp.com&quot; target=&quot;_blank&quot;&gt;Houston Code Camp 2011&lt;/a&gt;, happening on August 20th! The code camp is a one day conference on Saturday, held by developers - for developers. Here you'll find sessions on a multitude of platforms and of varying skill levels. Best of all? &lt;strong&gt;It's FREE&lt;/strong&gt;.&lt;/p&gt;
 
 
@@ -810,9 +810,9 @@ Here's to hoping the Xcode 4 continues to be improved. In the meantime, hope thi
   
   <entry>
     <title>Dry up Your Rspec Files with subject & let Blocks</title>
-    <link href="http://benscheirman.com/blog/2011/05/dry-up-your-rspec-files-with-subject-let-blocks/"/>
+    <link href="http://benscheirman.com/2011/05/dry-up-your-rspec-files-with-subject-let-blocks/"/>
     <updated>2011-05-14T00:00:00-05:00</updated>
-    <id>http://benscheirman.com/blog/2011/05/dry-up-your-rspec-files-with-subject-let-blocks</id>
+    <id>http://benscheirman.com/2011/05/dry-up-your-rspec-files-with-subject-let-blocks</id>
     <content type="html">&lt;p&gt;Rspec is pretty awesome, however due to its flexibility, often times I find that people write specs in ways that either a) aren't structured very well, or b) use the wrong terminology to group up common contexts &amp;amp; behaviors.&lt;/p&gt;
 
 
@@ -923,9 +923,9 @@ Here's to hoping the Xcode 4 continues to be improved. In the meantime, hope thi
   
   <entry>
     <title>2011 Ultimate Tools List for Mac</title>
-    <link href="http://benscheirman.com/blog/2011/05/2011-ultimate-tools-list-for-mac/"/>
+    <link href="http://benscheirman.com/2011/05/2011-ultimate-tools-list-for-mac/"/>
     <updated>2011-05-05T00:00:00-05:00</updated>
-    <id>http://benscheirman.com/blog/2011/05/2011-ultimate-tools-list-for-mac</id>
+    <id>http://benscheirman.com/2011/05/2011-ultimate-tools-list-for-mac</id>
     <content type="html">&lt;p&gt;In pure &lt;a href=&quot;http://www.hanselman.com/blog/ScottHanselmans2009UltimateDeveloperAndPowerUsersToolListForWindows.aspx&quot;&gt;Hanselman&lt;/a&gt;-style, I present to you the 2011 Ultimate Tools List for Mac.&lt;/p&gt;
 
 
@@ -1330,9 +1330,9 @@ Here's to hoping the Xcode 4 continues to be improved. In the meantime, hope thi
   
   <entry>
     <title>Using Guard & Spork with Mongoid & Devise</title>
-    <link href="http://benscheirman.com/blog/2011/04/using-guard-spork-with-mongoid-devise/"/>
+    <link href="http://benscheirman.com/2011/04/using-guard-spork-with-mongoid-devise/"/>
     <updated>2011-04-22T00:00:00-05:00</updated>
-    <id>http://benscheirman.com/blog/2011/04/using-guard-spork-with-mongoid-devise</id>
+    <id>http://benscheirman.com/2011/04/using-guard-spork-with-mongoid-devise</id>
     <content type="html">&lt;p&gt;On my last project, I eventually settled on using Guard along with Spork to allow for quicker testing. Specifically, I used:&lt;/p&gt;
 
 
@@ -1456,9 +1456,9 @@ You might be saying, &lt;em&gt;&quot;What the hell are all these gems for?!?!&qu
   
   <entry>
     <title>Private Categories in Objective-C</title>
-    <link href="http://benscheirman.com/blog/2011/04/private-categories-in-objective-c/"/>
+    <link href="http://benscheirman.com/2011/04/private-categories-in-objective-c/"/>
     <updated>2011-04-16T00:00:00-05:00</updated>
-    <id>http://benscheirman.com/blog/2011/04/private-categories-in-objective-c</id>
+    <id>http://benscheirman.com/2011/04/private-categories-in-objective-c</id>
     <content type="html">&lt;p&gt;Sometimes properties can vastly simplify the memory management code when working with your private instance variables (or &lt;em&gt;ivars&lt;/em&gt;). Here is an example:&lt;/p&gt;
 
 &lt;p&gt;&lt;em&gt;MyTableViewController.h&lt;/em&gt;&lt;/p&gt;
@@ -1624,9 +1624,9 @@ Now that I have that implemented, all I have to do is include my header file any
   
   <entry>
     <title>Increasing Shared Memory for Postgres on OS X</title>
-    <link href="http://benscheirman.com/blog/2011/04/increasing-shared-memory-for-postgres-on-os-x/"/>
+    <link href="http://benscheirman.com/2011/04/increasing-shared-memory-for-postgres-on-os-x/"/>
     <updated>2011-04-14T00:00:00-05:00</updated>
-    <id>http://benscheirman.com/blog/2011/04/increasing-shared-memory-for-postgres-on-os-x</id>
+    <id>http://benscheirman.com/2011/04/increasing-shared-memory-for-postgres-on-os-x</id>
     <content type="html">&lt;p&gt;I came across a cryptic error while trying to create another database instance for my local Postgresql server. The error was:&lt;/p&gt;
 
 
@@ -1699,9 +1699,9 @@ Now that I have that implemented, all I have to do is include my header file any
   
   <entry>
     <title>Presentations from iPhone Dev Con Boston</title>
-    <link href="http://benscheirman.com/blog/2011/04/presentations-from-iphone-dev-con-boston/"/>
+    <link href="http://benscheirman.com/2011/04/presentations-from-iphone-dev-con-boston/"/>
     <updated>2011-04-13T00:00:00-05:00</updated>
-    <id>http://benscheirman.com/blog/2011/04/presentations-from-iphone-dev-con-boston</id>
+    <id>http://benscheirman.com/2011/04/presentations-from-iphone-dev-con-boston</id>
     <content type="html">&lt;p&gt;I gave 2 talks at iPhone Dev Con in Boston. I've posted the slides &amp;amp; material online.&lt;/p&gt;
 
 
@@ -1739,9 +1739,9 @@ Now that I have that implemented, all I have to do is include my header file any
   
   <entry>
     <title>Book Review:  Crafting Rails Applications</title>
-    <link href="http://benscheirman.com/blog/2011/04/book-review-crafting-rails-applications/"/>
+    <link href="http://benscheirman.com/2011/04/book-review-crafting-rails-applications/"/>
     <updated>2011-04-13T00:00:00-05:00</updated>
-    <id>http://benscheirman.com/blog/2011/04/book-review-crafting-rails-applications</id>
+    <id>http://benscheirman.com/2011/04/book-review-crafting-rails-applications</id>
     <content type="html">&lt;p&gt;&lt;img src=&quot;http://benscheirman.com/images/capa_crafting.png&quot;  style=&quot;float:left; margin-right:10px; margin-bottom:10px;&quot;  /&gt;&lt;/p&gt;
 
 &lt;p&gt;I just finished with &lt;a href=&quot;http://www.amazon.com/gp/product/1934356735/ref=as_li_ss_tl?ie=UTF8&amp;amp;tag=flux88com-20&amp;amp;linkCode=as2&amp;amp;camp=1789&amp;amp;creative=390957&amp;amp;creativeASIN=1934356735&quot;&gt;Crafting Rails Applications&lt;/a&gt;&lt;img src=&quot;http://www.assoc-amazon.com/e/ir?t=&amp;amp;l=as2&amp;amp;o=1&amp;amp;a=1934356735&quot; width=&quot;1&quot; height=&quot;1&quot; border=&quot;0&quot; alt=&quot;&quot; style=&quot;border:none !important; margin:0px !important;&quot; /&gt; by &lt;a href=&quot;http://blog.plataformatec.com.br/author/josevalim/&quot;&gt;José Valim&lt;/a&gt;. The book claims to teach Expert Practices for Everyday Rails Development. I didn't find it to be exactly that, however I did enjoy it and I learned a ton.&lt;/p&gt;
@@ -1773,9 +1773,9 @@ I tend to prefer RSpec with 1 assertion per test method and many fine-grained me
   
   <entry>
     <title>Mariachi Product Engineering</title>
-    <link href="http://benscheirman.com/blog/2011/04/mariachi-product-engineering/"/>
+    <link href="http://benscheirman.com/2011/04/mariachi-product-engineering/"/>
     <updated>2011-04-12T00:00:00-05:00</updated>
-    <id>http://benscheirman.com/blog/2011/04/mariachi-product-engineering</id>
+    <id>http://benscheirman.com/2011/04/mariachi-product-engineering</id>
     <content type="html">&lt;p&gt;I spoke at iPhone Dev Con in Boston last week and I attended Mike Lee's excellent keynote presentation: &quot;Mariachi Product Engineering&quot;&lt;/p&gt;
 
 
@@ -1814,9 +1814,9 @@ I tend to prefer RSpec with 1 assertion per test method and many fine-grained me
   
   <entry>
     <title>[blog reboot]</title>
-    <link href="http://benscheirman.com/blog/2011/04/blog-reboot/"/>
+    <link href="http://benscheirman.com/2011/04/blog-reboot/"/>
     <updated>2011-04-11T00:00:00-05:00</updated>
-    <id>http://benscheirman.com/blog/2011/04/blog-reboot</id>
+    <id>http://benscheirman.com/2011/04/blog-reboot</id>
     <content type="html">&lt;p&gt;My blog was feeling a little stale to me, hence my utter lack of content in the past few months.  I wanted to move it off of Windows hosting which really didn't make sense for me anymore.  Orcsweb graciously provided me with hosting through my MVP, and I would recommend their service to anyone.&lt;/p&gt;
 
 &lt;p&gt;But for me, it doesn't make sense to run a .NET blog anymore.  The days of &quot;oh, maybe I'll be able to extend it somehow&quot; have just not ever mattered much.  In the end, it was a pretty easy decision to move to Wordpress because it's easy to host, easy to extend, there's a gajillion themes &amp;amp; plugins, and the entire thing is fairly polished.  Sure, there's the nasty PHP underneath, but hey it lends itself well to simple hacking of the site to get things up &amp;amp; running.&lt;/p&gt;
