@@ -5,15 +5,26 @@ date: 2011-6-8
 comments: true
 link: false
 ---
-<p>In my continued quest to actually use Xcode 4 full time, I've run into yet another major issue: Xcode 4's code index sometimes gets borked and syntax highlighting &amp; code completion stop working.</p>
-<p>In the past, this has been fixed (temporarily) by deleting the Derived Data folder in Organizer, restarting Xcode, changing the compiler from LLVM to GCC &amp; back again or some random combination of the 3. This doesn't always work, and today I sat down to figure out what the cause was and how to fix it.</p>
-<p>In searching stackoverflow and the developer forums, I found that Xcode's code index can hang on recursive and/or relative search paths.</p>
-<p>My project utilizes 2 static libraries, so I must provide proper header search paths, otherwise the compiler doesn't recognize any of the symbols.</p>
-<p>So if you have a Header Search Path setting of <strong>`../lib/MyAwesomeLib`</strong> or <strong>`../lib/MyAwesomeLib/**`</strong> then you might be having this problem too.</p>
-<h2>Step 1: Correcting relative paths</h2>You might be tempted to hard code the path to the file. Don't! This will break on somebody else's machine, and most of the time you're not working on this stuff alone.<br />
-You can utilize the $(SOURCE_ROOT) build variable to construct a dynamic path relative to the Xcode project directory.<br />
-This step might be all you need, but in my case I needed to follow the next step as well...<br />
-<h2>Step 2: Remove the need for recursive searches</h2>I have two subprojects, each of which symlink their build output to a build/current folder. This makes it easy to add a non-recursive library search path reference for similar reasons. I also want to copy headers into this folder so there's always a deterministic location to find the headers, regardless of the platform &amp; configuration we're building for.<br />
+In my continued quest to actually use Xcode 4 full time, I've run into yet another major issue: Xcode 4's code index sometimes gets borked and syntax highlighting &amp; code completion stop working.
+
+In the past, this has been fixed (temporarily) by deleting the Derived Data folder in Organizer, restarting Xcode, changing the compiler from LLVM to GCC &amp; back again or some random combination of the 3. This doesn't always work, and today I sat down to figure out what the cause was and how to fix it.
+
+In searching stackoverflow and the developer forums, I found that Xcode's code index can hang on recursive and/or relative search paths.
+
+My project utilizes 2 static libraries, so I must provide proper header search paths, otherwise the compiler doesn't recognize any of the symbols.
+
+So if you have a Header Search Path setting of `../lib/MyAwesomeLib` or `../lib/MyAwesomeLib/**` then you might be having this problem too.
+
+## Step 1: Correcting relative paths
+
+You might be tempted to hard code the path to the file. Don't! This will break on somebody else's machine, and most of the time you're not working on this stuff alone.
+You can utilize the `$(SOURCE_ROOT)` build variable to construct a dynamic path relative to the Xcode project directory.
+
+This step might be all you need, but in my case I needed to follow the next step as well...
+
+## Step 2: Remove the need for recursive searches
+
+I have two subprojects, each of which symlink their build output to a build/current folder. This makes it easy to add a non-recursive library search path reference for similar reasons. I also want to copy headers into this folder so there's always a deterministic location to find the headers, regardless of the platform &amp; configuration we're building for.<br />
 So I added a Run Script build phase to do this work for me:<br />
 {% codeblock %}
 # Symlink build output to a common directory for easy referencing in other projects

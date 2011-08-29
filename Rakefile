@@ -184,6 +184,13 @@ task :rsync do
   ok_failed system("rsync -avz --delete #{public_dir}/ #{ssh_user}:#{document_root}")
 end
 
+desc "deploys site to Heroku"
+task :heroku do
+  puts "## Deploying to heroku..."
+  system "git push heroku source:master"
+  puts "## Heroku deploy complete"
+end
+
 desc "deploy public directory to github pages"
 multitask :push do
   puts "## Deploying branch to Github Pages "
