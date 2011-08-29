@@ -934,8 +934,25 @@ This step might be all you need, but in my case I needed to follow the next step
 
 
 <p>I have two subprojects, each of which symlink their build output to a build/current folder. This makes it easy to add a non-recursive library search path reference for similar reasons. I also want to copy headers into this folder so there&#8217;s always a deterministic location to find the headers, regardless of the platform &amp; configuration we&#8217;re building for.<br />
-So I added a Run Script build phase to do this work for me:<br />
-Liquid error: ClassNotFound: no lexer for alias &#8216;shell&#8217; foundThe line is a bash for loop that copies all the header files in any subfolder &amp; flattens it out for a single headers folder reference.<br /></p>
+So I added a Run Script build phase to do this work for me:<br /></p>
+
+<div><figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+<span class='line'>2</span>
+<span class='line'>3</span>
+<span class='line'>4</span>
+<span class='line'>5</span>
+<span class='line'>6</span>
+<span class='line'>7</span>
+</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'># Symlink build output to a common directory for easy referencing in other projects
+</div><div class='line'>rm -rf "$BUILD_DIR/current"
+</div><div class='line'>ln -s "$BUILT_PRODUCTS_DIR" "$BUILD_DIR/current"
+</div><div class='line'>
+</div><div class='line'># Copy headers to a shared location
+</div><div class='line'>mkdir -p "$BUILD_DIR/current/headers"
+</div><div class='line'>for file in `find . -name "*.h"`; do cp $file "$BUILD_DIR/current/headers/"; done;</div></code></pre></td></tr></table></div></figure></div>
+
+
+<p>The line is a bash for loop that copies all the header files in any subfolder &amp; flattens it out for a single headers folder reference.<br /></p>
 
 <h2>Step 3: Add the new common header search paths</h2>
 
