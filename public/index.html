@@ -910,28 +910,22 @@ of features. Just epic content, that&#8217;s it!</p>
 
   <div class="entry-content"><p>In my continued quest to actually use Xcode 4 full time, I&#8217;ve run into yet another major issue: Xcode 4&#8217;s code index sometimes gets borked and syntax highlighting &amp; code completion stop working.</p>
 
-
 <p>In the past, this has been fixed (temporarily) by deleting the Derived Data folder in Organizer, restarting Xcode, changing the compiler from LLVM to GCC &amp; back again or some random combination of the 3. This doesn&#8217;t always work, and today I sat down to figure out what the cause was and how to fix it.</p>
-
 
 <p>In searching stackoverflow and the developer forums, I found that Xcode&#8217;s code index can hang on recursive and/or relative search paths.</p>
 
-
 <p>My project utilizes 2 static libraries, so I must provide proper header search paths, otherwise the compiler doesn&#8217;t recognize any of the symbols.</p>
 
-
-<p>So if you have a Header Search Path setting of <strong>`../lib/MyAwesomeLib`</strong> or <strong>`../lib/MyAwesomeLib/**`</strong> then you might be having this problem too.</p>
-
+<p>So if you have a Header Search Path setting of <code>../lib/MyAwesomeLib</code> or <code>../lib/MyAwesomeLib/**</code> then you might be having this problem too.</p>
 
 <h2>Step 1: Correcting relative paths</h2>
 
+<p>You might be tempted to hard code the path to the file. Don&#8217;t! This will break on somebody else&#8217;s machine, and most of the time you&#8217;re not working on this stuff alone.
+You can utilize the <code>$(SOURCE_ROOT)</code> build variable to construct a dynamic path relative to the Xcode project directory.</p>
 
-<p>You might be tempted to hard code the path to the file. Don&#8217;t! This will break on somebody else&#8217;s machine, and most of the time you&#8217;re not working on this stuff alone.<br />
-You can utilize the $(SOURCE_ROOT) build variable to construct a dynamic path relative to the Xcode project directory.<br />
-This step might be all you need, but in my case I needed to follow the next step as well&#8230;<br /></p>
+<p>This step might be all you need, but in my case I needed to follow the next step as well&#8230;</p>
 
 <h2>Step 2: Remove the need for recursive searches</h2>
-
 
 <p>I have two subprojects, each of which symlink their build output to a build/current folder. This makes it easy to add a non-recursive library search path reference for similar reasons. I also want to copy headers into this folder so there&#8217;s always a deterministic location to find the headers, regardless of the platform &amp; configuration we&#8217;re building for.<br />
 So I added a Run Script build phase to do this work for me:<br /></p>

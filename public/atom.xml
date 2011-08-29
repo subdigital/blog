@@ -4,7 +4,7 @@
   <title>Fickle Bits</title>
   <link href="http://benscheirman.com/atom.xml" rel="self"/>
   <link href="http://benscheirman.com/"/>
-  <updated>2011-08-29T08:57:04-05:00</updated>
+  <updated>2011-08-29T10:14:56-05:00</updated>
   <id>http://benscheirman.com/</id>
   <author>
     <name>Ben Scheirman</name>
@@ -651,28 +651,22 @@ of features. Just epic content, that's it!&lt;/p&gt;
     <id>http://benscheirman.com/2011/06/fixing-xcode-4s-broken-code-completion</id>
     <content type="html">&lt;p&gt;In my continued quest to actually use Xcode 4 full time, I've run into yet another major issue: Xcode 4's code index sometimes gets borked and syntax highlighting &amp;amp; code completion stop working.&lt;/p&gt;
 
-
 &lt;p&gt;In the past, this has been fixed (temporarily) by deleting the Derived Data folder in Organizer, restarting Xcode, changing the compiler from LLVM to GCC &amp;amp; back again or some random combination of the 3. This doesn't always work, and today I sat down to figure out what the cause was and how to fix it.&lt;/p&gt;
-
 
 &lt;p&gt;In searching stackoverflow and the developer forums, I found that Xcode's code index can hang on recursive and/or relative search paths.&lt;/p&gt;
 
-
 &lt;p&gt;My project utilizes 2 static libraries, so I must provide proper header search paths, otherwise the compiler doesn't recognize any of the symbols.&lt;/p&gt;
 
-
-&lt;p&gt;So if you have a Header Search Path setting of &lt;strong&gt;`../lib/MyAwesomeLib`&lt;/strong&gt; or &lt;strong&gt;`../lib/MyAwesomeLib/**`&lt;/strong&gt; then you might be having this problem too.&lt;/p&gt;
-
+&lt;p&gt;So if you have a Header Search Path setting of &lt;code&gt;../lib/MyAwesomeLib&lt;/code&gt; or &lt;code&gt;../lib/MyAwesomeLib/**&lt;/code&gt; then you might be having this problem too.&lt;/p&gt;
 
 &lt;h2&gt;Step 1: Correcting relative paths&lt;/h2&gt;
 
+&lt;p&gt;You might be tempted to hard code the path to the file. Don't! This will break on somebody else's machine, and most of the time you're not working on this stuff alone.
+You can utilize the &lt;code&gt;$(SOURCE_ROOT)&lt;/code&gt; build variable to construct a dynamic path relative to the Xcode project directory.&lt;/p&gt;
 
-&lt;p&gt;You might be tempted to hard code the path to the file. Don't! This will break on somebody else's machine, and most of the time you're not working on this stuff alone.&lt;br /&gt;
-You can utilize the $(SOURCE_ROOT) build variable to construct a dynamic path relative to the Xcode project directory.&lt;br /&gt;
-This step might be all you need, but in my case I needed to follow the next step as well...&lt;br /&gt;&lt;/p&gt;
+&lt;p&gt;This step might be all you need, but in my case I needed to follow the next step as well...&lt;/p&gt;
 
 &lt;h2&gt;Step 2: Remove the need for recursive searches&lt;/h2&gt;
-
 
 &lt;p&gt;I have two subprojects, each of which symlink their build output to a build/current folder. This makes it easy to add a non-recursive library search path reference for similar reasons. I also want to copy headers into this folder so there's always a deterministic location to find the headers, regardless of the platform &amp;amp; configuration we're building for.&lt;br /&gt;
 So I added a Run Script build phase to do this work for me:&lt;br /&gt;&lt;/p&gt;

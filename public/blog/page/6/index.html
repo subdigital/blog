@@ -422,7 +422,7 @@
 
 <p>  <p>One of those things is the AdoNetAppender’s connection string.&#160; There’s no built-in way of making this use a connection string from your &lt;connectionStrings&gt; section of your config file.</p>  <p>I came across <a href="http://weblogs.asp.net/drnetjes/archive/2005/02/16/374780.aspx" target="_blank">this post</a>, which helped me solve the problem, but the post is 4 years old and the code sample didn’t quite work.&#160; </p>  <p>Here is an updated snippet that does work with the latest version of log4net:</p></p>
 
-<div><figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+<div><figure role=code> <div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
 <span class='line'>2</span>
 <span class='line'>3</span>
 <span class='line'>4</span>
@@ -435,19 +435,20 @@
 <span class='line'>11</span>
 <span class='line'>12</span>
 <span class='line'>13</span>
-</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>public static void SetAdoNetAppenderConnectionStrings(string connectionStringKey)
-</div><div class='line'>{
-</div><div class='line'>var hier = (Hierarchy)LogManager.GetRepository();
-</div><div class='line'>if (hier != null)
-</div><div class='line'>{
-</div><div class='line'>var appenders = hier.GetAppenders().OfType&lt;adonetappender>();
-</div><div class='line'>foreach (var appender in appenders)
-</div><div class='line'>{
-</div><div class='line'>appender.ConnectionString = ConfigurationManager.ConnectionStrings[connectionStringKey].ConnectionString;
-</div><div class='line'>appender.ActivateOptions();
-</div><div class='line'>}
-</div><div class='line'>}
-</div><div class='line'>}</div></code></pre></td></tr></table></div></figure></div>
+</pre></td><td class='code' width='100%'><pre><code class='csharp'><div class='line'><span class="k">public</span> <span class="k">static</span> <span class="k">void</span> <span class="nf">SetAdoNetAppenderConnectionStrings</span><span class="p">(</span><span class="kt">string</span> <span class="n">connectionStringKey</span><span class="p">)</span>
+</div><div class='line'><span class="p">{</span>
+</div><div class='line'>  <span class="n">var</span> <span class="n">hier</span> <span class="p">=</span> <span class="p">(</span><span class="n">Hierarchy</span><span class="p">)</span><span class="n">LogManager</span><span class="p">.</span><span class="n">GetRepository</span><span class="p">();</span>
+</div><div class='line'>  <span class="k">if</span> <span class="p">(</span><span class="n">hier</span> <span class="p">!=</span> <span class="k">null</span><span class="p">)</span>
+</div><div class='line'>  <span class="p">{</span>
+</div><div class='line'>    <span class="n">var</span> <span class="n">appenders</span> <span class="p">=</span> <span class="n">hier</span><span class="p">.</span><span class="n">GetAppenders</span><span class="p">().</span><span class="n">OfType</span><span class="p">&lt;</span><span class="n">adonetappender</span><span class="p">&gt;();</span>
+</div><div class='line'>    <span class="k">foreach</span> <span class="p">(</span><span class="n">var</span> <span class="n">appender</span> <span class="k">in</span> <span class="n">appenders</span><span class="p">)</span>
+</div><div class='line'>    <span class="p">{</span>
+</div><div class='line'>      <span class="n">appender</span><span class="p">.</span><span class="n">ConnectionString</span> <span class="p">=</span> <span class="n">ConfigurationManager</span><span class="p">.</span><span class="n">ConnectionStrings</span><span class="p">[</span><span class="n">connectionStringKey</span><span class="p">].</span><span class="n">ConnectionString</span><span class="p">;</span>
+</div><div class='line'>      <span class="n">appender</span><span class="p">.</span><span class="n">ActivateOptions</span><span class="p">();</span>
+</div><div class='line'>    <span class="p">}</span>
+</div><div class='line'>  <span class="p">}</span>
+</div><div class='line'><span class="p">}</span>
+</div></code></pre></td></tr></table></div></figure></div>
 
 
 
