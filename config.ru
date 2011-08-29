@@ -10,8 +10,14 @@ use Rack::Rewrite do
    rack_env['SERVER_NAME'] != 'benscheirman.com' && ENV['RACK_ENV'] == 'production'
  }
 
- #r301 %r{^/(\d{4}/\d{2}/.+/?)$}, '/blog/$1'
- r301 %r{^(.+)/$}, '$1'
+  # redirect /blog/2004/10/* to just /2004/10/*
+  r301 %r{^/blog/(\d{4}/\d{2}/.*)$}, '/$1'
+
+  # redirect wordpress feed request to the new url
+  r301 '/feed', '/atom.xml'
+
+  # remove trailing slashes
+  r301 %r{^(.+)/$}, '$1'
 
 end
 

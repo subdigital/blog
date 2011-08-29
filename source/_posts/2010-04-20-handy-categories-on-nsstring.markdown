@@ -46,26 +46,26 @@ Here are a few handy categories on NSString that I carry around from project to 
 -(NSArray *)splitOnChar:(char)ch {
     NSMutableArray *results = [[NSMutableArray alloc] init];
    int start = 0;
-     for(int i=0; i&lt;[self length]; i++) {
-            
+     for(int i=0; i<[self length]; i++) {
+
            BOOL isAtSplitChar = [self characterAtIndex:i] == ch;
               BOOL isAtEnd = i == [self length] - 1;
-                             
+
            if(isAtSplitChar || isAtEnd) {
                      //take the substring &amp; add it to the array
                  NSRange range;
                      range.location = start;
                     range.length = i - start + 1;
-                      
+
                    if(isAtSplitChar)
                           range.length -= 1;
-                 
+
                    [results addObject:[self substringWithRange:range]];
                        start = i + 1;
              }
-          
+
            //handle the case where the last character was the split char.  we need an empty trailing element in the array.
-            if(isAtEnd &amp;&amp; isAtSplitChar)
+            if(isAtEnd && isAtSplitChar)
                        [results addObject:@""];
    }
 
