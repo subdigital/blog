@@ -1,8 +1,0 @@
---- 
-layout: post
-title: DevCon 2005 afterthoughts
-date: 2005-6-14
-comments: true
-link: false
----
-<div style="clear:both;"></div>Man, what a day! I had a blast at this conference. I really got something from every session, which was a lot more than I was expecting... especially after reading some of <a href="http://www.managed-world.com">Jason Olson's</a> comments about TechEd. Anyway, I especially enjoyed the talks by <a href="http://blogs.msdn.com/methylamine/default.aspx">Michael Stuart</a> and <a href="http://agiledeveloper.com/blog/">Venkat Subramaniam</a> on the new Visual Studio 2005 testing integration. My favorite features of Visual Studio 2005 are too many to list here, but mainly I think that Team Foundation Server is a huge step in the right direction. Microsoft is really paying attention to the community and providing what the developers really want/ (or already use)... but much tighter integration with the IDE. This was a recurring theme throughout the day... that you can do <i>all of these things without leaving Visual Studio</i>. I did think that the free books were a little lame... I mean 90% of the people that were present would not need an "Introduction to..." anything. They are obviously past that point. But I guess I shouldn't expect much for an entry price of $99. The books they handed out were: <ul><li>Introducing Visual Basic 2005 for Developers <li>Introducing SQL 2005 <li>Introducing ASP.NET 2.0</ul> Oh well, at roughly 200 pages each it should take long to breeze through them, and I might stumble on a gem or 2 :). The ASP.NET one is written by Dino Esposito, so I will crack it open, I enjoyed his 1.1 version.<div style="clear:both; padding-bottom: 0.25em;"></div>

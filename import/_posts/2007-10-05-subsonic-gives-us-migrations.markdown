@@ -1,8 +1,0 @@
---- 
-layout: post
-title: SubSonic Gives Us Migrations
-date: 2007-10-5
-comments: true
-link: false
----
-<a href="http://subsonicproject.com">SubSonic</a>, a dead-simple code-generator / ActiveRecord ORM tool, is about to release a kick-ass new feature.&nbsp; Migrations are an awesome tool that exists in Rails, but we haven't had a solid .NET equivalent yet.&nbsp; I hope that SubSonic Migrations will live up to the hype.<br><br>I've <a href="http://www.flux88.com/DatabaseMigrationsForNET.aspx">blogged about the need for this before</a>.&nbsp; I've been wanting to use VSTS DB Pro in this way, but the tool just isn't meant to provide evolutionary db support.<br><br>My current project relies on SubSonic for the code-generation, but our database development is done through DB Pro.&nbsp; I think this is a great tool, but I fear that it's really missing something.&nbsp; I'm sure the next version will be much better, as is generally true with Microsoft products.&nbsp; 1st versions often take some time to meld, get some good feedback from the general public, and get the usage stories streamlined.<br><br>I may be able to take advantage of Migrations, however the DB Project needs to contain all scripts (and they have to be named according to the client's standards).&nbsp; I wonder if I could create the migrations, execute them, then use sonic.exe to generate the scripts that represent the changes.&nbsp; I could dump this script in the database project (or import it).<br><br>Right now it seems like a <a href="http://en.wikipedia.org/wiki/Rube_Goldberg">Rube-Goldbergian</a> mess.&nbsp; Any thoughts, ideas, suggestions?<br><p></p>

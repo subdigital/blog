@@ -1,8 +1,0 @@
---- 
-layout: post
-title: Safari On Windows
-date: 2007-6-13
-comments: true
-link: false
----
-<p>So I went out and installed <a href="http://www.apple.com/safari/download/" target="_blank">Safari 3 for Windows</a> yesterday.</p><p>I just had to see what all the fuss was about.&nbsp; How do you piss off a number of Windows users simultaneously?&nbsp; Release a product that has a different font rendering technology than their native OS.</p><p>Seriously, people are going nuts about this font thing.&nbsp; <a href="http://joelonsoftware.com/items/2007/06/12.html" target="_blank">Joel Spolsky</a> and <a href="http://www.codinghorror.com/blog/archives/000884.html" target="_blank">Jeff Atwood</a> have covered the details nicely, but I find it quite interesting that something so trivial&nbsp;can make such an impact.&nbsp; You generally don&rsquo;t even think about it, but I&rsquo;ve always noticed that Safari on Mac looked somehow different than Firefox on Windows.&nbsp; I&rsquo;m not talking about the browser itself, I&rsquo;m talking about the pages that get rendered.</p><p>I can see everyones argument, but I really happen to like the Apple mentality, and as Atwood says, <a href="http://www.codinghorror.com/blog/archives/000885.html" target="_blank">this debate will be gone once higher dpi screens become available</a>.</p><p>There is just something beautiful about the way that plain text looks with Safari, particularly at large sizes.&nbsp; At tiny sizes, however, I get a headache reading it.</p><p>Firefox is still my browser-o-choice, but Safari does give me a nice experience.&nbsp; I hope more Mac software ends up on Windows.&nbsp; Choice is good.</p><p>&nbsp;</p>

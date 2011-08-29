@@ -15,7 +15,7 @@ use Rack::Rewrite do
 
 end
 
-class SinatraStaticServer < Sinatra::Base  
+class SinatraStaticServer < Sinatra::Base
 
   get(/.+/) do
     send_sinatra_file(request.path) {404}

@@ -113,51 +113,161 @@
   </header>
 
 
-<div class="entry-content"><p>In Objective-C there is a great feature called Categories. To .NET folk, this closely resembles extension methods, and it is a great way to achieve utility code re-use and in general heighten the level of the code that you&#8217;re working with. It&#8217;s also a great way to turn a very hairy method and section it off into very simple, coherent tasks.</p>
-
+<div class="entry-content"><p>In Objective-C there is a great feature called <em>Categories</em>. To .NET folk, this closely resembles extension methods, and it is a great way to achieve utility code re-use and in general heighten the level of the code that you&#8217;re working with. It&#8217;s also a great way to turn a very hairy method and section it off into very simple, coherent tasks.</p>
 
 <p>In some cases this means adding methods that don&#8217;t necessarily belong on the class in question, but they make perfect sense in the context of your application.</p>
 
-
 <p>In other cases, you can use Categories to add methods that ought to be there in the first place.</p>
-
 
 <p>Here are a few handy categories on NSString that I carry around from project to project:</p>
 
+<div><figure role=code><figcaption><span>NSString+Common.h  </span></figcaption>
+ <div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+<span class='line'>2</span>
+<span class='line'>3</span>
+<span class='line'>4</span>
+<span class='line'>5</span>
+<span class='line'>6</span>
+<span class='line'>7</span>
+<span class='line'>8</span>
+<span class='line'>9</span>
+</pre></td><td class='code' width='100%'><pre><code class='objc'><div class='line'><span class="k">@interface</span> <span class="nc">NSString</span> <span class="nl">(Common)</span>
+</div><div class='line'>
+</div><div class='line'><span class="o">-</span><span class="p">(</span><span class="kt">BOOL</span><span class="p">)</span><span class="n">isBlank</span><span class="p">;</span>
+</div><div class='line'><span class="o">-</span><span class="p">(</span><span class="kt">BOOL</span><span class="p">)</span><span class="nl">contains:</span><span class="p">(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="n">string</span><span class="p">;</span>
+</div><div class='line'><span class="o">-</span><span class="p">(</span><span class="n">NSArray</span> <span class="o">*</span><span class="p">)</span><span class="nl">splitOnChar:</span><span class="p">(</span><span class="kt">char</span><span class="p">)</span><span class="n">ch</span><span class="p">;</span>
+</div><div class='line'><span class="o">-</span><span class="p">(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="nl">substringFrom:</span><span class="p">(</span><span class="n">NSInteger</span><span class="p">)</span><span class="n">from</span> <span class="nl">to:</span><span class="p">(</span><span class="n">NSInteger</span><span class="p">)</span><span class="n">to</span><span class="p">;</span>
+</div><div class='line'><span class="o">-</span><span class="p">(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="n">stringByStrippingWhitespace</span><span class="p">;</span>
+</div><div class='line'>
+</div><div class='line'><span class="k">@end</span>
+</div></code></pre></td></tr></table></div></figure></div>
 
-<p><code>&lt;strong&gt;NSString+Common.h&lt;/strong&gt;</code></p>
-
-<div><figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
-</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>#import &lt;br />@interface NSString (Common)&lt;br />-(BOOL)isBlank;&lt;br />-(BOOL)contains:(NSString *)string;&lt;br />-(NSArray *)splitOnChar:(char)ch;&lt;br />-(NSString *)substringFrom:(NSInteger)from to:(NSInteger)to;&lt;br />-(NSString *)stringByStrippingWhitespace;&lt;br />@end</div></code></pre></td></tr></table></div></figure></div>
 
 
-<p><code>&lt;strong&gt;NSString+Common.m&lt;/strong&gt;</code></p>
 
-<div><figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
-</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>#import "NSString+Common.h";&lt;br />@implementation NSString (Common)&lt;br />-(BOOL)isBlank {&lt;br />      if([[self stringByStrippingWhitespace] isEqualToString:@""])&lt;br />               return YES;&lt;br />        return NO;&lt;br />}&lt;br />-(BOOL)contains:(NSString *)string {&lt;br />        NSRange range = [self rangeOfString:string];&lt;br />       return (range.location != NSNotFound);&lt;br />}&lt;br />-(NSString *)stringByStrippingWhitespace {&lt;br />      return [self stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];&lt;br />}&lt;br />-(NSArray *)splitOnChar:(char)ch {&lt;br />    NSMutableArray *results = [[NSMutableArray alloc] init];&lt;br />   int start = 0;&lt;br />     for(int i=0; i&lt;[self length]; i++) {&lt;br />            &lt;br />           BOOL isAtSplitChar = [self characterAtIndex:i] == ch;&lt;br />              BOOL isAtEnd = i == [self length] - 1;&lt;br />                             &lt;br />           if(isAtSplitChar || isAtEnd) {&lt;br />                     //take the substring &amp; add it to the array&lt;br />                 NSRange range;&lt;br />                     range.location = start;&lt;br />                    range.length = i - start + 1;&lt;br />                      &lt;br />                   if(isAtSplitChar)&lt;br />                          range.length -= 1;&lt;br />                 &lt;br />                   [results addObject:[self substringWithRange:range]];&lt;br />                       start = i + 1;&lt;br />             }&lt;br />          &lt;br />           //handle the case where the last character was the split char.  we need an empty trailing element in the array.&lt;br />            if(isAtEnd &amp;&amp; isAtSplitChar)&lt;br />                       [results addObject:@""];&lt;br />   }&lt;br />  &lt;br />   return [results autorelease];&lt;br />}&lt;br />        &lt;br />-(NSString *)substringFrom:(NSInteger)from to:(NSInteger)to {&lt;br /> NSString *rightPart = [self substringFromIndex:from];&lt;br />      return [rightPart substringToIndex:to-from];&lt;br />}      @end</div></code></pre></td></tr></table></div></figure></div>
-
-
+<div><figure role=code><figcaption><span>NSString+Common.m  </span></figcaption>
+ <div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+<span class='line'>2</span>
+<span class='line'>3</span>
+<span class='line'>4</span>
+<span class='line'>5</span>
+<span class='line'>6</span>
+<span class='line'>7</span>
+<span class='line'>8</span>
+<span class='line'>9</span>
+<span class='line'>10</span>
+<span class='line'>11</span>
+<span class='line'>12</span>
+<span class='line'>13</span>
+<span class='line'>14</span>
+<span class='line'>15</span>
+<span class='line'>16</span>
+<span class='line'>17</span>
+<span class='line'>18</span>
+<span class='line'>19</span>
+<span class='line'>20</span>
+<span class='line'>21</span>
+<span class='line'>22</span>
+<span class='line'>23</span>
+<span class='line'>24</span>
+<span class='line'>25</span>
+<span class='line'>26</span>
+<span class='line'>27</span>
+<span class='line'>28</span>
+<span class='line'>29</span>
+<span class='line'>30</span>
+<span class='line'>31</span>
+<span class='line'>32</span>
+<span class='line'>33</span>
+<span class='line'>34</span>
+<span class='line'>35</span>
+<span class='line'>36</span>
+<span class='line'>37</span>
+<span class='line'>38</span>
+<span class='line'>39</span>
+<span class='line'>40</span>
+<span class='line'>41</span>
+<span class='line'>42</span>
+<span class='line'>43</span>
+<span class='line'>44</span>
+<span class='line'>45</span>
+<span class='line'>46</span>
+<span class='line'>47</span>
+<span class='line'>48</span>
+<span class='line'>49</span>
+<span class='line'>50</span>
+<span class='line'>51</span>
+<span class='line'>52</span>
+</pre></td><td class='code' width='100%'><pre><code class='objc'><div class='line'><span class="cp">#import &quot;NSString+Common.h&quot;;</span>
+</div><div class='line'><span class="k">@implementation</span> <span class="nc">NSString</span> <span class="nl">(Common)</span>
+</div><div class='line'><span class="o">-</span><span class="p">(</span><span class="kt">BOOL</span><span class="p">)</span><span class="n">isBlank</span> <span class="p">{</span>
+</div><div class='line'>  <span class="k">if</span><span class="p">([[</span><span class="n">self</span> <span class="n">stringByStrippingWhitespace</span><span class="p">]</span> <span class="nl">isEqualToString:</span><span class="s">@&quot;&quot;</span><span class="p">])</span>
+</div><div class='line'>    <span class="k">return</span> <span class="n">YES</span><span class="p">;</span>
+</div><div class='line'>  <span class="k">return</span> <span class="n">NO</span><span class="p">;</span>
+</div><div class='line'><span class="p">}</span>
+</div><div class='line'>
+</div><div class='line'><span class="o">-</span><span class="p">(</span><span class="kt">BOOL</span><span class="p">)</span><span class="nl">contains:</span><span class="p">(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="n">string</span> <span class="p">{</span>
+</div><div class='line'>        <span class="n">NSRange</span> <span class="n">range</span> <span class="o">=</span> <span class="p">[</span><span class="n">self</span> <span class="nl">rangeOfString:</span><span class="n">string</span><span class="p">];</span>
+</div><div class='line'>       <span class="k">return</span> <span class="p">(</span><span class="n">range</span><span class="p">.</span><span class="n">location</span> <span class="o">!=</span> <span class="n">NSNotFound</span><span class="p">);</span>
+</div><div class='line'><span class="p">}</span>
+</div><div class='line'>
+</div><div class='line'><span class="o">-</span><span class="p">(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="n">stringByStrippingWhitespace</span> <span class="p">{</span>
+</div><div class='line'>      <span class="k">return</span> <span class="p">[</span><span class="n">self</span> <span class="nl">stringByTrimmingCharactersInSet:</span><span class="p">[</span><span class="n">NSCharacterSet</span> <span class="n">whitespaceAndNewlineCharacterSet</span><span class="p">]];</span>
+</div><div class='line'><span class="p">}</span>
+</div><div class='line'>
+</div><div class='line'><span class="o">-</span><span class="p">(</span><span class="n">NSArray</span> <span class="o">*</span><span class="p">)</span><span class="nl">splitOnChar:</span><span class="p">(</span><span class="kt">char</span><span class="p">)</span><span class="n">ch</span> <span class="p">{</span>
+</div><div class='line'>    <span class="n">NSMutableArray</span> <span class="o">*</span><span class="n">results</span> <span class="o">=</span> <span class="p">[[</span><span class="n">NSMutableArray</span> <span class="n">alloc</span><span class="p">]</span> <span class="n">init</span><span class="p">];</span>
+</div><div class='line'>   <span class="kt">int</span> <span class="n">start</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</div><div class='line'>     <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="n">i</span><span class="o">&amp;</span><span class="n">lt</span><span class="p">;[</span><span class="n">self</span> <span class="n">length</span><span class="p">];</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+</div><div class='line'>
+</div><div class='line'>           <span class="kt">BOOL</span> <span class="n">isAtSplitChar</span> <span class="o">=</span> <span class="p">[</span><span class="n">self</span> <span class="nl">characterAtIndex:</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="n">ch</span><span class="p">;</span>
+</div><div class='line'>              <span class="kt">BOOL</span> <span class="n">isAtEnd</span> <span class="o">=</span> <span class="n">i</span> <span class="o">==</span> <span class="p">[</span><span class="n">self</span> <span class="n">length</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span>
+</div><div class='line'>
+</div><div class='line'>           <span class="k">if</span><span class="p">(</span><span class="n">isAtSplitChar</span> <span class="o">||</span> <span class="n">isAtEnd</span><span class="p">)</span> <span class="p">{</span>
+</div><div class='line'>                     <span class="c1">//take the substring &amp;amp; add it to the array</span>
+</div><div class='line'>                 <span class="n">NSRange</span> <span class="n">range</span><span class="p">;</span>
+</div><div class='line'>                     <span class="n">range</span><span class="p">.</span><span class="n">location</span> <span class="o">=</span> <span class="n">start</span><span class="p">;</span>
+</div><div class='line'>                    <span class="n">range</span><span class="p">.</span><span class="n">length</span> <span class="o">=</span> <span class="n">i</span> <span class="o">-</span> <span class="n">start</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
+</div><div class='line'>
+</div><div class='line'>                   <span class="k">if</span><span class="p">(</span><span class="n">isAtSplitChar</span><span class="p">)</span>
+</div><div class='line'>                          <span class="n">range</span><span class="p">.</span><span class="n">length</span> <span class="o">-=</span> <span class="mi">1</span><span class="p">;</span>
+</div><div class='line'>
+</div><div class='line'>                   <span class="p">[</span><span class="n">results</span> <span class="nl">addObject:</span><span class="p">[</span><span class="n">self</span> <span class="nl">substringWithRange:</span><span class="n">range</span><span class="p">]];</span>
+</div><div class='line'>                       <span class="n">start</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
+</div><div class='line'>             <span class="p">}</span>
+</div><div class='line'>
+</div><div class='line'>           <span class="c1">//handle the case where the last character was the split char.  we need an empty trailing element in the array.</span>
+</div><div class='line'>            <span class="k">if</span><span class="p">(</span><span class="n">isAtEnd</span> <span class="o">&amp;</span><span class="n">amp</span><span class="p">;</span><span class="o">&amp;</span><span class="n">amp</span><span class="p">;</span> <span class="n">isAtSplitChar</span><span class="p">)</span>
+</div><div class='line'>                       <span class="p">[</span><span class="n">results</span> <span class="nl">addObject:</span><span class="s">@&quot;&quot;</span><span class="p">];</span>
+</div><div class='line'>   <span class="p">}</span>
+</div><div class='line'>
+</div><div class='line'>   <span class="k">return</span> <span class="p">[</span><span class="n">results</span> <span class="n">autorelease</span><span class="p">];</span>
+</div><div class='line'><span class="p">}</span>
+</div><div class='line'>
+</div><div class='line'><span class="o">-</span><span class="p">(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="nl">substringFrom:</span><span class="p">(</span><span class="n">NSInteger</span><span class="p">)</span><span class="n">from</span> <span class="nl">to:</span><span class="p">(</span><span class="n">NSInteger</span><span class="p">)</span><span class="n">to</span> <span class="p">{</span>
+</div><div class='line'>  <span class="n">NSString</span> <span class="o">*</span><span class="n">rightPart</span> <span class="o">=</span> <span class="p">[</span><span class="n">self</span> <span class="nl">substringFromIndex:</span><span class="n">from</span><span class="p">];</span>
+</div><div class='line'>  <span class="k">return</span> <span class="p">[</span><span class="n">rightPart</span> <span class="nl">substringToIndex:</span><span class="n">to</span><span class="o">-</span><span class="n">from</span><span class="p">];</span>
+</div><div class='line'><span class="p">}</span>
+</div><div class='line'>
+</div><div class='line'><span class="k">@end</span>
+</div></code></pre></td></tr></table></div></figure></div>
 
 
 <p>To use these new functions, you simply reference the header file and access them as if they were built-in methods on NSString:</p>
 
-
-
-
-<div><figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
-</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>[@"foo.xml" splitOnChar:'.']; // returns NSArray with 2 elements: ["foo", "xml"]</div></code></pre></td></tr></table></div></figure></div>
+<div><figure role=code> <div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+</pre></td><td class='code' width='100%'><pre><code class='objc'><div class='line'><span class="p">[</span><span class="s">@&quot;foo.xml&quot;</span> <span class="nl">splitOnChar:</span><span class="sc">&#39;.&#39;</span><span class="p">];</span> <span class="c1">// returns NSArray with 2 elements: [&quot;foo&quot;, &quot;xml&quot;]</span>
+</div></code></pre></td></tr></table></div></figure></div>
 
 
 
 
-<div><figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
-</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>[@"" isBlank]; // returns YES</div></code></pre></td></tr></table></div></figure></div>
-
-
+<div><figure role=code> <div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+</pre></td><td class='code' width='100%'><pre><code class='objc'><div class='line'><span class="p">[</span><span class="s">@&quot;&quot;</span> <span class="n">isBlank</span><span class="p">];</span> <span class="c1">// returns YES</span>
+</div></code></pre></td></tr></table></div></figure></div>
 
 
 <p>I&#8217;m used to having access to higher level methods like these in C# and Ruby, however in Objective-C they seem to be oddly missing. Thankfully Categories can fill this gap for now.</p>
-
 </div>
 
 
