@@ -86,7 +86,11 @@
 </form>
 <ul role=main-navigation>
   <li><a href="/">Blog</a></li>
+  <li><a href="/about-me">About Me</a></li>
+  <li><a href="/speaking">Speaking</a></li>
+  <li><a href="/contact">Contact</a></li>
   <li><a href="/blog/archives">Archives</a></li>
+
 </ul>
 
 </nav>
@@ -113,78 +117,170 @@
   </header>
 
 
-<div class="entry-content"><p>I&#8217;ll let the code speak for itself:
-{% codeblock %}
-class Animal
-def sound
-puts &#8216;A non-descript sound is emitted from the animal&#8217;
-end
-end
-class Frog &lt; Animal
-def sound
-puts &#8216;Ribbit!&#8217;
-end
-end
-class Cat &lt; Animal
-def sound
-puts &#8216;Meow!&#8217;
-end
-end
-class Person
-attr_accessor :name
-def initialize(name)
-@injured = false
-@name = name
-end
-def injure!(by = nil)
-print &#8220;#{name}: Help I&#8217;m being attacked&#8221;
-print &#8221; by a #{by.class}&#8221; if by
-print &#8216;!&#8217;
-puts
-@injured = true
-end
-def injured?
-@injured
-end
-end
-module Aggression
-def self.apply_to_all_animals
-animal_classes = Module.constants.map { |x| Module.const_get(x) }.select { |x| x.respond_to?(:superclass) &amp;&amp; x.superclass == Animal }
-animal_classes.each do |animal_class|
-animal_class.module_eval do
-include Aggression
-end
-end
-end
-def attack(person)
-sound
-puts &#8221;<em>Munch</em>&#8221;
-person.injure!(self)
-sound
-puts
-end
-end
-bonsai = Cat.new
-brian = Frog.new
-people = [Person.new(&#8216;Ollie&#8217;), Person.new(&#8216;manitoba98&#8217;)]
-begin
-bonsai.attack(people[0])
-rescue => e
-puts &#8216;Aww bonsai isn&#39;t capable of agressition. How cute&#8217;
-end
-begin
-brian.attack(people[0])
-rescue => e
-puts &#8216;Nor is brian awwww&#8217;
-end
-puts</p>
+<div class="entry-content"><p>I&#8217;ll let the code speak for itself:</p>
 
-<h1>and then god said:</h1>
+<div><figure role=code> <div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+<span class='line'>2</span>
+<span class='line'>3</span>
+<span class='line'>4</span>
+<span class='line'>5</span>
+<span class='line'>6</span>
+<span class='line'>7</span>
+<span class='line'>8</span>
+<span class='line'>9</span>
+<span class='line'>10</span>
+<span class='line'>11</span>
+<span class='line'>12</span>
+<span class='line'>13</span>
+<span class='line'>14</span>
+<span class='line'>15</span>
+<span class='line'>16</span>
+<span class='line'>17</span>
+<span class='line'>18</span>
+<span class='line'>19</span>
+<span class='line'>20</span>
+<span class='line'>21</span>
+<span class='line'>22</span>
+<span class='line'>23</span>
+<span class='line'>24</span>
+<span class='line'>25</span>
+<span class='line'>26</span>
+<span class='line'>27</span>
+<span class='line'>28</span>
+<span class='line'>29</span>
+<span class='line'>30</span>
+<span class='line'>31</span>
+<span class='line'>32</span>
+<span class='line'>33</span>
+<span class='line'>34</span>
+<span class='line'>35</span>
+<span class='line'>36</span>
+<span class='line'>37</span>
+<span class='line'>38</span>
+<span class='line'>39</span>
+<span class='line'>40</span>
+<span class='line'>41</span>
+<span class='line'>42</span>
+<span class='line'>43</span>
+<span class='line'>44</span>
+<span class='line'>45</span>
+<span class='line'>46</span>
+<span class='line'>47</span>
+<span class='line'>48</span>
+<span class='line'>49</span>
+<span class='line'>50</span>
+<span class='line'>51</span>
+<span class='line'>52</span>
+<span class='line'>53</span>
+<span class='line'>54</span>
+<span class='line'>55</span>
+<span class='line'>56</span>
+<span class='line'>57</span>
+<span class='line'>58</span>
+<span class='line'>59</span>
+<span class='line'>60</span>
+<span class='line'>61</span>
+<span class='line'>62</span>
+<span class='line'>63</span>
+<span class='line'>64</span>
+<span class='line'>65</span>
+<span class='line'>66</span>
+<span class='line'>67</span>
+<span class='line'>68</span>
+<span class='line'>69</span>
+<span class='line'>70</span>
+<span class='line'>71</span>
+<span class='line'>72</span>
+<span class='line'>73</span>
+<span class='line'>74</span>
+<span class='line'>75</span>
+<span class='line'>76</span>
+<span class='line'>77</span>
+<span class='line'>78</span>
+<span class='line'>79</span>
+</pre></td><td class='code' width='100%'><pre><code class='ruby'><div class='line'><span class="k">class</span> <span class="nc">Animal</span>
+</div><div class='line'>  <span class="k">def</span> <span class="nf">sound</span>
+</div><div class='line'>    <span class="nb">puts</span> <span class="s1">&#39;A non-descript sound is emitted from the animal&#39;</span>
+</div><div class='line'>  <span class="k">end</span>
+</div><div class='line'><span class="k">end</span>
+</div><div class='line'>
+</div><div class='line'><span class="k">class</span> <span class="nc">Frog</span> <span class="o">&lt;</span> <span class="no">Animal</span>
+</div><div class='line'>  <span class="k">def</span> <span class="nf">sound</span>
+</div><div class='line'>    <span class="nb">puts</span> <span class="s1">&#39;Ribbit!&#39;</span>
+</div><div class='line'>  <span class="k">end</span>
+</div><div class='line'><span class="k">end</span>
+</div><div class='line'>
+</div><div class='line'><span class="k">class</span> <span class="nc">Cat</span> <span class="o">&lt;</span> <span class="no">Animal</span>
+</div><div class='line'>  <span class="k">def</span> <span class="nf">sound</span>
+</div><div class='line'>    <span class="nb">puts</span> <span class="s1">&#39;Meow!&#39;</span>
+</div><div class='line'>  <span class="k">end</span>
+</div><div class='line'><span class="k">end</span>
+</div><div class='line'>
+</div><div class='line'><span class="k">class</span> <span class="nc">Person</span>
+</div><div class='line'>  <span class="kp">attr_accessor</span> <span class="ss">:name</span>
+</div><div class='line'>  <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="nb">name</span><span class="p">)</span>
+</div><div class='line'>    <span class="vi">@injured</span> <span class="o">=</span> <span class="kp">false</span>
+</div><div class='line'>    <span class="vi">@name</span> <span class="o">=</span> <span class="nb">name</span>
+</div><div class='line'>  <span class="k">end</span>
+</div><div class='line'>
+</div><div class='line'>  <span class="k">def</span> <span class="nf">injure!</span><span class="p">(</span><span class="n">by</span> <span class="o">=</span> <span class="kp">nil</span><span class="p">)</span>
+</div><div class='line'>    <span class="nb">print</span> <span class="s2">&quot;</span><span class="si">#{</span><span class="nb">name</span><span class="si">}</span><span class="s2">: Help I&#39;m being attacked&quot;</span>
+</div><div class='line'>    <span class="nb">print</span> <span class="s2">&quot; by a </span><span class="si">#{</span><span class="n">by</span><span class="o">.</span><span class="n">class</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">if</span> <span class="n">by</span>
+</div><div class='line'>    <span class="nb">print</span> <span class="s1">&#39;!&#39;</span>
+</div><div class='line'>    <span class="nb">puts</span>
+</div><div class='line'>    <span class="vi">@injured</span> <span class="o">=</span> <span class="kp">true</span>
+</div><div class='line'>  <span class="k">end</span>
+</div><div class='line'>
+</div><div class='line'>  <span class="k">def</span> <span class="nf">injured?</span>
+</div><div class='line'>    <span class="vi">@injured</span>
+</div><div class='line'>  <span class="k">end</span>
+</div><div class='line'><span class="k">end</span>
+</div><div class='line'>
+</div><div class='line'><span class="k">module</span> <span class="nn">Aggression</span>
+</div><div class='line'>  <span class="k">def</span> <span class="nc">self</span><span class="o">.</span><span class="nf">apply_to_all_animals</span>
+</div><div class='line'>    <span class="n">animal_classes</span> <span class="o">=</span> <span class="no">Module</span><span class="o">.</span><span class="n">constants</span><span class="o">.</span><span class="n">map</span> <span class="p">{</span> <span class="o">|</span><span class="n">x</span><span class="o">|</span>
+</div><div class='line'>      <span class="no">Module</span><span class="o">.</span><span class="n">const_get</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="p">}</span><span class="o">.</span><span class="n">select</span> <span class="p">{</span> <span class="o">|</span><span class="n">x</span><span class="o">|</span>
+</div><div class='line'>        <span class="n">x</span><span class="o">.</span><span class="n">respond_to?</span><span class="p">(</span><span class="ss">:superclass</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="n">x</span><span class="o">.</span><span class="n">superclass</span> <span class="o">==</span> <span class="no">Animal</span> <span class="p">}</span>
+</div><div class='line'>    <span class="n">animal_classes</span><span class="o">.</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">animal_class</span><span class="o">|</span>
+</div><div class='line'>      <span class="n">animal_class</span><span class="o">.</span><span class="n">module_eval</span> <span class="k">do</span>
+</div><div class='line'>        <span class="kp">include</span> <span class="no">Aggression</span>
+</div><div class='line'>      <span class="k">end</span>
+</div><div class='line'>    <span class="k">end</span>
+</div><div class='line'>  <span class="k">end</span>
+</div><div class='line'>
+</div><div class='line'>  <span class="k">def</span> <span class="nf">attack</span><span class="p">(</span><span class="n">person</span><span class="p">)</span>
+</div><div class='line'>    <span class="n">sound</span>
+</div><div class='line'>    <span class="nb">puts</span> <span class="s2">&quot;*Munch*&quot;</span>
+</div><div class='line'>    <span class="n">person</span><span class="o">.</span><span class="n">injure!</span><span class="p">(</span><span class="nb">self</span><span class="p">)</span>
+</div><div class='line'>    <span class="n">sound</span>
+</div><div class='line'>    <span class="nb">puts</span>
+</div><div class='line'>  <span class="k">end</span>
+</div><div class='line'><span class="k">end</span>
+</div><div class='line'>
+</div><div class='line'><span class="n">bonsai</span> <span class="o">=</span> <span class="no">Cat</span><span class="o">.</span><span class="n">new</span>
+</div><div class='line'><span class="n">brian</span> <span class="o">=</span> <span class="no">Frog</span><span class="o">.</span><span class="n">new</span>
+</div><div class='line'><span class="n">people</span> <span class="o">=</span> <span class="o">[</span><span class="no">Person</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s1">&#39;Ollie&#39;</span><span class="p">),</span> <span class="no">Person</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s1">&#39;manitoba98&#39;</span><span class="p">)</span><span class="o">]</span>
+</div><div class='line'><span class="k">begin</span>
+</div><div class='line'>  <span class="n">bonsai</span><span class="o">.</span><span class="n">attack</span><span class="p">(</span><span class="n">people</span><span class="o">[</span><span class="mi">0</span><span class="o">]</span><span class="p">)</span>
+</div><div class='line'><span class="k">rescue</span> <span class="o">=&gt;</span> <span class="n">e</span>
+</div><div class='line'>  <span class="nb">puts</span> <span class="s1">&#39;Aww bonsai isn\&#39;t capable of agressition. How cute&#39;</span>
+</div><div class='line'><span class="k">end</span>
+</div><div class='line'>
+</div><div class='line'><span class="k">begin</span>
+</div><div class='line'>  <span class="n">brian</span><span class="o">.</span><span class="n">attack</span><span class="p">(</span><span class="n">people</span><span class="o">[</span><span class="mi">0</span><span class="o">]</span><span class="p">)</span>
+</div><div class='line'><span class="k">rescue</span> <span class="o">=&gt;</span> <span class="n">e</span>
+</div><div class='line'>  <span class="nb">puts</span> <span class="s1">&#39;Nor is brian awwww&#39;</span>
+</div><div class='line'><span class="k">end</span>
+</div><div class='line'><span class="nb">puts</span>
+</div><div class='line'>
+</div><div class='line'><span class="c1"># and then god said:</span>
+</div><div class='line'><span class="no">Aggression</span><span class="o">.</span><span class="n">apply_to_all_animals</span>
+</div><div class='line'><span class="n">bonsai</span><span class="o">.</span><span class="n">attack</span><span class="p">(</span><span class="n">people</span><span class="o">[</span><span class="mi">0</span><span class="o">]</span><span class="p">)</span>
+</div><div class='line'><span class="n">brian</span><span class="o">.</span><span class="n">attack</span><span class="p">(</span><span class="n">people</span><span class="o">[</span><span class="mi">1</span><span class="o">]</span><span class="p">)</span>
+</div></code></pre></td></tr></table></div></figure></div>
 
-<p>Aggression.apply_to_all_animals
-bonsai.attack(people[0])
-brian.attack(people[1])
-{% endcodeblock %}</p>
+
+
 
 <p>
 Output:
@@ -202,9 +298,12 @@ Ribbit!
 *Munch*
 manitoba98: Help I'm being attacked by a Frog!
 Ribbit!
-{% endcodeblock %}
-Found <a href="">here</a>.
-<p>Needless to say, I'm really enjoying Ruby.</p>
+</pre>
+
+
+
+
+<p>Needless to say, I&#8217;m really enjoying Ruby.</p>
 
 </div>
 

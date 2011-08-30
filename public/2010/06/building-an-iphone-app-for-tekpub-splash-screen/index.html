@@ -86,7 +86,11 @@
 </form>
 <ul role=main-navigation>
   <li><a href="/">Blog</a></li>
+  <li><a href="/about-me">About Me</a></li>
+  <li><a href="/speaking">Speaking</a></li>
+  <li><a href="/contact">Contact</a></li>
   <li><a href="/blog/archives">Archives</a></li>
+
 </ul>
 
 </nav>
@@ -134,47 +138,86 @@
 <p>The root controller is called SplashScreenController.  It handles the asynchronous data loading, utilizes a progress bar so it doesn&#8217;t feel like the app is doing nothing, and notifies the Application Delegate once it is done loading.</p>
 
 
-<p>{% codeblock %}<span style="font-family: Menlo; font-size: 11px;"><span style="color: #b930a1;">@implementation</span> SplashScreenController</span>{% endcodeblock %}
-{% codeblock %}<br />{% endcodeblock %}
-{% codeblock %}-(<span style="color: #b930a1;">void</span>)viewDidLoad {{% endcodeblock %}
-{% codeblock %}<span style="color: #000000;"><span style="white-space: pre;"> </span></span><span style="color: #7140a7;">UIProgressView</span><span style="color: #000000;"> <em>progressView = [[[</span><span style="color: #7140a7;">UIProgressView</span><span style="color: #000000;"> </span>alloc<span style="color: #000000;">] </span>initWithProgressViewStyle<span style="color: #000000;">:</span>UIProgressViewStyleBar<span style="color: #000000;">] </span>autorelease<span style="color: #000000;">];</span>{% endcodeblock %}
-{% codeblock %}<span style="white-space: pre;"> </span><span style="color: #b930a1;">int</span> width = <span style="color: #3031d5;">200</span>;{% endcodeblock %}
-{% codeblock %}<span style="white-space: pre;"> </span>progressView.<span style="color: #7140a7;">frame</span> = <span style="color: #3e217f;">CGRectMake</span>((<span style="color: #3031d5;">320</span>-width)/<span style="color: #3031d5;">2</span>, (<span style="color: #3031d5;">480</span>-<span style="color: #3031d5;">10</span>)/<span style="color: #3031d5;">2</span> + <span style="color: #3031d5;">20</span>, width, <span style="color: #3031d5;">10</span>);{% endcodeblock %}
-{% codeblock %}<span style="white-space: pre;"> </span>[<span style="color: #b930a1;">self</span>.<span style="color: #7140a7;">view</span> <span style="color: #3e217f;">addSubview</span>:progressView];{% endcodeblock %}
-{% codeblock %}<span style="white-space: pre;"> </span>{% endcodeblock %}
-{% codeblock %}<span style="white-space: pre;"> </span><span style="color: #7140a7;">UILabel</span> </em>label = [[[<span style="color: #7140a7;">UILabel</span> <span style="color: #3e217f;">alloc</span>] <span style="color: #3e217f;">initWithFrame</span>:<span style="color: #3e217f;">CGRectMake</span>((<span style="color: #3031d5;">320</span>-width)/<span style="color: #3031d5;">2</span>, (<span style="color: #3031d5;">480</span>-<span style="color: #3031d5;">10</span>)/<span style="color: #3031d5;">2</span>, width, <span style="color: #3031d5;">20</span>)] <span style="color: #3e217f;">autorelease</span>];{% endcodeblock %}
-{% codeblock %}<span style="white-space: pre;"> </span>label.<span style="color: #7140a7;">font</span> = [<span style="color: #7140a7;">UIFont</span> <span style="color: #3e217f;">fontWithName</span>:<span style="color: #ce2f24;">@&#8221;Courier&#8221;</span> <span style="color: #3e217f;">size</span>:<span style="color: #3031d5;">12</span>];{% endcodeblock %}
-{% codeblock %}<span style="color: #000000;"><span style="white-space: pre;"> </span>label.</span>backgroundColor<span style="color: #000000;"> = [</span>UIColor<span style="color: #000000;"> </span><span style="color: #3e217f;">clearColor</span><span style="color: #000000;">];</span>{% endcodeblock %}
-{% codeblock %}<span style="color: #000000;"><span style="white-space: pre;"> </span>label.</span>textColor<span style="color: #000000;"> = [</span>UIColor<span style="color: #000000;"> </span><span style="color: #3e217f;">darkGrayColor</span><span style="color: #000000;">];</span>{% endcodeblock %}
-{% codeblock %}<span style="color: #000000;"><span style="white-space: pre;"> </span>label.</span><span style="color: #7140a7;">textAlignment</span><span style="color: #000000;"> = </span>UITextAlignmentCenter<span style="color: #000000;">;</span>{% endcodeblock %}
-{% codeblock %}<span style="color: #000000;"><span style="white-space: pre;"> </span>label.</span><span style="color: #7140a7;">text</span><span style="color: #000000;"> = </span>@&#8221;Preparing the awesome &#8230;&#8221;<span style="color: #000000;">;</span>{% endcodeblock %}
-{% codeblock %}<span style="white-space: pre;"> </span>[<span style="color: #b930a1;">self</span>.<span style="color: #7140a7;">view</span> <span style="color: #3e217f;">addSubview</span>:label];{% endcodeblock %}
-{% codeblock %}<span style="white-space: pre;"> </span>{% endcodeblock %}
-{% codeblock %}<span style="color: #000000;"><span style="white-space: pre;"> </span></span>proxy<span style="color: #000000;"> = [[</span>TekpubProxy<span style="color: #000000;"> </span><span style="color: #3e217f;">alloc</span><span style="color: #000000;">] </span><span style="color: #3e217f;">init</span><span style="color: #000000;">];</span>{% endcodeblock %}
-{% codeblock %}<span style="color: #000000;"><span style="white-space: pre;"> </span></span><span style="color: #518187;">proxy</span><span style="color: #000000;">.</span>delegate<span style="color: #000000;"> = </span><span style="color: #b930a1;">self</span><span style="color: #000000;">;</span>{% endcodeblock %}
-{% codeblock %}<span style="color: #000000;"><span style="white-space: pre;"> </span></span>proxy<span style="color: #000000;">.</span>progressDelegate<span style="color: #000000;"> = progressView;</span>{% endcodeblock %}
-{% codeblock %}<span style="color: #000000;"><span style="white-space: pre;"> </span>[</span><span style="color: #518187;">proxy</span><span style="color: #000000;"> </span>asyncUpdateProductions<span style="color: #000000;">];</span>{% endcodeblock %}
-{% codeblock %}}{% endcodeblock %}
-{% codeblock %}<br />{% endcodeblock %}
-{% codeblock %}- (<span style="color: #b930a1;">void</span>)doneUpdatingProductions {{% endcodeblock %}
-{% codeblock %}<span style="color: #000000;"><span style="white-space: pre;"> </span></span><span style="color: #518187;">proxy</span><span style="color: #000000;">.</span>delegate<span style="color: #000000;"> = </span><span style="color: #b930a1;">nil</span><span style="color: #000000;">;</span>{% endcodeblock %}
-{% codeblock %}<span style="color: #000000;"><span style="white-space: pre;"> </span></span>proxy<span style="color: #000000;">.</span>progressDelegate<span style="color: #000000;"> = </span><span style="color: #b930a1;">nil</span><span style="color: #000000;">;</span>{% endcodeblock %}
-{% codeblock %}<span style="color: #000000;"><span style="white-space: pre;"> </span>[</span><span style="color: #518187;">proxy</span><span style="color: #000000;"> </span>release<span style="color: #000000;">];</span>{% endcodeblock %}
-{% codeblock %}<br />{% endcodeblock %}
-{% codeblock %}<span style="white-space: pre;"> </span><span style="color: #518187;">tekpubAppDelegate</span> <em>appDelegate = (<span style="color: #518187;">tekpubAppDelegate</span> </em>)[[<span style="color: #7140a7;">UIApplication</span> <span style="color: #3e217f;">sharedApplication</span>] delegate];{% endcodeblock %}
-{% codeblock %}<span style="white-space: pre;"> </span>[appDelegate <span style="color: #33595d;">doneLoading</span>];{% endcodeblock %}
-{% codeblock %}}{% endcodeblock %}
-{% codeblock %}<br />{% endcodeblock %}
-{% codeblock %}- (<span style="color: #b930a1;">void</span>)failedUpatingProductions {{% endcodeblock %}
-{% codeblock %}<span style="color: #000000;"><span style="white-space: pre;"> </span></span>UIAlertView<span style="color: #000000;"> *alert = [[[</span>UIAlertView<span style="color: #000000;"> </span><span style="color: #3e217f;">alloc</span><span style="color: #000000;">] </span><span style="color: #3e217f;">initWithTitle</span><span style="color: #000000;">:</span><span style="color: #ce2f24;">@&#8221;Error connecting!&#8221;</span>{% endcodeblock %}
-{% codeblock %}<span style="color: #000000;"><span style="white-space: pre;"> </span> </span><span style="color: #3e217f;">message</span><span style="color: #000000;">:</span>@&#8221;We couldn&#8217;t fetch the <code>awesome</code> from tekpub.com.  Are you connected to the internet?&#8221;{% endcodeblock %}
-{% codeblock %}<span style="color: #000000;"><span style="white-space: pre;"> </span></span>delegate<span style="color: #000000;">:</span><span style="color: #b930a1;">nil</span><span style="color: #000000;"> </span>{% endcodeblock %}
-{% codeblock %}<span style="color: #000000;"> </span>cancelButtonTitle<span style="color: #000000;">:</span><span style="color: #ce2f24;">@&#8221;OK&#8221;</span><span style="color: #000000;"> </span>otherButtonTitles<span style="color: #000000;">:</span><span style="color: #b930a1;">nil</span><span style="color: #000000;">] </span>autorelease<span style="color: #000000;">];</span>{% endcodeblock %}
-{% codeblock %}<span style="white-space: pre;"> </span>[alert <span style="color: #3e217f;">show</span>];{% endcodeblock %}
-{% codeblock %}}{% endcodeblock %}
-{% codeblock %}<br />{% endcodeblock %}
-{% codeblock %}<br />{% endcodeblock %}
-{% codeblock %}@end{% endcodeblock %}</p>
+
+
+<div><figure role=code> <div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+<span class='line'>2</span>
+<span class='line'>3</span>
+<span class='line'>4</span>
+<span class='line'>5</span>
+<span class='line'>6</span>
+<span class='line'>7</span>
+<span class='line'>8</span>
+<span class='line'>9</span>
+<span class='line'>10</span>
+<span class='line'>11</span>
+<span class='line'>12</span>
+<span class='line'>13</span>
+<span class='line'>14</span>
+<span class='line'>15</span>
+<span class='line'>16</span>
+<span class='line'>17</span>
+<span class='line'>18</span>
+<span class='line'>19</span>
+<span class='line'>20</span>
+<span class='line'>21</span>
+<span class='line'>22</span>
+<span class='line'>23</span>
+<span class='line'>24</span>
+<span class='line'>25</span>
+<span class='line'>26</span>
+<span class='line'>27</span>
+<span class='line'>28</span>
+<span class='line'>29</span>
+<span class='line'>30</span>
+<span class='line'>31</span>
+<span class='line'>32</span>
+<span class='line'>33</span>
+<span class='line'>34</span>
+<span class='line'>35</span>
+<span class='line'>36</span>
+<span class='line'>37</span>
+</pre></td><td class='code' width='100%'><pre><code class='objc'><div class='line'><span class="k">@implementation</span> <span class="nc">SplashScreenController</span>
+</div><div class='line'><span class="o">-</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">viewDidLoad</span> <span class="p">{</span>
+</div><div class='line'>  <span class="n">UIProgressView</span> <span class="o">*</span><span class="n">progressView</span> <span class="o">=</span> <span class="p">[[[</span><span class="n">UIProgressView</span> <span class="n">alloc</span><span class="p">]</span> <span class="nl">initWithProgressViewStyle:</span><span class="n">UIProgressViewStyleBar</span><span class="p">]</span> <span class="n">autorelease</span><span class="p">];</span>
+</div><div class='line'>  <span class="kt">int</span> <span class="n">width</span> <span class="o">=</span> <span class="mi">200</span><span class="p">;</span>
+</div><div class='line'>  <span class="n">progressView</span><span class="p">.</span><span class="n">frame</span> <span class="o">=</span> <span class="n">CGRectMake</span><span class="p">((</span><span class="mi">320</span><span class="o">-</span><span class="n">width</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="p">(</span><span class="mi">480</span><span class="o">-</span><span class="mi">10</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span> <span class="o">+</span> <span class="mi">20</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="mi">10</span><span class="p">);</span>
+</div><div class='line'>  <span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">view</span> <span class="nl">addSubview:</span><span class="n">progressView</span><span class="p">];</span>
+</div><div class='line'>
+</div><div class='line'>  <span class="n">UILabel</span> <span class="o">*</span><span class="n">label</span> <span class="o">=</span> <span class="p">[[[</span><span class="n">UILabel</span> <span class="n">alloc</span><span class="p">]</span> <span class="nl">initWithFrame:</span><span class="n">CGRectMake</span><span class="p">((</span><span class="mi">320</span><span class="o">-</span><span class="n">width</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="p">(</span><span class="mi">480</span><span class="o">-</span><span class="mi">10</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="mi">20</span><span class="p">)]</span> <span class="n">autorelease</span><span class="p">];</span>
+</div><div class='line'>  <span class="n">label</span><span class="p">.</span><span class="n">font</span> <span class="o">=</span> <span class="p">[</span><span class="n">UIFont</span> <span class="nl">fontWithName:</span><span class="s">@&quot;Courier&quot;</span> <span class="nl">size:</span><span class="mi">12</span><span class="p">];</span>
+</div><div class='line'>  <span class="n">label</span><span class="p">.</span><span class="n">backgroundColor</span> <span class="o">=</span> <span class="p">[</span><span class="n">UIColor</span> <span class="n">clearColor</span><span class="p">];</span>
+</div><div class='line'>  <span class="n">label</span><span class="p">.</span><span class="n">textColor</span> <span class="o">=</span> <span class="p">[</span><span class="n">UIColor</span> <span class="n">darkGrayColor</span><span class="p">];</span>
+</div><div class='line'>  <span class="n">label</span><span class="p">.</span><span class="n">textAlignment</span> <span class="o">=</span> <span class="n">UITextAlignmentCenter</span><span class="p">;</span>
+</div><div class='line'>  <span class="n">label</span><span class="p">.</span><span class="n">text</span> <span class="o">=</span> <span class="s">@&quot;Preparing the awesome ...&quot;</span><span class="p">;</span>
+</div><div class='line'>  <span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">view</span> <span class="nl">addSubview:</span><span class="n">label</span><span class="p">];</span>
+</div><div class='line'>
+</div><div class='line'>  <span class="n">proxy</span> <span class="o">=</span> <span class="p">[[</span><span class="n">TekpubProxy</span> <span class="n">alloc</span><span class="p">]</span> <span class="n">init</span><span class="p">];</span>
+</div><div class='line'>  <span class="n">proxy</span><span class="p">.</span><span class="n">delegate</span> <span class="o">=</span> <span class="n">self</span><span class="p">;</span>
+</div><div class='line'>  <span class="n">proxy</span><span class="p">.</span><span class="n">progressDelegate</span> <span class="o">=</span> <span class="n">progressView</span><span class="p">;</span>
+</div><div class='line'>  <span class="p">[</span><span class="n">proxy</span> <span class="n">asyncUpdateProductions</span><span class="p">];</span>
+</div><div class='line'><span class="p">}</span>
+</div><div class='line'>
+</div><div class='line'><span class="o">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">doneUpdatingProductions</span> <span class="p">{</span>
+</div><div class='line'>  <span class="n">proxy</span><span class="p">.</span><span class="n">delegate</span> <span class="o">=</span> <span class="nb">nil</span><span class="p">;</span>
+</div><div class='line'>  <span class="n">proxy</span><span class="p">.</span><span class="n">progressDelegate</span> <span class="o">=</span> <span class="nb">nil</span><span class="p">;</span>
+</div><div class='line'>  <span class="p">[</span><span class="n">proxy</span> <span class="n">release</span><span class="p">];</span>
+</div><div class='line'>  <span class="n">tekpubAppDelegate</span> <span class="o">*</span><span class="n">appDelegate</span> <span class="o">=</span> <span class="p">(</span><span class="n">tekpubAppDelegate</span> <span class="o">*</span><span class="p">)[[</span><span class="n">UIApplication</span> <span class="n">sharedApplication</span><span class="p">]</span> <span class="n">delegate</span><span class="p">];</span>
+</div><div class='line'>  <span class="p">[</span><span class="n">appDelegate</span> <span class="n">doneLoading</span><span class="p">];</span>
+</div><div class='line'><span class="p">}</span>
+</div><div class='line'>
+</div><div class='line'><span class="o">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">failedUpatingProductions</span> <span class="p">{</span>
+</div><div class='line'>  <span class="n">UIAlertView</span> <span class="o">*</span><span class="n">alert</span> <span class="o">=</span> <span class="p">[[[</span><span class="n">UIAlertView</span> <span class="n">alloc</span><span class="p">]</span> <span class="nl">initWithTitle:</span><span class="s">@&quot;Error connecting!&quot;</span>
+</div><div class='line'>    <span class="nl">message:</span><span class="s">@&quot;We couldn&#39;t fetch the `awesome` from tekpub.com.  Are you connected to the internet?&quot;</span>
+</div><div class='line'>    <span class="nl">delegate:</span><span class="nb">nil</span>
+</div><div class='line'>    <span class="nl">cancelButtonTitle:</span><span class="s">@&quot;OK&quot;</span> <span class="nl">otherButtonTitles:</span><span class="nb">nil</span><span class="p">]</span> <span class="n">autorelease</span><span class="p">];</span>
+</div><div class='line'>  <span class="p">[</span><span class="n">alert</span> <span class="n">show</span><span class="p">];</span>
+</div><div class='line'><span class="p">}</span>
+</div><div class='line'><span class="k">@end</span>
+</div></code></pre></td></tr></table></div></figure></div>
+
+
+
 
 <p>The first few lines of code simply set up some UI elements that weren&#8217;t part of the NIB file.  Doing it this way is certainly a matter of preference, and I find that occasionally building UI controls is easier than in Interface Builder.</p>
 
@@ -188,42 +231,64 @@
 <p>Here is the AppDelegate class:</p>
 
 
-<p>{% codeblock %}<span style="font-family: Menlo; font-size: 11px;"><span style="color: #b930a1;">@implementation</span> tekpubAppDelegate</span>{% endcodeblock %}
-{% codeblock %}<br />{% endcodeblock %}
-{% codeblock %}@synthesize<span style="color: #000000;"> window;</span>{% endcodeblock %}
-{% codeblock %}<span style="color: #b930a1;">@synthesize</span> splashScreenController;{% endcodeblock %}
-{% codeblock %}<br />{% endcodeblock %}
-{% codeblock %}<br />{% endcodeblock %}
-{% codeblock %}- (<span style="color: #b930a1;">void</span>)applicationDidFinishLaunching:(<span style="color: #7140a7;">UIApplication</span> <em>)application {{% endcodeblock %}
-{% codeblock %}<br />{% endcodeblock %}
-{% codeblock %}<span style="color: #000000;"> </span>// Add the tab bar controller&#8217;s current view as a subview of the window{% endcodeblock %}
-{% codeblock %}<span style="color: #000000;"> [</span>window<span style="color: #000000;"> </span><span style="color: #3e217f;">addSubview</span><span style="color: #000000;">:</span>splashScreenController<span style="color: #000000;">.</span><span style="color: #3e217f;">view</span><span style="color: #000000;">];</span>{% endcodeblock %}
-{% codeblock %}}{% endcodeblock %}
-{% codeblock %}<br />{% endcodeblock %}
-{% codeblock %}-(<span style="color: #b930a1;">void</span>)doneLoading {{% endcodeblock %}
-{% codeblock %}<span style="white-space: pre;"> </span>{% endcodeblock %}
-{% codeblock %}<span style="color: #000000;"><span style="white-space: pre;"> </span></span>ProductionsController<span style="color: #000000;"> </em>controller = [[</span>ProductionsController<span style="color: #000000;"> </span><span style="color: #3e217f;">alloc</span><span style="color: #000000;">] </span><span style="color: #3e217f;">initWithStyle</span><span style="color: #000000;">:</span><span style="color: #3e217f;">UITableViewStylePlain</span><span style="color: #000000;">];</span>{% endcodeblock %}
-{% codeblock %}<span style="color: #000000;"><span style="white-space: pre;"> </span></span><span style="color: #518187;">navController</span><span style="color: #000000;"> = [[</span><span style="color: #7140a7;">UINavigationController</span><span style="color: #000000;"> </span>alloc<span style="color: #000000;">] </span>initWithRootViewController<span style="color: #000000;">:controller];</span>{% endcodeblock %}
-{% codeblock %}<span style="color: #000000;"><span style="white-space: pre;"> </span></span><span style="color: #518187;">navController</span><span style="color: #000000;">.</span>navigationBar<span style="color: #000000;">.</span>tintColor<span style="color: #000000;"> = [</span>UIColor<span style="color: #000000;"> </span><span style="color: #3e217f;">blackColor</span><span style="color: #000000;">];</span>{% endcodeblock %}
-{% codeblock %}<span style="white-space: pre;"> </span>{% endcodeblock %}
-{% codeblock %}<span style="color: #000000;"><span style="white-space: pre;"> </span>[</span>window<span style="color: #000000;"> </span><span style="color: #3e217f;">insertSubview</span><span style="color: #000000;">:</span>navController<span style="color: #000000;">.</span><span style="color: #7140a7;">view</span><span style="color: #000000;"> </span><span style="color: #3e217f;">belowSubview</span><span style="color: #000000;">:</span>splashScreenController<span style="color: #000000;">.</span><span style="color: #3e217f;">view</span><span style="color: #000000;">];</span>{% endcodeblock %}
-{% codeblock %}<span style="white-space: pre;"> </span>{% endcodeblock %}
-{% codeblock %}<span style="color: #000000;"><span style="white-space: pre;"> </span>[</span><span style="color: #7140a7;">UIView</span><span style="color: #000000;"> </span>beginAnimations<span style="color: #000000;">:</span><span style="color: #ce2f24;">@&#8221;fadeIn&#8221;</span><span style="color: #000000;"> </span>context<span style="color: #000000;">:</span><span style="color: #b930a1;">nil</span><span style="color: #000000;">];</span>{% endcodeblock %}
-{% codeblock %}<span style="color: #000000;"><span style="white-space: pre;"> </span>[</span><span style="color: #7140a7;">UIView</span><span style="color: #000000;"> </span>setAnimationDuration<span style="color: #000000;">:</span><span style="color: #3031d5;">1.5</span><span style="color: #000000;">];</span>{% endcodeblock %}
-{% codeblock %}<span style="color: #000000;"><span style="white-space: pre;"> </span></span>splashScreenController<span style="color: #000000;">.</span><span style="color: #7140a7;">view</span><span style="color: #000000;">.</span><span style="color: #7140a7;">alpha</span><span style="color: #000000;"> = </span><span style="color: #3031d5;">0</span><span style="color: #000000;">;</span>{% endcodeblock %}
-{% codeblock %}<br />{% endcodeblock %}
-{% codeblock %}<span style="color: #000000;"><span style="white-space: pre;"> </span>[</span><span style="color: #7140a7;">UIView</span><span style="color: #000000;"> </span>commitAnimations<span style="color: #000000;">];</span>{% endcodeblock %}
-{% codeblock %}<span style="white-space: pre;"> </span>{% endcodeblock %}
-{% codeblock %}<span style="white-space: pre;"> </span>[controller <span style="color: #3e217f;">release</span>];{% endcodeblock %}
-{% codeblock %}}{% endcodeblock %}
-{% codeblock %}<span style="font-family: Menlo; font-size: small;"><span style="font-size: 11px;">﻿</span></span>{% endcodeblock %}
-{% codeblock %}<span style="font-family: Menlo; font-size: small;"><span style="font-size: 11px;"><span style="color: #b930a1;">@end</span></span></span>{% endcodeblock %}</p>
-
-<p>We utilize a nice cross-fade animation to bring the navigation controller stack into view.  The end result is quite nice, and makes the 2-3 second loading time much more bearable.</p>
 
 
-<p><span style="color: #b930a1; font-family: Menlo; font-size: small;"><span style="font-size: 11px;"> <img src="https://flux88.s3.amazonaws.com/images/tekpub-splash.png" alt="tekpub-splash-screen" /></span></span></p>
+<div><figure role=code> <div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+<span class='line'>2</span>
+<span class='line'>3</span>
+<span class='line'>4</span>
+<span class='line'>5</span>
+<span class='line'>6</span>
+<span class='line'>7</span>
+<span class='line'>8</span>
+<span class='line'>9</span>
+<span class='line'>10</span>
+<span class='line'>11</span>
+<span class='line'>12</span>
+<span class='line'>13</span>
+<span class='line'>14</span>
+<span class='line'>15</span>
+<span class='line'>16</span>
+<span class='line'>17</span>
+<span class='line'>18</span>
+<span class='line'>19</span>
+<span class='line'>20</span>
+<span class='line'>21</span>
+<span class='line'>22</span>
+<span class='line'>23</span>
+<span class='line'>24</span>
+<span class='line'>25</span>
+</pre></td><td class='code' width='100%'><pre><code class='objc'><div class='line'><span class="k">@implementation</span> <span class="nc">tekpubAppDelegate</span>
+</div><div class='line'>
+</div><div class='line'><span class="k">@synthesize</span> <span class="n">window</span><span class="p">;</span>
+</div><div class='line'><span class="k">@synthesize</span> <span class="n">splashScreenController</span><span class="p">;</span>
+</div><div class='line'>
+</div><div class='line'><span class="o">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nl">applicationDidFinishLaunching:</span><span class="p">(</span><span class="n">UIApplication</span> <span class="o">*</span><span class="p">)</span><span class="n">application</span> <span class="p">{</span>
+</div><div class='line'>  <span class="c1">// Add the tab bar controller&#39;s current view as a subview of the window</span>
+</div><div class='line'>  <span class="p">[</span><span class="n">window</span> <span class="nl">addSubview:</span><span class="n">splashScreenController</span><span class="p">.</span><span class="n">view</span><span class="p">];</span>
+</div><div class='line'><span class="p">}</span>
+</div><div class='line'>
+</div><div class='line'><span class="o">-</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">doneLoading</span> <span class="p">{</span>
+</div><div class='line'>  <span class="n">ProductionsController</span> <span class="o">*</span><span class="n">controller</span> <span class="o">=</span> <span class="p">[[</span><span class="n">ProductionsController</span> <span class="n">alloc</span><span class="p">]</span> <span class="nl">initWithStyle:</span><span class="n">UITableViewStylePlain</span><span class="p">];</span>
+</div><div class='line'>  <span class="n">navController</span> <span class="o">=</span> <span class="p">[[</span><span class="n">UINavigationController</span> <span class="n">alloc</span><span class="p">]</span> <span class="nl">initWithRootViewController:</span><span class="n">controller</span><span class="p">];</span>
+</div><div class='line'>  <span class="n">navController</span><span class="p">.</span><span class="n">navigationBar</span><span class="p">.</span><span class="n">tintColor</span> <span class="o">=</span> <span class="p">[</span><span class="n">UIColor</span> <span class="n">blackColor</span><span class="p">];</span>
+</div><div class='line'>  <span class="p">[</span><span class="n">window</span> <span class="nl">insertSubview:</span><span class="n">navController</span><span class="p">.</span><span class="n">view</span> <span class="nl">belowSubview:</span><span class="n">splashScreenController</span><span class="p">.</span><span class="n">view</span><span class="p">];</span>
+</div><div class='line'>
+</div><div class='line'>  <span class="p">[</span><span class="n">UIView</span> <span class="nl">beginAnimations:</span><span class="s">@&quot;fadeIn&quot;</span> <span class="nl">context:</span><span class="nb">nil</span><span class="p">];</span>
+</div><div class='line'>  <span class="p">[</span><span class="n">UIView</span> <span class="nl">setAnimationDuration:</span><span class="mf">1.5</span><span class="p">];</span>
+</div><div class='line'>  <span class="n">splashScreenController</span><span class="p">.</span><span class="n">view</span><span class="p">.</span><span class="n">alpha</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</div><div class='line'>  <span class="p">[</span><span class="n">UIView</span> <span class="n">commitAnimations</span><span class="p">];</span>
+</div><div class='line'>
+</div><div class='line'>  <span class="p">[</span><span class="n">controller</span> <span class="n">release</span><span class="p">];</span>
+</div><div class='line'><span class="p">}</span>
+</div><div class='line'>
+</div><div class='line'><span class="k">@end</span>
+</div></code></pre></td></tr></table></div></figure></div>
 
+
+<p>We utilize a nice cross-fade animation to bring the navigation controller stack into view. The end result is quite nice, and makes the 2-3 second loading time much more bearable.</p>
+
+<p><img src="https://flux88.s3.amazonaws.com/images/tekpub-splash.png" alt="tekpub-splash-screen" /></p>
 </div>
 
 

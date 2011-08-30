@@ -1,2 +1,17 @@
 // This File is imported last, and will override other styles in the cascade
 // Add styles here to make changes without digging in too much
+
+table.contact {
+  background-color: #fff;
+  margin: auto;
+  width: 350px;
+  border: solid 1px #ddd;
+
+  tr {
+    border-bottom: solid 1px #ddd;
+  }
+
+  td {
+    padding: 10px;
+  }
+}
