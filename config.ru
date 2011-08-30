@@ -13,6 +13,9 @@ use Rack::Rewrite do
   # redirect /blog/2004/10/* to just /2004/10/*
   r301 %r{^/blog/(\d{4}/\d{2}/.*)$}, '/$1'
 
+  # redirect /blog/2004/10/15/* to just /2004/10/*
+  r301 %r{^/(\d{4}/\d{2}/)\d{2}/(.*)$}, '/$1$2'
+
   # redirect wordpress feed request to the new url
   r301 '/feed', '/atom.xml'
 
