@@ -100,7 +100,7 @@
     
   <header>
     
-      <h1 class="entry-title"><a href="/2011/08/vim---could-not-invoke-jslint/">Vim - Could Not Invoke JSLint</a></h1>
+      <h1 class="entry-title"><a href="/2008/10/the-curly-brace-tax/">The Curly Brace Tax</a></h1>
     
     
       <p class="meta">
@@ -108,7 +108,7 @@
 
 
 
-<time datetime="2011-08-26 08:59:00 -0500" pubdate  updated >Aug 26<span>th</span>, 2011</time>
+<time datetime="2008-10-05 00:00:00 -0500" pubdate  updated >Oct 5<span>th</span>, 2008</time>
 
 
 </p>
@@ -116,819 +116,23 @@
   </header>
 
 
-  <div class="entry-content"><p>If you&#8217;re running MacVim with Janus and have upgraded to Lion, you may
-have noticed a little error when you open JavaScript files:</p>
+  <div class="entry-content"><p><em>(I shamelessly stole this title from a chat with <a href="http://mhinze.com/" target="_blank">Matt Hinze</a>)</em></p>
 
-<blockquote><p>Error detected while processing function 87_JSLint:
-Line 33:
-could not invoke JSLint!</p></blockquote>
+<p>99% of the examples you see out there for ASP.NET MVC are using WebFormsViewEngine.  That&#8217;s fine, it&#8217;s familiar, it benefits from intellisense, compilation, and refactoring support.  But all of that comes at a price, and that price is (at times) <strong>incredibly wordy</strong>.</p>
 
-<p>It seems many are having <a href="https://github.com/hallettj/jslint.vim/issues/13">this issue</a>.  There are 2 things to check:</p>
+<p>Picture this example, taken from the Site.master (master page) in the Preview 5 new project template.</p>
 
-<ol>
-<li>Make sure you have Node in your path.  Confirm this by typing <code>which
-node</code> and make sure it resolves a binary somewhere on your system.</li>
-<li>Open up your <code>~/.vimrc.local</code> and add this command:</li>
-</ol>
+<p>At the top of the page, they want to render some text if the user is logged in, and different text if the user isn&#8217;t logged in.  Here are the screens:</p>
 
+<p><strong>When you&#8217;re not logged in:</strong></p>
 
-<figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
-<span class='line'>2</span>
-</pre></td><td class='code' width='100%'><pre><code class='vim'><div class='line'><span class="c">&quot; Use Node.js for JavaScript interpretation</span>
-</div><div class='line'><span class="k">let</span> $JS_CMD<span class="p">=</span><span class="s1">&#39;node&#39;</span>
-</div></code></pre></td></tr></table></div></figure>
+<p><img src="/images/mvcmasterpagelogin_thumb.jpg" alt="mvc-masterpage-login"  border="0"  /></p>
 
-<p>Kudos to <a href="http://github.com/eventualbuddha">eventualbuddha</a> for
-figuring this out.</p>
-</div>
-  <footer>
-    <a rel="full-article" href="/2011/08/vim---could-not-invoke-jslint/">Read on &rarr;</a>
-  </footer>
+<p><strong>And when you&#8217;re logged in&#8230;</strong></p>
 
+<p><img src="/images/mvcmasterpagelogout_thumb.jpg" alt="mvc-masterpage-logout"  border="0"  /></p>
 
-  </article>
-
-
-  <article>
-    
-  <header>
-    
-      <h1 class="entry-title"><a href="/2011/08/is-rails-exempt-from-software-principles/">Is Rails Exempt?</a></h1>
-    
-    
-      <p class="meta">
-
-
-
-
-<time datetime="2011-08-26 07:58:00 -0500" pubdate  updated >Aug 26<span>th</span>, 2011</time>
-
-
-</p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>If you&#8217;ve been following the Ruby community recently, you&#8217;d notice that
-there&#8217;s are people calling our Rails (and Rails developers) for treating
-Rails as if it is somehow <em>exempt</em> from long-standing software
-principles.</p>
-
-<p><a href="http://osherove.com/">Roy Osherove</a>, a fairly well-known .NET developer and author of The <a href="http://artofunittesting.com/">Art of Unit Testing</a>, ventured into Ruby-land
-recently and commented on twitter about how Rails&#8217;s
-definition of unit &amp; integration is quite different from his.</p>
-
-<p><img class='tweet ' src='/images/rails-unit-integration-tweet.png' width='' height='' alt='' title=''></p>
-
-<p>I have to agree with Roy. Those in the TDD camp in .NET understood the
-difference and were (from my experience) fairly cognizent of isolating
-concerns and not mixing the 2 concepts. Some even go as far as to
-isolate integration tests into their own assembly, providing a physical
-separation further guaranteeing that a unit test project won&#8217;t touch
-web services or the database.</p>
-
-<p>It&#8217;s easy to assume from the outside that the Rails is just testing
-nirvana and that <em>everyone</em> does it and it&#8217;s so easy.  Unfortunately it&#8217;s
-just not the truth.  Rails (and Ruby) make testing really easy but that
-means it&#8217;s even easier to do the wrong thing as well.</p>
-
-<h2>Legacy Rails Apps</h2>
-
-<p>Now that Rails is (gasp) over 7 years old you&#8217;re starting to see some
-real legacy Rails applications out in the wild.</p>
-
-<p><a href="http://twitter.com/avdi">Avdi Grimm</a> has a <a href="http://avdi.org/devblog/2011/08/22/your-code-is-my-hell/">good post</a> on the topic of how many of the Rails apps he comes to work on are in poor shape, technically.</p>
-
-<blockquote><p>Here are a few examples, just to give you an idea of what I’m talking about:</p>
-
-<p>“Design Patterns are a Java thing. In Ruby you just write code.”</p>
-
-<p>“The warnings Ruby produces are dumb; just disable them.”</p>
-
-<p>“Sure they aren’t technically Unit Tests, but isolating objects turned out to be kind of hard and besides nobody else is doing it.”</p>
-
-<p>“Stuff like the Law of Demeter isn’t really as important in Ruby code”</p>
-
-<p>“That’s only a problem in large projects” (implying that this project will never become large).</p></blockquote>
-
-<p>I&#8217;ve certainly been guilty of some of this. Rails makes it easy to do
-things that can turn out to be problematic. As with anything, you have
-to be disciplined to notice the warning signs and act accordingly.</p>
-
-<p>When testing is painful, you&#8217;re likely making mistakes. Some common
-pain-points that I&#8217;ve experienced are:</p>
-
-<ul>
-<li>No tests - the app is hard to test because the design is poor. Classes
-are too tightly coupled and don&#8217;t have clear delineation of
-responsibilities.</li>
-<li>Tests break for unrelated reasons - the tests are covering too much
-behavior, so when a single behavior changes, many tests break.</li>
-<li>Tests break when implementation changes - the tests are probably
-utilizing too much mocking &amp; stubbing. The tests are coupled heavily
-to a particular implementation.</li>
-<li>Unclear what the problem is when a test breaks - Tests are probably
-too coarse-grained and may contain too many assertions per test.</li>
-</ul>
-
-
-<p>These are just a sampling of what I&#8217;ve personally observed.</p>
-
-<p>So why do many Rails developers ignore these concepts?</p>
-
-<h2>Pragmatism at work</h2>
-
-<p>Many rails tutorials (and the default Rails template) treats model tests
-as <em>unit</em> tests. Since Rails models are by default based on Active
-Record, they have data access baked into their core.  Doing proper unit
-testing means you&#8217;re testing a logical unit.  If your test involves a
-model operation that requires a database round-trip, that&#8217;s technically
-an <em>integration</em> test.  But does it really matter?</p>
-
-<p>Most Rails developers will tell you no. Consider this spec:</p>
-
-<figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
-<span class='line'>2</span>
-<span class='line'>3</span>
-<span class='line'>4</span>
-<span class='line'>5</span>
-</pre></td><td class='code' width='100%'><pre><code class='ruby'><div class='line'><span class="n">describe</span> <span class="no">Post</span> <span class="k">do</span>
-</div><div class='line'>  <span class="n">it</span> <span class="s2">&quot;should be initially unpublished&quot;</span> <span class="k">do</span>
-</div><div class='line'>    <span class="no">Post</span><span class="o">.</span><span class="n">new</span><span class="o">.</span><span class="n">published</span><span class="o">.</span><span class="n">should</span> <span class="o">==</span> <span class="kp">false</span>
-</div><div class='line'>  <span class="k">end</span>
-</div><div class='line'><span class="k">end</span>
-</div></code></pre></td></tr></table></div></figure>
-
-<p>This is a unit test. It tests a single piece of functionality and will
-fail for just one reason.</p>
-
-<p>Now, here&#8217;s another example:</p>
-
-<figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
-<span class='line'>2</span>
-<span class='line'>3</span>
-</pre></td><td class='code' width='100%'><pre><code class='ruby'><div class='line'><span class="n">it</span> <span class="s2">&quot;should fetch published articles&quot;</span> <span class="k">do</span>
-</div><div class='line'>  <span class="c1"># ?</span>
-</div><div class='line'><span class="k">end</span>
-</div></code></pre></td></tr></table></div></figure>
-
-<figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
-<span class='line'>2</span>
-<span class='line'>3</span>
-<span class='line'>4</span>
-<span class='line'>5</span>
-<span class='line'>6</span>
-</pre></td><td class='code' width='100%'><pre><code class='ruby'><div class='line'><span class="c1"># post.rb</span>
-</div><div class='line'><span class="k">class</span> <span class="nc">Post</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span>
-</div><div class='line'>  <span class="k">def</span> <span class="nc">self</span><span class="o">.</span><span class="nf">published</span>
-</div><div class='line'>    <span class="n">where</span><span class="p">(</span><span class="s2">&quot;published_at &lt;= ?&quot;</span><span class="p">,</span> <span class="no">Time</span><span class="o">.</span><span class="n">now</span><span class="p">)</span>
-</div><div class='line'>  <span class="k">end</span>
-</div><div class='line'><span class="k">end</span>
-</div></code></pre></td></tr></table></div></figure>
-
-<p>How should you implement this spec?</p>
-
-<p>If you were trying to avoid hitting the database you might intercept the
-<code>where</code> call and assert the parameters passed to it. But surely this
-isn&#8217;t the only way you could implement this method giving the same
-behavior.  You might use <code>scopes</code> or another <code>where</code> call might actually
-be added later that doesn&#8217;t affect the outcome of this method in any way
-that this test is concerned about.</p>
-
-<figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
-<span class='line'>2</span>
-<span class='line'>3</span>
-<span class='line'>4</span>
-<span class='line'>5</span>
-<span class='line'>6</span>
-<span class='line'>7</span>
-</pre></td><td class='code' width='100%'><pre><code class='ruby'><div class='line'><span class="n">it</span> <span class="s2">&quot;should fetch published articles&quot;</span> <span class="k">do</span>
-</div><div class='line'>  <span class="mi">3</span><span class="o">.</span><span class="n">times</span> <span class="p">{</span> <span class="no">Factory</span><span class="o">.</span><span class="n">create</span> <span class="ss">:article</span> <span class="p">}</span>
-</div><div class='line'>  <span class="n">future_post</span> <span class="o">=</span> <span class="no">Factory</span><span class="o">.</span><span class="n">create</span> <span class="ss">:article</span><span class="p">,</span> <span class="ss">:published_at</span> <span class="o">=&gt;</span> <span class="mi">2</span><span class="o">.</span><span class="n">days</span><span class="o">.</span><span class="n">from_now</span>
-</div><div class='line'>  <span class="n">posts</span> <span class="o">=</span> <span class="no">Post</span><span class="o">.</span><span class="n">published</span>
-</div><div class='line'>  <span class="n">posts</span><span class="o">.</span><span class="n">size</span><span class="o">.</span><span class="n">should</span> <span class="o">==</span> <span class="mi">3</span>
-</div><div class='line'>  <span class="n">post</span><span class="o">.</span><span class="n">should_not</span> <span class="kp">include</span> <span class="n">future_post</span>
-</div><div class='line'><span class="k">end</span>
-</div></code></pre></td></tr></table></div></figure>
-
-<p>This test hits the database (numerous times, in fact) but it&#8217;s testing
-<em>exactly</em> the behavior we need.  We aren&#8217;t testing implementation, we&#8217;re
-testing that the behavior works as intended.  If we somehow muck with
-the query, breaking it, this test will fail.  If we change the
-implementation to use some other query means (scopes or whatever) this
-test will still pass.</p>
-
-<p>Is it so bad that the test hits the database?</p>
-
-<p>There are drawbacks of course:</p>
-
-<ul>
-<li>The test requires a database, thus you have to migrate</li>
-<li>The <code>database_cleaner</code> gem will have to be present to clean out the
-database before each run</li>
-<li>These database statements make the test suite a LOT slower, so large
-test suites will eventually suffer.</li>
-<li>The tests could fail if the database isn&#8217;t present (or migrated), or
-if the query is incorrect.  But this isn&#8217;t likely to happen since
-we&#8217;re using a tested framework (ActiveRecord).</li>
-</ul>
-
-
-<p>Ultimately this isn&#8217;t really a unit test at all.  It&#8217;s an integration
-test.  So is <code>spec/models/post_spec.rb</code> the wrong place for this stuff?</p>
-
-<p>The question eventually comes down to this: <em>What is more valuable?  A
-fast, isolated test suite?  Or a test suite that breaks for the right
-reasons?</em></p>
-
-<h2>Don&#8217;t throw out good practices just because it&#8217;s Ruby</h2>
-
-<p>I think it&#8217;s important to be cognizant of software paradigms and use
-them where they make sense. It&#8217;s also important to recognize when
-practices are being ignored because &#8220;celebrities&#8221; aren&#8217;t touting them.</p>
-
-<p>It is still valuable, however, to keep a fresh eye on old assumptions. Don&#8217;t
-always take things as gospel just because that&#8217;s the way they have
-always been. One
-of the things I love about the Ruby community is how willing people are
-to rock the boat &amp; try something new.</p>
-</div>
-  <footer>
-    <a rel="full-article" href="/2011/08/is-rails-exempt-from-software-principles/">Read on &rarr;</a>
-  </footer>
-
-
-  </article>
-
-
-  <article>
-    
-  <header>
-    
-      <h1 class="entry-title"><a href="/2011/08/when-viewwillappear-isnt-called/">When viewWillAppear: Isn&#8217;t Called</a></h1>
-    
-    
-      <p class="meta">
-
-
-
-
-<time datetime="2011-08-24 10:11:00 -0500" pubdate  updated >Aug 24<span>th</span>, 2011</time>
-
-
-</p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>The <code>UIViewController</code> lifecycle is pretty simple.  <code>viewDidLoad</code> is
-called when the view is loaded (usually from a XIB) and when the view
-controller&#8217;s view is about to be displayed <code>viewWillAppear:</code> gets called
-(and <code>viewWillDisappear:</code> when it goes away).</p>
-
-<p>The problem is, when you have a non-standard view hierarchy (like my
-current app) these methods don&#8217;t get called. The Apple docs have this to
-say about the problem:</p>
-
-<blockquote><p>Warning: If the view belonging to a view controller is added to a view hierarchy directly, the view controller will not receive this message. If you insert or add a view to the view hierarchy, and it has a view controller, you should send the associated view controller this message directly. Failing to send the view controller this message will prevent any associated animation from being displayed.</p></blockquote>
-
-<p>In my application I have a persistent bar at the bottom of the screen,
-so my <code>UINavigationController</code> only owns a portion of the screen.  Thus, my
-<code>RootViewController</code> (which owns these 2 portions) is always <em>active</em>.</p>
-
-<p><img class='screenshot ' src='/images/non-standard-nav-frame.png' width='' height='' alt='' title=''></p>
-
-<p>I recently came upon a requirement that needed to leverage
-<code>viewWillAppear:</code> and <code>viewWillDisappear:</code> in order to decorate the
-bottom bar with some additional information. Since this is a view
-controller a few layers deep in the hierarchy, the methods weren&#8217;t being
-called.</p>
-
-<p>Luckly, there is a fix to this. The navigation controller can notify
-its <code>delegate</code> when it changes view controllers.</p>
-
-<p>Start off in the view controller that is the root of the navigation
-controller hierarchy.  Make it conform to the
-<code>UINavigationControllerDelegate</code> protocol.  We&#8217;ll also need an ivar to
-store the last view controller that <em>appeared</em> so that we can notify
-when it <em>disappears</em>.</p>
-
-<figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
-<span class='line'>2</span>
-<span class='line'>3</span>
-<span class='line'>4</span>
-<span class='line'>5</span>
-<span class='line'>6</span>
-<span class='line'>7</span>
-</pre></td><td class='code' width='100%'><pre><code class='objc'><div class='line'><span class="k">@interface</span> <span class="nc">MyRootViewController</span> : <span class="nc">UIViewController</span>
-</div><div class='line'>    <span class="o">&lt;</span><span class="n">UINavigationControllerDelegate</span><span class="o">&gt;</span> <span class="p">{</span>
-</div><div class='line'>      <span class="n">UIViewController</span> <span class="o">*</span><span class="n">_lastViewController</span><span class="p">;</span>
-</div><div class='line'><span class="p">}</span>
-</div><div class='line'><span class="c1">// methods</span>
-</div><div class='line'>
-</div><div class='line'><span class="k">@end</span>
-</div></code></pre></td></tr></table></div></figure>
-
-<p>In the implementation, in do the following:</p>
-
-<figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
-<span class='line'>2</span>
-<span class='line'>3</span>
-<span class='line'>4</span>
-<span class='line'>5</span>
-<span class='line'>6</span>
-<span class='line'>7</span>
-<span class='line'>8</span>
-<span class='line'>9</span>
-<span class='line'>10</span>
-<span class='line'>11</span>
-<span class='line'>12</span>
-<span class='line'>13</span>
-<span class='line'>14</span>
-<span class='line'>15</span>
-<span class='line'>16</span>
-<span class='line'>17</span>
-<span class='line'>18</span>
-<span class='line'>19</span>
-<span class='line'>20</span>
-</pre></td><td class='code' width='100%'><pre><code class='objc'><div class='line'><span class="k">@implementation</span> <span class="nc">MyRootViewController</span>
-</div><div class='line'>
-</div><div class='line'><span class="c1">// other stuff</span>
-</div><div class='line'>
-</div><div class='line'><span class="o">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">viewDidLoad</span> <span class="p">{</span>
-</div><div class='line'>    <span class="p">[</span><span class="n">super</span> <span class="n">viewDidLoad</span><span class="p">];</span>
-</div><div class='line'>
-</div><div class='line'>    <span class="n">self</span><span class="p">.</span><span class="n">navigationController</span><span class="p">.</span><span class="n">delegate</span> <span class="o">=</span> <span class="n">self</span><span class="p">;</span>
-</div><div class='line'>    <span class="c1">// ...</span>
-</div><div class='line'><span class="p">}</span>
-</div><div class='line'>
-</div><div class='line'><span class="o">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nl">navigationController:</span><span class="p">(</span><span class="n">UINavigationController</span> <span class="o">*</span><span class="p">)</span><span class="n">navigationController</span>
-</div><div class='line'>      <span class="nl">willShowViewController:</span><span class="p">(</span><span class="n">UIViewController</span> <span class="o">*</span><span class="p">)</span><span class="n">viewController</span> <span class="nl">animated:</span><span class="p">(</span><span class="kt">BOOL</span><span class="p">)</span><span class="n">animated</span> <span class="p">{</span>
-</div><div class='line'>    <span class="k">if</span> <span class="p">(</span><span class="n">_lastViewController</span><span class="p">)</span> <span class="p">{</span>
-</div><div class='line'>        <span class="p">[</span><span class="n">_lastViewController</span> <span class="nl">viewWillDisappear:</span><span class="n">animated</span><span class="p">];</span>
-</div><div class='line'>    <span class="p">}</span>
-</div><div class='line'>
-</div><div class='line'>    <span class="p">[</span><span class="n">viewController</span> <span class="nl">viewWillAppear:</span><span class="n">animated</span><span class="p">];</span>
-</div><div class='line'>    <span class="n">_lastViewController</span> <span class="o">=</span> <span class="n">viewController</span><span class="p">;</span>
-</div><div class='line'><span class="p">}</span>
-</div></code></pre></td></tr></table></div></figure>
-
-<p>If you need support for <code>viewDidAppear</code> and <code>viewDidDisappear</code> then
-you&#8217;d have to implement this method as well:</p>
-
-<figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
-<span class='line'>2</span>
-<span class='line'>3</span>
-</pre></td><td class='code' width='100%'><pre><code class='objc'><div class='line'><span class="o">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nl">navigationController:</span><span class="p">(</span><span class="n">UINavigationController</span> <span class="o">*</span><span class="p">)</span><span class="n">navigationController</span>
-</div><div class='line'>       <span class="nl">didShowViewController:</span><span class="p">(</span><span class="n">UIViewController</span> <span class="o">*</span><span class="p">)</span><span class="n">viewController</span>
-</div><div class='line'>                    <span class="nl">animated:</span><span class="p">(</span><span class="kt">BOOL</span><span class="p">)</span><span class="n">animated</span><span class="p">;</span>
-</div></code></pre></td></tr></table></div></figure>
-
-<p>After doing this, your view controllers should start receiving the
-<code>viewWillAppear:</code> and <code>viewWillDisappear:</code> methods successfully.</p>
-</div>
-  <footer>
-    <a rel="full-article" href="/2011/08/when-viewwillappear-isnt-called/">Read on &rarr;</a>
-  </footer>
-
-
-  </article>
-
-
-  <article>
-    
-  <header>
-    
-      <h1 class="entry-title"><a href="/2011/08/moving-my-blog/">Moving My Blog</a></h1>
-    
-    
-      <p class="meta">
-
-
-
-
-<time datetime="2011-08-21 00:00:00 -0500" pubdate  updated >Aug 21<span>st</span>, 2011</time>
-
-
-</p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>I&#8217;ve decided to transition over to a new blog.</p>
-
-
-<p>The reasons? Mostly because I&#8217;m questioning more &amp; more the need to have a dynamic blog that I need to maintain. Static HTML blog generators are very interesting and I thought I&#8217;d give one a try.</p>
-
-
-<p>I&#8217;ll leave this one around for historical reasons. It gets a decent amount of traffic and has content going back to 2004.<br /></p>
-
-
-<p>So without further ado I present my new blog, <a href="http://benscheirman.com">Fickle Bits</a>.<br /></p>
-
-
-<p>(Note to RSS readers, your feeds will not auto-update. Subscribe to the new blog here: <a href="http://feeds.feedburner.com/ficklebits" target="_blank">Subscribe</a> )<br /></p>
-
-</div>
-  <footer>
-    <a rel="full-article" href="/2011/08/moving-my-blog/">Read on &rarr;</a>
-  </footer>
-
-
-  </article>
-
-
-  <article>
-    
-  <header>
-    
-      <h1 class="entry-title"><a href="/2011/08/my-vim-journey/">My Vim Journey</a></h1>
-    
-    
-      <p class="meta">
-
-
-
-
-<time datetime="2011-08-17 23:53:00 -0500" pubdate  updated >Aug 17<span>th</span>, 2011</time>
-
-
-</p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>For my Rails work, I&#8217;ve largely leaned on <a href="http://macromates.org">TextMate</a>.  It&#8217;s used by many Rubyists, looks sexy,
-and is easily extended.</p>
-
-<p>I still use TextMate frequently, but I&#8217;ve been ramping up on my Vim
-skills and I&#8217;ve recently come to a point where I think I&#8217;m pretty
-productive in it.</p>
-
-<p>My initial frustrations with Vim were that it was too configurable.
-Talk to any Vim power-user and you&#8217;ll find a completely different set of
-plugins &amp; keyboard shortcuts.  If you snag a friend&#8217;s set of Vim
-configuration files (like I did) you might find yourself frustrated that
-there&#8217;s too much to learn and it&#8217;s difficult to know where various
-behaviors are coming from.</p>
-
-<p>In this post, I&#8217;ll attempt to demonstrate a very sane Vim setup that
-newcomers can use to get started and not be too overwhelmed.</p>
-
-<h2>Why Vim?</h2>
-
-<p>Before I get started with the basics of Vim, why would you use it in the
-first place?</p>
-
-<p>For me it boils down to this:  <em>I love staying on the keyboard</em>.
-Vim may not make you faster (<em>in fact initially you&#8217;ll be a lot slower</em>) but it can fit your workflow better.</p>
-
-<p>Another big differentiator of Vim is <em>Command Mode</em>.  The notion
-here is that you spend more time wrangling text rather than creating it
-from scratch.  That&#8217;s certainly true of my code.</p>
-
-<p>It is important, however, that in the larger software ecosystem,
-<em>typing is not the bottleneck</em>.  Don&#8217;t expect Vim to make you build
-the right software faster.</p>
-
-<p>Vim enables a keyboard-optimized workflow that <em>may</em> make you faster.
-YMMV.  If you&#8217;re fast with TextMate or Emacs or don&#8217;t want to spend the
-time to learn something new, then Vim may very well not be for you.</p>
-
-<p>Lastly, Vim is ubiquitous.  It&#8217;s on every platform and
-you can carry your configuration (or a very large set of it) everywhere.
-People frequently put their vim configurations on Github for themselves
-and others to utilize.</p>
-
-<h2>Getting MacVim</h2>
-
-<p>Almost all Unix-based systems (like Mac) include a terminal version of
-Vim.  The version included on OS X isn&#8217;t compiled with Ruby support, so
-some plugins won&#8217;t work.  In addition, it doesn&#8217;t have OS-level
-integration like Copy &amp; Paste in the same buffer.</p>
-
-<p>Most Vim users I know use MacVim, which comes pre-compiled with Ruby
-support, has tabs, and more.</p>
-
-<p>If you have <a href="http://mxcl.github.com/homebrew/">homebrew</a> installed, just
-type:</p>
-
-<p><code>
-brew install  macvim
-</code></p>
-
-<p>If you&#8217;d rather grab a pre-built binary, then head on over <a href="https://github.com/b4winckler/macvim">here</a>.</p>
-
-<p>You&#8217;ll also want to make sure that the <code>mvim</code> binary is in your path.</p>
-
-<h2>Basic Vim Navigation</h2>
-
-<p>I won&#8217;t cover everything you can do in Vim here, but here&#8217;s just enough
-to get you started:</p>
-
-<p>In Command Mode:</p>
-
-<ul>
-<li>Press <code>h</code>, <code>j</code>, <code>k</code>, <code>l</code> to move the cursor around.  It will feel weird, but you start to appreciate not
-lifting your hand off of the home row to reach for the arrow keys.</li>
-<li>Press <code>G</code> to go to the end of a document, <code>gg</code> to go to the top of
-the document.</li>
-<li>Press <code>i</code> to go to insert mode at the current position</li>
-<li>Press <code>I</code> to insert at the beginning of the line</li>
-<li>Press <code>a</code> to &#8220;append&#8221; content after the cursor</li>
-<li>Press <code>A</code> to &#8220;append&#8221; content at the end of a line</li>
-<li>Type <code>cw</code> (&#8220;change word&#8221;) to replace the current word and go into insert mode</li>
-<li>Type <code>dta</code> to (&#8220;delete &#8216;til the letter a&#8221;) in a line</li>
-</ul>
-
-
-<p>In Insert Mode:</p>
-
-<ul>
-<li>Press <code>esc</code> to go back to command mode.</li>
-</ul>
-
-
-<p>Commands:</p>
-
-<ul>
-<li>In Command Mode, you can type commands by prefixing them with <code>:</code>.</li>
-<li>To write the changes to the current buffer (save) type <code>:w</code> and hit
-<code>enter</code>.  Often times you&#8217;ll write &amp; quit in one command, with <code>:wq</code>.</li>
-</ul>
-
-
-<p>Feel free to use the mouse &amp; arrow-keys while you&#8217;re getting used to everything.  It
-will feel weird.</p>
-
-<p>For more Vim-fu, definitely check out this <a href="http://peepcode.com/products/smash-into-vim-i">PeepCode
-screencast</a>.</p>
-
-<h2>Installing a Base Set of Plugins with Janus</h2>
-
-<p>The real power of Vim is in the plugins, and fortunately Yehuda Katz &amp;
-Carl Lerche have put together an opinionated and useful set of plugins
-that are pre-configured and work well together.  Take a look at the plugins it includes
-<a href="https://github.com/carlhuda/janus">here</a>.</p>
-
-<p>Getting Janus installed is easy.  If you are super trust-worthy and
-don&#8217;t mind running a script blindly (I don&#8217;t recommend it) you can
-simply run:</p>
-
-<figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
-</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'><span class="n">curl</span> <span class="n">https:</span><span class="sr">//</span><span class="n">raw</span><span class="o">.</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="sr">/carlhuda/</span><span class="n">janus</span><span class="sr">/master/</span><span class="n">bootstrap</span><span class="o">.</span><span class="n">sh</span> <span class="o">-</span><span class="n">o</span> <span class="o">-</span> <span class="o">|</span> <span class="n">sh</span>
-</div></code></pre></td></tr></table></div></figure>
-
-<p>More explicit instructions for the paranoid can be found on <a href="http://github.com/carlhuda/janus">the github
-page</a>.</p>
-
-<p>Once you have Janus installed, your Vim will be on steroids. Don&#8217;t worry
-though, I&#8217;ll try to cover the most important things you&#8217;ll be using.</p>
-
-<h2>Getting a Decent Theme installed</h2>
-
-<p>MacVim installs a hundred nasty looking themes, but a few of them are
-worth taking a look at.  Here are some that I like:</p>
-
-<ul>
-<li>molokai</li>
-<li>railscasts</li>
-<li>vividchalk</li>
-<li>vibrantink</li>
-</ul>
-
-
-<p>If you want to install other themes (like this nice <a href="http://www.vim.org/scripts/script.php?script_id=2855">github</a> one) then you
-simply download it &amp; copy the <code>theme.vim</code> (or whatever the theme is
-called) to <code>~/.vim/colors</code>.</p>
-
-<p>To switch between the themes that are installed, you can use the menu,
-or you can type <code>:colorscheme &lt;scheme&gt;</code>.</p>
-
-<p>To set defaults for your installation, you&#8217;d normally add commands to
-<code>~/.vimrc</code> however Janus has taken that file over.  It instead reads
-your settings from <code>~/.vimrc.local</code>.  In order to provide settings for
-graphical Vim installations (like MacVim) there&#8217;s also a <code>~/.gvimrc</code>
-file.</p>
-
-<p>Open up that file (<code>:edit ~/.gvimrc</code>) and add the following commands:</p>
-
-<figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
-<span class='line'>2</span>
-</pre></td><td class='code' width='100%'><pre><code class='vim'><div class='line'><span class="k">colorscheme</span> github
-</div><div class='line'><span class="k">set</span> <span class="nb">guifont</span><span class="p">=</span>Menlo:h14
-</div></code></pre></td></tr></table></div></figure>
-
-<p>Feel free to tweak this to contain your favorite color scheme &amp; font.
-In order to see these changes you have to &#8220;source&#8221; the file:</p>
-
-<figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
-</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'><span class="p">:</span><span class="n">source</span> <span class="nv">%</span>
-</div></code></pre></td></tr></table></div></figure>
-
-<p>(<code>%</code> here means &#8220;current file&#8221;)</p>
-
-<p>You should see the changes take effect immediately.</p>
-
-<h2>Opening MacVim with a &#8220;Project&#8221;</h2>
-
-<p>One common thing in TextMate is to <code>cd</code> into a project and then type
-<code>mate .</code> which will open TextMate&#8217;s project drawer with all of the files
-in that directory loaded up.</p>
-
-<p>In MacVim, you can do the same.  Navigate to a folder with some content
-(like a Rails app) and type: <code>mvim .</code></p>
-
-<p>You should see something resembling a file navigator.  You can navigate
-these with the same movement commands from above.</p>
-
-<p>Once you&#8217;ve chosen a file, press <code>enter</code> to open it in the buffer.</p>
-
-<p><span class='has-pullquote' data-pullquote='The leader key is a special, configurable key used to create quick shortcut combinations.'>
-Janus comes with NERDTree, which has similar behavior to TextMate&#8217;s
-Project Drawer.  Open up the NERDTree pane by typing <code>&lt;leader&gt;-n</code> or <code>\n</code>. By default the leader key is set to backslash.
-The leader key is a special, configurable key used to create quick shortcut combinations.
-</span></p>
-
-<p>The NERDTree window can be collapsed by typing <code>&lt;leader&gt;-n</code> again.</p>
-
-<p>You might want to instead find the file by searching for it by name.
-For that, the aptly-named Command-T plugin can be hepful.</p>
-
-<p>Command-T can be activated (by default) with <code>&lt;leader&gt;-t</code>.  Start typing
-and it will auto complete the results.</p>
-
-<h2>Scared Yet?</h2>
-
-<p>Writing this reminds me of how hard it was to get started.  I can only
-offer some encouragement that with practice, Vim does start to feel like
- you can leverage your fast typing skills to really.</p>
-
-<p>Practice only a couple of commands at a time.  Really learn what they
-are doing and then move one to the next command.  Print out a cheet
-sheet.  Pair with someone else who uses Vim.</p>
-
-<p>I hope you found this intro useful. I&#8217;ll cover some more Vim tricks as time goes on.</p>
-</div>
-  <footer>
-    <a rel="full-article" href="/2011/08/my-vim-journey/">Read on &rarr;</a>
-  </footer>
-
-
-  </article>
-
-
-  <article>
-    
-  <header>
-    
-      <h1 class="entry-title"><a href="/2011/08/a-fresh-start/">A Fresh Start?</a></h1>
-    
-    
-      <p class="meta">
-
-
-
-
-<time datetime="2011-08-17 23:37:00 -0500" pubdate  updated >Aug 17<span>th</span>, 2011</time>
-
-
-</p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>So I&#8217;ve been thinking of ditching the traditional blog for a while now.  My <a href="http://flux88.com">current blog</a> is powered by WordPress, which
-is powerful enough, however it always seems like a hassle to maintain.
-There are also no fantastic blog editors for the Mac (still).</p>
-
-<p>This time I&#8217;m going in a completely new direction.  This blog is powered
-by <a href="http://octopress.org">Octopress</a> (which uses
-<a href="https://github.com/mojombo/jekyll">Jekyll</a> as the engine.  I&#8217;m not
-going to import old posts and I&#8217;m not going to worry about integrating a lot
-of features. Just epic content, that&#8217;s it!</p>
-
-<p>Posts are composed in Markdown (I&#8217;m using vim to write this), static HTML is generated and the blog is then deployed to a git repository.</p>
-
-<p>Will it make me blog more? I hope so, but only time will tell!</p>
-</div>
-  <footer>
-    <a rel="full-article" href="/2011/08/a-fresh-start/">Read on &rarr;</a>
-  </footer>
-
-
-  </article>
-
-
-  <article>
-    
-  <header>
-    
-      <h1 class="entry-title"><a href="/2011/06/houston-code-camp-registration-is-now-open/">Houston Code Camp Registration Is Now Open</a></h1>
-    
-    
-      <p class="meta">
-
-
-
-
-<time datetime="2011-06-17 00:00:00 -0500" pubdate  updated >Jun 17<span>th</span>, 2011</time>
-
-
-</p>
-    
-  </header>
-
-
-  <div class="entry-content"><h2>Houston Code Camp 2011</h2>
-
-
-<h3>August 20th, 2011</h3>
-
-
-<p><img src="/images/logo__.jpg" style="float:right; margin: 25px;"   /></p>
-
-<p>Houston Code Camp is a free day of sessions relating to software development. The event is free to attend, but registration is required.</p>
-
-
-<p>A Code Camp follows these rules:</p>
-
-
-<ul>
-  <li>They are a organized by developers and for developers to come and learn from their peers. Topics are always based on community interest and never determined by anyone other than the community.</li>
-
-  <li>Code Camps are always FREE for attendees</li>
-
-  <li>The success of the Code Camp is determined by the community. All content that is delivered is original and voted for by you! Make sure your vote counts, and vote for the sessions you&#8217;d like to see at our <a href="http://houstoncodecamp.uservoice.com/forums/116507-speaker-submissions" target="_blank">speaker submission site</a>.</li>
-
-  <li>No Fluff - Code Camps are about Code, not slides. You won&#8217;t find any marketing heavy powerpoint decks here</li>
-
-  <li>All are welcome to attend and speak and do so without expectation of payment. Learn more about speaking on our <a href="http://houstoncodecamp.uservoice.com/forums/116507-speaker-submissions" target="_blank">speaking</a> page.</li>
-
-  <li>The beauty of the Code Camp is that they always occur on weekends.</li>
-</ul>
-
-
-<p>The schedule is still being formed. Take a look at the list of submissions <a href="http://houstoncodecamp.uservoice.com/forums/116507-speaker-submissions" target="_blank">here</a>. You can still get your session proposal in if you&#8217;re interested in speaking!</p>
-
-
-<p>Space is limited, so make sure and snag your ticket today. It&#8217;s FREE!.</p>
-
-
-
-
-<p>What are you waiting for? <strong><a href="http://houstoncodecamp.com/registration" target="_blank">Go register</a></strong>!</p>
-
-</div>
-  <footer>
-    <a rel="full-article" href="/2011/06/houston-code-camp-registration-is-now-open/">Read on &rarr;</a>
-  </footer>
-
-
-  </article>
-
-
-  <article>
-    
-  <header>
-    
-      <h1 class="entry-title"><a href="/2011/06/fixing-xcode-4s-broken-code-completion/">Fixing Xcode 4&#8217;s Broken Code Completion</a></h1>
-    
-    
-      <p class="meta">
-
-
-
-
-<time datetime="2011-06-08 00:00:00 -0500" pubdate  updated >Jun 8<span>th</span>, 2011</time>
-
-
-</p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>In my continued quest to actually use Xcode 4 full time, I&#8217;ve run into yet another major issue: Xcode 4&#8217;s code index sometimes gets borked and syntax highlighting &amp; code completion stop working.</p>
-
-<p>In the past, this has been fixed (temporarily) by deleting the Derived Data folder in Organizer, restarting Xcode, changing the compiler from LLVM to GCC &amp; back again or some random combination of the 3. This doesn&#8217;t always work, and today I sat down to figure out what the cause was and how to fix it.</p>
-
-<p>In searching stackoverflow and the developer forums, I found that Xcode&#8217;s code index can hang on recursive and/or relative search paths.</p>
-
-<p>My project utilizes 2 static libraries, so I must provide proper header search paths, otherwise the compiler doesn&#8217;t recognize any of the symbols.</p>
-
-<p>So if you have a Header Search Path setting of <code>../lib/MyAwesomeLib</code> or <code>../lib/MyAwesomeLib/**</code> then you might be having this problem too.</p>
-
-<h2>Step 1: Correcting relative paths</h2>
-
-<p>You might be tempted to hard code the path to the file. Don&#8217;t! This will break on somebody else&#8217;s machine, and most of the time you&#8217;re not working on this stuff alone.
-You can utilize the <code>$(SOURCE_ROOT)</code> build variable to construct a dynamic path relative to the Xcode project directory.</p>
-
-<p>This step might be all you need, but in my case I needed to follow the next step as well&#8230;</p>
-
-<h2>Step 2: Remove the need for recursive searches</h2>
-
-<p>I have two subprojects, each of which symlink their build output to a build/current folder. This makes it easy to add a non-recursive library search path reference for similar reasons. I also want to copy headers into this folder so there&#8217;s always a deterministic location to find the headers, regardless of the platform &amp; configuration we&#8217;re building for.<br />
-So I added a Run Script build phase to do this work for me:<br /></p>
+<p>This is implemented using ASPX code that looks like this:</p>
 
 <div><figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
 <span class='line'>2</span>
@@ -937,159 +141,60 @@ So I added a Run Script build phase to do this work for me:<br /></p>
 <span class='line'>5</span>
 <span class='line'>6</span>
 <span class='line'>7</span>
-</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'># Symlink build output to a common directory for easy referencing in other projects
-</div><div class='line'>rm -rf "$BUILD_DIR/current"
-</div><div class='line'>ln -s "$BUILT_PRODUCTS_DIR" "$BUILD_DIR/current"
-</div><div class='line'>
-</div><div class='line'># Copy headers to a shared location
-</div><div class='line'>mkdir -p "$BUILD_DIR/current/headers"
-</div><div class='line'>for file in `find . -name "*.h"`; do cp $file "$BUILD_DIR/current/headers/"; done;</div></code></pre></td></tr></table></div></figure></div>
+</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>&lt;div id="logindisplay">
+</div><div class='line'>  &lt;% if (Request.IsAuthenticated) { %>
+</div><div class='line'>    Welcome &lt;b>&lt;%= Html.Encode(Page.User.Identity.Name) %>&lt;/b>![ &lt;%=Html.ActionLink("Logout", "Logout", "Account") %> ]
+</div><div class='line'>&lt;% } else { %> 
+</div><div class='line'>    [ &lt;%=Html.ActionLink("Login", "Login", "Account") %> ]
+</div><div class='line'>&lt;% } %>
+</div><div class='line'>&lt;/div></div></code></pre></td></tr></table></div></figure></div>
 
 
-<p>The line is a bash for loop that copies all the header files in any subfolder &amp; flattens it out for a single headers folder reference.<br /></p>
-
-<h2>Step 3: Add the new common header search paths</h2>
-
-
-<p>In my case I exchanged a relative, recursive search path of:<br /></p>
+<p>Now let&#8217;s take the same example and convert it to <a href="http://velocity.apache.org/engine/releases/velocity-1.5/user-guide.html" target="_blank">NVelocity</a>, another view engine with a looser syntax:</p>
 
 <div><figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
-</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>../lib/**</div></code></pre></td></tr></table></div></figure></div>
+<span class='line'>2</span>
+<span class='line'>3</span>
+<span class='line'>4</span>
+<span class='line'>5</span>
+<span class='line'>6</span>
+</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>&lt;div id="logindisplay">   
+</div><div class='line'>  #if ($isAuthenticated)
+</div><div class='line'>    Welcome &lt;b>$html.encode($user.name)&lt;/b>!      [ $html.actionlink("Logout", "logout", "account") ]
+</div><div class='line'>  #else
+</div><div class='line'>    [ $html.actionlink("Login", "login", "account") ]   #end
+</div><div class='line'>&lt;/div></div></code></pre></td></tr></table></div></figure></div>
 
 
-<br />
+<p>We&#8217;d have to stuff the <code>$isAuthenticated</code> and <code>$user</code> values into <code>ViewData</code>, but that&#8217;s a piece of cake.<br/>
+This is a great example of how concise we can get if we don&#8217;t rely on all that strong typing.</p>
+
+<p><em>The beauty of this is, the key that you use for ViewData becomes the object you interact with on the view</em>.</p>
+
+<p>In NVelocity:</p>
+
+<ul>
+<li>case doesn&#8217;t matter</li>
+<li>no need to open up <code>&lt;% %&gt;</code> tags, you can embed it directly in your template</li>
+<li>type doesn&#8217;t matter.  It&#8217;s evaluated at runtime.</li>
+</ul>
 
 
-<p>to the more explicit, and more Xcode 4 friendly:<br /></p>
+<p>There are some downsides, however:</p>
 
-<br />
+<ul>
+<li><p>You don&#8217;t get compile time checking for your views.  If I wrote <code>$htlm.actionlink(..)</code>  I&#8217;d get an
+error at runtime.</p></li>
+<li><p>Performance.  Compiled views are much faster than interpreted ones.  It&#8217;s likely that this doesn&#8217;t matter for most sites out there.</p></li>
+<li><p>No intellisense.  (The arguments to ActionLink above are not obvious, so you just have to memorize it)</p></li>
+<li><strong>No Refactoring support</strong>.  This is a big one.  If you rename your actions, you&#8217;ll have to do a string comparison search to get the various links you might having lying around in your view.</li>
+</ul>
 
 
-<p><img src="/images/Xcode4.png"  alt="Xcode.png"  /><br />
-As soon as I did that, my code lit up like a Christmas tree! Symbols were recognized, code was highlighted, and best of all&#8230; code completion resumed.<br />
-Here&#8217;s to hoping the Xcode 4 continues to be improved. In the meantime, hope this fix saves you the headache I&#8217;ve been having.</p>
+<p>That last one is really the only one that I miss when doing something in NVelocity.  In any case, try it out, see what you think!</p>
 </div>
   <footer>
-    <a rel="full-article" href="/2011/06/fixing-xcode-4s-broken-code-completion/">Read on &rarr;</a>
-  </footer>
-
-
-  </article>
-
-
-  <article>
-    
-  <header>
-    
-      <h1 class="entry-title"><a href="/2011/06/creating-proper-ipa-files-in-xcode-4/">Creating Proper IPA Files in Xcode 4</a></h1>
-    
-    
-      <p class="meta">
-
-
-
-
-<time datetime="2011-06-02 00:00:00 -0500" pubdate  updated >Jun 2<span>nd</span>, 2011</time>
-
-
-</p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Xcode 4 has changed a lot of things. Most of those things are ok, but occasionally I find that I just cannot do something any other way than to use Xcode 3.</p>
-
-
-<p>Until today, I was creating Ad-hoc builds for my current project with Xcode 3, then selecting Share &amp; saving the resulting IPA file to disk.</p>
-
-
-<p>Xcode 4 has the new &#8220;Build -&gt; Archive&#8221; menu option, but every time I&#8217;d try to share this file, I&#8217;d presented with this lovely restricted dialog box:</p>
-
-
-<p><br />
-<img src="/images/Xcode3.png"  alt="Xcode.png"  /></p>
-
-
-<p>With the errors <i><b>No Packager exists for the type of archive</b></i> and <i><b>This kind of archive cannot be signed</b></i>.</p>
-
-
-<p>As it turns out, if you have static libraries that you&#8217;re linking in, your Archive step actually outputs those as well. Xcode doesn&#8217;t know how to create an IPA out of 1 .app file and a handful of .a files, so it gives up.</p>
-
-
-<p>You can tell that Xcode 4 is doing this if your Organizer -&gt; Applications list shows an icon like this:</p>
-
-
-<p><br />
-<img src="/images/Xcode2.png"  alt="Xcode.png"  /></p>
-
-
-<p>If you right-click on this build, and select &#8220;Reveal in Finder&#8221; you&#8217;ll see the files are .xcarchive files. Right click on that and select &#8220;Show Package Contents&#8221; to see what I&#8217;m talking about. If you see a usr/lib/mystaticlibary.a file, then read on for the fix.</p>
-
-
-<p>You need to tell Xcode 4 <b>not</b> to &#8220;install&#8221; the static libraries. For each of the static library targets, select them in Xcode 4, and under Build Settings, search for &#8220;Skip Install&#8221;. Set that flag to YES. I had to do this to both of the static libraries I include in my project.</p>
-
-
-<p><img src="/images/Xcode1.png"  alt="Xcode1.png"  /></p>
-
-
-<p>Once that&#8217;s done, your app should show a normal icon again &amp; have the ability to export to IPA just like before. Yay!</p>
-
-
-<p><br />
-<img src="/images/Xcode.png"  alt="Xcode.png"  /></p>
-
-
-<p>Huge thanks to <a href="http://stackoverflow.com/questions/5265292/xcode-4-create-ipa-file-instead-of-xcarchive">this stackoverflow question</a> for pointing me in the right direction.</p>
-
-</div>
-  <footer>
-    <a rel="full-article" href="/2011/06/creating-proper-ipa-files-in-xcode-4/">Read on &rarr;</a>
-  </footer>
-
-
-  </article>
-
-
-  <article>
-    
-  <header>
-    
-      <h1 class="entry-title"><a href="/2011/05/rails-intrigue-video-at-nhdnug/">Rails Intrigue Video at NHDNUG</a></h1>
-    
-    
-      <p class="meta">
-
-
-
-
-<time datetime="2011-05-31 00:00:00 -0500" pubdate  updated >May 31<span>st</span>, 2011</time>
-
-
-</p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>I gave a presentation at the North Houston .NET User Group a couple weeks ago entitled &#8220;Rails Intrigue&#8221;.  My friend, <a href="http://claudiolassala.wordpress.com/">Claudio Lassala</a> recorded it and posted the video on YouTube.</p>
-
-
-
-
-<p>In the presentation, I tried to give a little glimpse of what it feels like to build an application with Rails.  I also tried to convey a little of why I think <strong>Rails is just Fun</strong>.</p>
-
-
-
-
-<p>I think it went pretty well, for being mostly off the cuff.  Give it a watch, and let me know what you think.</p>
-
-
-
-
-<iframe width="560" height="349" src="http://www.youtube.com/embed/GIksgdjQ82g" frameborder="0" allowfullscreen></iframe>
-
-</div>
-  <footer>
-    <a rel="full-article" href="/2011/05/rails-intrigue-video-at-nhdnug/">Read on &rarr;</a>
+    <a rel="full-article" href="/2008/10/the-curly-brace-tax/">Read on &rarr;</a>
   </footer>
 
 
@@ -1097,8 +202,6 @@ Here&#8217;s to hoping the Xcode 4 continues to be improved. In the meantime, ho
 
 <nav role="pagination">
   <div>
-    
-      <a class="prev" href="/blog/page/2/">&larr; Older</a>
     
     <a href="/blog/archives">Blog Archives</a>
     
@@ -1127,23 +230,7 @@ Here&#8217;s to hoping the Xcode 4 continues to be improved. In the meantime, ho
   <ul id="recent_posts">
     
       <li class="post">
-        <a href="/2011/08/vim---could-not-invoke-jslint/">Vim - Could Not Invoke JSLint</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2011/08/is-rails-exempt-from-software-principles/">Is Rails Exempt?</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2011/08/when-viewwillappear-isnt-called/">When viewWillAppear: Isn&#8217;t Called</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2011/08/moving-my-blog/">Moving My Blog</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2011/08/my-vim-journey/">My Vim Journey</a>
+        <a href="/2008/10/the-curly-brace-tax/">The Curly Brace Tax</a>
       </li>
     
   </ul>

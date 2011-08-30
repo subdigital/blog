@@ -19,6 +19,8 @@ use Rack::Rewrite do
   # redirect wordpress feed request to the new url
   r301 '/feed', '/atom.xml'
 
+  r301 '/about', '/about-me'
+
   # remove trailing slashes
   r301 %r{^(.+)/$}, '$1'
 

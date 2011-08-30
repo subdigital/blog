@@ -38,19 +38,19 @@ Card
   #value
     Two of Hearts
       value
-        <span style="color: #2f2">should == 2</span>
+        should == 2
     Face Cards
       King of Clubs
         value
-          <span style="color: #2f2">should == 13</span>
+          should == 13
       Queen of Clubs
         value
-          <span style="color: #2f2">should == 12</span>
+          should == 12
       Jack of Hearts
         value
-          <span style="color: #2f2">should == 11</span>
+          should == 11
     Bad Value
-      <span style="color: #2f2">should raise StandardError</span>
+      should raise StandardError
 {% endcodeblock %}
 <p>I think that's a big improvement.</p>
 
