@@ -104,6 +104,40 @@
     
   <header>
     
+      <h1 class="entry-title"><a href="/2005/10/net-2-0-windows-forms/">.NET 2.0 Windows Forms</a></h1>
+    
+    
+      <p class="meta">
+
+
+
+
+<time datetime="2005-10-03 00:00:00 -0500" pubdate  updated >Oct 3<span>rd</span>, 2005</time>
+
+
+</p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I&rsquo;ve been struggling with some windows forms development in .NET 2.0 beta 2, and would really benefit from a good book, but there are none out!&nbsp; (Chris Sells&rsquo;s book is waiting on the final release, as are others&hellip;)</p>
+
+
+<p>Anyone know of some good online resources or beta 2 books that I could pick up?</p>
+
+</div>
+  <footer>
+    <a rel="full-article" href="/2005/10/net-2-0-windows-forms/">Read on &rarr;</a>
+  </footer>
+
+
+  </article>
+
+
+  <article>
+    
+  <header>
+    
       <h1 class="entry-title"><a href="/2005/09/for-every-action-there-is-an-equal-and-opposite-reaction/">For Every Action, There Is an Equal and Opposite Reaction&#8230;</a></h1>
     
     
@@ -472,70 +506,6 @@
 
   </article>
 
-
-  <article>
-    
-  <header>
-    
-      <h1 class="entry-title"><a href="/2005/07/accessing-session-from-an-httpmodule/">Accessing Session From an HttpModule</a></h1>
-    
-    
-      <p class="meta">
-
-
-
-
-<time datetime="2005-07-28 00:00:00 -0500" pubdate  updated >Jul 28<span>th</span>, 2005</time>
-
-
-</p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Today I wanted to extend my NHibernate implementation to allow formulti-page transactions for certain operations (that I control) andkeep with the cleaner ISession-per-HttpRequest pattern for everythingelse.</p>
-
-
-<p>To do that I had to modify my HttpModule to allow for this check,but I had no access to the SessionState here.&nbsp; Why is that?</p>
-
-
-<p>Here’s what I was doing in my HttpModule:</p>
-
-
-<p></p>
-
-
-<div id="code">
-<div><figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
-</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>public void Init(HttpApplication application)&lt;br>&lt;br>{ &lt;br> &lt;span class="comments">//add event handlers&lt;br>&lt;/span>&nbsp;application.BeginRequest += new EventHandler(context_BeginRequest);&lt;br>&nbsp;application.EndRequest += new EventHandler(context_EndRequest); &lt;br>}</div></code></pre></td></tr></table></div></figure></div>
-</div>
-
-
-<p></p>
-
-
-<p>I was creating and disconnecting my ISession object inside of thosemethods. The problem is that SessionState is not loaded until after theBeginRequest had fired and before the EndRequest had fired.(specifically it is accessibly after the AcquireRequestState event).So, changing my code to this worked:<br><br></p>
-
-
-<div id="code">
-<div><figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
-</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>public void Init(HttpApplication application) &lt;br>{ &lt;br>application.PreRequestHandlerExecute += new EventHandler(application_PreRequestHandlerExecute); &lt;br>application.PostRequestHandlerExecute += new EventHandler(application_PostRequestHandlerExecute); &lt;br>}</div></code></pre></td></tr></table></div></figure></div>
-</div>
-
-
-<p></p>
-
-
-<p>Also, I saw some people online incorrectly suggesting that oneimplement the IRequiresSessionState or IReadOnlySessionStateinterfaces, but if you read the docs, those are marker interfaces forHttpHandlers only. </p>
-
-</div>
-  <footer>
-    <a rel="full-article" href="/2005/07/accessing-session-from-an-httpmodule/">Read on &rarr;</a>
-  </footer>
-
-
-  </article>
-
 <nav role="pagination">
   <div>
     
@@ -570,6 +540,10 @@
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2011/09/firebug-style-debugging-for-ios/">Firebug-Style Visual Debugging for iOS</a>
+      </li>
+    
+      <li class="post">
         <a href="/2011/08/vim---could-not-invoke-jslint/">Vim - Could Not Invoke JSLint</a>
       </li>
     
@@ -583,10 +557,6 @@
     
       <li class="post">
         <a href="/2011/08/moving-my-blog/">Moving My Blog</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2011/08/my-vim-journey/">My Vim Journey</a>
       </li>
     
   </ul>

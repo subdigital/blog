@@ -104,6 +104,144 @@
     
   <header>
     
+      <h1 class="entry-title"><a href="/2009/08/my-favorite-production-software-bug/">My Favorite Production Software Bug</a></h1>
+    
+    
+      <p class="meta">
+
+
+
+
+<time datetime="2009-08-21 00:00:00 -0500" pubdate  updated >Aug 21<span>st</span>, 2009</time>
+
+
+</p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>When I first graduated from college I worked for a small company doing custom development work in .NET 1.1.</p>
+
+
+<p>Our largest client (coincidentally where our offices were) had a print shop and a web site for financial agents to set up and send mailings to folks inviting them to a dinner and telling them about the latest &amp; greatest annuities that they should invest all their money in.</p>
+
+
+<p>The system was pretty interesting.&nbsp; With a batch job they&#8217;d print out letters, a bio card that showed the agent&#8217;s photo on it, and other inserts, such as tickets to the dinner.&nbsp; These would be collated, folded, and stuffed into an envelope that would be licked, sealed, and affixed with a real stamp. (<em>People are 20 times more likely to open a letter if it has a real stamp &#8211; and yes I just made that number up</em>).&nbsp; It was very impressive to watch it all work.</p>
+
+
+<p>The website we built allowed the agents to place these orders (with optional inserts) and mail them to a set of folks matching a given demographic all online.</p>
+
+
+<p><img style="margin: 10px 10px 10px 0px" align="left" alt="" src="http://www.creative-ps.com/images/content/mailsorter.jpg" /></p>
+
+
+<p>Often times the agents would purchase an upgrade to have a reminder card sent to each person a week before the event occurred.&nbsp; These cards were special and even though we had a room full of expensive printers, we didn&#8217;t have the ability to print these cards.&nbsp; So we&#8217;d have to outsource it to another print shop across town.</p>
+
+
+<p>The process went something like this:</p>
+
+
+<ul>
+<li>We&#8217;d compile all the info, along with a TIF of the agent&#8217;s photo and FTP it over to the other company</li>
+<li>They&#8217;d print them all and drive them to the post office for mailing</li>
+<li>They would charge us money</li>
+</ul>
+
+
+<p>All of this just worked, and I never had to see the internals of this system.&nbsp; That is, until my boss went on vacation to Mexico (at the time it was just me and him).</p>
+
+
+<p>You see, an agent had sent a card to himself and a couple of his friends.&nbsp; He never received them.&nbsp; Since he had paid of for the upgrade he was understandably upset.&nbsp; They asked me to look into it.</p>
+
+
+<p>I was slightly familiar with the tables, and so I went looking.&nbsp; There was a table along the lines of ResponseCardQueue.&nbsp; It contained columns such as agent_id, recipient, address, city, state, zip, and date_sent.</p>
+
+
+<p>There were tens of thousands of these records.&nbsp; I issued this query:</p>
+
+
+
+
+<div><figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>SELECT * FROM ResponseCardQueue WHERE date_sent IS NULL</div></code></pre></td></tr></table></div></figure></div>
+
+
+
+
+<p>To find that there were about 2100 records returned.&nbsp; For some reason these weren&#8217;t being processed.</p>
+
+
+<p>I finally found the code that was reading this, and it had some code that looked like this:</p>
+
+
+
+
+<div><figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>public void ProcessCards(Card[] cards)&lt;br />{&lt;br />&nbsp; try &lt;br />&nbsp; {&lt;br />&nbsp;&nbsp;&nbsp; foreach(Card c in cards)&lt;br />&nbsp;&nbsp;&nbsp; {&lt;br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; string tifFilename = @&quot;\\SOME\NETWORK\PATH\&quot; + c.AgentId + &quot;.TIF&quot;&lt;br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; //copy details + tif image to some folder&lt;br />&nbsp;&nbsp;&nbsp; }&lt;br />&nbsp;&nbsp;&nbsp; //zip up folder&lt;br />&lt;br />&lt;br />&lt;br />&lt;br />&nbsp;&nbsp;&nbsp; //FTP the file to the other print shop&lt;br />    //mark date_sent to DateTime.now&lt;br />&nbsp; }&lt;br />&nbsp; catch&lt;br />&nbsp; {&lt;br />&nbsp; }&lt;br />}</div></code></pre></td></tr></table></div></figure></div>
+
+
+
+
+<p>There are two things to notice.&nbsp; One was that we were calculating the filename based on the column in the database.&nbsp; The 2nd was the empty catch block, effectively allowing errors to go on unnoticed.</p>
+
+
+<p>In this system an agent id was an identity column in another table, so the numbers were incrementing by 1 with each new account.&nbsp; After much searching, I realized that the column type for the agent id in this table was defined as a char(4).&nbsp; So as soon as we had our 10000th record in the system, it started looking for filenames that didn&#8217;t exist on the network share.</p>
+
+
+<p>It would be something like this:</p>
+
+
+<p>agent id 10200 would get truncated to 1020, which in our system didn&#8217;t exist (most of the numbers started in the 4000&#8217;s.&nbsp; So the filename didn&#8217;t exist (and probably better that it errored out here rather than choose the wrong picture for the card!).&nbsp; This code threw an exception and stopped processing future records.</p>
+
+
+<p>And so the unsent records piled up.&nbsp; For 4 months.</p>
+
+
+<p><img style="margin: 10px 0px 10px 10px" align="right" width="137" height="174" alt="" src="http://1sdiresource.com/pile.jpg" /></p>
+
+
+<p>So I diligently made the column type int and updated the records that were below that threshold to correct their agent id numbers.&nbsp; So guess what happened?&nbsp; I fixed the clog and with one big TWOOOSH all of the records were processed.</p>
+
+
+<p>I felt mighty proud.</p>
+
+
+<p>&nbsp;</p>
+
+
+<p>Until&#8230;&#8230;&#8230;</p>
+
+
+<p>&nbsp;</p>
+
+
+<p>A few hours later I realized that the cards would actually now be mailed!&nbsp; How embarrassing it would be to remind someone of an event that took place 3 months ago?</p>
+
+
+<p>By the time I was able to explain all of this and someone jumped in their car and went to the post office just in time to grab the entire batch before it was about to be mailed.</p>
+
+
+<p>We still were charged for the printing &amp; postage of those cards, however we saved ourselves the embarrassment of explaining to all of our customers that we screwed up big time.</p>
+
+
+<p>I learned a valuable lesson that a simple oversight can cost a company a <em>ton</em> of money (and in this case&#8230; reputation).</p>
+
+
+<p>So what&#8217;s your favorite production software bug?</p>
+
+</div>
+  <footer>
+    <a rel="full-article" href="/2009/08/my-favorite-production-software-bug/">Read on &rarr;</a>
+  </footer>
+
+
+  </article>
+
+
+  <article>
+    
+  <header>
+    
       <h1 class="entry-title"><a href="/2009/08/asp-net-mvc-in-action-in-stores-in-september/">ASP.NET MVC in Action in Stores in September</a></h1>
     
     
@@ -840,103 +978,6 @@ Wait &#8216;til VSTS2010 comes out!&rdquo;</p>
 
   </article>
 
-
-  <article>
-    
-  <header>
-    
-      <h1 class="entry-title"><a href="/2009/05/a-culture-of-microcomponents/">A Culture of Microcomponents</a></h1>
-    
-    
-      <p class="meta">
-
-
-
-
-<time datetime="2009-05-01 00:00:00 -0500" pubdate  updated >May 1<span>st</span>, 2009</time>
-
-
-</p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Imagine that you are given the opportunity to rewrite (or upgrade with extreme prejudice) one of your older .NET 2.0 (or 1.1) projects using .NET 3.5.&nbsp; You wrote it, so you have intimate knowledge of the current architecture, what parts smell, what works well.&nbsp; You know what custom components you wrote to solve various problems, etc.&nbsp; You also have a ton of lessons learned.&nbsp; Now you get to do again, only this time you have more advanced, sharper tools at your disposal.</p>
-
-
-<p> <p><img style="margin: 0px 20px" align="right" src="http://www.blackwagon.com/Merchant2/graphics/00000001/BRIO010-brio-building-blocks-natural-lg.jpg">I went through this process recently and came up with no shortage of 3rd party libraries I wanted to use for the new version:</p> <ul> <li><a href="https://www.hibernate.org/343.html" target="_blank">NHibernate</a>  <li><a href="http://fluentnhibernate.org/" target="_blank">Fluent NHibernate</a>  <li><a href="http://sourceforge.net/projects/nhcontrib/" target="_blank">NHibernate.Linq</a>  <li><a href="http://www.castleproject.org/container/index.html" target="_blank">Castle Windsor</a>  <li><a href="http://www.castleproject.org/activerecord/documentation/v1rc1/usersguide/validation.html" target="_blank">Castle Validators</a>  <li><a href="http://logging.apache.org/log4net/index.html" target="_blank">log4net</a>  <li><a href="http://www.codeplex.com/AutoMapper" target="_blank">AutoMapper</a>  <li><a href="http://code.google.com/p/elmah/" target="_blank">ELMAH</a>  <li><a href="http://mvccontrib.org" target="_blank">MvcContrib</a>  <li><a href="http://sparkviewengine.com/" target="_blank">Spark</a>  <li><a href="http://jquery.com/" target="_blank">jQuery</a>  <li><a href="http://www.atblabs.com/jquery.corners.html" target="_blank">jQuery rounded corners</a> <li><a href="http://bassistance.de/jquery-plugins/jquery-plugin-autocomplete/" target="_blank">jQuery auto-complete</a>  <li><a href="http://www.codeplex.com/CommonServiceLocator" target="_blank">CommonServiceLocator</a>  <li><a href="http://www.codeplex.com/LINQtoAD" target="_blank">LINQ to ActiveDirectory</a>  <li><a href="http://docu.jagregory.com/" target="_blank">docu</a>  <li><a href="http://nunit.org" target="_blank">NUnit</a>  <li><a href="http://nant.sf.net" target="_blank">NAnt</a></li></ul> <p>This list is nothing to sneeze at, and it&#8217;s just what I could remember&#8230; in fact it&#8217;s probably a bit longer.&nbsp; This tends to scare people, as it is a lot of stuff to learn.&nbsp; <em>What the heck are these things?&nbsp; Where did they come from?&nbsp; Do I need it?&nbsp; How do I learn it?&nbsp; Why did you include this?</em></p> <p>That&#8217;s a great question.&nbsp; <strong>Why <em>do</em> I want to use all of these things?</strong>&nbsp;</p> <p>I firmly believe in leveraging the work of others, and writing code that is expressive and easy to maintain.&nbsp; Some of these projects exist solely to make working with another item from the list a lot easier.&nbsp; NHibernate is a great example.&nbsp; I loves me some NHibernate, but writing XML mapping files by hand isn&#8217;t what I&#8217;d call a fun time.&nbsp; Fluent NHibernate makes this so much nicer.&nbsp; The last thing I want to do is reinvent the wheel.</p> <p><img style="margin: 20px" src="http://liambest.com/square.jpg" width="419" height="480"></p> <p>I don&#8217;t think I&#8217;m alone here.&nbsp; Most projects I come across have a similar attitude regarding re-using rather than re-inventing.&nbsp; Most come with a dozen or so additional libraries so that it can function.&nbsp; I recently asked on twitter how many 3rd party libraries folks are using.&nbsp; The average result was about 5, but some were as high as 12.</p> <p>The bottom line for me is:&nbsp; <strong>The value I get from leveraging 3rd party tools is greater than the psychic weight that they cause.&nbsp; </strong>But others may not agree with me.</p> <p>What about the Ruby community?&nbsp; Don&#8217;t they have this problem?&nbsp; Absolutely.&nbsp; But I don&#8217;t think they would classify it as a problem, and I&#8217;d tend to agree.&nbsp; Say you&#8217;re writing a ruby app and you somehow want to integrate flickr with twitter and paypal.</p></p>
-
-<div><figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
-<span class='line'>2</span>
-<span class='line'>3</span>
-</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>&gt; gem install flickr
-</div><div class='line'>&gt; gem install twitter
-</div><div class='line'>&gt; gem install paypal</div></code></pre></td></tr></table></div></figure></div>
-
-
-
-
-
-
-<p><img style="margin: 0px 20px" align="right" src="http://www.workingwithrails.com/images/ruby-gem.png?1213632569">&#8230;Wait what?&nbsp; That&#8217;s it?&nbsp; Yep.&nbsp; <strong><a href="http://rubygems.org/" target="_blank">Rubygems</a> is a thing of beauty</strong>.&nbsp; It lowers the barrier to installing 3rd party plugins and libraries.&nbsp; Rails plugins has a similar concept.&nbsp; Need to rate one of your models?&nbsp; 
-<div><figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
-</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>script/install plugin acts_as_rateable</div></code></pre></td></tr></table></div></figure></div>
- Want to use jQuery instead of prototype/scriptaculous?&nbsp; simply run 
-<div><figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
-</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>script/install plugin jrails</div></code></pre></td></tr></table></div></figure></div>
-
-<p></p>
-<p>These techniques allow you to add small pieces of functionality to existing applications with relative ease.&nbsp; You don&#8217;t have to open a web browser &amp; search for the tool.&nbsp; You don&#8217;t have to download &amp; extract it somewhere.&nbsp; And you don&#8217;t need to copy it into your project tree.&nbsp; Everything is done with a single command.</p>
-<p>It seems as if every concept and service has their own gem or rails plugin.&nbsp; Rails applications today can be built rather simply by composing tiny pieces of functionality written by other people.&nbsp; <br></p>
-<p>So why can&#8217;t we do this in .NET?&nbsp; Well in short, we can&#8230; but it requires a culture shift.&nbsp; For starters, in .NET we generally check in all of our dependencies into source control, so that we can always guarantee that each developer has all of the required tools (and the specific versions of such tools).&nbsp; With ruby gems, each gem is installed into a common location, which is consistent across all machines (actually it is configurable, but the point is it&#8217;s a global directory).&nbsp; To use one of the gems installed on your machine, you simply do this:</p>
-<div><figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
-</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>require &lt;span class="str">'hpricot'&lt;/span></div></code></pre></td></tr></table></div></figure></div>
-
-<style type="text/css">.csharpcode, .csharpcode pre
-{
-font-size: small;
-color: black;
-font-family: consolas, &#8220;Courier New&#8221;, courier, monospace;
-background-color: #ffffff;
-/*white-space: pre;*/
-}
-.csharpcode pre { margin: 0em; }
-.csharpcode .rem { color: #008000; }
-.csharpcode .kwrd { color: #0000ff; }
-.csharpcode .str { color: #006080; }
-.csharpcode .op { color: #0000c0; }
-.csharpcode .preproc { color: #cc6633; }
-.csharpcode .asp { background-color: #ffff00; }
-.csharpcode .html { color: #800000; }
-.csharpcode .attr { color: #ff0000; }
-.csharpcode .alt
-{
-background-color: #f4f4f4;
-width: 100%;
-margin: 0em;
-}
-.csharpcode .lnum { color: #606060; }
-</style>
-<p>It knows to load up that library from a central location.&nbsp; When this application is deployed to another environment, the same thing occurs.&nbsp; Gems are installed via the same commands as on the dev machines. </p>
-<p>Back at ALT.NET Seattle 2009 I convened a session to discuss revitalizing one of the many <em>gems-for-.NET</em> projects.&nbsp; We identified several efforts along similar lines as gems:</p>
-<ul>
-<li>ngems
-<li>cogs
-<li>nu
-<li>horn
-<li>Machine.PartStore</li></ul>
-<p> Out of this discussion, a few folks decided to start fresh with a new project (affectionately called <a href="http://github.com/scottcreynolds/rocks/tree/master" target="_blank">rocks</a>), and toy with getting rubygems to work with IronRuby and wrapping it all in our own command line interface.&nbsp; Not much has been done on this except a quick spike, but I think the idea is promising.</p>
-<p>I believe that if something like this comes up in the .NET community it will lead to a shift in how we think about dependencies, components, and overall re-use of small pieces of code to build larger applications.&nbsp; </p>
-<p>What do you think?</p>
-
-</div>
-  <footer>
-    <a rel="full-article" href="/2009/05/a-culture-of-microcomponents/">Read on &rarr;</a>
-  </footer>
-
-
-  </article>
-
 <nav role="pagination">
   <div>
     
@@ -971,6 +1012,10 @@ margin: 0em;
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2011/09/firebug-style-debugging-for-ios/">Firebug-Style Visual Debugging for iOS</a>
+      </li>
+    
+      <li class="post">
         <a href="/2011/08/vim---could-not-invoke-jslint/">Vim - Could Not Invoke JSLint</a>
       </li>
     
@@ -984,10 +1029,6 @@ margin: 0em;
     
       <li class="post">
         <a href="/2011/08/moving-my-blog/">Moving My Blog</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2011/08/my-vim-journey/">My Vim Journey</a>
       </li>
     
   </ul>

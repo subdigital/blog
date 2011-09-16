@@ -104,6 +104,86 @@
     
   <header>
     
+      <h1 class="entry-title"><a href="/2007/08/decorator-the-cool-pattern-with-the-stupid-name/">Decorator - the Cool Pattern With the Stupid Name</a></h1>
+    
+    
+      <p class="meta">
+
+
+
+
+<time datetime="2007-08-03 00:00:00 -0500" pubdate  updated >Aug 3<span>rd</span>, 2007</time>
+
+
+</p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>So I have a logging class that is implementation agnostic.&nbsp; Under the hood it uses an <a href="http://www.dofactory.com/Patterns/PatternAdapter.aspx" target="_blank">Adapter</a> for <a href="http://msdn2.microsoft.com/en-us/library/aa480453.aspx" target="_blank">Enterprise Library</a> Logging, however we could easily switch it out for <a href="http://logging.apache.org/log4net/" target="_blank">log4net</a> if needed without changing the code.</p>
+
+
+<p>So you can imagine that I have an interface that looks like this:</p>
+
+
+<div style="FONT-SIZE: 10pt; BACKGROUND: white; COLOR: black; FONT-FAMILY: Courier New"><p style="MARGIN: 0px"><span style="COLOR: blue">public</span> <span style="COLOR: blue">interface</span> <span style="COLOR: #2b91af">ILogger</span></p><p style="MARGIN: 0px">{</p><p style="MARGIN: 0px">&nbsp;&nbsp;&nbsp; <span style="COLOR: blue">void</span> Write(<span style="COLOR: blue">string</span> text);</p><p style="MARGIN: 0px">&nbsp;&nbsp;&nbsp; <span style="COLOR: blue">void</span> Warn(<span style="COLOR: blue">string</span> text);</p><p style="MARGIN: 0px">&nbsp;&nbsp;&nbsp; <span style="COLOR: blue">void</span> Error(<span style="COLOR: blue">string</span> text, <span style="COLOR: #2b91af">Exception</span> msg);</p><p style="MARGIN: 0px">}</p></div>
+
+
+<!--EndFragment-->
+
+
+<p>&hellip; and there is currently an implementation of this class called EntLibLogger:</p>
+
+
+<div style="FONT-SIZE: 10pt; BACKGROUND: white; COLOR: black; FONT-FAMILY: Courier New"><p style="MARGIN: 0px"><span style="COLOR: blue">public</span> <span style="COLOR: blue">class</span> <span style="COLOR: #2b91af">EntLibLogger</span> : <span style="COLOR: #2b91af">ILogger</span></p><p style="MARGIN: 0px">{&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; </p><p style="MARGIN: 0px">&nbsp;&nbsp;&nbsp; <span style="COLOR: blue">public</span> <span style="COLOR: blue">void</span> Write(<span style="COLOR: blue">string</span> text)</p><p style="MARGIN: 0px">&nbsp;&nbsp;&nbsp; {</p><p style="MARGIN: 0px">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="COLOR: green">//ent. lib write log entry</span></p><p style="MARGIN: 0px">&nbsp;&nbsp;&nbsp; }</p><p style="MARGIN: 0px">&nbsp;</p><p style="MARGIN: 0px">&nbsp;&nbsp;&nbsp; <span style="COLOR: blue">public</span> <span style="COLOR: blue">void</span> Warn(<span style="COLOR: blue">string</span> text)</p><p style="MARGIN: 0px">&nbsp;&nbsp;&nbsp; {</p><p style="MARGIN: 0px">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="COLOR: green">//ent. lib warn</span></p><p style="MARGIN: 0px">&nbsp;&nbsp;&nbsp; }</p><p style="MARGIN: 0px">&nbsp;</p><p style="MARGIN: 0px">&nbsp;&nbsp;&nbsp; <span style="COLOR: blue">public</span> <span style="COLOR: blue">void</span> Error(<span style="COLOR: blue">string</span> text, <span style="COLOR: #2b91af">Exception</span> msg)</p><p style="MARGIN: 0px">&nbsp;&nbsp;&nbsp; {</p><p style="MARGIN: 0px">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="COLOR: green">//ent. lib error</span></p><p style="MARGIN: 0px">&nbsp;&nbsp;&nbsp; }&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; </p><p style="MARGIN: 0px">}</p></div>
+
+
+<!--EndFragment-->
+
+
+<p>The specific logger that is used is abstracted behind a factory of course.&nbsp; However, some of the applications that use this component will not have the logging configuration.&nbsp; It is perfectly feasible to ignore logging in this scenario (ie: swallow exceptions) however this is something that any logging component would do.&nbsp; I don&rsquo;t want to add it to each and every implementation of ILogger.</p>
+
+
+<p>So here&rsquo;s where the decorator comes in.&nbsp; This pattern could really use a better name, but I can&rsquo;t think of one, so I&rsquo;ll leave that up to you.</p>
+
+
+<p>A Decorator implements the same interface, however it wraps each method with its own behavior before deferring the call to an inner implementation.&nbsp; Wow, that doesn&rsquo;t really make much sense, so how about an example&hellip;</p>
+
+
+<div style="FONT-SIZE: 10pt; BACKGROUND: white; COLOR: black; FONT-FAMILY: Courier New"><p style="MARGIN: 0px"><span style="COLOR: blue">public</span> <span style="COLOR: blue">class</span> <span style="COLOR: #2b91af">SilentlyFailLoggingDecorator</span> : <span style="COLOR: #2b91af">ILogger</span></p><p style="MARGIN: 0px">{</p><p style="MARGIN: 0px">&nbsp;&nbsp;&nbsp; <span style="COLOR: blue">private</span> <span style="COLOR: blue">readonly</span> <span style="COLOR: #2b91af">ILogger</span> _innerLogger;</p><p style="MARGIN: 0px">&nbsp;</p><p style="MARGIN: 0px">&nbsp;&nbsp;&nbsp; <span style="COLOR: blue">public</span> SilentlyFailLoggingDecorator(<span style="COLOR: #2b91af">ILogger</span> innerLogger)</p><p style="MARGIN: 0px">&nbsp;&nbsp;&nbsp; {</p><p style="MARGIN: 0px">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; _innerLogger = innerLogger;</p><p style="MARGIN: 0px">&nbsp;&nbsp;&nbsp; }</p><p style="MARGIN: 0px">&nbsp;</p><p style="MARGIN: 0px">&nbsp;&nbsp;&nbsp; <span style="COLOR: blue">public</span> <span style="COLOR: blue">void</span> Write(<span style="COLOR: blue">string</span> text)</p><p style="MARGIN: 0px">&nbsp;&nbsp;&nbsp; {</p><p style="MARGIN: 0px">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="COLOR: blue">try</span></p><p style="MARGIN: 0px">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; {</p><p style="MARGIN: 0px">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; _innerLogger.Write(text);</p><p style="MARGIN: 0px">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; }</p><p style="MARGIN: 0px">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="COLOR: blue">catch</span></p><p style="MARGIN: 0px">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; {</p><p style="MARGIN: 0px">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="COLOR: green">//swallow exception</span></p><p style="MARGIN: 0px">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; }</p><p style="MARGIN: 0px">&nbsp;&nbsp;&nbsp; }</p><p style="MARGIN: 0px">&nbsp;</p><p style="MARGIN: 0px">&nbsp;&nbsp;&nbsp; <span style="COLOR: blue">public</span> <span style="COLOR: blue">void</span> Warn(<span style="COLOR: blue">string</span> text)</p><p style="MARGIN: 0px">&nbsp;&nbsp;&nbsp; {</p><p style="MARGIN: 0px">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="COLOR: blue">try</span> </p><p style="MARGIN: 0px">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; {&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; </p><p style="MARGIN: 0px">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; _innerLogger.Warn(text);&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; </p><p style="MARGIN: 0px">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; }</p><p style="MARGIN: 0px">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="COLOR: blue">catch</span></p><p style="MARGIN: 0px">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; {</p><p style="MARGIN: 0px">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="COLOR: green">//swallow exception&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; </span></p><p style="MARGIN: 0px">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; }</p><p style="MARGIN: 0px">&nbsp;&nbsp;&nbsp; }</p><p style="MARGIN: 0px">&nbsp;</p><p style="MARGIN: 0px">&nbsp;&nbsp;&nbsp; <span style="COLOR: blue">public</span> <span style="COLOR: blue">void</span> Error(<span style="COLOR: blue">string</span> text, <span style="COLOR: #2b91af">Exception</span> exc)</p><p style="MARGIN: 0px">&nbsp;&nbsp;&nbsp; {</p><p style="MARGIN: 0px">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="COLOR: blue">try</span></p><p style="MARGIN: 0px">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; {</p><p style="MARGIN: 0px">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; _innerLogger.Error(text, exc);</p><p style="MARGIN: 0px">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; }</p><p style="MARGIN: 0px">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="COLOR: blue">catch</span></p><p style="MARGIN: 0px">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; {</p><p style="MARGIN: 0px">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="COLOR: green">//swallow</span></p><p style="MARGIN: 0px">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; }</p><p style="MARGIN: 0px">&nbsp;&nbsp;&nbsp; }</p><p style="MARGIN: 0px">&nbsp;</p><p style="MARGI
+N: 0px">}</p></div>
+
+
+<p>All of the actual implementation comes from whatever ILogger is sent via the constructor.&nbsp; All this class does is &ldquo;decorate&rdquo; the method calls with additional behavior.&nbsp; (This time, we&rsquo;re choosing to silently ignore errors rather than throw exceptions that cause the program to stop)</p>
+
+
+<p>To wire this up, wherever the factory method resides that creates the actual logger, you&rsquo;d write&hellip;</p>
+
+
+<div style="FONT-SIZE: 10pt; BACKGROUND: white; COLOR: black; FONT-FAMILY: Courier New"><p style="MARGIN: 0px"><span style="COLOR: blue">public</span> <span style="COLOR: blue">static</span> <span style="COLOR: #2b91af">ILogger</span> GetLogger()</p><p style="MARGIN: 0px">{</p><p style="MARGIN: 0px">&nbsp;&nbsp;&nbsp; <span style="COLOR: green">//via IoC or just hard-coding</span></p><p style="MARGIN: 0px">&nbsp;&nbsp;&nbsp; <span style="COLOR: blue">return</span> <span style="COLOR: blue">new</span> <span style="COLOR: #2b91af">SilentlyFailLoggingDecorator</span>(</p><p style="MARGIN: 0px"><font color="#0000ff">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </font><span style="COLOR: blue">new</span> <span style="COLOR: #2b91af">EntLibLogger</span>()</p><p style="MARGIN: 0px">&nbsp;&nbsp;&nbsp;&nbsp;);</p><p style="MARGIN: 0px">}</p></div>
+
+
+<!--EndFragment-->
+
+
+<p>So there you have it!&nbsp; The decorator pattern can do all kinds of Aspect-Oriented things such as Log a message each time a method is called, or possibly massage parameters before sending them to an inner class.</p>
+
+
+<div class="bjtags">Tags:<a rel="tag" href="http://technorati.com/tag/Decorator">Decorator</a>, <a rel="tag" href="http://technorati.com/tag/Enterprise+Library">Enterprise+Library</a>, <a rel="tag" href="http://technorati.com/tag/log4net">log4net</a></div>
+
+</div>
+  <footer>
+    <a rel="full-article" href="/2007/08/decorator-the-cool-pattern-with-the-stupid-name/">Read on &rarr;</a>
+  </footer>
+
+
+  </article>
+
+
+  <article>
+    
+  <header>
+    
       <h1 class="entry-title"><a href="/2007/08/how-does-youtube-handle-it/">How Does YouTube Handle It?</a></h1>
     
     
@@ -531,67 +611,6 @@
 
   </article>
 
-
-  <article>
-    
-  <header>
-    
-      <h1 class="entry-title"><a href="/2007/07/enamoured-with-console/">Enamoured With Console</a></h1>
-    
-    
-      <p class="meta">
-
-
-
-
-<time datetime="2007-07-13 00:00:00 -0500" pubdate  updated >Jul 13<span>th</span>, 2007</time>
-
-
-</p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Face it.&nbsp; The windows command line interface has always sucked.&nbsp; Maybe that&rsquo;s why most Windows users don&rsquo;t use it&hellip;</p>
-
-
-<p>Lately I&rsquo;ve become enamoured with <a href="http://sourceforge.net/projects/console/" target="_blank">Console</a>, the open-source replacement for the basic Windows command prompt.</p>
-
-
-<p>The reasons I like it?</p>
-
-
-<ul><li>Tabbed interface</li><li>Alpha Transparency</li><li>Support for lots of colors and fonts (Consolas kicks ass)</li><li><a href="http://garbageburrito.com/blog/entry/74" target="_blank">Integration with cygwin</a></li></ul>
-
-
-<p>Seriously, now&hellip;&nbsp; which looks better?</p>
-
-
-<p>This&hellip;.</p>
-
-
-<p><img src="/images/console_small.jpg" hspace="5"  border="0"  /></p>
-
-
-<p>or this&hellip;.</p>
-
-
-<p><img src="/images/cmd.jpg" hspace="5"  border="0"  /></p>
-
-
-<p>&nbsp;</p>
-
-
-<div class="bjtags">Tags:<a rel="tag" href="http://technorati.com/tag/Console">Console</a>, <a rel="tag" href="http://technorati.com/tag/Command+Line">Command+Line</a></div>
-
-</div>
-  <footer>
-    <a rel="full-article" href="/2007/07/enamoured-with-console/">Read on &rarr;</a>
-  </footer>
-
-
-  </article>
-
 <nav role="pagination">
   <div>
     
@@ -626,6 +645,10 @@
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2011/09/firebug-style-debugging-for-ios/">Firebug-Style Visual Debugging for iOS</a>
+      </li>
+    
+      <li class="post">
         <a href="/2011/08/vim---could-not-invoke-jslint/">Vim - Could Not Invoke JSLint</a>
       </li>
     
@@ -639,10 +662,6 @@
     
       <li class="post">
         <a href="/2011/08/moving-my-blog/">Moving My Blog</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2011/08/my-vim-journey/">My Vim Journey</a>
       </li>
     
   </ul>

@@ -104,6 +104,319 @@
     
   <header>
     
+      <h1 class="entry-title"><a href="/2008/11/subsonic-and-projections/">SubSonic and Projections</a></h1>
+    
+    
+      <p class="meta">
+
+
+
+
+<time datetime="2008-11-11 00:00:00 -0600" pubdate  updated >Nov 11<span>th</span>, 2008</time>
+
+
+</p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I&#8217;ve said in the past that we use SubSonic on my current project.&#160; It does what it says it does (mostly) and generates some usable code off of an existing database.&#160; I do have my qualms about it, mostly because of my bias to look at things from the object/domain world rather than the database world.&#160; But I am a committer, so my energy complaining would be better off contributing goodness to the project.</p>
+
+
+<p>  <p>With the most recent release of the new query API in SubSonic, we were given a lot of flexibility.&#160; This was much needed in our project because getting single results and collections off of a single entity is rarely sufficient for complex applications.&#160; Often times the data needed to display on a page comes from multiple tables.</p>  <p>In the past, I was forced to do this sort of ugly nastiness:</p></p>
+
+<div><figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+<span class='line'>2</span>
+<span class='line'>3</span>
+<span class='line'>4</span>
+<span class='line'>5</span>
+<span class='line'>6</span>
+</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>&lt;span class="rem">//get schedules (1 query)&lt;/span>
+</div><div class='line'>Schedule[] schedules = _repository.GetSchedulesInRange(start, end);
+</div><div class='line'>&lt;span class="rem">//get employee info (2 queries)&lt;/span>
+</div><div class='line'>Employee[] employees = _repository.GetEmployeesInSchedules(schedules);
+</div><div class='line'>ScheduleDisplayMapper mapper = &lt;span class="kwrd">new&lt;/span> ScheduleDisplayMapper();
+</div><div class='line'>&lt;span class="kwrd">return&lt;/span> mapper.Map(schedules, employees);</div></code></pre></td></tr></table></div></figure></div>
+
+
+
+
+<p>This function returned an array of `ScheduleDTO` objects that were used to bind to a view.&#160; The lack of joins at the database level was really killing our productivity and in some cases, performance.&#160; It often took more code to write the query than you&#8217;d expect, because you would have to perform it in steps.</p>
+
+
+<blockquote>
+<p>Note: I&#8217;m really pragmatic about performance, so 2 queries when 1 is possible doesn&#8217;t usually matter in the long run.&#160; Of course if this *is* a perf bottleneck, then of course, optimize.&#160; I much prefer to balance programmer performance over unnoticeable application performance.</p>
+</blockquote>
+
+
+<p>With the new query API, I can now do this:</p>
+
+
+
+
+<div><figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+<span class='line'>2</span>
+<span class='line'>3</span>
+<span class='line'>4</span>
+<span class='line'>5</span>
+<span class='line'>6</span>
+<span class='line'>7</span>
+<span class='line'>8</span>
+<span class='line'>9</span>
+<span class='line'>10</span>
+<span class='line'>11</span>
+</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>SqlQuery query = &lt;span class="kwrd">new&lt;/span> Select()
+</div><div class='line'>.From&lt;OnCallSchedule&gt;()
+</div><div class='line'>.InnerJoin(Area.AreaIdColumn, OnCallSchedule.AreaIdColumn)
+</div><div class='line'>.InnerJoin(EmployeeProfile.EmployeeProfileIdColumn, OnCallSchedule.EmployeeProfileIdColumn)
+</div><div class='line'>.Where(OnCallSchedule.StartDtColumn).IsLessThanOrEqualTo(date)
+</div><div class='line'>.And(OnCallSchedule.EndDtColumn).IsGreaterThanOrEqualTo(date)
+</div><div class='line'>.OpenExpression()
+</div><div class='line'>.And(Area.AreaIdColumn).IsNull()
+</div><div class='line'>.Or(Area.AreaIdColumn).IsEqualTo(areaId)
+</div><div class='line'>.CloseExpression()
+</div><div class='line'>.OrderAsc(OnCallSchedule.PriorityColumn.ColumnName);</div></code></pre></td></tr></table></div></figure></div>
+
+
+
+
+<p>I get complete refactoring support, intellisense, and type-safety.&#160; But now we have a different problem:&#160; we&#8217;re not returning a single entity anymore.&#160; We&#8217;re returning a combination of columns from different tables.</p>
+
+
+<p>To build my DTO objects, I then had to resort to functions like this:</p>
+
+
+
+
+<div><figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+<span class='line'>2</span>
+<span class='line'>3</span>
+<span class='line'>4</span>
+<span class='line'>5</span>
+<span class='line'>6</span>
+<span class='line'>7</span>
+<span class='line'>8</span>
+<span class='line'>9</span>
+<span class='line'>10</span>
+<span class='line'>11</span>
+<span class='line'>12</span>
+<span class='line'>13</span>
+<span class='line'>14</span>
+<span class='line'>15</span>
+</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>&lt;span class="kwrd">public&lt;/span> &lt;span class="kwrd">static&lt;/span> ScheduleDTO FetchFromRow(IDataReader dr)
+</div><div class='line'>{
+</div><div class='line'>&lt;span class="kwrd">int&lt;/span> i = 0;
+</div><div class='line'>ScheduleDTO schedule = &lt;span class="kwrd">new&lt;/span> ScheduleDTO();
+</div><div class='line'>schedule.OnCallScheduleId = dr.GetGuid(i++);
+</div><div class='line'>schedule.Start = dr.GetDateTime(i++);
+</div><div class='line'>schedule.End = dr.GetDateTime(i++);
+</div><div class='line'>schedule.Comments = dr[i++] &lt;span class="kwrd">as&lt;/span> &lt;span class="kwrd">string&lt;/span>;
+</div><div class='line'>schedule.Priority = dr.GetInt32(i++);
+</div><div class='line'>schedule.EmployeeProfileId = dr.GetGuid(i++);
+</div><div class='line'>&lt;span class="kwrd">string&lt;/span> firstName = dr.GetString(i++);
+</div><div class='line'>&lt;span class="kwrd">string&lt;/span> lastName = dr.GetString(i++);
+</div><div class='line'>schedule.EmployeeName = firstName + &lt;span class="str">&quot; &quot;&lt;/span> + lastName;
+</div><div class='line'>&lt;span class="kwrd">return&lt;/span> schedule;
+</div><div class='line'>}</div></code></pre></td></tr></table></div></figure></div>
+
+
+
+
+<p><strong>Excuse me while I go vomit</strong>.&#160; This code gives me nightmares from the days when I wrote my own data access layer by hand.&#160; We as programmers should never be writing code that is simply of the form <em>copy this value to that value.&#160; Cast X to Y</em>.&#160; It&#8217;s specifically the reason why data binding exists for forms.</p>
+
+
+<p>After writing two of these methods I decided we need to come up with a better way.&#160; I wanted to declaratively say, this <em>DTO maps to these columns</em>.&#160; We don&#8217;t have .NET 3.5, so magic-y lambda syntax is out.</p>
+
+
+<p>I decided to lean on attributes.&#160; Yes, this does add some &quot;database-y&quot; things on my DTOs, but I figured the baggage was worth it.&#160; I created a custom attribute to map properties on my DTOs to columns on a result set.</p>
+
+
+<p></p>
+
+
+
+
+<div><figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+<span class='line'>2</span>
+<span class='line'>3</span>
+<span class='line'>4</span>
+<span class='line'>5</span>
+<span class='line'>6</span>
+<span class='line'>7</span>
+<span class='line'>8</span>
+<span class='line'>9</span>
+<span class='line'>10</span>
+<span class='line'>11</span>
+<span class='line'>12</span>
+<span class='line'>13</span>
+</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>[AttributeUsage(AttributeTargets.Property)]
+</div><div class='line'>&lt;span class="kwrd">public&lt;/span> &lt;span class="kwrd">class&lt;/span> MapToColumnAttribute : Attribute
+</div><div class='line'>{
+</div><div class='line'>&lt;span class="kwrd">private&lt;/span> &lt;span class="kwrd">readonly&lt;/span> &lt;span class="kwrd">string&lt;/span> _columnName;
+</div><div class='line'>&lt;span class="kwrd">public&lt;/span> MapToColumnAttribute(&lt;span class="kwrd">string&lt;/span> columnName)
+</div><div class='line'>{
+</div><div class='line'>_columnName = columnName;
+</div><div class='line'>}
+</div><div class='line'>&lt;span class="kwrd">public&lt;/span> &lt;span class="kwrd">string&lt;/span> ColumnName
+</div><div class='line'>{
+</div><div class='line'>get { &lt;span class="kwrd">return&lt;/span> _columnName; }
+</div><div class='line'>}
+</div><div class='line'>}</div></code></pre></td></tr></table></div></figure></div>
+
+
+
+
+<p></p>
+
+
+<p>Now to decorate my DTO&#8230;.</p>
+
+
+<p></p>
+
+
+
+
+<div><figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+<span class='line'>2</span>
+<span class='line'>3</span>
+<span class='line'>4</span>
+<span class='line'>5</span>
+<span class='line'>6</span>
+<span class='line'>7</span>
+<span class='line'>8</span>
+<span class='line'>9</span>
+<span class='line'>10</span>
+<span class='line'>11</span>
+<span class='line'>12</span>
+<span class='line'>13</span>
+<span class='line'>14</span>
+<span class='line'>15</span>
+</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>&lt;span class="kwrd">public&lt;/span> &lt;span class="kwrd">class&lt;/span> ScheduleDTO
+</div><div class='line'>{
+</div><div class='line'>[MapToColumn(OnCallSchedule.Columns.Priority)]
+</div><div class='line'>&lt;span class="kwrd">public&lt;/span> &lt;span class="kwrd">int&lt;/span> Priority
+</div><div class='line'>{
+</div><div class='line'>get { &lt;span class="kwrd">return&lt;/span> _priority; }
+</div><div class='line'>set { _priority = &lt;span class="kwrd">value&lt;/span>; }
+</div><div class='line'>}
+</div><div class='line'>[MapToColumn(EmployeeProfile.Columns.EmployeeProfileId)]
+</div><div class='line'>&lt;span class="kwrd">public&lt;/span> Guid ProfileId
+</div><div class='line'>{
+</div><div class='line'>get { &lt;span class="kwrd">return&lt;/span> _profileId; }
+</div><div class='line'>set { _profileId = &lt;span class="kwrd">value&lt;/span>; }
+</div><div class='line'>}
+</div><div class='line'>&lt;span class="rem">/* snip */&lt;/span></div></code></pre></td></tr></table></div></figure></div>
+
+
+
+
+<p></p>
+
+
+<p>SubSonic has a struct called <em>Columns</em> that contains all of the column names. I had to edit the default template to make these constants rather than statics, so that they would be usable in the attribute constructors.</p>
+
+
+<p>Now that all of the mapping information has been provided declaratively, I can now leverage a generic mapper class to do the copying form DataReader over to DTO.</p>
+
+
+<p></p>
+
+
+
+
+<div><figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+<span class='line'>2</span>
+<span class='line'>3</span>
+<span class='line'>4</span>
+<span class='line'>5</span>
+<span class='line'>6</span>
+<span class='line'>7</span>
+<span class='line'>8</span>
+<span class='line'>9</span>
+<span class='line'>10</span>
+<span class='line'>11</span>
+<span class='line'>12</span>
+<span class='line'>13</span>
+<span class='line'>14</span>
+</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>&lt;span class="kwrd">public&lt;/span> T Map&lt;T&gt;(IDataReader dr) &lt;span class="kwrd">where&lt;/span> T : &lt;span class="kwrd">new&lt;/span>()
+</div><div class='line'>{
+</div><div class='line'>Type type = &lt;span class="kwrd">typeof&lt;/span>(T);
+</div><div class='line'>T target = &lt;span class="kwrd">new&lt;/span> T();
+</div><div class='line'>&lt;span class="kwrd">foreach&lt;/span>(PropertyInfo property &lt;span class="kwrd">in&lt;/span> type.GetProperties())
+</div><div class='line'>{
+</div><div class='line'>&lt;span class="kwrd">foreach&lt;/span>(MapToColumnAttribute attr &lt;span class="kwrd">in&lt;/span> ReflectionUtil.GetAttributes&lt;MapToColumnAttribute&gt;(property))
+</div><div class='line'>{
+</div><div class='line'>&lt;span class="kwrd">object&lt;/span> &lt;span class="kwrd">value&lt;/span> = dr[attr.ColumnName];
+</div><div class='line'>property.SetValue(target, &lt;span class="kwrd">value&lt;/span>, &lt;span class="kwrd">null&lt;/span>);
+</div><div class='line'>}
+</div><div class='line'>}
+</div><div class='line'>&lt;span class="kwrd">return&lt;/span> target;
+</div><div class='line'>}</div></code></pre></td></tr></table></div></figure></div>
+
+
+
+
+<p></p>
+
+
+<p>This function takes a DataReader that currently on a record, loops over the properties of the DTO looking for our attribute.&#160; It then sets the value using reflection.&#160; The beauty of this is, I don&#8217;t have to worry about casting anything.&#160; As long as the types of the columns match up with the type of the property, then we&#8217;re golden.</p>
+
+
+<p>The act of mapping projections of entities onto flat data transfer objects is now incredibly simple:</p>
+
+
+<p></p>
+
+
+
+
+<div><figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+<span class='line'>2</span>
+<span class='line'>3</span>
+<span class='line'>4</span>
+<span class='line'>5</span>
+<span class='line'>6</span>
+</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>ProjectionMapper mapper = &lt;span class="kwrd">new&lt;/span> ProjectionMapper();
+</div><div class='line'>&lt;span class="kwrd">using&lt;/span>(IDataReader dr = query.ExecuteReader())
+</div><div class='line'>{
+</div><div class='line'>&lt;span class="kwrd">while&lt;/span>(dr.Read())
+</div><div class='line'>results.Add(mapper.Map&lt;ScheduleDTO&gt;(dr));
+</div><div class='line'>}</div></code></pre></td></tr></table></div></figure></div>
+
+
+
+
+<p></p>
+
+
+<p></p>
+
+
+<p>You can take this one step further to encapsulate the looping over the data reader as well.</p>
+
+
+<p>It was a nice feeling to be able to remove 17 lines of query code and 1 40 line mapping class and replace it with a tighter query and a few attributes.</p>
+
+
+<p>Deleting code is fun.</p>
+
+
+<div class="wlWriterSmartContent" id="scid:0767317B-992E-4b12-91E0-4F059A8CECA8:226b7435-322b-43b9-b942-f3fbbede0838" style="padding-right: 0px; display: inline; padding-left: 0px; padding-bottom: 0px; margin: 0px; padding-top: 0px">Technorati Tags: <a href="http://technorati.com/tags/SubSonic" rel="tag">SubSonic</a></div>
+
+</div>
+  <footer>
+    <a rel="full-article" href="/2008/11/subsonic-and-projections/">Read on &rarr;</a>
+  </footer>
+
+
+  </article>
+
+
+  <article>
+    
+  <header>
+    
       <h1 class="entry-title"><a href="/2008/11/photos/">Photos</a></h1>
     
     
@@ -613,111 +926,6 @@ new RhinoMocks AAA syntax, makes my tests much easier to read.</p>
 
   </article>
 
-
-  <article>
-    
-  <header>
-    
-      <h1 class="entry-title"><a href="/2008/10/the-curly-brace-tax/">The Curly Brace Tax</a></h1>
-    
-    
-      <p class="meta">
-
-
-
-
-<time datetime="2008-10-05 00:00:00 -0500" pubdate  updated >Oct 5<span>th</span>, 2008</time>
-
-
-</p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><em>(I shamelessly stole this title from a chat with <a href="http://mhinze.com/" target="_blank">Matt Hinze</a>)</em></p>
-
-<p>99% of the examples you see out there for ASP.NET MVC are using WebFormsViewEngine.  That&#8217;s fine, it&#8217;s familiar, it benefits from intellisense, compilation, and refactoring support.  But all of that comes at a price, and that price is (at times) <strong>incredibly wordy</strong>.</p>
-
-<p>Picture this example, taken from the Site.master (master page) in the Preview 5 new project template.</p>
-
-<p>At the top of the page, they want to render some text if the user is logged in, and different text if the user isn&#8217;t logged in.  Here are the screens:</p>
-
-<p><strong>When you&#8217;re not logged in:</strong></p>
-
-<p><img src="/images/mvcmasterpagelogin_thumb.jpg" alt="mvc-masterpage-login"  border="0"  /></p>
-
-<p><strong>And when you&#8217;re logged in&#8230;</strong></p>
-
-<p><img src="/images/mvcmasterpagelogout_thumb.jpg" alt="mvc-masterpage-logout"  border="0"  /></p>
-
-<p>This is implemented using ASPX code that looks like this:</p>
-
-<div><figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
-<span class='line'>2</span>
-<span class='line'>3</span>
-<span class='line'>4</span>
-<span class='line'>5</span>
-<span class='line'>6</span>
-<span class='line'>7</span>
-</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>&lt;div id="logindisplay">
-</div><div class='line'>  &lt;% if (Request.IsAuthenticated) { %>
-</div><div class='line'>    Welcome &lt;b>&lt;%= Html.Encode(Page.User.Identity.Name) %>&lt;/b>![ &lt;%=Html.ActionLink("Logout", "Logout", "Account") %> ]
-</div><div class='line'>&lt;% } else { %> 
-</div><div class='line'>    [ &lt;%=Html.ActionLink("Login", "Login", "Account") %> ]
-</div><div class='line'>&lt;% } %>
-</div><div class='line'>&lt;/div></div></code></pre></td></tr></table></div></figure></div>
-
-
-<p>Now let&#8217;s take the same example and convert it to <a href="http://velocity.apache.org/engine/releases/velocity-1.5/user-guide.html" target="_blank">NVelocity</a>, another view engine with a looser syntax:</p>
-
-<div><figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
-<span class='line'>2</span>
-<span class='line'>3</span>
-<span class='line'>4</span>
-<span class='line'>5</span>
-<span class='line'>6</span>
-</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>&lt;div id="logindisplay">   
-</div><div class='line'>  #if ($isAuthenticated)
-</div><div class='line'>    Welcome &lt;b>$html.encode($user.name)&lt;/b>!      [ $html.actionlink("Logout", "logout", "account") ]
-</div><div class='line'>  #else
-</div><div class='line'>    [ $html.actionlink("Login", "login", "account") ]   #end
-</div><div class='line'>&lt;/div></div></code></pre></td></tr></table></div></figure></div>
-
-
-<p>We&#8217;d have to stuff the <code>$isAuthenticated</code> and <code>$user</code> values into <code>ViewData</code>, but that&#8217;s a piece of cake.<br/>
-This is a great example of how concise we can get if we don&#8217;t rely on all that strong typing.</p>
-
-<p><em>The beauty of this is, the key that you use for ViewData becomes the object you interact with on the view</em>.</p>
-
-<p>In NVelocity:</p>
-
-<ul>
-<li>case doesn&#8217;t matter</li>
-<li>no need to open up <code>&lt;% %&gt;</code> tags, you can embed it directly in your template</li>
-<li>type doesn&#8217;t matter.  It&#8217;s evaluated at runtime.</li>
-</ul>
-
-
-<p>There are some downsides, however:</p>
-
-<ul>
-<li><p>You don&#8217;t get compile time checking for your views.  If I wrote <code>$htlm.actionlink(..)</code>  I&#8217;d get an
-error at runtime.</p></li>
-<li><p>Performance.  Compiled views are much faster than interpreted ones.  It&#8217;s likely that this doesn&#8217;t matter for most sites out there.</p></li>
-<li><p>No intellisense.  (The arguments to ActionLink above are not obvious, so you just have to memorize it)</p></li>
-<li><strong>No Refactoring support</strong>.  This is a big one.  If you rename your actions, you&#8217;ll have to do a string comparison search to get the various links you might having lying around in your view.</li>
-</ul>
-
-
-<p>That last one is really the only one that I miss when doing something in NVelocity.  In any case, try it out, see what you think!</p>
-</div>
-  <footer>
-    <a rel="full-article" href="/2008/10/the-curly-brace-tax/">Read on &rarr;</a>
-  </footer>
-
-
-  </article>
-
 <nav role="pagination">
   <div>
     
@@ -752,6 +960,10 @@ error at runtime.</p></li>
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2011/09/firebug-style-debugging-for-ios/">Firebug-Style Visual Debugging for iOS</a>
+      </li>
+    
+      <li class="post">
         <a href="/2011/08/vim---could-not-invoke-jslint/">Vim - Could Not Invoke JSLint</a>
       </li>
     
@@ -765,10 +977,6 @@ error at runtime.</p></li>
     
       <li class="post">
         <a href="/2011/08/moving-my-blog/">Moving My Blog</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2011/08/my-vim-journey/">My Vim Journey</a>
       </li>
     
   </ul>

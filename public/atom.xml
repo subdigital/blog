@@ -4,13 +4,89 @@
   <title>Fickle Bits</title>
   <link href="http://benscheirman.com/atom.xml" rel="self"/>
   <link href="http://benscheirman.com/"/>
-  <updated>2011-08-30T10:11:23-05:00</updated>
+  <updated>2011-09-16T11:19:15-05:00</updated>
   <id>http://benscheirman.com/</id>
   <author>
     <name>Ben Scheirman</name>
     
   </author>
 
+  
+  <entry>
+    <title>Firebug-Style Visual Debugging for iOS</title>
+    <link href="http://benscheirman.com/2011/09/firebug-style-debugging-for-ios/"/>
+    <updated>2011-09-16T10:56:00-05:00</updated>
+    <id>http://benscheirman.com/2011/09/firebug-style-debugging-for-ios</id>
+    <content type="html">&lt;p&gt;Using a crazy helpful library called &lt;a href=&quot;https://github.com/domesticcatsoftware/DCIntrospect&quot;&gt;DC Introspect&lt;/a&gt; you're able to easily take an app running in the Simulator:&lt;/p&gt;
+
+&lt;p&gt;&lt;img class='image ' src='http://benscheirman.com/images/simulator-before-introspection.png' width='' height='' alt='' title=''&gt;&lt;/p&gt;
+
+&lt;p&gt;And get visual frame debugging information like this:&lt;/p&gt;
+
+&lt;p&gt;&lt;img class='image ' src='http://benscheirman.com/images/simulator-after-introspection.png' width='' height='' alt='' title=''&gt;&lt;/p&gt;
+
+&lt;p&gt;You can also click &amp;amp; drag your mouse to get pixel information,
+surrounding frames, print out detailed frame information in the console,
+and even move frames around all while the app is running.&lt;/p&gt;
+
+&lt;p&gt;Using it is incredibly simple:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Make sure you have &lt;code&gt;DEBUG&lt;/code&gt; defined in your Preprocessor Macros:&lt;/li&gt;
+&lt;/ul&gt;
+
+
+&lt;p&gt;&lt;img class='image ' src='http://benscheirman.com/images/debug-preprocessor-macro.png' width='' height='' alt='' title=''&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;Download the code from https://github.com/domesticcatsoftware/DCIntrospect and drag the DCIntrospect/DCIntrospect folder into your project&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;In your Application Delegate class, make the following changes:&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+
+&lt;p&gt;```objc&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;#import &quot;DCIntrospect.h&quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;```&lt;/p&gt;
+
+&lt;p&gt;```objc&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;// in applicationDidFinishLaunching:
+
+[self.window makeKeyAndVisible];
+
+#ifdef TARGET_IPHONE_SIMULATOR
+    [[DCIntrospect sharedIntrospector] start];
+#endif
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;```&lt;/p&gt;
+
+&lt;p&gt;Once that is done, the library will be loaded and you can use it.  When
+the simulator launches, just press Spacebar to activate the tool.&lt;/p&gt;
+
+&lt;p&gt;Here are some keyboard shortcuts:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;o&lt;/code&gt; - Outline all views&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;?&lt;/code&gt; - Prints out a help view&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;f&lt;/code&gt; - Flash on &lt;code&gt;drawRect:&lt;/code&gt; calls&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;c&lt;/code&gt; - Toggle showing coordinates&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;4 6 8 2&lt;/code&gt; - Nudge the selected view left, right, up, down&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;0&lt;/code&gt; - Recenter view where it was originally&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;9 7 3 1&lt;/code&gt; - Modify Width &amp;amp; Height of selected view&lt;/li&gt;
+&lt;/ul&gt;
+
+
+&lt;p&gt;You can also click &amp;amp; drag with the mouse to get detailed information
+about frames &amp;amp; mouse position.&lt;/p&gt;
+
+&lt;p&gt;I am amazed at how awesome this library is. I'll be using it in my
+default toolbox from now on.&lt;/p&gt;
+</content>
+  </entry>
   
   <entry>
     <title>Vim - Could Not Invoke JSLint</title>
@@ -1820,21 +1896,6 @@ I tend to prefer RSpec with 1 assertion per test method and many fine-grained me
 
 &lt;p&gt;I'll have links to my presentation material soon, but I wanted to share this awesome event. Certainly one for the books!&lt;/p&gt;
 
-</content>
-  </entry>
-  
-  <entry>
-    <title>[blog reboot]</title>
-    <link href="http://benscheirman.com/2011/04/blog-reboot/"/>
-    <updated>2011-04-11T00:00:00-05:00</updated>
-    <id>http://benscheirman.com/2011/04/blog-reboot</id>
-    <content type="html">&lt;p&gt;My blog was feeling a little stale to me, hence my utter lack of content in the past few months.  I wanted to move it off of Windows hosting which really didn't make sense for me anymore.  Orcsweb graciously provided me with hosting through my MVP, and I would recommend their service to anyone.&lt;/p&gt;
-
-&lt;p&gt;But for me, it doesn't make sense to run a .NET blog anymore.  The days of &quot;oh, maybe I'll be able to extend it somehow&quot; have just not ever mattered much.  In the end, it was a pretty easy decision to move to Wordpress because it's easy to host, easy to extend, there's a gajillion themes &amp;amp; plugins, and the entire thing is fairly polished.  Sure, there's the nasty PHP underneath, but hey it lends itself well to simple hacking of the site to get things up &amp;amp; running.&lt;/p&gt;
-
-&lt;p&gt;So this is my attempt to freshen things up &amp;amp; encourage me to start posting more.  Let me know what you think!&lt;/p&gt;
-
-&lt;p&gt;&lt;em&gt;Side note: My blog has now had a total of 4 homes.  First was blogger, then dasBlog, over to GraffitiCMS, and now finally WordPress.&lt;/em&gt;&lt;/p&gt;
 </content>
   </entry>
   
