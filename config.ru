@@ -21,6 +21,9 @@ use Rack::Rewrite do
 
   r301 '/about', '/about-me'
 
+  # redirect giggle touch url
+  r301 /^\/giggle-?touch$/, 'http://appsites.heroku.com/giggletouch'
+
   # remove trailing slashes
   r301 %r{^(.+)/$}, '$1'
 

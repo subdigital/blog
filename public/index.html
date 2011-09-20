@@ -104,6 +104,73 @@
     
   <header>
     
+      <h1 class="entry-title"><a href="/2011/09/introducing-appsites/">Introducing App Sites</a></h1>
+    
+    
+      <p class="meta">
+
+
+
+
+<time datetime="2011-09-20 08:46:00 -0500" pubdate  updated >Sep 20<span>th</span>, 2011</time>
+
+
+</p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I&#8217;ve not been that great about marketing Giggle Touch.  It&#8217;s a cool app,
+kids like it, but most people don&#8217;t know about it.</p>
+
+<p>The biggest reason was probably that I never set up a proper website for
+it.  Doing a search would only yield a blog post that said it was
+&#8220;coming soon.&#8221;</p>
+
+<p>That&#8217;s all changed now.  I&#8217;d like to introduce <em>App Sites</em>.</p>
+
+<h2><a href="http://appsites.heroku.com">App Sites</a></h2>
+
+<p><img class='right ' src='/images/yourapphere.png' width='' height='' alt='' title=''></p>
+
+<p>The premise is simple: <em>standup a website for an iPhone
+app in minutes</em>.</p>
+
+<p>Check it out here:
+<a href="http://appsites.heroku.com">http://appsites.heroku.com</a>.</p>
+
+<p>You can see the site in action by visiting the
+<a href="http://appsites.heroku.com/giggletouch">Giggle Touch</a> page.</p>
+
+<p>It&#8217;s free (for now) and gives you the ability to add features, a
+description, a link back to the app, and a screenshot.</p>
+
+<p>Planned upcoming features include:</p>
+
+<ul>
+<li>Custom domains</li>
+<li>Multiple screenshots</li>
+<li>Videos</li>
+<li>Coming soon (if the app hasn&#8217;t launched yet)</li>
+<li>More analytics</li>
+</ul>
+
+
+<p>If you have an iPhone app, I encourage you to create a page.  Let me
+know what you think!</p>
+</div>
+  <footer>
+    <a rel="full-article" href="/2011/09/introducing-appsites/">Read on &rarr;</a>
+  </footer>
+
+
+  </article>
+
+
+  <article>
+    
+  <header>
+    
       <h1 class="entry-title"><a href="/2011/09/firebug-style-debugging-for-ios/">Firebug-Style Visual Debugging for iOS</a></h1>
     
     
@@ -1077,79 +1144,6 @@ Here&#8217;s to hoping the Xcode 4 continues to be improved. In the meantime, ho
 
   </article>
 
-
-  <article>
-    
-  <header>
-    
-      <h1 class="entry-title"><a href="/2011/06/creating-proper-ipa-files-in-xcode-4/">Creating Proper IPA Files in Xcode 4</a></h1>
-    
-    
-      <p class="meta">
-
-
-
-
-<time datetime="2011-06-02 00:00:00 -0500" pubdate  updated >Jun 2<span>nd</span>, 2011</time>
-
-
-</p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Xcode 4 has changed a lot of things. Most of those things are ok, but occasionally I find that I just cannot do something any other way than to use Xcode 3.</p>
-
-
-<p>Until today, I was creating Ad-hoc builds for my current project with Xcode 3, then selecting Share &amp; saving the resulting IPA file to disk.</p>
-
-
-<p>Xcode 4 has the new &#8220;Build -&gt; Archive&#8221; menu option, but every time I&#8217;d try to share this file, I&#8217;d presented with this lovely restricted dialog box:</p>
-
-
-<p><br />
-<img src="/images/Xcode3.png"  alt="Xcode.png"  /></p>
-
-
-<p>With the errors <i><b>No Packager exists for the type of archive</b></i> and <i><b>This kind of archive cannot be signed</b></i>.</p>
-
-
-<p>As it turns out, if you have static libraries that you&#8217;re linking in, your Archive step actually outputs those as well. Xcode doesn&#8217;t know how to create an IPA out of 1 .app file and a handful of .a files, so it gives up.</p>
-
-
-<p>You can tell that Xcode 4 is doing this if your Organizer -&gt; Applications list shows an icon like this:</p>
-
-
-<p><br />
-<img src="/images/Xcode2.png"  alt="Xcode.png"  /></p>
-
-
-<p>If you right-click on this build, and select &#8220;Reveal in Finder&#8221; you&#8217;ll see the files are .xcarchive files. Right click on that and select &#8220;Show Package Contents&#8221; to see what I&#8217;m talking about. If you see a usr/lib/mystaticlibary.a file, then read on for the fix.</p>
-
-
-<p>You need to tell Xcode 4 <b>not</b> to &#8220;install&#8221; the static libraries. For each of the static library targets, select them in Xcode 4, and under Build Settings, search for &#8220;Skip Install&#8221;. Set that flag to YES. I had to do this to both of the static libraries I include in my project.</p>
-
-
-<p><img src="/images/Xcode1.png"  alt="Xcode1.png"  /></p>
-
-
-<p>Once that&#8217;s done, your app should show a normal icon again &amp; have the ability to export to IPA just like before. Yay!</p>
-
-
-<p><br />
-<img src="/images/Xcode.png"  alt="Xcode.png"  /></p>
-
-
-<p>Huge thanks to <a href="http://stackoverflow.com/questions/5265292/xcode-4-create-ipa-file-instead-of-xcarchive">this stackoverflow question</a> for pointing me in the right direction.</p>
-
-</div>
-  <footer>
-    <a rel="full-article" href="/2011/06/creating-proper-ipa-files-in-xcode-4/">Read on &rarr;</a>
-  </footer>
-
-
-  </article>
-
 <nav role="pagination">
   <div>
     
@@ -1182,6 +1176,10 @@ Here&#8217;s to hoping the Xcode 4 continues to be improved. In the meantime, ho
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2011/09/introducing-appsites/">Introducing App Sites</a>
+      </li>
+    
+      <li class="post">
         <a href="/2011/09/firebug-style-debugging-for-ios/">Firebug-Style Visual Debugging for iOS</a>
       </li>
     
@@ -1195,10 +1193,6 @@ Here&#8217;s to hoping the Xcode 4 continues to be improved. In the meantime, ho
     
       <li class="post">
         <a href="/2011/08/when-viewwillappear-isnt-called/">When viewWillAppear: Isn&#8217;t Called</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2011/08/moving-my-blog/">Moving My Blog</a>
       </li>
     
   </ul>

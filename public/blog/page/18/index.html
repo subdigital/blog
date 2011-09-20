@@ -104,6 +104,45 @@
     
   <header>
     
+      <h1 class="entry-title"><a href="/2008/01/be-careful-outputting-strings-in-asp-net-mvc/">Be Careful Outputting Strings in ASP.NET MVC</a></h1>
+    
+    
+      <p class="meta">
+
+
+
+
+<time datetime="2008-01-09 00:00:00 -0600" pubdate  updated >Jan 9<span>th</span>, 2008</time>
+
+
+</p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><font style="BACKGROUND-COLOR: #f4f4f4">During my presentation at Alamo Coders last night, someon mentioned that it is unsafe to output user-entered strings like this:</font></p>
+
+
+<p><font color="#0000ff"><p>&lt;</font><font color="#a31515">h2</font><font color="#0000ff">&gt;</font>&lt;%<font color="#0000ff">=</font> college.Name %&gt;<font color="#0000ff">&lt;/</font><font color="#a31515">h2</font><font color="#0000ff">&gt;</p></font><p>The reason is, of course, that the user could be malicious and enter in a string such as this:</p><p>&ldquo;&lt;script&gt;alert(&lsquo;I am evil&rsquo;);&lt;/script&gt;&rdquo;</p><p>And it would evaluated on the page and all of your users would get an alert box.&nbsp; This is leaving your door wide-open to clever attacks known as <a href="http://en.wikipedia.org/wiki/Cross_site_scripting" target="_blank">Cross Site Scripting</a>&nbsp;and is very dangerous.</p><p>Instead, we should escape these strings so that they aren&rsquo;t rendered as HTML or javascript, but rather textual characters.&nbsp; That means that &lt; will be translated to &amp;lt; and so on.</p><p>To do that, the Html helpers that ship with the framework give you an Encode method, letting you do something like:</p><font color="#0000ff"><p>&lt;</font><font color="#a31515">h2</font><font color="#0000ff">&gt;</font>&lt;%<font color="#0000ff">=</font> Html.Encode(college.Name) %&gt;<font color="#0000ff">&lt;/</font><font color="#a31515">h2</font><font color="#0000ff">&gt;</p></font><p>But the syntax is a bit cumbersome for <strong>every outputted value on a page.</strong>&nbsp; I prefer the way Rails handles it&hellip; like this:</p><font color="#0000ff"><p>&lt;</font><font color="#a31515">h2</font><font color="#0000ff">&gt;</font>&lt;%<font color="#0000ff">=</font> h(college.Name) %&gt;<font color="#0000ff">&lt;/</font><font color="#a31515">h2</font><font color="#0000ff">&gt;</p></font><p>And it turns out that you can add this extension method somewhere and be done with it:</p><p>`</p>
+
+<div><figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>public static string h(this ViewPage page, string input){ return new HtmlHelper(page.ViewContext).Encode(input);}`</div></code></pre></td></tr></table></div></figure></div>
+
+
+<p>And that&rsquo;s it!&nbsp; Just remember to take this precaution, or you&rsquo;ll regret it later.</p>
+</div>
+  <footer>
+    <a rel="full-article" href="/2008/01/be-careful-outputting-strings-in-asp-net-mvc/">Read on &rarr;</a>
+  </footer>
+
+
+  </article>
+
+
+  <article>
+    
+  <header>
+    
       <h1 class="entry-title"><a href="/2007/12/asp-net-mvc-tour-of-texas/">ASP.NET MVC Tour of Texas</a></h1>
     
     
@@ -562,78 +601,6 @@
 
   </article>
 
-
-  <article>
-    
-  <header>
-    
-      <h1 class="entry-title"><a href="/2007/11/on-fluent-interfaces-and-friction/">On Fluent Interfaces and Friction</a></h1>
-    
-    
-      <p class="meta">
-
-
-
-
-<time datetime="2007-11-09 00:00:00 -0600" pubdate  updated >Nov 9<span>th</span>, 2007</time>
-
-
-</p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>So I decided to start that NHibernate Mapping DSL project andopen-source it.&nbsp; Right now it doesn&#8217;t do anything, but you&#8217;re free totake a look at <a href="http://www.assembla.com/space/nhibernate-mapping">http://www.assembla.com/space/nhibernate-mapping</a><br><br>I wrote all of this code test-first, and it allowed me to tackle theinterface and flow the way I thought might be useful.&nbsp; I ended up withsomething that was mildly usable like this:<br><br></p>
-
-<div><figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
-</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>&lt;span style="color: Black; background-color: transparent; font-family: Courier New; font-size: 11px;">IMapping mapping &lt;span style="color: Red; background-color: transparent; font-family: Courier New; font-size: 11px;">=&lt;/span> Mapping.For&lt;Product&gt;()&lt;br> .Identity(&lt;span style="color: rgb(102, 102, 102); background-color: rgb(228, 228, 228); font-family: Courier New; font-size: 11px;">"Id"&lt;/span>)&lt;br> .Property(&lt;span style="color: rgb(102, 102, 102); background-color: rgb(228, 228, 228); font-family: Courier New; font-size: 11px;">"Name"&lt;/span>)&lt;br> .Property(&lt;span style="color: rgb(102, 102, 102); background-color: rgb(228, 228, 228); font-family: Courier New; font-size: 11px;">"Price"&lt;/span>)&lt;br> .Map();&lt;/span></div></code></pre></td></tr></table></div></figure></div>
-
-
-<br>So this allows me to quickly accept the defaults of the mappings, so NHibernate will assume that I have &#8230;<br><ul><li>the column names are the same as the property names<br></li><li>the type of the column matches the type of the property and it can be picked up via reflection</li><li>the identity generator of the primary key is Identity</li><li>the identity/properties have setters</li><li>the &#8220;Name&#8221; and &#8220;Price&#8221; columns are nullable</li></ul>This isn&#8217;t always true of course, so we need to be able to specify where we deviate from the defaults.&nbsp; So how can we accomplish this using a fluent interface?&nbsp; We could resort to adding more overloads to the Identity() method, so you might have&#8230;.<br><br>
-
-
-<div><figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
-</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>&lt;span style="color: Black; background-color: transparent; font-family: Courier New; font-size: 11px;">IMapping mapping &lt;span style="color: Red; background-color: transparent; font-family: Courier New; font-size: 11px;">=&lt;/span> Mapping.For&lt;Product&gt;()&lt;br> .Identity(&lt;span style="color: rgb(102, 102, 102); background-color: rgb(228, 228, 228); font-family: Courier New; font-size: 11px;">"Id"&lt;/span>, &lt;span style="color: rgb(102, 102, 102); background-color: rgb(228, 228, 228); font-family: Courier New; font-size: 11px;">"product_id"&lt;/span>, Access.NoSetterCamelcaseUnderscore, Generator.Native)&lt;br> .Property(&lt;span style="color: rgb(102, 102, 102); background-color: rgb(228, 228, 228); font-family: Courier New; font-size: 11px;">"Name"&lt;/span>, &lt;span style="color: rgb(102, 102, 102); background-color: rgb(228, 228, 228); font-family: Courier New; font-size: 11px;">"product_name"&lt;/span>, &lt;span style="color: Blue; background-color: transparent; font-family: Courier New; font-size: 11px;">false&lt;/span>)&lt;br> .Property(&lt;span style="color: rgb(102, 102, 102); background-color: rgb(228, 228, 228); font-family: Courier New; font-size: 11px;">"Price"&lt;/span>, &lt;span style="color: Blue; background-color: transparent; font-family: Courier New; font-size: 11px;">false&lt;/span>)&lt;br> .Map();&lt;br>&lt;/span></div></code></pre></td></tr></table></div></figure></div>
-
-
-<p>But we don&#8217;t know how many settings the user might want to specify.&nbsp; If we have 4 simple, independent settings, then we&#8217;d have to support 4! method overload options!&nbsp; Yuck!<br><br></p>
-
-<div><figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
-</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>&lt;span style="color: Black; background-color: transparent; font-family: Courier New; font-size: 11px;">&lt;span style="color: Blue; background-color: transparent; font-family: Courier New; font-size: 11px;">public&lt;/span> IPropertySpecificationPredicate Property(&lt;span style="color: Blue; background-color: transparent; font-family: Courier New; font-size: 11px;">string&lt;/span> name);&lt;br>&lt;span style="color: Blue; background-color: transparent; font-family: Courier New; font-size: 11px;">public&lt;/span> IPropertySpecificationPredicate Property(&lt;span style="color: Blue; background-color: transparent; font-family: Courier New; font-size: 11px;">string&lt;/span> name, &lt;span style="color: Blue; background-color: transparent; font-family: Courier New; font-size: 11px;">string&lt;/span> columnName);&lt;br>&lt;span style="color: Blue; background-color: transparent; font-family: Courier New; font-size: 11px;">public&lt;/span> IPropertySpecificationPredicate Property(&lt;span style="color: Blue; background-color: transparent; font-family: Courier New; font-size: 11px;">string&lt;/span> name, &lt;span style="color: Blue; background-color: transparent; font-family: Courier New; font-size: 11px;">string&lt;/span> columnName, DbType type);&lt;br>&lt;span style="color: Blue; background-color: transparent; font-family: Courier New; font-size: 11px;">public&lt;/span> IPropertySpecificationPredicate Property(&lt;span style="color: Blue; background-color: transparent; font-family: Courier New; font-size: 11px;">string&lt;/span> name, &lt;span style="color: Blue; background-color: transparent; font-family: Courier New; font-size: 11px;">string&lt;/span> columnName, DbType type, &lt;span style="color: Blue; background-color: transparent; font-family: Courier New; font-size: 11px;">int&lt;/span> length);&lt;br>&lt;span style="color: Blue; background-color: transparent; font-family: Courier New; font-size: 11px;">public&lt;/span> IPropertySpecificationPredicate Property(&lt;span style="color: Blue; background-color: transparent; font-family: Courier New; font-size: 11px;">string&lt;/span> name, &lt;span style="color: Blue; background-color: transparent; font-family: Courier New; font-size: 11px;">string&lt;/span> columnName, &lt;span style="color: Blue; background-color: transparent; font-family: Courier New; font-size: 11px;">bool&lt;/span> nullable);&lt;br>...&lt;/span></div></code></pre></td></tr></table></div></figure></div>
-
-
-<p>This is just the beginning.&nbsp; What if you wanted to only specify the property name and the nullability?&nbsp; We quickly end up in an anti-pattern I like to call <b>overload explosion</b>.&nbsp; <br><br>We can do a bit better, right?&nbsp; I started to gather my thoughts and came up with this syntax:<br><br></p>
-
-<div><figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
-</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>&lt;span style="color: Black; background-color: transparent; font-family: Courier New; font-size: 11px;">IMapping mapping &lt;span style="color: Red; background-color: transparent; font-family: Courier New; font-size: 11px;">=&lt;/span> Mapping.For&lt;Product&gt;()&lt;br>.Identity(&lt;span style="color: rgb(102, 102, 102); background-color: rgb(228, 228, 228); font-family: Courier New; font-size: 11px;">"Id"&lt;/span>)&lt;br>.Column(&lt;span style="color: rgb(102, 102, 102); background-color: rgb(228, 228, 228); font-family: Courier New; font-size: 11px;">"product_id"&lt;/span>)&lt;br>.Generator(Generator.Native)&lt;br>.Map();&lt;/span></div></code></pre></td></tr></table></div></figure></div>
-
-
-<p>So now the Identity() method takes a single parameter, the name of the property.&nbsp; Anything else is optional.&nbsp; The return type is now something like an IIdentityBuilder interface, which accepts methods on altering the identity object that its building.&nbsp; Here you can see that we only specified the settings that we wanted, nothing else.&nbsp; We still had to have a way to &#8220;pop&#8221; the current object (and thus the entire mapping) so that we can indicate to the builder that we are done building the property and you can return the IMapping object next.&nbsp; This feels awkward for now, but for now it&#8217;s ok.<br><br>Let&#8217;s extend this pattern.&nbsp; Once I&#8217;m working with the IMappingBuilder interface, I can now see methods called Generator(), Access(), Column(), etc.&nbsp; There&#8217;s nothing there to prevent me from calling .Column(&#8220;&#8230;&#8221;).Column(&#8220;&#8230;&#8221;).Column(&#8220;&#8230;&#8221;).Column(&#8220;&#8230;&#8221;) which I guess isn&#8217;t such a big deal.&nbsp; All it&#8217;s doing is setting the column property of this object we&#8217;re building.<br><br>Now I&#8217;m noticing that there has to be a spot where the user gets finished with the mapping identity and now has some choices.&nbsp; The obvious next operation would be to create a property, but how do I pop the current context and start working on a new one?<br><br>Maybe something like this?<br><br></p>
-
-<div><figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
-<span class='line'>2</span>
-</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>&lt;span style="color: Black; background-color: transparent; font-family: Courier New; font-size: 11px;">IMapping mapping &lt;span style="color: Red; background-co
-</div><div class='line'>lor: transparent; font-family: Courier New; font-size: 11px;">=&lt;/span> Mapping.For&lt;Product&gt;().Identity(&lt;span style="color: rgb(102, 102, 102); background-color: rgb(228, 228, 228); font-family: Courier New; font-size: 11px;">"Id"&lt;/span>).Column(&lt;span style="color: rgb(102, 102, 102); background-color: rgb(228, 228, 228); font-family: Courier New; font-size: 11px;">"product_id"&lt;/span>).Generator(Generator.Native).AndProperty(&lt;span style="color: rgb(102, 102, 102); background-color: rgb(228, 228, 228); font-family: Courier New; font-size: 11px;">"Name"&lt;/span>).Nullable(&lt;span style="color: Blue; background-color: transparent; font-family: Courier New; font-size: 11px;">false&lt;/span>).Map();&lt;/span></div></code></pre></td></tr></table></div></figure></div>
-
-
-<p></p>
-
-
-<p>I&#8217;m already started to notice that my identity and property elements are getting lost in the noise.&nbsp; If I keep up this pattern not only do I have TONS of ISomethingPredicateBuilder objects, I also remember that it&#8217;s not only properties that I can add at any time.&nbsp; I could add a Bag, a Set, a List, or any number of other mapping elements.<br><br>Another route I might take is using anonymous to provide me with the flexibility of code within the interface.&nbsp; Take a look:<br><br></p>
-
-<div><figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
-</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>&lt;span style="color: Black; background-color: transparent; font-family: Courier New; font-size: 11px;">IMapping mapping &lt;span style="color: Red; background-color: transparent; font-family: Courier New; font-size: 11px;">=&lt;/span> Mapping.For&lt;Product&gt;().Identity(&lt;span style="color: rgb(102, 102, 102); background-color: rgb(228, 228, 228); font-family: Courier New; font-size: 11px;">"Id"&lt;/span>, &lt;span style="color: Blue; background-color: transparent; font-family: Courier New; font-size: 11px;">delegate&lt;/span>(Identity i) { i.column &lt;span style="color: Red; background-color: transparent; font-family: Courier New; font-size: 11px;">=&lt;/span> &lt;span style="color: rgb(102, 102, 102); background-color: rgb(228, 228, 228); font-family: Courier New; font-size: 11px;">"product_id"&lt;/span>; i.generator &lt;span style="color: Red; background-color: transparent; font-family: Courier New; font-size: 11px;">=&lt;/span> Generator.Native;}).AndProperty(&lt;span style="color: rgb(102, 102, 102); background-color: rgb(228, 228, 228); font-family: Courier New; font-size: 11px;">"Name"&lt;/span>, &lt;span style="color: Blue; background-color: transparent; font-family: Courier New; font-size: 11px;">delegate&lt;/span>(Property p) { p.column &lt;span style="color: Red; background-color: transparent; font-family: Courier New; font-size: 11px;">=&lt;/span> &lt;span style="color: rgb(102, 102, 102); background-color: rgb(228, 228, 228); font-family: Courier New; font-size: 11px;">"product_name"&lt;/span>; p.nullable &lt;span style="color: Red; background-color: transparent; font-family: Courier New; font-size: 11px;">=&lt;/span> &lt;span style="color: Blue; background-color: transparent; font-family: Courier New; font-size: 11px;">false&lt;/span>;}).Map();&lt;/span></div></code></pre></td></tr></table></div></figure></div>
-
-
-<p>Here I have a lot more flexibility over the different ways that I define various mapping elements.&nbsp; The only part of this that is really cumbersome is the delegate syntax itself.<br><br>This is probably where Boo or Ruby would come in and save the day because of it&#8217;s super-dynamicness-flexibility-extraordinaire, but I&#8217;d like to see how far I can push C# for now.&nbsp; At least until C# 3.0 comes out, where I&#8217;ll get object initializers, lamba expressions, and a few other neat tricks that really make this stuff more fun to sculpt.<br><br>What about you?&nbsp; What types of syntax do you find most readable, usable?<br></p>
-</div>
-  <footer>
-    <a rel="full-article" href="/2007/11/on-fluent-interfaces-and-friction/">Read on &rarr;</a>
-  </footer>
-
-
-  </article>
-
 <nav role="pagination">
   <div>
     
@@ -668,6 +635,10 @@
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2011/09/introducing-appsites/">Introducing App Sites</a>
+      </li>
+    
+      <li class="post">
         <a href="/2011/09/firebug-style-debugging-for-ios/">Firebug-Style Visual Debugging for iOS</a>
       </li>
     
@@ -681,10 +652,6 @@
     
       <li class="post">
         <a href="/2011/08/when-viewwillappear-isnt-called/">When viewWillAppear: Isn&#8217;t Called</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2011/08/moving-my-blog/">Moving My Blog</a>
       </li>
     
   </ul>

@@ -104,6 +104,50 @@
     
   <header>
     
+      <h1 class="entry-title"><a href="/2009/02/a-story-of-tfs-wtfery/">A Story of TFS WTFery</a></h1>
+    
+    
+      <p class="meta">
+
+
+
+
+<time datetime="2009-02-05 00:00:00 -0600" pubdate  updated >Feb 5<span>th</span>, 2009</time>
+
+
+</p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I&#8217;ve had it with TFS.&nbsp; It&#8217;s a thorn in my side.&nbsp; It sits there, embedded in Visual studio like ivy on a brick wall, mocking me.&nbsp; It&#8217;s like developing in a hot tar pit.&nbsp; Sticky, smelly, and literally the <strong>biggest source of developer pain I feel these days</strong>.&nbsp; I finished up a set of bug fixes and application features that I needed to deploy to QA today.&nbsp;&nbsp; <p>One of them was updating a text file.&nbsp; Easy, right?&nbsp; Just double click the file!&nbsp; WRONG.&nbsp; If you do this you can&#8217;t save it, you need to open Visual Studio &amp; explicitly check-out the file.&nbsp; Then you can edit it.&nbsp; This is done because apparently the developers of TFS decided that Visual Studio is our only editor&#8230;.  <p><strong>Don&#8217;t lock my files, bro!</strong>  <p><a href="http://flux88.com/files/media/image/WindowsLiveWriter/AStoryofTFSWTFery_FA86/203-41266207d6209dc6_2.png"><img src="/images/203-41266207d6209dc6_thumb.png" alt="203-41266207d6209dc6"  border="0" /></a>  <p>That is a minor gripe, but it&#8217;s pretty substantial when you think about the fact that I have batch files, a NAnt build, configuration files, and a readme&#8230; all of which I&#8217;d like to use either <a href="http://www.flos-freeware.ch/notepad2.html">Notepad2</a> or <a href="http://e-texteditor.com">e-texteditor</a> to edit.  <p>If I want to edit a text file, Visual Studio is <strong>the last editor on the planet that I want to use</strong>.  <p>Then I finish up some other boring SSRS work and commit it to our dev branch.&nbsp; Our CI build shows success, and I&#8217;m ready to merge to integration, which is where we deploy from.&nbsp; I kick off the deploy process and it fails.&nbsp; Apparently there was a missing file in the integration branch.  <p>This file was a new file in a directory that was already branched, so when mergine shouldn&#8217;t it get merged too?&nbsp; I guess not, because when I go to merge the folder, the new file is excluded.&nbsp; If you right click &amp; try to merge just the file, it shows no branching targets.&nbsp; Ok, so let&#8217;s branch it.&nbsp;&nbsp; <p><a href="http://flux88.com/files/media/image/WindowsLiveWriter/AStoryofTFSWTFery_FA86/203-41266207ce9264e2_2.png"><img src="/images/203-41266207ce9264e2_thumb.png" alt="203-41266207ce9264e2"  border="0" /></a>  <p>Branching in the same folder?&nbsp; Why on earth would you ever want to do that?&nbsp; That, my friends, is <strong>the path to madness</strong>.&nbsp; I correct the path to branch the file into the integration path.  <p>So I finally do my build again, and get more errors.&nbsp; Reading the build output it looks like some changes still haven&#8217;t made it over.&nbsp; I do another merge on this folder and&#8230;  <p><a href="http://flux88.com/files/media/image/WindowsLiveWriter/AStoryofTFSWTFery_FA86/203-41266207d6c2f073_2.png"><img src="/images/203-41266207d6c2f073_thumb.png" alt="203-41266207d6c2f073"  border="0" /></a>  <p>then do a diff of the files:  <p><a href="http://flux88.com/files/media/image/WindowsLiveWriter/AStoryofTFSWTFery_FA86/203-41266207d71aed6b_2.png"><img src="/images/203-41266207d71aed6b_thumb.png" alt="203-41266207d71aed6b"  border="0" /></a>  <p>WTFF!  <p>So I guess now I&#8217;ll need to merge each file, not the directory.&nbsp; Select the files and&#8230;  <p><a href="http://flux88.com/files/media/image/WindowsLiveWriter/AStoryofTFSWTFery_FA86/203-41266207d8308b91_2.png"><img src="/images/203-41266207d8308b91_thumb.png" alt="203-41266207d8308b91"  border="0" /></a>  <p>Doh!&nbsp; You can&#8217;t branch multiple files via selection like this.&nbsp; Why?&nbsp; I&#8217;m sure there&#8217;s a technical reason, but <strong>I don&#8217;t flippin care</strong>.&nbsp; This is an abismal user-experience.  <p>Ok, so I&#8217;ll branch <em>each one</em> individually&#8230;.&nbsp; Merging individually didn&#8217;t work either:  <p><a href="http://flux88.com/files/media/image/WindowsLiveWriter/AStoryofTFSWTFery_FA86/203-41266207e0fbd402_2.png"><img src="/images/203-41266207e0fbd402_thumb.png" alt="203-41266207e0fbd402"  border="0" /></a>  <p>At this point I&#8217;m feeling a little bit like this guy:  <p><a href="http://flux88.com/files/media/image/WindowsLiveWriter/AStoryofTFSWTFery_FA86/60371673_0eb0b14f91_2.jpg"><img src="/images/60371673_0eb0b14f91_thumb.jpg" alt="60371673_0eb0b14f91"  border="0" /></a>  <p><em>(</em><a href="http://flickr.com/photos/dannyboyster"><em>http://flickr.com/photos/dannyboyster</em></a><em>)</em>  <p>So I went to the command-line to try a baseless merge.&nbsp; You can do that like this: 
+<div><figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>c:\project&gt;tf merge /baseless &lt;source&gt; &lt;target&gt; /recursive</div></code></pre></td></tr></table></div></figure></div>
+
+<p>This seemed to do the trick.&nbsp; Time to commit the changes.
+<p>Now I&#8217;m greeted with a host of conflicts.&nbsp; I have <strong>never</strong> made code changes to my target branch.&nbsp; I have only merged to it.&nbsp; There should never be an incompatible change!
+<p>Now, here&#8217;s what really gets me:&nbsp; I get different conflict resolution <em>language</em> depending on if I select a single file or multiple files.
+<p>Single file conflict resolution dialog:
+<p><a href="http://flux88.com/files/media/image/WindowsLiveWriter/AStoryofTFSWTFery_FA86/203-41266207dfeac2f0_2.png"><img src="/images/203-41266207dfeac2f0_thumb.png" alt="203-41266207dfeac2f0"  border="0" /></a>
+<p>Multiple file conflict resolution dialog:
+<p><a href="http://flux88.com/files/media/image/WindowsLiveWriter/AStoryofTFSWTFery_FA86/203-41266207dfcdf012_2.png"><img src="/images/203-41266207dfcdf012_thumb.png" alt="203-41266207dfcdf012"  border="0" /></a>
+<p>So which is it TFS?&nbsp; Source/Target, or Local/Server?&nbsp; This is so confusing I&#8217;m not sure what to do in the latter.&nbsp; I guess I need discard server version, so I do that.
+<p>Two hours after completing my feature work, I&#8217;m finally able to check in the changes, do my deploy, and see it running successfully on the QA box.
+<p>What a day.&nbsp; <strong>TFS:&nbsp; I hate you</strong>.</p>
+
+</div>
+  <footer>
+    <a rel="full-article" href="/2009/02/a-story-of-tfs-wtfery/">Read on &rarr;</a>
+  </footer>
+
+
+  </article>
+
+
+  <article>
+    
+  <header>
+    
       <h1 class="entry-title"><a href="/2009/02/february-alt-net-geek-dinner/">February ALT.NET Geek Dinner</a></h1>
     
     
@@ -647,154 +691,6 @@ You can get this at an Apple store, ebay, craigslist, or the usual places. I fou
 
   </article>
 
-
-  <article>
-    
-  <header>
-    
-      <h1 class="entry-title"><a href="/2008/11/fluent-route-testing-in-asp-net-mvc/">Fluent Route Testing in ASP.NET MVC</a></h1>
-    
-    
-      <p class="meta">
-
-
-
-
-<time datetime="2008-11-25 00:00:00 -0600" pubdate  updated >Nov 25<span>th</span>, 2008</time>
-
-
-</p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Have you written code like this recently?</p>
-
-
-<p>&nbsp;</p>
-
-
-<!--
-{\rtf1\ansi\ansicpg\lang1024\noproof1252\uc1 \deff0{\fonttbl{\f0\fnil\fcharset0\fprq1 Consolas;}}{\colortbl;??\red238\green238\blue238;\red32\green32\blue32;\red255\green0\blue128;\red144\green238\blue144;\red242\green240\blue223;\red192\green192\blue192;\red0\green255\blue255;}??\fs26 \cf1\cb2\highlight2 [\cf3 Test\cf1 ]\par ??\cf4 public\cf1  \cf4 void\cf1  \cf5 tedious_route_test\cf1 ()\par ??\{\par ??    \cf3 Global\cf6 .\cf5 RegisterRoutes\cf1 (\cf3 RouteTable\cf6 .\cf5 Routes\cf1 );\par ??    \cf4 var\cf1  \cf5 httpContext\cf1  \cf6 =\cf1  \cf3 MockRepository\cf6 .\cf5 GenerateStub\cf6 &lt;\cf3 HttpContextBase\cf6 &gt;\cf1 ();\par ??    \cf5 httpContext\cf6 .\cf5 Stub\cf1 (\cf5 x\cf1  \cf6 =&gt;\cf1  \cf5 x\cf6 .\cf5 Request\cf1 )\cf6 .\cf5 Return\cf1 (\cf3 MockRepository\cf6 .\cf5 GenerateStub\cf6 &lt;\cf3 HttpRequestBase\cf6 &gt;\cf1 ());\par ??    \cf5 httpContext\cf6 .\cf5 Request\cf6 .\cf5 Stub\cf1 (\cf5 x\cf1  \cf6 =&gt;\cf1  \cf5 x\cf6 .\cf5 PathInfo\cf1 )\cf6 .\cf5 Return\cf1 (\cf7 {\b ""}\cf1 );\par ??    \cf5 httpContext\cf6 .\cf5 Request\cf6 .\cf5 Stub\cf1 (\cf5 x\cf1  \cf6 =&gt;\cf1  \cf5 x\cf6 .\cf5 AppRelativeCurrentExecutionFilePath\cf1 )\cf6 .\cf5 Return\cf1 (\cf7 {\b "~/foo/bar"}\cf1 );\par ??\par ??    \cf4 var\cf1  \cf5 routeData\cf1  \cf6 =\cf1  \cf3 RouteTable\cf6 .\cf5 Routes\cf6 .\cf5 GetRouteData\cf1 (\cf5 httpContext\cf1 );\par ??\par ??    \cf3 Assert\cf6 .\cf5 That\cf1 (\cf5 routeData\cf6 .\cf5 Values\cf1 [\cf7 {\b "controller"}\cf1 ], \cf3 Is\cf6 .\cf5 EqualTo\cf1 (\cf7 {\b "foo"}\cf1 ));\par ??    \cf3 Assert\cf6 .\cf5 That\cf1 (\cf5 routeData\cf6 .\cf5 Values\cf1 [\cf7 {\b "action"}\cf1 ], \cf3 Is\cf6 .\cf5 EqualTo\cf1 (\cf7 {\b "bar"}\cf1 ));\par ??\}\par ??}
--->
-
-
-<div style="padding: 10px; background: rgb(32, 32, 32) none repeat scroll 0% 0%; font-size: 13pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial; color: rgb(238, 238, 238); font-family: consolas,courier new;">
-<p style="margin: 0px;">[<span style="color: rgb(255, 0, 128);">Test</span>]</p>
-<p style="margin: 0px;"><span style="color: rgb(144, 238, 144);">public</span> <span style="color: rgb(144, 238, 144);">void</span> <span style="color: rgb(242, 240, 223);">tedious_route_test</span>()</p>
-<p style="margin: 0px;">{</p>
-<p style="margin: 0px;">&nbsp;&nbsp;&nbsp; <span style="color: rgb(255, 0, 128);">Global</span><span style="color: silver;">.</span><span style="color: rgb(242, 240, 223);">RegisterRoutes</span>(<span style="color: rgb(255, 0, 128);">RouteTable</span><span style="color: silver;">.</span><span style="color: rgb(242, 240, 223);">Routes</span>);</p>
-<p style="margin: 0px;">&nbsp;&nbsp;&nbsp; <span style="color: rgb(144, 238, 144);">var</span> <span style="color: rgb(242, 240, 223);">httpContext</span> <span style="color: silver;">=</span> <span style="color: rgb(255, 0, 128);">MockRepository</span><span style="color: silver;">.</span><span style="color: rgb(242, 240, 223);">GenerateStub</span><span style="color: silver;">&lt;</span><span style="color: rgb(255, 0, 128);">HttpContextBase</span><span style="color: silver;">&gt;</span>();</p>
-<p style="margin: 0px;">&nbsp;&nbsp;&nbsp; <span style="color: rgb(242, 240, 223);">httpContext</span><span style="color: silver;">.</span><span style="color: rgb(242, 240, 223);">Stub</span>(<span style="color: rgb(242, 240, 223);">x</span> <span style="color: silver;">=&gt;</span> <span style="color: rgb(242, 240, 223);">x</span><span style="color: silver;">.</span><span style="color: rgb(242, 240, 223);">Request</span>)<span style="color: silver;">.</span><span style="color: rgb(242, 240, 223);">Return</span>(<span style="color: rgb(255, 0, 128);">MockRepository</span><span style="color: silver;">.</span><span style="color: rgb(242, 240, 223);">GenerateStub</span><span style="color: silver;">&lt;</span><span style="color: rgb(255, 0, 128);">HttpRequestBase</span><span style="color: silver;">&gt;</span>());</p>
-<p style="margin: 0px;">&nbsp;&nbsp;&nbsp; <span style="color: rgb(242, 240, 223);">httpContext</span><span style="color: silver;">.</span><span style="color: rgb(242, 240, 223);">Request</span><span style="color: silver;">.</span><span style="color: rgb(242, 240, 223);">Stub</span>(<span style="color: rgb(242, 240, 223);">x</span> <span style="color: silver;">=&gt;</span> <span style="color: rgb(242, 240, 223);">x</span><span style="color: silver;">.</span><span style="color: rgb(242, 240, 223);">PathInfo</span>)<span style="color: silver;">.</span><span style="color: rgb(242, 240, 223);">Return</span>(<span style="font-weight: bold; color: aqua;">&quot;&quot;</span>);</p>
-<p style="margin: 0px;">&nbsp;&nbsp;&nbsp; <span style="color: rgb(242, 240, 223);">httpContext</span><span style="color: silver;">.</span><span style="color: rgb(242, 240, 223);">Request</span><span style="color: silver;">.</span><span style="color: rgb(242, 240, 223);">Stub</span>(<span style="color: rgb(242, 240, 223);">x</span> <span style="color: silver;">=&gt;</span> <span style="color: rgb(242, 240, 223);">x</span><span style="color: silver;">.</span><span style="color: rgb(242, 240, 223);">AppRelativeCurrentExecutionFilePath</span>)<span style="color: silver;">.</span><span style="color: rgb(242, 240, 223);">Return</span>(<span style="font-weight: bold; color: aqua;">&quot;~/foo/bar&quot;</span>);</p>
-<p style="margin: 0px;">&nbsp;</p>
-<p style="margin: 0px;">&nbsp;&nbsp;&nbsp; <span style="color: rgb(144, 238, 144);">var</span> <span style="color: rgb(242, 240, 223);">routeData</span> <span style="color: silver;">=</span> <span style="color: rgb(255, 0, 128);">RouteTable</span><span style="color: silver;">.</span><span style="color: rgb(242, 240, 223);">Routes</span><span style="color: silver;">.</span><span style="color: rgb(242, 240, 223);">GetRouteData</span>(<span style="color: rgb(242, 240, 223);">httpContext</span>);</p>
-<p style="margin: 0px;">&nbsp;</p>
-<p style="margin: 0px;">&nbsp;&nbsp;&nbsp; <span style="color: rgb(255, 0, 128);">Assert</span><span style="color: silver;">.</span><span style="color: rgb(242, 240, 223);">That</span>(<span style="color: rgb(242, 240, 223);">routeData</span><span style="color: silver;">.</span><span style="color: rgb(242, 240, 223);">Values</span>[<span style="font-weight: bold; color: aqua;">&quot;controller&quot;</span>], <span style="color: rgb(255, 0, 128);">Is</span><span style="color: silver;">.</span><span style="color: rgb(242, 240, 223);">EqualTo</span>(<span style="font-weight: bold; color: aqua;">&quot;foo&quot;</span>));</p>
-<p style="margin: 0px;">&nbsp;&nbsp;&nbsp; <span style="color: rgb(255, 0, 128);">Assert</span><span style="color: silver;">.</span><span style="color: rgb(242, 240, 223);">That</span>(<span style="color: rgb(242, 240, 223);">routeData</span><span style="color: silver;">.</span><span style="color: rgb(242, 240, 223);">Values</span>[<span style="font-weight: bold; color: aqua;">&quot;action&quot;</span>], <span style="color: rgb(255, 0, 128);">Is</span><span style="color: silver;">.</span><span style="color: rgb(242, 240, 223);">EqualTo</span>(<span style="font-weight: bold; color: aqua;">&quot;bar&quot;</span>));</p>
-<p style="margin: 0px;">}</p>
-</div>
-
-
-<p>This mess of nastiness is what is required to test your routes in ASP.NET MVC.&nbsp; There are a number of things wrong with this.&nbsp; First and foremost, we&#8217;re doing magical-mocking here.&nbsp; That is - we somehow know exactly the two properties we need to mock for this to work.&nbsp; It turns out this isn&#8217;t such a magical process as it is looking at reflector and a lot of trial and error.&nbsp; The next thing wrong that I see is that our route values (and keys) are case-insensitive, so we&#8217;d need to include some more flexibility in our Asserts here.</p>
-
-
-<p>Who wants to deal with that mess?&nbsp; I sure don&#8217;t.&nbsp; Last night, my pal &amp; co-author <a href="http://www.lostechies.com/blogs/jimmy_bogard" target="_blank">Jimmy Bogard</a> banged together a fluent API for testing routes without needing all of this crap.</p>
-
-
-<p>Here is a test to verify our root route is working properly:</p>
-
-
-<!--
-{\rtf1\ansi\ansicpg\lang1024\noproof1252\uc1 \deff0{\fonttbl{\f0\fnil\fcharset0\fprq1 Consolas;}}{\colortbl;??\red0\green255\blue255;\red32\green32\blue32;\red192\green192\blue192;\red242\green240\blue223;\red238\green238\blue238;\red255\green0\blue128;}??\fs26 \cf1\cb2\highlight2 {\b "~/"}\cf3 .\cf4 Route\cf5 ()\cf3 .\cf4 ShouldMapTo\cf3 &lt;\cf6 FooController\cf3 &gt;\cf5 (); }
--->
-
-
-<div style="padding: 10px; background: rgb(32, 32, 32) none repeat scroll 0% 0%; font-size: 13pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial; color: rgb(238, 238, 238); font-family: consolas,courier new;">
-<p style="margin: 0px;"><span style="font-weight: bold; color: aqua;">&quot;~/&quot;</span><span style="color: silver;">.</span><span style="color: rgb(242, 240, 223);">Route</span>()<span style="color: silver;">.</span><span style="color: rgb(242, 240, 223);">ShouldMapTo</span><span style="color: silver;">&lt;</span><span style="color: rgb(255, 0, 128);">FooController</span><span style="color: silver;">&gt;</span>();</p>
-</div>
-
-
-<p>And a more complex case where we have an action parameter:</p>
-
-
-<!--
-{\rtf1\ansi\ansicpg\lang1024\noproof1252\uc1 \deff0{\fonttbl{\f0\fnil\fcharset0\fprq1 Consolas;}}{\colortbl;??\red0\green255\blue255;\red32\green32\blue32;\red192\green192\blue192;\red242\green240\blue223;\red238\green238\blue238;\red255\green0\blue128;}??\fs26 \cf1\cb2\highlight2 {\b "~/foo/bar/widget"}\cf3 .\cf4 Route\cf5 ()\cf3 .\cf4 ShouldMapTo\cf3 &lt;\cf6 FooController\cf3 &gt;\cf5 (\cf4 x\cf5  \cf3 =&gt;\cf5  \cf4 x\cf3 .\cf4 Bar\cf5 (\cf1 {\b "widget"}\cf5 ));}
--->
-
-
-<div style="padding: 10px; background: rgb(32, 32, 32) none repeat scroll 0% 0%; font-size: 13pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial; color: rgb(238, 238, 238); font-family: consolas,courier new;">
-<p style="margin: 0px;"><span style="font-weight: bold; color: aqua;">&quot;~/foo/bar/widget&quot;</span><span style="color: silver;">.</span><span style="color: rgb(242, 240, 223);">Route</span>()<span style="color: silver;">.</span><span style="color: rgb(242, 240, 223);">ShouldMapTo</span><span style="color: silver;">&lt;</span><span style="color: rgb(255, 0, 128);">FooController</span><span style="color: silver;">&gt;</span>(<span style="color: rgb(242, 240, 223);">x</span> <span style="color: silver;">=&gt;</span> <span style="color: rgb(242, 240, 223);">x</span><span style="color: silver;">.</span><span style="color: rgb(242, 240, 223);">Bar</span>(<span style="font-weight: bold; color: aqua;">&quot;widget&quot;</span>));</p>
-</div>
-
-
-<p>These are a lot nicer, as we are dealing with no unnecessary string here, the controller are now strongly-typed (we get intellisense and refactoring support), and we can easily test routes with a single line.</p>
-
-
-<p>This does have a couple caveats though:&nbsp; it assumes</p>
-
-
-<ul>
-<li>you&#8217;re using NUnit</li>
-<li>you&#8217;re using RhinoMocks</li>
-<li>you add your routes to the RouteTable.Routes collection</li>
-</ul>
-
-
-<p>So how did we do this?&nbsp; I have to admit, I tried to get this to work on the bus ride to work, but without an internet connection I was dead in the water.&nbsp; Jimmy helped me grasp the way that Expression&lt;T&gt; works.&nbsp; His wise words were: &quot;Here&#8217;s where you just set a breakpoint and fire up the debugger and look.&quot;&nbsp; He&#8217;s right - the API there is quite opaque.&nbsp; But once I got it to&nbsp; work it made a lot of sense.&nbsp; Expression&lt;T&gt; is awesome!</p>
-
-
-<p>Here&#8217;s the method with most of the goods:</p>
-
-
-<!--
-{\rtf1\ansi\ansicpg\lang1024\noproof65001\uc1 \deff0{\fonttbl{\f0\fnil\fcharset0\fprq1 Consolas;}}{\colortbl;??\red144\green238\blue144;\red32\green32\blue32;\red238\green238\blue238;\red255\green0\blue128;\red242\green240\blue223;\red192\green192\blue192;\red255\green255\blue0;\red0\green255\blue255;\red164\green164\blue164;}??\fs26 \cf1\cb2\highlight2 public\cf3  \cf1 static\cf3  \cf4 RouteData\cf3  \cf5 ShouldMapTo\cf6 &lt;\cf5 TController\cf6 &gt;\cf3 (\cf1 this\cf3  \cf4 RouteData\cf3  \cf5 routeData\cf3 , \cf4 Expression\cf6 &lt;\cf7 Func\cf6 &lt;\cf5 TController\cf3 , \cf4 ActionResult\cf6 &gt;&gt;\cf3  \cf5 action\cf3 )\par ??    \cf1 where\cf3  \cf5 TController\cf3  : \cf4 Controller\par ??\cf3 \{            \par ??    \cf4 Assert\cf6 .\cf5 That\cf3 (\cf5 routeData\cf3 , \cf4 Is\cf6 .\cf5 Not\cf6 .\cf5 Null\cf3 , \cf8 {\b "The URL did not match any route"}\cf3 );\par ??\par ??    \cf9 {\b //check controller}\par ??\cf3     \cf5 routeData\cf6 .\cf5 ShouldMapTo\cf6 &lt;\cf5 TController\cf6 &gt;\cf3 ();\par ??    \par ??    \cf9 {\b //check action}\par ??\cf3     \cf1 var\cf3  \cf5 methodCall\cf3  \cf6 =\cf3  (\cf4 MethodCallExpression\cf3 ) \cf5 action\cf6 .\cf5 Body\cf3 ;\par ??    \cf1 string\cf3  \cf5 actualAction\cf3  \cf6 =\cf3  \cf5 routeData\cf6 .\cf5 Values\cf6 .\cf5 GetValue\cf3 (\cf8 {\b "action"}\cf3 )\cf6 .\cf5 ToString\cf3 ();\par ??    \cf1 string\cf3  \cf5 expectedAction\cf3  \cf6 =\cf3  \cf5 methodCall\cf6 .\cf5 Method\cf6 .\cf5 Name\cf3 ;\par ??    \cf5 actualAction\cf6 .\cf5 AssertSameStringAs\cf3 (\cf5 expectedAction\cf3 );\par ??                \par ??    \cf9 {\b //check parameters}\par ??\cf3     \cf1 for\cf3  (\cf1 int\cf3  \cf5 i\cf3  \cf6 =\cf3  \cf8 0\cf3 ; \cf5 i\cf3  \cf6 &lt;\cf3  \cf5 methodCall\cf6 .\cf5 Arguments\cf6 .\cf5 Count\cf3 ; \cf5 i\cf6 ++\cf3 )\par ??    \{\par ??        \cf1 string\cf3  \cf5 name\cf3  \cf6 =\cf3  \cf5 methodCall\cf6 .\cf5 Method\cf6 .\cf5 GetParameters\cf3 ()[\cf5 i\cf3 ]\cf6 .\cf5 Name\cf3 ;\par ??        \cf1 object\cf3  \cf5 value\cf3  \cf6 =\cf3  ((\cf4 ConstantExpression\cf3 ) \cf5 methodCall\cf6 .\cf5 Arguments\cf3 [\cf5 i\cf3 ])\cf6 .\cf5 Value\cf3 ;\par ??\par ??        \cf4 Assert\cf6 .\cf5 That\cf3 (\cf5 routeData\cf6 .\cf5 Values\cf6 .\cf5 GetValue\cf3 (\cf5 name\cf3 ), \cf4 Is\cf6 .\cf5 EqualTo\cf3 (\cf5 value\cf6 .\cf5 ToString\cf3 ()));\par ??    \}\par ??\par ??    \cf1 return\cf3  \cf5 routeData\cf3 ;\par ??\}\par ??}
--->
-
-
-<div style="padding: 10px; background: rgb(32, 32, 32) none repeat scroll 0% 0%; font-size: 13pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial; color: rgb(238, 238, 238); font-family: consolas,courier new;">
-<p style="margin: 0px;"><span style="color: rgb(144, 238, 144);">public</span> <span style="color: rgb(144, 238, 144);">static</span> <span style="color: rgb(255, 0, 128);">RouteData</span> <span style="color: rgb(242, 240, 223);">ShouldMapTo</span><span style="color: silver;">&lt;</span><span style="color: rgb(242, 240, 223);">TController</span><span style="color: silver;">&gt;</span>(<span style="color: rgb(144, 238, 144);">this</span> <span style="color: rgb(255, 0, 128);">RouteData</span> <span style="color: rgb(242, 240, 223);">routeData</span>, <span style="color: rgb(255, 0, 128);">Expression</span><span style="color: silver;">&lt;</span><span style="color: yellow;">Func</span><span style="color: silver;">&lt;</span><span style="color: rgb(242, 240, 223);">TController</span>, <span style="color: rgb(255, 0, 128);">ActionResult</span><span style="color: silver;">&gt;&gt;</span> <span style="color: rgb(242, 240, 223);">action</span>)</p>
-<p style="margin: 0px;">&nbsp;&nbsp;&nbsp; <span style="color: rgb(144, 238, 144);">where</span> <span style="color: rgb(242, 240, 223);">TController</span> : <span style="color: rgb(255, 0, 128);">Controller</span></p>
-<p style="margin: 0px;">{&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
-<p style="margin: 0px;">&nbsp;&nbsp;&nbsp; <span style="color: rgb(255, 0, 128);">Assert</span><span style="color: silver;">.</span><span style="color: rgb(242, 240, 223);">That</span>(<span style="color: rgb(242, 240, 223);">routeData</span>, <span style="color: rgb(255, 0, 128);">Is</span><span style="color: silver;">.</span><span style="color: rgb(242, 240, 223);">Not</span><span style="color: silver;">.</span><span style="color: rgb(242, 240, 223);">Null</span>, <span style="font-weight: bold; color: aqua;">&quot;The URL did not match any route&quot;</span>);</p>
-<p style="margin: 0px;">&nbsp;</p>
-<p style="margin: 0px;">&nbsp;&nbsp;&nbsp; <span style="font-weight: bold; color: rgb(164, 164, 164);">//check controller</span></p>
-<p style="margin: 0px;">&nbsp;&nbsp;&nbsp; <span style="color: rgb(242, 240, 223);">routeData</span><span style="color: silver;">.</span><span style="color: rgb(242, 240, 223);">ShouldMapTo</span><span style="color: silver;">&lt;</span><span style="color: rgb(242, 240, 223);">TController</span><span style="color: silver;">&gt;</span>();</p>
-<p style="margin: 0px;">&nbsp;</p>
-<p style="margin: 0px;">&nbsp;&nbsp;&nbsp; <span style="font-weight: bold; color: rgb(164, 164, 164);">//check action</span></p>
-<p style="margin: 0px;">&nbsp;&nbsp;&nbsp; <span style="color: rgb(144, 238, 144);">var</span> <span style="color: rgb(242, 240, 223);">methodCall</span> <span style="color: silver;">=</span> (<span style="color: rgb(255, 0, 128);">MethodCallExpression</span>) <span style="color: rgb(242, 240, 223);">action</span><span style="color: silver;">.</span><span style="color: rgb(242, 240, 223);">Body</span>;</p>
-<p style="margin: 0px;">&nbsp;&nbsp;&nbsp; <span style="color: rgb(144, 238, 144);">string</span> <span style="color: rgb(242, 240, 223);">actualAction</span> <span style="color: silver;">=</span> <span style="color: rgb(242, 240, 223);">routeData</span><span style="color: silver;">.</span><span style="color: rgb(242, 240, 223);">Values</span><span style="color: silver;">.</span><span style="color: rgb(242, 240, 223);">GetValue</span>(<span style="font-weight: bold; color: aqua;">&quot;action&quot;</span>)<span style="color: silver;">.</span><span style="color: rgb(242, 240, 223);">ToString</span>();</p>
-<p style="margin: 0px;">&nbsp;&nbsp;&nbsp; <span style="color: rgb(144, 238, 144);">string</span> <span style="color: rgb(242, 240, 223);">expectedAction</span> <span style="color: silver;">=</span> <span style="color: rgb(242, 240, 223);">methodCall</span><span style="color: silver;">.</span><span style="color: rgb(242, 240, 223);">Method</span><span style="color: silver;">.</span><span style="color: rgb(242, 240, 223);">Name</span>;</p>
-<p style="margin: 0px;">&nbsp;&nbsp;&nbsp; <span style="color: rgb(242, 240, 223);">actualAction</span><span style="color: silver;">.</span><span style="color: rgb(242, 240, 223);">AssertSameStringAs</span>(<span style="color: rgb(242, 240, 223);">expectedAction</span>);</p>
-<p style="margin: 0px;">&nbsp;</p>
-<p style="margin: 0px;">&nbsp;&nbsp;&nbsp; <span style="font-weight: bold; color: rgb(164, 164, 164);">//check parameters</span></p>
-<p style="margin: 0px;">&nbsp;&nbsp;&nbsp; <span style="color: rgb(144, 238, 144);">for</span> (<span style="color: rgb(144, 238, 144);">int</span> <span style="color: rgb(242, 240, 223);">i</span> <span style="color: silver;">=</span> <span style="color: aqua;">0</span>; <span style="color: rgb(242, 240, 223);">i</span> <span style="color: silver;">&lt;</span> <span style="color: rgb(242, 240, 223);">methodCall</span><span style="color: silver;">.</span><span style="color: rgb(242, 240, 223);">Arguments</span><span style="color: silver;">.</span><span style="color: rgb(242, 240, 223);">Count</span>; <span style="color: rgb(242, 240, 223);">i</span><span style="color: silver;">++</span>)</p>
-<p style="margin: 0px;">&nbsp;&nbsp;&nbsp; {</p>
-<p style="margin: 0px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color: rgb(144, 238, 144);">string</span> <span style="color: rgb(242, 240, 223);">name</span> <span style="color: silver;">=</span> <span style="color: rgb(242, 240, 223);">methodCall</span><span style="color: silver;">.</span><span style="color: rgb(242, 240, 223);">Method</span><span style="color: silver;">.</span><span style="color: rgb(242, 240, 223);">GetParameters</span>()[<span style="color: rgb(242, 240, 223);">i</span>]<span style="color: silver;">.</span><span style="color: rgb(242, 240, 223);">Name</span>;</p>
-<p style="margin: 0px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color: rgb(144, 238, 144);">object</span> <span style="color: rgb(242, 240, 223);">value</span> <span style="color: silver;">=</span> ((<span style="color: rgb(255, 0, 128);">ConstantExpression</span>) <span style="color: rgb(242, 240, 223);">methodCall</span><span style="color: silver;">.</span><span style="color: rgb(242, 240, 223);">Arguments</span>[<span style="color: rgb(242, 240, 223);">i</span>])<span style="color: silver;">.</span><span style="color: rgb(242, 240, 223);">Value</span>;</p>
-<p style="margin: 0px;">&nbsp;</p>
-<p style="margin: 0px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color: rgb(255, 0, 128);">Assert</span><span style="color: silver;">.</span><span style="color: rgb(242, 240, 223);">That</span>(<span style="color: rgb(242, 240, 223);">routeData</span><span style="color: silver;">.</span><span style="color: rgb(242, 240, 223);">Values</span><span style="color: silver;">.</span><span style="color: rgb(242, 240, 223);">GetValue</span>(<span style="color: rgb(242, 240, 223);">name</span>), <span style="color: rgb(255, 0, 128);">Is</span><span style="color: silver;">.</span><span style="color: rgb(242, 240, 223);">EqualTo</span>(<span style="color: rgb(242, 240, 223);">value</span><span style="color: silver;">.</span><span style="color: rgb(242, 240, 223);">ToString</span>()));</p>
-<p style="margin: 0px;">&nbsp;&nbsp;&nbsp; }</p>
-<p style="margin: 0px;">&nbsp;</p>
-<p style="margin: 0px;">&nbsp;&nbsp;&nbsp; <span style="color: rgb(144, 238, 144);">return</span> <span style="color: rgb(242, 240, 223);">routeData</span>;</p>
-<p style="margin: 0px;">}</p>
-</div>
-
-
-<p>This might be a tad brittle, but in my preliminary testing it worked wonders.&nbsp; This code is now in <a href="http://mvccontrib.org" target="_blank">MvcContrib</a>&#8217;s TestHelper project.&nbsp;</p>
-
-
-<div class="wlWriterSmartContent" id="scid:0767317B-992E-4b12-91E0-4F059A8CECA8:b04a1ca3-9141-402a-955f-b9b27054f6ac" style="margin: 0px; padding: 0px; display: inline;">Technorati Tags: <a href="http://technorati.com/tags/asp.net%20mvc" rel="tag">asp.net mvc</a></div>
-
-</div>
-  <footer>
-    <a rel="full-article" href="/2008/11/fluent-route-testing-in-asp-net-mvc/">Read on &rarr;</a>
-  </footer>
-
-
-  </article>
-
 <nav role="pagination">
   <div>
     
@@ -829,6 +725,10 @@ You can get this at an Apple store, ebay, craigslist, or the usual places. I fou
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2011/09/introducing-appsites/">Introducing App Sites</a>
+      </li>
+    
+      <li class="post">
         <a href="/2011/09/firebug-style-debugging-for-ios/">Firebug-Style Visual Debugging for iOS</a>
       </li>
     
@@ -842,10 +742,6 @@ You can get this at an Apple store, ebay, craigslist, or the usual places. I fou
     
       <li class="post">
         <a href="/2011/08/when-viewwillappear-isnt-called/">When viewWillAppear: Isn&#8217;t Called</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2011/08/moving-my-blog/">Moving My Blog</a>
       </li>
     
   </ul>

@@ -104,6 +104,43 @@
     
   <header>
     
+      <h1 class="entry-title"><a href="/2007/08/e-text-editor-no-such-file-exists-ubygems/">E - Text Editor - No Such File Exists &#8211; Ubygems</a></h1>
+    
+    
+      <p class="meta">
+
+
+
+
+<time datetime="2007-08-23 00:00:00 -0500" pubdate  updated >Aug 23<span>rd</span>, 2007</time>
+
+
+</p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>There&#8217;s no doubt that <a href="http://www.e-texteditor.com">e</a> kicks ass.&nbsp; On one of my computers, however I was having a problem using some of the bundles.&nbsp; Specifically some of the bundles utilize <a href="http://www.cygwin.com/">cygwin</a> to do their magic.<br><br>I was receiving this weird error, where ruby is complaining that it can&#8217;t locat a file named &#8220;ubygems&#8221;.&nbsp; Obviously, they are referring to rubygems, and the problem exists when you have a windows install of ruby and a cygwin install of ruby.<br><br>To fix it you need to reinstall ruby gems within cygwin.&nbsp; Download the <a href="http://rubyforge.org/frs/?group_id=126">latest version of rubygems</a> from rubyforge.&nbsp; Put the tarball in the c:\cygwin\home\USER folder, then open up your cygwin prompt and type:<br></p>
+
+<div><figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>$ tar -x -f rubygems-0.9.4.tgz(this will change if you download a different version)&lt;br>$ cd rubygems-0.9.4&lt;br>$ unset RUBYOPT&lt;br>$ ruby setup.rb&lt;br>&lt;br></div></code></pre></td></tr></table></div></figure></div>
+
+
+<p>At this point rubygems should be installing and you should be good to go.&nbsp; Back to &#8220;e goodness&#8221;!<br></p>
+
+</div>
+  <footer>
+    <a rel="full-article" href="/2007/08/e-text-editor-no-such-file-exists-ubygems/">Read on &rarr;</a>
+  </footer>
+
+
+  </article>
+
+
+  <article>
+    
+  <header>
+    
       <h1 class="entry-title"><a href="/2007/08/sogeti-is-hiring/">Sogeti Is Hiring</a></h1>
     
     
@@ -569,49 +606,6 @@
 
   </article>
 
-
-  <article>
-    
-  <header>
-    
-      <h1 class="entry-title"><a href="/2007/08/resharper-coolness-move-methods/">ReSharper Coolness - Move Methods</a></h1>
-    
-    
-      <p class="meta">
-
-
-
-
-<time datetime="2007-08-03 00:00:00 -0500" pubdate  updated >Aug 3<span>rd</span>, 2007</time>
-
-
-</p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Every once and a while I come across a new feature that just makes me stop and think &ldquo;<a href="http://jetbrains.com/resharper" target="_blank">ReSharper</a>, I love you MAN!&rdquo;</p>
-
-
-<p>If you have your cursor on a method, press <strong>CTRL+ALT+SHIFT&nbsp; </strong>and the <strong>Up</strong> or <strong>Down</strong> arrow keys.</p>
-
-
-<p>Here it is in action:</p>
-
-
-<p><img src="/images/resharper_movemethod.gif" alt="Resharper:move method"  border="0"  /></p>
-
-
-<div class="bjtags">Tags:<a rel="tag" href="http://technorati.com/tag/ReSharper">ReSharper</a>, <a rel="tag" href="http://technorati.com/tag/Tools">Tools</a></div>
-
-</div>
-  <footer>
-    <a rel="full-article" href="/2007/08/resharper-coolness-move-methods/">Read on &rarr;</a>
-  </footer>
-
-
-  </article>
-
 <nav role="pagination">
   <div>
     
@@ -646,6 +640,10 @@
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2011/09/introducing-appsites/">Introducing App Sites</a>
+      </li>
+    
+      <li class="post">
         <a href="/2011/09/firebug-style-debugging-for-ios/">Firebug-Style Visual Debugging for iOS</a>
       </li>
     
@@ -659,10 +657,6 @@
     
       <li class="post">
         <a href="/2011/08/when-viewwillappear-isnt-called/">When viewWillAppear: Isn&#8217;t Called</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2011/08/moving-my-blog/">Moving My Blog</a>
       </li>
     
   </ul>

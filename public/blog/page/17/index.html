@@ -104,6 +104,36 @@
     
   <header>
     
+      <h1 class="entry-title"><a href="/2008/02/a-new-host/">A New Host</a></h1>
+    
+    
+      <p class="meta">
+
+
+
+
+<time datetime="2008-02-13 00:00:00 -0600" pubdate  updated >Feb 13<span>th</span>, 2008</time>
+
+
+</p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><img src="http://flux88.com/content/binary/419970_front_rack_server.jpg" style="margin: 10px; float: right;" border="0">I&#8217;ve been hosted on <a href="http://www.webhost4life.com">webhost4life</a> for about 2 years now, and I was starting to see the pain with shared hosting.&nbsp; It starts out with a tempting $5/month, but then you want SQL Server 2005, and you want to point many domains to non-root folders and in the end it just isn&#8217;t that cheap.<br><br>It&#8217;s also really slow and I don&#8217;t have full control of the box.&nbsp; Doing a reverse ip check at <a href="http://yougetsignal.com">http://yougetsignal.com</a> (awesome site, hilarious name) i could see hundreds of sites that are on my same server.&nbsp; I&#8217;d rather not be sharing bandwidth and hardware resources with so many.<br><br>So I&#8217;ve made the switch to a VPS plan at <a href="http://vpsland.com">VPSLand</a>.&nbsp; VPS is Virtual Private Server, so basically they take a beefy server (8-core cpu, gobs of ram) and then run Virtual Server on it.&nbsp; They sell a limited amount of virtual machines per actual server, so you are sharing with far less people. VPS plans are a bit more expensive, but they are worth it.&nbsp; Why you ask?<br><ul><li>Remote Desktop into your box (no more crappy cpanel interfaces)<br></li><li>Install whatever-the-hell-you-want software (provided it&#8217;s legal)</li><li>Run your sites in .NET 2.0, 3.0, 3.5, 6.0, whatever (ASP.NET MVC sites here I come)</li><li>Run ASP.NET, Rails, PHP all on the same server (if you want)<br></li><li>No more Medium Trust nonsense</li><li>control your own DNS (if you want)</li><li>run your own mail server (I use <a href="http://google.com/a">GAFYD</a> however)</li><li>point as many domains to whatever folders you want</li></ul>The downside:<br><ul><li>I have to track my bandwidth now.&nbsp; I have 200gb/month, which is good enough for now, but it could get expensive if I go over.</li><li>I only have 5gb of storage space.&nbsp; The base install takes 2gb.&nbsp; Yikes!&nbsp; I plan on making this 10gb sometime soon.</li><li>a little more expensive.</li></ul>Ultimately, I&#8217;m paying about $10/month more than shared hosting, and I think it&#8217;s totally worth it.&nbsp; VPSLand&#8217;s support is stellar so far.<br><br>Oh, and I have a question for you all:&nbsp; I plan on tinkering with rails, and I&#8217;ve read the long steps to get rails to work in IIS but should I?&nbsp; Or should I just install apache or Lighttpd and run it on port 81?<br></p>
+</div>
+  <footer>
+    <a rel="full-article" href="/2008/02/a-new-host/">Read on &rarr;</a>
+  </footer>
+
+
+  </article>
+
+
+  <article>
+    
+  <header>
+    
       <h1 class="entry-title"><a href="/2008/02/visual-studio-context-menu-the-himalayas-of-menus/">Visual Studio Context Menu - the Himalayas of Menus</a></h1>
     
     
@@ -667,45 +697,6 @@
 
   </article>
 
-
-  <article>
-    
-  <header>
-    
-      <h1 class="entry-title"><a href="/2008/01/be-careful-outputting-strings-in-asp-net-mvc/">Be Careful Outputting Strings in ASP.NET MVC</a></h1>
-    
-    
-      <p class="meta">
-
-
-
-
-<time datetime="2008-01-09 00:00:00 -0600" pubdate  updated >Jan 9<span>th</span>, 2008</time>
-
-
-</p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><font style="BACKGROUND-COLOR: #f4f4f4">During my presentation at Alamo Coders last night, someon mentioned that it is unsafe to output user-entered strings like this:</font></p>
-
-
-<p><font color="#0000ff"><p>&lt;</font><font color="#a31515">h2</font><font color="#0000ff">&gt;</font>&lt;%<font color="#0000ff">=</font> college.Name %&gt;<font color="#0000ff">&lt;/</font><font color="#a31515">h2</font><font color="#0000ff">&gt;</p></font><p>The reason is, of course, that the user could be malicious and enter in a string such as this:</p><p>&ldquo;&lt;script&gt;alert(&lsquo;I am evil&rsquo;);&lt;/script&gt;&rdquo;</p><p>And it would evaluated on the page and all of your users would get an alert box.&nbsp; This is leaving your door wide-open to clever attacks known as <a href="http://en.wikipedia.org/wiki/Cross_site_scripting" target="_blank">Cross Site Scripting</a>&nbsp;and is very dangerous.</p><p>Instead, we should escape these strings so that they aren&rsquo;t rendered as HTML or javascript, but rather textual characters.&nbsp; That means that &lt; will be translated to &amp;lt; and so on.</p><p>To do that, the Html helpers that ship with the framework give you an Encode method, letting you do something like:</p><font color="#0000ff"><p>&lt;</font><font color="#a31515">h2</font><font color="#0000ff">&gt;</font>&lt;%<font color="#0000ff">=</font> Html.Encode(college.Name) %&gt;<font color="#0000ff">&lt;/</font><font color="#a31515">h2</font><font color="#0000ff">&gt;</p></font><p>But the syntax is a bit cumbersome for <strong>every outputted value on a page.</strong>&nbsp; I prefer the way Rails handles it&hellip; like this:</p><font color="#0000ff"><p>&lt;</font><font color="#a31515">h2</font><font color="#0000ff">&gt;</font>&lt;%<font color="#0000ff">=</font> h(college.Name) %&gt;<font color="#0000ff">&lt;/</font><font color="#a31515">h2</font><font color="#0000ff">&gt;</p></font><p>And it turns out that you can add this extension method somewhere and be done with it:</p><p>`</p>
-
-<div><figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
-</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>public static string h(this ViewPage page, string input){ return new HtmlHelper(page.ViewContext).Encode(input);}`</div></code></pre></td></tr></table></div></figure></div>
-
-
-<p>And that&rsquo;s it!&nbsp; Just remember to take this precaution, or you&rsquo;ll regret it later.</p>
-</div>
-  <footer>
-    <a rel="full-article" href="/2008/01/be-careful-outputting-strings-in-asp-net-mvc/">Read on &rarr;</a>
-  </footer>
-
-
-  </article>
-
 <nav role="pagination">
   <div>
     
@@ -740,6 +731,10 @@
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2011/09/introducing-appsites/">Introducing App Sites</a>
+      </li>
+    
+      <li class="post">
         <a href="/2011/09/firebug-style-debugging-for-ios/">Firebug-Style Visual Debugging for iOS</a>
       </li>
     
@@ -753,10 +748,6 @@
     
       <li class="post">
         <a href="/2011/08/when-viewwillappear-isnt-called/">When viewWillAppear: Isn&#8217;t Called</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2011/08/moving-my-blog/">Moving My Blog</a>
       </li>
     
   </ul>

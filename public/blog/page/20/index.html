@@ -104,6 +104,89 @@
     
   <header>
     
+      <h1 class="entry-title"><a href="/2007/10/alt-net-goodness/">ALT.NET Goodness</a></h1>
+    
+    
+      <p class="meta">
+
+
+
+
+<time datetime="2007-10-09 00:00:00 -0500" pubdate  updated >Oct 9<span>th</span>, 2007</time>
+
+
+</p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Wow.&nbsp; What an awesome event.</p>
+
+
+<p>I’ll skip the play-by-play, because that has been covered to death.&nbsp; Instead I’ll focus on my notes.&nbsp; There are definitely some “meaty” posts in my mind that are still storming, so expect good things to come.&nbsp; There are some good points here, but it’s a long post so I’ll be surprised if I get any comments <img src="http://www.flux88.com/uploads/smile1.gif">.</p>
+
+
+<h3>Being a Catalyst for Change</h3>
+
+
+<p>I first attended a session on “Fostering Passion” and “Being a catalyst for change” which were grouped together.&nbsp; A lot of people showed up and <a href="http://www.jpboodhoo.com/" target="_blank">J.P. Boodhoo</a> led us off.&nbsp; He talked about the importance of a good, healthy work attitude, and if you aren’t getting what you need from your current employer then you should really seek out something better.&nbsp; </p>
+
+
+<ul><li>You need to show pain before you can start evangelizing new stuff.&nbsp; Ask people the question “How is that working for you?”&nbsp; or “What would you want to improve first…. why?”&nbsp; This gives you the context and the opening for suggesting new ideas.</li><li>Talk about problems in context with the 4 variables, this helps lead to whether something is “working” or not</li><ul><li>Time</li><li>Scope</li><li>Quality</li><li>Budget</li></ul><li>Hosting brown-bag sessions is a great way to get people excited.&nbsp; <a href="http://computerzen.com/" target="_blank">Scott Hanselman</a> pointed out that he found it valuable to create a “shadow government” of peers who you can individually get excited about different topics.&nbsp; Ask them to give&nbsp;a lunch &amp; learn and spread the word that way.&nbsp; Somebody called them “Hanselminions”&nbsp; —&nbsp; <em>epic</em>.</li><li>JP Boodhoo stressed that we build relationships before we offer to “fix up their processes.”&nbsp; If you come in wanting to change everything you’ll just alienate your team and ruin your credibility.</li><li>Another thing that we discussed is that newcomer’s to our community are going to be very overwhelmed…&nbsp; currently there isn’t much direction.&nbsp; We don’t want to be prescriptive, but a general “go in that direction” will definitely be helpful.</li></ul>
+
+
+<h3>Advanced NHibernate</h3>
+
+
+<p>The next session I attended was Advanced NHibernate Techniques, facilitated by <a href="http://codebetter.com/blogs/jeffrey.palermo" target="_blank">Jeffrey Palermo</a>.&nbsp; I found this to be awesome, because usually when I get to talk (or listen) to NHibernate at a user group or code camp, it’s focused on the beginner side of it.&nbsp; Everyone in the room had been using it for a while, and had some really good suggestions and valid problems with it.</p>
+
+
+<ul><li>ActiveRecord vs. Persistant Ignorant?</li><ul><li>I suggested that for dead-simple models, or a team that doesn’t know DDD, that AR was a much easier path with less friction, however you do quickly hit a limit here when you want to start using more Domain Driven Design such as the Aggregate root/aggregate relationship, repository pattern…&nbsp; or if you need these to be remote… they can’t be used on the client side.&nbsp; Somebody pointed out that it is very difficult to switch from one to the other, and this makes the initial decision very hard.</li><li>Howard Dierking pointed out that “No Simple CRUD app stays that way”</li></ul><li>Database, Mapping, Code -&gt; which first?</li><ul><li>This was basically a poll question.&nbsp; Almost everybody here started with code, then database, then mapping.&nbsp; Very few people used hbm2ddl (like I do) to generate the database.&nbsp; We all agreed that generating the database needs to be abandoned once you start doing tuning and specific tweaks.&nbsp; The <a href="http://blog.eleutian.com/" target="_blank">Eleutian</a> guys (who have names, by the way… Aaron and Jacob) have a pretty hefty process that all starts with a modeling tool.&nbsp; It kind of scares me, but they seem to have it working so that they don’t have to re-work anything.&nbsp; To be truly DRY you definitely need another abstraction, however I’m not convinced that UML is it.&nbsp;&nbsp; <strong>What if we had a Boo DSL that represented the mapping, and we could specify advanced DDD concepts there, and have it generate the code, hbm, and Database…</strong>?</li></ul><li>Issues?</li><ul><li>Aaron and Jacob have been stressing about Adaptive Queries and Read-only queries, and I need to make an effort to understand their problem.&nbsp; Originally I dismissed this as a non-issue, but that’s a cop-out.&nbsp; I want to understand what they are wanting that they aren’t getting with NHibernate.</li><li>We all seemed to agree that it’s painful that if you have a single error in your mapping file, the session factory throws an exception and just about every test in your application will fail.&nbsp; This SUCKS for pinpointing the error.&nbsp; I heard <a href="http://blogs.msdn.com/howard_dierking" target="_blank">Howard</a> mention something about jitting the mapping assemblies (I guess while writing?) — I definitely need to continue this discussion with him.</li><li>Partials mappings would be pretty cool, so you could generate the mappings based on default conventions, then you could override when necessary.</li></ul></ul>
+
+
+<h3>ASP.NET MVC Framework presented by <a href="http://weblogs.asp.net/scottgu" target="_blank">Scott Guthrie</a></h3>
+
+
+<ul><li>This flippin’ rocks.&nbsp; A detailed post to follow.</li></ul>
+
+
+<h3>Domain Driven Design – Facilitated by <a href="http://codebetter.com/blogs/david_laribee/" target="_blank">Dave Laribee</a> and <a href="http://codebetter.com/blogs/scott.bellware/" target="_blank">Scott Bellware</a> (with a cameo from yours truly!)</h3>
+
+
+<ul><li>This was pretty much review for me, but it’s always good to get refreshed.</li><li>Opening your mouth is a good way to get people to ask you another question (provided you didn’t say something completely stupid) — I kept getting asked to explain more topics here, which was flattering.</li><li>At one point I said “If you haven’t read <a href="http://www.amazon.com/Domain-Driven-Design-Tackling-Complexity-Software/dp/0321125215" target="_blank">Evans</a> yet, go TODAY and buy his book.&nbsp; Then read it 8 times.”&nbsp; — This led people to believe that I had read it a few times.&nbsp; Nope!&nbsp; I still have 7 more to go <img src="http://www.flux88.com/uploads/smile1.gif">.</li><li>A lot of discussion went around the different between responsibilities of the entities, and the responsibilities of domain services (not to be confused with application services or &lt;gasp&gt; SOA).</li></ul>
+
+
+<h3>User Stories (facilitated by Scott Bellware &amp; <a href="http://codebetter.com/blogs/raymond.lewallen/" target="_blank">Raymond Lewallen</a>)</h3>
+
+
+<ul><li>The more I dig into this stuff the more I like it</li><li>Epics– 30,000 ft view (almost impossible to estimate) (if you have to, also provide a low confidence value)</li><li>Theme – closer, but not enough to estimate.&nbsp; Gives more detail.&nbsp; Many themes per epic</li><li>Story – small enough to provide estimate &amp; acceptance criteria.</li><li>Ray said “I can give you a gantt chart &amp; have it say whatever you want on it.”&nbsp; — this is funny, but SO true</li><li>Estimation accuracy and Trust are increased as time goes on… providing you aren’t making empty promises early on</li><li><strong>Don’t estimate a user story until you have acceptance criteria</strong></li><li>Acceptance Criteria (AC) can be technical</li><li>AC helps define “done”</li><li>Early stories will add a LOT of new concepts</li><ul><li>new models</li><ul><li>tables, entities, whatever</li></ul><li>some UI req’s</li></ul><li>Estimating epics helps w/ product planning&nbsp; (“How much can we put in by next year?”)</li><li>Release planning should NOT include epics.&nbsp; Break them down.</li><li>AC transitions, which leads is implemented in TDD/BDD style</li><li>Test names should describe the behavior, not impl.&nbsp;
+I’ve got to follow this rule more often.&nbsp; A lot of tests I write are explicit in that I know what happened if it failed, but the actual story that I’m working on is missing.&nbsp; The failing test has no context, and thus no value associated with it.</li><li>BDD classes are named after the state or original behavior.&nbsp; The setups for this class put the object in that state.</li><li>Method names are named like the AC</li><ul><li>public class When_a_case_is_opened</li><ul><li>public void Its_status_is_changed_to_open</li></ul></ul></ul>
+
+
+<h3>Are Executable Requirements Possible?</h3>
+
+
+<ul><li><a href="http://codebetter.com/blogs/jeremy.miller/" target="_blank">Jeremy Miller</a> started off by stating the value of Fit vs. FitNesse and a lot of people showed pain with FitNesse.&nbsp;</li><li>Fit/FitNesse works great when dealing with state-based testing</li><li>Behavior based testing is where it breaks down and becomes really cumbersome</li><li>He invited <a href="http://www.lostechies.com/blogs/joe_ocampo" target="_blank">Joe Ocampo</a> (from <a href="http://www.lostechies.com/Default.aspx" target="_blank">Los Techies</a>) to talk about NBehave</li><li>NBehave solves their problem of providing change tracking and traceability into their organization because they have a strict environment that requires it.</li><li>They have a fluent language that looks like theUserStory.AsA(“Premier Member”).IWantTo(“get a discount on future purchases”).SoThat(“I can save money”)</li><li>I joked that they could also have another fluent interface that looked like SystemShall.(“Have a textbox”).ThatShallContain(“the user’s name”)&nbsp;</li><li>This helps solve the issue where refactoring is difficult.&nbsp; Since the strings above are keys for delegate hashes, you’ll get an exception if someone changes the text of a story.&nbsp; This will spark a much needed conversation with the developers.</li></ul>
+
+
+<p>I’m still trying to bask in the awesomeness that came from this event.&nbsp; All you naysayers out there are just upset that you missed out <img src="http://www.flux88.com/uploads/smile1.gif">.</p>
+
+
+<div class="bjtags">Tags:<a rel="tag" href="http://technorati.com/tag/altnetconf">altnetconf</a></div>
+
+</div>
+  <footer>
+    <a rel="full-article" href="/2007/10/alt-net-goodness/">Read on &rarr;</a>
+  </footer>
+
+
+  </article>
+
+
+  <article>
+    
+  <header>
+    
       <h1 class="entry-title"><a href="/2007/10/subsonic-gives-us-migrations/">SubSonic Gives Us Migrations</a></h1>
     
     
@@ -477,36 +560,6 @@
 
   </article>
 
-
-  <article>
-    
-  <header>
-    
-      <h1 class="entry-title"><a href="/2007/09/im-on-to-you-microsoft/">I&#8217;m on to You, Microsoft</a></h1>
-    
-    
-      <p class="meta">
-
-
-
-
-<time datetime="2007-09-18 00:00:00 -0500" pubdate  updated >Sep 18<span>th</span>, 2007</time>
-
-
-</p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>There&#8217;s a conspiracy going on here.&nbsp; We all ignored the first signs ofit, but now it&#8217;s too apparent to ignore.&nbsp;&nbsp; Microsoft is engaging insome devious master plan that will affect most of us.<br><br>We all read with shock and awe, Scott Hanselman&#8217;s post <a href="http://www.hanselman.com/blog/BlueBadge.aspx">where he announced he was becoming a blue badge</a>.&nbsp; People wondered what this would do to his blog content, or his contribution to <a href="http://dasblog.info">DasBlog</a>.&nbsp; This was the first sign.&nbsp; And we did NOTHING.<br><br>Today, I saw the 2nd sign, and I&#8217;m going to expose this Microsoft conspiracy for what it is.&nbsp; Phil Haack <a href="http://haacked.com/archive/2007/09/17/why-is-microsoft-removing-my-mvp-status.aspx">just announced</a> that he is joining the ranks as a Microsoft employee.&nbsp; That&#8217;s right, you heard me.&nbsp; <br><br><b>Microsoft has hired the technical and charismatic leaders of the two most popular open source blogging platforms for .NET</b>.&nbsp;This is all a part of a master plan to squash the multi-billion dollarmarket so that Microsoft alone can swim in the sea of money that is tobe made from .NET open source blogging.&nbsp; Don&#8217;t kid yourself, there is <b>buku </b>(TM) money to be made in this area.<br><br>Sure,both Phil and Scott claim to stay committed to SubText and DasBlog,respectively.&nbsp; But we all know better.&nbsp; Soon they will be hard at work,<b>developing the most incredible blogging platform ever devised</b>.&nbsp; I even have a name for this stealth-assassin project.&nbsp; It will likely be called <i>Microsoft Collaborative Team Works For Online Weblogs Framework Foundation </i><i>System 2008</i>.&nbsp; I can just hear Microsoft Marketing salivating at that title.<br><br>Allkidding aside, I think that Microsoft is going to be changing it&#8217;simage, especially in the ASP.NET arena.&nbsp; They&#8217;ve snatched up some <i><b>key</b></i> individuals in the community and they will definitely be making waves.&nbsp; You can quote me on that.<br><p></p></p>
-</div>
-  <footer>
-    <a rel="full-article" href="/2007/09/im-on-to-you-microsoft/">Read on &rarr;</a>
-  </footer>
-
-
-  </article>
-
 <nav role="pagination">
   <div>
     
@@ -541,6 +594,10 @@
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2011/09/introducing-appsites/">Introducing App Sites</a>
+      </li>
+    
+      <li class="post">
         <a href="/2011/09/firebug-style-debugging-for-ios/">Firebug-Style Visual Debugging for iOS</a>
       </li>
     
@@ -554,10 +611,6 @@
     
       <li class="post">
         <a href="/2011/08/when-viewwillappear-isnt-called/">When viewWillAppear: Isn&#8217;t Called</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2011/08/moving-my-blog/">Moving My Blog</a>
       </li>
     
   </ul>

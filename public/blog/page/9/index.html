@@ -104,6 +104,39 @@
     
   <header>
     
+      <h1 class="entry-title"><a href="/2009/05/upgrading-my-hackintosh-to-10-5-7/">Upgrading My Hackintosh to 10.5.7</a></h1>
+    
+    
+      <p class="meta">
+
+
+
+
+<time datetime="2009-05-13 00:00:00 -0500" pubdate  updated >May 13<span>th</span>, 2009</time>
+
+
+</p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I updated <a href="http://flux88.com/blog/building-a-hackintosh/">my Hackintosh</a> to <a href="http://support.apple.com/kb/HT3397">OS X 10.5.7</a> last night.&#160; Luckily I had just backed up my system volume with SuperDuper the night before, so I felt confident in doing the update.</p>
+
+
+<p>  <p>Usually updates are the bane of any hack-users existence (I wouldn’t exactly call myself a hacker, as I simply leverage smart peoples’ work).&#160; Updates to OS X generally replace hacked kexts, or add new road bumps that prevent previous hacks from working properly.</p>  <p>In my case, the upgrade went very smoothly.&#160; The system rebooted (twice for some reason) and I was able to log back in.</p>  <p>My sound didn’t work, so I loaded up <a href="http://cheetha.net/">Kext Helper</a> and loaded up these two kexts again:</p>  <ul>   <li><a href="http://www.mediafire.com/?zijzedz4rym">HDAEnabler</a></li>    <li><a href="http://www.filefactory.com/file/afgeac5/n/ALC888_4A_out_amp_2A_1D_in_1_6_2_a37_zip">Custom AppleHDA</a> for my Realtek ALC888 onboard sound card</li> </ul>  <p>(luckily I saved these from previous endeavors)</p>  <p>My drive icons were all orange (as if they were external USB drives instead of internal SATA ones), so I installed this fix to restore their normal icons: </p>  <p><a href="http://pcwizcomputer.com/index.php?option=com_docman&amp;task=doc_details&amp;gid=82&amp;Itemid=74">http://pcwizcomputer.com/index.php?option=com_docman&amp;task=doc_details&amp;gid=82&amp;Itemid=74</a></p>  <p>Everything seems to be running perfectly smooth.</p>  <p><a href="http://flux88.com/files/media/image/WindowsLiveWriter/UpgradingmyHackintoshto10.5.7_B8D6/image_8.png"><img src="/images/image_thumb_3.png" alt="image"  height="500"  /></a> </p>  <p>As an aside, a lot of folks have asked me how my hackintosh is treating me.&#160; Is the honeymoon phase over?&#160; Yes and no.&#160; The system is not without it’s flaws.&#160; I only recently got my microphone to work, and I still haven’t been able to get 5.1 surround to work (which is pretty low on my important-things-to-do list).&#160; My printer doesn’t work, so I’m relegated to printing from XP in VMWare Fusion.&#160; I still need to purchase a nice webcam that works with OS X.</p>  <p>I still thoroughly enjoy using OS X, even more so than Windows 7.&#160; The software is just that much more polished.</p>  <p>For development, it kind of sucks to have to be in Windows to use Visual Studio.&#160; MonoDevelop may get there one day, or perhaps JetBrains will unload an awesome cross-platform .NET IDE.&#160; Who knows.</p>  <p>The last thing I miss are games.&#160; I’ve been seriously considering cancelling my World of Warcraft account, due to lack of time… but I’d still like to play an FPS or two when they come out, and it looks like I’ll have to dual boot if I want to do that, since they’re almost never on the Mac.</p></p>
+</div>
+  <footer>
+    <a rel="full-article" href="/2009/05/upgrading-my-hackintosh-to-10-5-7/">Read on &rarr;</a>
+  </footer>
+
+
+  </article>
+
+
+  <article>
+    
+  <header>
+    
       <h1 class="entry-title"><a href="/2009/05/a-culture-of-microcomponents/">A Culture of Microcomponents</a></h1>
     
     
@@ -1246,50 +1279,6 @@ margin: 0em;
 
   </article>
 
-
-  <article>
-    
-  <header>
-    
-      <h1 class="entry-title"><a href="/2009/02/a-story-of-tfs-wtfery/">A Story of TFS WTFery</a></h1>
-    
-    
-      <p class="meta">
-
-
-
-
-<time datetime="2009-02-05 00:00:00 -0600" pubdate  updated >Feb 5<span>th</span>, 2009</time>
-
-
-</p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>I&#8217;ve had it with TFS.&nbsp; It&#8217;s a thorn in my side.&nbsp; It sits there, embedded in Visual studio like ivy on a brick wall, mocking me.&nbsp; It&#8217;s like developing in a hot tar pit.&nbsp; Sticky, smelly, and literally the <strong>biggest source of developer pain I feel these days</strong>.&nbsp; I finished up a set of bug fixes and application features that I needed to deploy to QA today.&nbsp;&nbsp; <p>One of them was updating a text file.&nbsp; Easy, right?&nbsp; Just double click the file!&nbsp; WRONG.&nbsp; If you do this you can&#8217;t save it, you need to open Visual Studio &amp; explicitly check-out the file.&nbsp; Then you can edit it.&nbsp; This is done because apparently the developers of TFS decided that Visual Studio is our only editor&#8230;.  <p><strong>Don&#8217;t lock my files, bro!</strong>  <p><a href="http://flux88.com/files/media/image/WindowsLiveWriter/AStoryofTFSWTFery_FA86/203-41266207d6209dc6_2.png"><img src="/images/203-41266207d6209dc6_thumb.png" alt="203-41266207d6209dc6"  border="0" /></a>  <p>That is a minor gripe, but it&#8217;s pretty substantial when you think about the fact that I have batch files, a NAnt build, configuration files, and a readme&#8230; all of which I&#8217;d like to use either <a href="http://www.flos-freeware.ch/notepad2.html">Notepad2</a> or <a href="http://e-texteditor.com">e-texteditor</a> to edit.  <p>If I want to edit a text file, Visual Studio is <strong>the last editor on the planet that I want to use</strong>.  <p>Then I finish up some other boring SSRS work and commit it to our dev branch.&nbsp; Our CI build shows success, and I&#8217;m ready to merge to integration, which is where we deploy from.&nbsp; I kick off the deploy process and it fails.&nbsp; Apparently there was a missing file in the integration branch.  <p>This file was a new file in a directory that was already branched, so when mergine shouldn&#8217;t it get merged too?&nbsp; I guess not, because when I go to merge the folder, the new file is excluded.&nbsp; If you right click &amp; try to merge just the file, it shows no branching targets.&nbsp; Ok, so let&#8217;s branch it.&nbsp;&nbsp; <p><a href="http://flux88.com/files/media/image/WindowsLiveWriter/AStoryofTFSWTFery_FA86/203-41266207ce9264e2_2.png"><img src="/images/203-41266207ce9264e2_thumb.png" alt="203-41266207ce9264e2"  border="0" /></a>  <p>Branching in the same folder?&nbsp; Why on earth would you ever want to do that?&nbsp; That, my friends, is <strong>the path to madness</strong>.&nbsp; I correct the path to branch the file into the integration path.  <p>So I finally do my build again, and get more errors.&nbsp; Reading the build output it looks like some changes still haven&#8217;t made it over.&nbsp; I do another merge on this folder and&#8230;  <p><a href="http://flux88.com/files/media/image/WindowsLiveWriter/AStoryofTFSWTFery_FA86/203-41266207d6c2f073_2.png"><img src="/images/203-41266207d6c2f073_thumb.png" alt="203-41266207d6c2f073"  border="0" /></a>  <p>then do a diff of the files:  <p><a href="http://flux88.com/files/media/image/WindowsLiveWriter/AStoryofTFSWTFery_FA86/203-41266207d71aed6b_2.png"><img src="/images/203-41266207d71aed6b_thumb.png" alt="203-41266207d71aed6b"  border="0" /></a>  <p>WTFF!  <p>So I guess now I&#8217;ll need to merge each file, not the directory.&nbsp; Select the files and&#8230;  <p><a href="http://flux88.com/files/media/image/WindowsLiveWriter/AStoryofTFSWTFery_FA86/203-41266207d8308b91_2.png"><img src="/images/203-41266207d8308b91_thumb.png" alt="203-41266207d8308b91"  border="0" /></a>  <p>Doh!&nbsp; You can&#8217;t branch multiple files via selection like this.&nbsp; Why?&nbsp; I&#8217;m sure there&#8217;s a technical reason, but <strong>I don&#8217;t flippin care</strong>.&nbsp; This is an abismal user-experience.  <p>Ok, so I&#8217;ll branch <em>each one</em> individually&#8230;.&nbsp; Merging individually didn&#8217;t work either:  <p><a href="http://flux88.com/files/media/image/WindowsLiveWriter/AStoryofTFSWTFery_FA86/203-41266207e0fbd402_2.png"><img src="/images/203-41266207e0fbd402_thumb.png" alt="203-41266207e0fbd402"  border="0" /></a>  <p>At this point I&#8217;m feeling a little bit like this guy:  <p><a href="http://flux88.com/files/media/image/WindowsLiveWriter/AStoryofTFSWTFery_FA86/60371673_0eb0b14f91_2.jpg"><img src="/images/60371673_0eb0b14f91_thumb.jpg" alt="60371673_0eb0b14f91"  border="0" /></a>  <p><em>(</em><a href="http://flickr.com/photos/dannyboyster"><em>http://flickr.com/photos/dannyboyster</em></a><em>)</em>  <p>So I went to the command-line to try a baseless merge.&nbsp; You can do that like this: 
-<div><figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
-</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>c:\project&gt;tf merge /baseless &lt;source&gt; &lt;target&gt; /recursive</div></code></pre></td></tr></table></div></figure></div>
-
-<p>This seemed to do the trick.&nbsp; Time to commit the changes.
-<p>Now I&#8217;m greeted with a host of conflicts.&nbsp; I have <strong>never</strong> made code changes to my target branch.&nbsp; I have only merged to it.&nbsp; There should never be an incompatible change!
-<p>Now, here&#8217;s what really gets me:&nbsp; I get different conflict resolution <em>language</em> depending on if I select a single file or multiple files.
-<p>Single file conflict resolution dialog:
-<p><a href="http://flux88.com/files/media/image/WindowsLiveWriter/AStoryofTFSWTFery_FA86/203-41266207dfeac2f0_2.png"><img src="/images/203-41266207dfeac2f0_thumb.png" alt="203-41266207dfeac2f0"  border="0" /></a>
-<p>Multiple file conflict resolution dialog:
-<p><a href="http://flux88.com/files/media/image/WindowsLiveWriter/AStoryofTFSWTFery_FA86/203-41266207dfcdf012_2.png"><img src="/images/203-41266207dfcdf012_thumb.png" alt="203-41266207dfcdf012"  border="0" /></a>
-<p>So which is it TFS?&nbsp; Source/Target, or Local/Server?&nbsp; This is so confusing I&#8217;m not sure what to do in the latter.&nbsp; I guess I need discard server version, so I do that.
-<p>Two hours after completing my feature work, I&#8217;m finally able to check in the changes, do my deploy, and see it running successfully on the QA box.
-<p>What a day.&nbsp; <strong>TFS:&nbsp; I hate you</strong>.</p>
-
-</div>
-  <footer>
-    <a rel="full-article" href="/2009/02/a-story-of-tfs-wtfery/">Read on &rarr;</a>
-  </footer>
-
-
-  </article>
-
 <nav role="pagination">
   <div>
     
@@ -1324,6 +1313,10 @@ margin: 0em;
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2011/09/introducing-appsites/">Introducing App Sites</a>
+      </li>
+    
+      <li class="post">
         <a href="/2011/09/firebug-style-debugging-for-ios/">Firebug-Style Visual Debugging for iOS</a>
       </li>
     
@@ -1337,10 +1330,6 @@ margin: 0em;
     
       <li class="post">
         <a href="/2011/08/when-viewwillappear-isnt-called/">When viewWillAppear: Isn&#8217;t Called</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2011/08/moving-my-blog/">Moving My Blog</a>
       </li>
     
   </ul>

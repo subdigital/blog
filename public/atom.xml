@@ -4,13 +4,59 @@
   <title>Fickle Bits</title>
   <link href="http://benscheirman.com/atom.xml" rel="self"/>
   <link href="http://benscheirman.com/"/>
-  <updated>2011-09-16T11:19:15-05:00</updated>
+  <updated>2011-09-20T09:03:16-05:00</updated>
   <id>http://benscheirman.com/</id>
   <author>
     <name>Ben Scheirman</name>
     
   </author>
 
+  
+  <entry>
+    <title>Introducing App Sites</title>
+    <link href="http://benscheirman.com/2011/09/introducing-appsites/"/>
+    <updated>2011-09-20T08:46:00-05:00</updated>
+    <id>http://benscheirman.com/2011/09/introducing-appsites</id>
+    <content type="html">&lt;p&gt;I've not been that great about marketing Giggle Touch.  It's a cool app,
+kids like it, but most people don't know about it.&lt;/p&gt;
+
+&lt;p&gt;The biggest reason was probably that I never set up a proper website for
+it.  Doing a search would only yield a blog post that said it was
+&quot;coming soon.&quot;&lt;/p&gt;
+
+&lt;p&gt;That's all changed now.  I'd like to introduce &lt;em&gt;App Sites&lt;/em&gt;.&lt;/p&gt;
+
+&lt;h2&gt;&lt;a href=&quot;http://appsites.heroku.com&quot;&gt;App Sites&lt;/a&gt;&lt;/h2&gt;
+
+&lt;p&gt;&lt;img class='right ' src='http://benscheirman.com/images/yourapphere.png' width='' height='' alt='' title=''&gt;&lt;/p&gt;
+
+&lt;p&gt;The premise is simple: &lt;em&gt;standup a website for an iPhone
+app in minutes&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;Check it out here:
+&lt;a href=&quot;http://appsites.heroku.com&quot;&gt;http://appsites.heroku.com&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;You can see the site in action by visiting the
+&lt;a href=&quot;http://appsites.heroku.com/giggletouch&quot;&gt;Giggle Touch&lt;/a&gt; page.&lt;/p&gt;
+
+&lt;p&gt;It's free (for now) and gives you the ability to add features, a
+description, a link back to the app, and a screenshot.&lt;/p&gt;
+
+&lt;p&gt;Planned upcoming features include:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Custom domains&lt;/li&gt;
+&lt;li&gt;Multiple screenshots&lt;/li&gt;
+&lt;li&gt;Videos&lt;/li&gt;
+&lt;li&gt;Coming soon (if the app hasn't launched yet)&lt;/li&gt;
+&lt;li&gt;More analytics&lt;/li&gt;
+&lt;/ul&gt;
+
+
+&lt;p&gt;If you have an iPhone app, I encourage you to create a page.  Let me
+know what you think!&lt;/p&gt;
+</content>
+  </entry>
   
   <entry>
     <title>Firebug-Style Visual Debugging for iOS</title>
@@ -1854,47 +1900,6 @@ I tend to prefer RSpec with 1 assertion per test method and many fine-grained me
 &lt;p&gt;Ultimately I think the book is excellent, and certainly gives plenty of information about Rails 3 internals. I think newcomers would probably be lost, but if you're past the newbie stage with Rails then this book is recommended.&lt;br /&gt;&lt;/p&gt;
 
 &lt;br /&gt;
-
-</content>
-  </entry>
-  
-  <entry>
-    <title>Mariachi Product Engineering</title>
-    <link href="http://benscheirman.com/2011/04/mariachi-product-engineering/"/>
-    <updated>2011-04-12T00:00:00-05:00</updated>
-    <id>http://benscheirman.com/2011/04/mariachi-product-engineering</id>
-    <content type="html">&lt;p&gt;I spoke at iPhone Dev Con in Boston last week and I attended Mike Lee's excellent keynote presentation: &quot;Mariachi Product Engineering&quot;&lt;/p&gt;
-
-
-&lt;p&gt;At iPhone Dev Con in San Diego last year, Mike came out dressed like a Pirate. No kidding.&lt;/p&gt;
-
-
-&lt;p&gt;&lt;br /&gt;
-&lt;img src=&quot;http://benscheirman.com/images/mikelee-pirate.jpg&quot;  alt=&quot;mikelee-pirate&quot;  /&gt;&lt;/p&gt;
-
-
-&lt;p&gt;This year he came with a Mariachi outfit on. It's pretty hilarious as nobody expects a keynote speaker to be dressed this way.&lt;/p&gt;
-
-
-&lt;p&gt;Over beers some of the guys at the conference decided it would be awesomely-epic to hire a real mariachi band to play during his keynote. So how does one find a mariachi band with after midnight on a Monday? Apparently, AMEX. One of the guys called his AMEX service and they &lt;i&gt;delivered&lt;/i&gt;. I swear this could be the makings of a new AMEX commercial.&lt;/p&gt;
-
-
-&lt;p&gt;It made for a memorable keynote to say the least. The talk was excellent as well, as Mike certainly has a lot to say about Product Engineering.&lt;/p&gt;
-
-
-&lt;p&gt;Here is the video of the first 30 or so minutes of the talk (I ran out of battery before it was over).&lt;/p&gt;
-
-
-&lt;iframe src=&quot;http://player.vimeo.com/video/22031658&quot; width=&quot;400&quot; height=&quot;300&quot; frameborder=&quot;0&quot;&gt;&lt;/iframe&gt;
-
-
-&lt;p&gt;&lt;a href=&quot;http://vimeo.com/22031658&quot;&gt;Mike Lee - Mariachi Product Engineering&lt;/a&gt; from &lt;a href=&quot;http://vimeo.com/user1579700&quot;&gt;Ben Scheirman&lt;/a&gt; on &lt;a href=&quot;http://vimeo.com&quot;&gt;Vimeo&lt;/a&gt;.&lt;/p&gt;
-
-
-&lt;p&gt;&lt;img src=&quot;http://benscheirman.com/images/mikelee-mariachi.jpg&quot;  alt=&quot;mikelee-mariachi.jpg&quot;  /&gt;&lt;/p&gt;
-
-
-&lt;p&gt;I'll have links to my presentation material soon, but I wanted to share this awesome event. Certainly one for the books!&lt;/p&gt;
 
 </content>
   </entry>

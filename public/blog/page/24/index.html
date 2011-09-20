@@ -104,6 +104,52 @@
     
   <header>
     
+      <h1 class="entry-title"><a href="/2007/07/realtek-sound-manager-wtf/">Realtek Sound Manager - WTF?</a></h1>
+    
+    
+      <p class="meta">
+
+
+
+
+<time datetime="2007-07-13 00:00:00 -0500" pubdate  updated >Jul 13<span>th</span>, 2007</time>
+
+
+</p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>My current work computer has one of those crappy OEM Realtek Sound Manager craplet pieces of software.</p>
+
+
+<p>I really hate it when hardware companies (especially sound card manufacturers) think that they should abandon the well-known and incredibly standard windows framed interface and invent their own scary window interface.</p>
+
+
+<p>Anyway, I normally would never open this app, but it forces itself in focus when I plug in my headphones.&nbsp; (Yes, you read that correctly)</p>
+
+
+<p><img src="/images/realtek.jpg" hspace="5"  border="0"  /></p>
+
+
+<p>Umm, WTF?&nbsp; It obviously <em>knows </em>what I plugged in because it is highlighted and checked.&nbsp; The headphones don&rsquo;t work until I click OK on this box.</p>
+
+
+<p>The worst part?&nbsp; Uninstalling the application renders the sound card useless.&nbsp; Pfft.</p>
+
+</div>
+  <footer>
+    <a rel="full-article" href="/2007/07/realtek-sound-manager-wtf/">Read on &rarr;</a>
+  </footer>
+
+
+  </article>
+
+
+  <article>
+    
+  <header>
+    
       <h1 class="entry-title"><a href="/2007/07/enamoured-with-console/">Enamoured With Console</a></h1>
     
     
@@ -810,52 +856,6 @@ ed it.&nbsp; It&rsquo;s full of useful tools and tricks to make your computer wo
 
   </article>
 
-
-  <article>
-    
-  <header>
-    
-      <h1 class="entry-title"><a href="/2007/06/reflection-and-inheritance-with-generics/">Reflection and Inheritance With Generics</a></h1>
-    
-    
-      <p class="meta">
-
-
-
-
-<time datetime="2007-06-19 00:00:00 -0500" pubdate  updated >Jun 19<span>th</span>, 2007</time>
-
-
-</p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>I was working on some <a href="http://subsonicproject.com/" target="_blank">SubSonic</a> entities today and I wanted to access some of the properties of the generated classes, not knowing which database objects will exist.</p>
-
-
-<p>Basically&nbsp;I wanted to write a utility method that would pull out all of the ActiveRecord&lt;T&gt; types in a given assembly.</p>
-
-
-<p>This was my first attempt:</p>
-
-
-<p>`
-<div><figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
-</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>public static Type[] GetActiveRecordTypes(Assembly assembly){    List&lt;Type&gt; types = new List&lt;Type&gt;();    foreach (Type type in assembly.GetTypes())  {       if(type.IsSubClassOf( &lt;b>typeof(ActiveRecord&lt;__WHAT_GOES_HERE_?__&gt;)&lt;/b> )           types.Add(type);    }   return types.ToArray();}</div></code></pre></td></tr></table></div></figure></div>
-`<p>The part in bold is where I got stuck. Sticking in `type` there doesn&#8217;t work. It won&#8217;t compile.&nbsp; I wouldn&#8217;t let that stop me, so I created a temporary solution like this:</p><p>`if(type.BaseType.Name.Contains(&#8220;ActiveRecord&#8221;)) { &#8230; }`</p><p>This works, but it&#8217;s a hack and it&#8217;s brittle. I asked a few friends and <a href="http://analog-man.blogspot.com/" target="_blank">Gary DeReese</a> came to my rescue with the following code:</p><p>`
-<div><figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
-</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>Type baseType = type.BaseType;if(baseType.IsGenericType &amp;&amp;   baseType.GetGenericType() == typeof(ActiveRecord&lt;&gt;) &amp;&amp;    baseType.GetGenericParameter()[0] == type) { ... }</div></code></pre></td></tr></table></div></figure></div>
-`<p></p><p>It&#8217;s good to have smart friends you can reach out to in times like this where you just aren&#8217;t thinking about the problem the way the framework wants you to. Thanks Gary! </p>
-
-</div>
-  <footer>
-    <a rel="full-article" href="/2007/06/reflection-and-inheritance-with-generics/">Read on &rarr;</a>
-  </footer>
-
-
-  </article>
-
 <nav role="pagination">
   <div>
     
@@ -890,6 +890,10 @@ ed it.&nbsp; It&rsquo;s full of useful tools and tricks to make your computer wo
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2011/09/introducing-appsites/">Introducing App Sites</a>
+      </li>
+    
+      <li class="post">
         <a href="/2011/09/firebug-style-debugging-for-ios/">Firebug-Style Visual Debugging for iOS</a>
       </li>
     
@@ -903,10 +907,6 @@ ed it.&nbsp; It&rsquo;s full of useful tools and tricks to make your computer wo
     
       <li class="post">
         <a href="/2011/08/when-viewwillappear-isnt-called/">When viewWillAppear: Isn&#8217;t Called</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2011/08/moving-my-blog/">Moving My Blog</a>
       </li>
     
   </ul>

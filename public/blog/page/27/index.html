@@ -104,6 +104,79 @@
     
   <header>
     
+      <h1 class="entry-title"><a href="/2007/03/writing-a-simple-image-editor-in-cab-part-1/">Writing a Simple Image Editor in CAB - Part 1</a></h1>
+    
+    
+      <p class="meta">
+
+
+
+
+<time datetime="2007-03-09 00:00:00 -0600" pubdate  updated >Mar 9<span>th</span>, 2007</time>
+
+
+</p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I promised posts with more &ldquo;meat,&rdquo; so here it goes.&nbsp; I&rsquo;m going to demonstrate how to start writing a CAB application by building a simple image manipulation program.</p>
+
+
+<p><u>Overview:<br /></u><em>The application will load an image from some flexible source (file system, flickr, whatever).&nbsp; The image will be displayed on the canvas.&nbsp; The user will have various filters to apply to the image.&nbsp; These filters should be easily added later on, and they should all manipulate the image in some way.&nbsp; When everything is done, the user will have the option of saving the changes to disk.</em></p>
+
+
+<p>So now that we have our high-level description of the app, let&rsquo;s build it!</p>
+
+
+<p>Start up Visual Studio 2005, create a blank solution called <strong>CAB-ImageEditor</strong>.&nbsp; Add a new C# Windows application called <strong>ImageEditorShell</strong>.&nbsp; This will be the basic structure of the application, and we will add things to it.</p>
+
+
+<p>Add the following references to your project:</p>
+
+
+<ul><li>Microsoft.Practices.CompositeUI</li><li>Microsoft.Practices.ObjectBuilder</li><li>Microsoft.Practices.CompositeUI.WinForms</li></ul>
+
+
+<p>First you need to delete the files&nbsp;that Visual Studio gives you out of the box.&nbsp; We will start from scratch.</p>
+
+
+<p>Create a new Form called <strong>ImageEditorShell.cs</strong>.&nbsp; Give it a window title if you like.</p>
+
+
+<p><img src="/images/CropperCapture%5B41%5D_small.jpg" alt="Our blank shell"  border="1"  /></p>
+
+
+<p>Create a new class called <strong>ImageEditorApplication.cs</strong>.&nbsp; This will be the entry point for our application.&nbsp; We need to inherit the class from <strong>FormShellApplication&lt;T,K&gt;</strong> and give it the type of the root work item and our shell.</p>
+
+
+<div style="FONT-SIZE: 8pt; BACKGROUND: white; COLOR: black; FONT-FAMILY: Consolas"><p style="MARGIN: 0px"><span style="COLOR: blue">using</span> System;</p><p style="MARGIN: 0px"><span style="COLOR: blue">using</span> Microsoft.Practices.CompositeUI;</p><p style="MARGIN: 0px"><span style="COLOR: blue">using</span> Microsoft.Practices.CompositeUI.WinForms;</p><p style="MARGIN: 0px">&nbsp;</p><p style="MARGIN: 0px"><span style="COLOR: blue">namespace</span> ImageEditorShell</p><p style="MARGIN: 0px">{</p><p style="MARGIN: 0px">&nbsp; &nbsp; <span style="COLOR: blue">public</span> <span style="COLOR: blue">class</span> <span style="COLOR: teal">ImageEditorApplication</span> : <span style="COLOR: teal">FormShellApplication</span>&lt;<span style="COLOR: teal">WorkItem</span>, <span style="COLOR: teal">ImageEditorShell</span>&gt;</p><p style="MARGIN: 0px">&nbsp; &nbsp; {</p><p style="MARGIN: 0px">&nbsp;&nbsp;&nbsp; }</p><p style="MARGIN: 0px">}</p></div>
+
+
+<p>We need an entry point to start the application, so add that&hellip;</p>
+
+
+<div style="FONT-SIZE: 8pt; BACKGROUND: white; COLOR: black; FONT-FAMILY: Consolas"><p style="MARGIN: 0px"><span style="COLOR: blue">public</span> <span style="COLOR: blue">class</span> <span style="COLOR: teal">ImageEditorApplication</span> : <span style="COLOR: teal">FormShellApplication</span>&lt;<span style="COLOR: teal">WorkItem</span>, <span style="COLOR: teal">ImageEditorShell</span>&gt;</p><p style="MARGIN: 0px">{</p><p style="MARGIN: 0px">&nbsp; &nbsp; <strong>[<span style="COLOR: teal">STAThread</span>]</strong></p><p style="MARGIN: 0px"><strong>&nbsp; &nbsp; <span style="COLOR: blue">public</span> <span style="COLOR: blue">static</span> <span style="COLOR: blue">void</span> Main()</strong></p><p style="MARGIN: 0px"><strong>&nbsp; &nbsp; {</strong></p><p style="MARGIN: 0px"><strong>&nbsp; &nbsp; &nbsp; &nbsp; <span style="COLOR: blue">new</span> <span style="COLOR: teal">ImageEditorApplication</span>().Run();</strong></p><p style="MARGIN: 0px"><strong>&nbsp; &nbsp; }</strong>&nbsp; &nbsp; &nbsp; &nbsp; </p><p style="MARGIN: 0px">}</p></div>
+
+
+<p>That&rsquo;s all we need to get our application running.&nbsp; Go ahead and push F5 and see what happens.</p>
+
+
+<p>Man, are you impressed yet?&nbsp; Hehe, chill out.&nbsp; There&rsquo;s more to come&hellip;</p>
+
+</div>
+  <footer>
+    <a rel="full-article" href="/2007/03/writing-a-simple-image-editor-in-cab-part-1/">Read on &rarr;</a>
+  </footer>
+
+
+  </article>
+
+
+  <article>
+    
+  <header>
+    
       <h1 class="entry-title"><a href="/2007/03/cab-hands-on-labs/">CAB - Hands on Labs</a></h1>
     
     
@@ -507,55 +580,6 @@
 
   </article>
 
-
-  <article>
-    
-  <header>
-    
-      <h1 class="entry-title"><a href="/2007/02/on-to-a-new-client/">On to a New Client</a></h1>
-    
-    
-      <p class="meta">
-
-
-
-
-<time datetime="2007-02-28 00:00:00 -0600" pubdate  updated >Feb 28<span>th</span>, 2007</time>
-
-
-</p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>I wrapped up my project at a client today, so I&rsquo;m on to a new one on Monday.</p>
-
-
-<p>The project consisted mainly of SharePoint, but I did get to do some interesting development aside from that.&nbsp; I worked on a Stock Quote web service that would gather information from pluggable sources.&nbsp; They wanted to pay for a dedicated source, however politics and paperwork were such a barrier I ended up just scraping Google finance.&nbsp; It won&rsquo;t last forever, but it&rsquo;s free and avoids the paperwork.</p>
-
-
-<p>We wrote a few custom SharePoint Web Parts, and I found out first hand what a pain in the ass it is to deploy these things.&nbsp; The deployment project outputs a CAB file.&nbsp; This CAB file needs to be copied onto the server, and you have to use the STSADM tool to install it into the portal server.&nbsp; This means you need Remote Desktop access just to deploy to&nbsp;a server!&nbsp; Our production servers are load-balanced, so this means you have to do it twice.&nbsp; To save us a lot of time and headaches I wrote a Windows service that would monitor a CAB file for changes using a FileSystemWatcher, when it detected a change, it would&hellip;</p>
-
-
-<ul><li>Extract the CAB to get the dlls</li><li>Copy the dlls to the target bin folder</li><li>Optionally sign the assembly so it can be installed into the GAC</li><li>Run STSADM to remove the old CAB file from the portal server</li><li>Run STSADM to get the new CAB file in the portal&nbsp;server</li><li>Reset IIS</li></ul>
-
-
-<p>This thing worked like a charm!&nbsp; We could kick off a build, run a batch file the copy the new CAB over, and the thing would install itself.&nbsp; I wish I could release the code here, but I wrote it at a client site, so it belongs to them.</p>
-
-
-<p>We also managed to contort a SharePoint Portal site into something actually pleasing to look at, and ripped out most of SharePoints crappy markup.&nbsp; Why in the world does SharePoint output so many damn tables?</p>
-
-
-<p>To be clear, this is all with SharePoint 2003, so I imagine MOSS 2007 is loads better, but I haven&rsquo;t yet worked on it.&nbsp; Anyway, my next project doesn&rsquo;t involve SharePoint, so I&rsquo;m happy.</p>
-
-</div>
-  <footer>
-    <a rel="full-article" href="/2007/02/on-to-a-new-client/">Read on &rarr;</a>
-  </footer>
-
-
-  </article>
-
 <nav role="pagination">
   <div>
     
@@ -590,6 +614,10 @@
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2011/09/introducing-appsites/">Introducing App Sites</a>
+      </li>
+    
+      <li class="post">
         <a href="/2011/09/firebug-style-debugging-for-ios/">Firebug-Style Visual Debugging for iOS</a>
       </li>
     
@@ -603,10 +631,6 @@
     
       <li class="post">
         <a href="/2011/08/when-viewwillappear-isnt-called/">When viewWillAppear: Isn&#8217;t Called</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2011/08/moving-my-blog/">Moving My Blog</a>
       </li>
     
   </ul>
