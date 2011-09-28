@@ -106,6 +106,70 @@
     
   <header>
     
+      <h1 class="entry-title"><a href="/2008/05/asp-net-mvc-preview-2-update/">ASP.NET MVC Preview 2 Update</a></h1>
+    
+    
+      <p class="meta">
+
+
+
+
+<time datetime="2008-05-03 00:00:00 -0500" pubdate  updated >May 3<span>rd</span>, 2008</time>
+
+
+</p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I&rsquo;m upgrading <a href="http://codecampserver.org/" target="_blank">Code Camp Server</a>&nbsp;to the <a href="http://www.codeplex.com/aspnet" target="_blank">latest drop of ASP.NET MVC</a> (which is just an interim release, so you might not yet care) but I wanted to get some first hand knowledge of how the new changes work out.</p>
+
+
+<p>I won&rsquo;t go over every change,&nbsp;because <a href="http://weblogs.asp.net/scottgu/archive/2008/04/16/asp-net-mvc-source-refresh-preview.aspx" target="_blank">The Gu has a great writeup already</a>.&nbsp; But there are a few thoughts I&rsquo;d like to share.</p>
+
+
+<p><strong>Routing</strong></p>
+
+
+<p>Routing is getting mature, and quick.&nbsp; The fact that we can use this in our WebForms projects is really cool.&nbsp; With routing getting more and more features, it is critical that you have extensive tests around your routes.&nbsp; Imagine that you have an application already deployed.&nbsp; A single change to the routing assembly (or the registered routes)&nbsp;can have a <em>drastic</em> effect on your application.&nbsp; Existing links could be broken, new links might not work the way you expected, and you will severly cripple your search engine ranking.</p>
+
+
+<p>Code Camp Server definitely needs to get an exhaustive set of routing tests to verify each of our URLs is functioning properly.</p>
+
+
+<p><strong>ActionResult</strong></p>
+
+
+<p>Instead of having controllers directly render views or redirect to another action, they have extracted this into ActionResult classes.&nbsp; While the syntax is a bit quirky (&ldquo;return RenderView&rdquo;) this is a good design choice in my opinion.&nbsp; If C# were as flexible as Ruby, we could still have the single &ldquo;RenderView&rdquo; method call, and the last statement would actually get returned to the calling method.</p>
+
+
+<p>Our tests for Code Camp Server will be <em>a lot cleaner</em>.&nbsp; No more test subclasses.&nbsp; A lot less mocking as well, since now you can rely on plain old Asserts on the ActionResult .</p>
+
+
+<p>This ActionResult change never made it to ComponentController though, but it will likely be there in the next drop.</p>
+
+
+<p>Aside from the readability hiccup with &ldquo;return&rdquo; I don&rsquo;t see any downsides to this change.&nbsp; Anybody else experience any?</p>
+
+
+<p><strong>Validation Love from Steven Sanderson</strong></p>
+
+
+<p>Some people wonder how to do validation, since the existing ASP.NET Validators don&rsquo;t work with ASP.NET MVC.&nbsp; I ran across this, where Steven Sanderson shows how to do <a href="http://blog.codeville.net/2008/04/30/model-based-client-side-validation-for-aspnet-mvc/" target="_blank">Model-based Client-side Validation</a> in ASP.NET MVC using Castle Validator.&nbsp; There&rsquo;s even a 6&ndash;minute screencast!&nbsp; Keep that kind of stuff coming Steve!&nbsp;</p>
+
+</div>
+  <footer>
+    <a rel="full-article" href="/2008/05/asp-net-mvc-preview-2-update/">Read on &rarr;</a>
+  </footer>
+
+
+  </article>
+
+
+  <article>
+    
+  <header>
+    
       <h1 class="entry-title"><a href="/2008/05/im-an-insider/">I&#8217;m an Insider</a></h1>
     
     
@@ -799,52 +863,6 @@ ough here.</li></ul></ul></ul>
 
   </article>
 
-
-  <article>
-    
-  <header>
-    
-      <h1 class="entry-title"><a href="/2008/03/asp-net-mvc-preview-2-thoughts/">ASP.NET MVC - Preview 2 Thoughts</a></h1>
-    
-    
-      <p class="meta">
-
-
-
-
-<time datetime="2008-03-10 00:00:00 -0500" pubdate  updated >Mar 10<span>th</span>, 2008</time>
-
-
-</p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>I said previously that I was excited for this release.&nbsp; Ultimately I didn&rsquo;t see much worth blogging about.&nbsp; Some features are a step in the right direction, some (I think) were a step back.</p>
-
-
-<p>I&rsquo;m currently upgrade <a href="http://codecampserver.org/" target="_blank">Code Camp Server</a> to Preview 2 and hit about 80 errors which I had to go in and resolve.&nbsp; My initial thoughts:</p>
-
-
-<ul><li>I think the HttpContextBase is a bad idea.&nbsp; Yes I understand the desire to not introduce breaking changes.&nbsp; But I think that the people that will be using ASP.NET MVC will be congnizant of this and code appropriately.&nbsp; Interfaces are much easier to depend work with while testing, and I&rsquo;d rather just use those.&nbsp; Hey, couldn&rsquo;t they give us both, and framework providers could choose?<br /></li><li>what&rsquo;s up with the <strong>OnActionExecuting</strong>, <strong>OnActionExecuted</strong> events?&nbsp; These used to be <strong>OnPreAction</strong>, <strong>OnPostAction</strong>, which was much more readable (in my opinion) &mdash; seriously, put these back!&nbsp; The new naming is not nearly as obvious to the glance.<br /></li><li>Testing is still too cumbersome.&nbsp; I think some good mocking-fu can mitigate this, but it&rsquo;s a tough sell to people new to unit testing (and to mocking).&nbsp; TempData should be implemented as an IDictionary on the controller, only to have a real TempData that depends on session state at runtime.&nbsp; This would allow me to test that TempData works without having to mock session (which is not intuitive at all).<br /></li><li>The Action filters are going to be where the goo lives.&nbsp; This is how we will see some really productive &amp; handy filters for performing actions such as requiring SSL, protecting an action from unauthenticated access, loading common data, etc.&nbsp; Think of them as HttpModules for individual actions.</li></ul>
-
-
-<p>More to come, I&rsquo;m sure&hellip;</p>
-
-
-<p>&nbsp;</p>
-
-
-<p>&nbsp;</p>
-
-</div>
-  <footer>
-    <a rel="full-article" href="/2008/03/asp-net-mvc-preview-2-thoughts/">Read on &rarr;</a>
-  </footer>
-
-
-  </article>
-
 <nav role="pagination">
   <div>
     
@@ -879,6 +897,10 @@ ough here.</li></ul></ul></ul>
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2011/09/creating-a-glow-effect-for-uilabel-and-uibutton/">Creating a Glow Effect for UILabel and UIButton</a>
+      </li>
+    
+      <li class="post">
         <a href="/2011/09/introducing-appsites/">Introducing App Sites</a>
       </li>
     
@@ -892,10 +914,6 @@ ough here.</li></ul></ul></ul>
     
       <li class="post">
         <a href="/2011/08/is-rails-exempt-from-software-principles/">Is Rails Exempt?</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2011/08/when-viewwillappear-isnt-called/">When viewWillAppear: Isn&#8217;t Called</a>
       </li>
     
   </ul>

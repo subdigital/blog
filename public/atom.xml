@@ -4,13 +4,63 @@
   <title>Fickle Bits</title>
   <link href="http://benscheirman.com/atom.xml" rel="self"/>
   <link href="http://benscheirman.com/"/>
-  <updated>2011-09-20T09:07:04-05:00</updated>
+  <updated>2011-09-27T20:19:33-05:00</updated>
   <id>http://benscheirman.com/</id>
   <author>
     <name>Ben Scheirman</name>
     
   </author>
 
+  
+  <entry>
+    <title>Creating a Glow Effect for UILabel and UIButton</title>
+    <link href="http://benscheirman.com/2011/09/creating-a-glow-effect-for-uilabel-and-uibutton/"/>
+    <updated>2011-09-27T19:57:00-05:00</updated>
+    <id>http://benscheirman.com/2011/09/creating-a-glow-effect-for-uilabel-and-uibutton</id>
+    <content type="html">&lt;p&gt;One recent iPhone design mockup called for a glowing effect for a
+&lt;code&gt;UIButton&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;This can be accomplished with images, however I needed a series of
+buttons to have the same glow effect, and it can easily be accomplished
+with Core Graphics.&lt;/p&gt;
+
+&lt;p&gt;The first step is to include the Core Graphics headers:&lt;/p&gt;
+
+&lt;p&gt;```objc&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;#import &amp;lt;QuartzCore/QuartzCore.h&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;```&lt;/p&gt;
+
+&lt;p&gt;Next, the effect is achieved by using a shadow with no offset (meaning
+the shadow will be directly underneath the text, not shifted down or to
+the right).  The layer is then given a shadow radius &amp;amp; opacity to allow
+the shadow to bleed outward.  Unsetting &lt;code&gt;masksToBounds&lt;/code&gt; will allow the
+glow to be drawn even outside of the label's frame. Finally the shadow color is set to either the
+foreground color or something a bit lighter.&lt;/p&gt;
+
+&lt;p&gt;```objc&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;UIColor *color = button.currentTitleColor;
+button.titleLabel.layer.shadowColor = [color CGColor];
+button.titleLabel.layer.shadowRadius = 4.0f;
+button.titleLabel.layer.shadowOpacity = .9;
+button.titleLabel.layer.shadowOffset = CGSizeZero;
+button.titleLabel.layer.masksToBounds = NO;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;```&lt;/p&gt;
+
+&lt;p&gt;This effect works on plain &lt;code&gt;UILabel&lt;/code&gt; or the &lt;code&gt;titleLabel&lt;/code&gt; property of a
+&lt;code&gt;UIButton&lt;/code&gt;.  You can see the results of the effect here:&lt;/p&gt;
+
+&lt;p&gt;&lt;img class='image ' src='http://benscheirman.com/images/uibutton-gloweffect.png' width='' height='' alt='' title=''&gt;&lt;/p&gt;
+
+&lt;p&gt;Don't go overboard with this.  It's a subtle effect, but looks great
+when used effectively.&lt;/p&gt;
+</content>
+  </entry>
   
   <entry>
     <title>Introducing App Sites</title>
@@ -1866,40 +1916,6 @@ Now that I have that implemented, all I have to do is include my header file any
 
 
 &lt;p&gt;Thanks to all who attended and left me such great reviews!&lt;/p&gt;
-
-</content>
-  </entry>
-  
-  <entry>
-    <title>Book Review:  Crafting Rails Applications</title>
-    <link href="http://benscheirman.com/2011/04/book-review-crafting-rails-applications/"/>
-    <updated>2011-04-13T00:00:00-05:00</updated>
-    <id>http://benscheirman.com/2011/04/book-review-crafting-rails-applications</id>
-    <content type="html">&lt;p&gt;&lt;img src=&quot;http://benscheirman.com/images/capa_crafting.png&quot;  style=&quot;float:left; margin-right:10px; margin-bottom:10px;&quot;  /&gt;&lt;/p&gt;
-
-&lt;p&gt;I just finished with &lt;a href=&quot;http://www.amazon.com/gp/product/1934356735/ref=as_li_ss_tl?ie=UTF8&amp;amp;tag=flux88com-20&amp;amp;linkCode=as2&amp;amp;camp=1789&amp;amp;creative=390957&amp;amp;creativeASIN=1934356735&quot;&gt;Crafting Rails Applications&lt;/a&gt;&lt;img src=&quot;http://www.assoc-amazon.com/e/ir?t=&amp;amp;l=as2&amp;amp;o=1&amp;amp;a=1934356735&quot; width=&quot;1&quot; height=&quot;1&quot; border=&quot;0&quot; alt=&quot;&quot; style=&quot;border:none !important; margin:0px !important;&quot; /&gt; by &lt;a href=&quot;http://blog.plataformatec.com.br/author/josevalim/&quot;&gt;José Valim&lt;/a&gt;. The book claims to teach Expert Practices for Everyday Rails Development. I didn't find it to be exactly that, however I did enjoy it and I learned a ton.&lt;/p&gt;
-
-
-&lt;h2&gt;The Good&lt;/h2&gt;
-
-
-&lt;p&gt;The book flows pretty well. Each chapter contains a challenge or set of related challenges and it's pretty easy to follow along with the code. Each example contains automated tests, and he creates a gem for almost each solution, so that it is easy to see how to modularize things.&lt;br /&gt;
-The coverage of Rails internals is really enlightening. Sometimes it can be a bit dry, but you'll learn quite a few things about Renderers, Responders, Engines, Railties, Routing, Rack, Instruments, and more.&lt;br /&gt;
-The book also contains a wide range of technology topics. José doesn't just utilize Rails &amp;amp; ActiveRecord. Other examples include MongoMapper, Redis, and Sinatra.&lt;br /&gt;&lt;/p&gt;
-
-&lt;h2&gt;The Bad&lt;/h2&gt;
-
-
-&lt;p&gt;Even though each of the examples contains unit tests, they are written in a style that I find to be problematic in real systems. The concise nature of the tests is probably an artifact of being printed, but most of the testing examples utilize few test classes with many assertions per test method.&lt;br /&gt;
-In addition, though he &quot;writes&quot; the tests before implementation, this actually hurts understandability in some cases. The reason is most of the tests read as if he already knew the implementation and knew exactly how to test it. But it isn't apparent to the reader.&lt;br /&gt;
-I tend to prefer RSpec with 1 assertion per test method and many fine-grained methods that test various behaviors in each context my system is in. The book's Test::Unit style wasn't something I'd suggest as a good way to test real applications.&lt;br /&gt;&lt;/p&gt;
-
-&lt;h2&gt;The Bottom Line&lt;/h2&gt;
-
-
-&lt;p&gt;Ultimately I think the book is excellent, and certainly gives plenty of information about Rails 3 internals. I think newcomers would probably be lost, but if you're past the newbie stage with Rails then this book is recommended.&lt;br /&gt;&lt;/p&gt;
-
-&lt;br /&gt;
 
 </content>
   </entry>

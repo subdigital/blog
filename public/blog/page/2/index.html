@@ -106,6 +106,95 @@
     
   <header>
     
+      <h1 class="entry-title"><a href="/2011/06/fixing-xcode-4s-broken-code-completion/">Fixing Xcode 4&#8217;s Broken Code Completion</a></h1>
+    
+    
+      <p class="meta">
+
+
+
+
+<time datetime="2011-06-08 00:00:00 -0500" pubdate  updated >Jun 8<span>th</span>, 2011</time>
+
+
+</p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>In my continued quest to actually use Xcode 4 full time, I&#8217;ve run into yet another major issue: Xcode 4&#8217;s code index sometimes gets borked and syntax highlighting &amp; code completion stop working.</p>
+
+<p>In the past, this has been fixed (temporarily) by deleting the Derived Data folder in Organizer, restarting Xcode, changing the compiler from LLVM to GCC &amp; back again or some random combination of the 3. This doesn&#8217;t always work, and today I sat down to figure out what the cause was and how to fix it.</p>
+
+<p>In searching stackoverflow and the developer forums, I found that Xcode&#8217;s code index can hang on recursive and/or relative search paths.</p>
+
+<p>My project utilizes 2 static libraries, so I must provide proper header search paths, otherwise the compiler doesn&#8217;t recognize any of the symbols.</p>
+
+<p>So if you have a Header Search Path setting of <code>../lib/MyAwesomeLib</code> or <code>../lib/MyAwesomeLib/**</code> then you might be having this problem too.</p>
+
+<h2>Step 1: Correcting relative paths</h2>
+
+<p>You might be tempted to hard code the path to the file. Don&#8217;t! This will break on somebody else&#8217;s machine, and most of the time you&#8217;re not working on this stuff alone.
+You can utilize the <code>$(SOURCE_ROOT)</code> build variable to construct a dynamic path relative to the Xcode project directory.</p>
+
+<p>This step might be all you need, but in my case I needed to follow the next step as well&#8230;</p>
+
+<h2>Step 2: Remove the need for recursive searches</h2>
+
+<p>I have two subprojects, each of which symlink their build output to a build/current folder. This makes it easy to add a non-recursive library search path reference for similar reasons. I also want to copy headers into this folder so there&#8217;s always a deterministic location to find the headers, regardless of the platform &amp; configuration we&#8217;re building for.<br />
+So I added a Run Script build phase to do this work for me:<br /></p>
+
+<div><figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+<span class='line'>2</span>
+<span class='line'>3</span>
+<span class='line'>4</span>
+<span class='line'>5</span>
+<span class='line'>6</span>
+<span class='line'>7</span>
+</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'># Symlink build output to a common directory for easy referencing in other projects
+</div><div class='line'>rm -rf "$BUILD_DIR/current"
+</div><div class='line'>ln -s "$BUILT_PRODUCTS_DIR" "$BUILD_DIR/current"
+</div><div class='line'>
+</div><div class='line'># Copy headers to a shared location
+</div><div class='line'>mkdir -p "$BUILD_DIR/current/headers"
+</div><div class='line'>for file in `find . -name "*.h"`; do cp $file "$BUILD_DIR/current/headers/"; done;</div></code></pre></td></tr></table></div></figure></div>
+
+
+<p>The line is a bash for loop that copies all the header files in any subfolder &amp; flattens it out for a single headers folder reference.<br /></p>
+
+<h2>Step 3: Add the new common header search paths</h2>
+
+
+<p>In my case I exchanged a relative, recursive search path of:<br /></p>
+
+<div><figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>../lib/**</div></code></pre></td></tr></table></div></figure></div>
+
+
+<br />
+
+
+<p>to the more explicit, and more Xcode 4 friendly:<br /></p>
+
+<br />
+
+
+<p><img src="/images/Xcode4.png"  alt="Xcode.png"  /><br />
+As soon as I did that, my code lit up like a Christmas tree! Symbols were recognized, code was highlighted, and best of all&#8230; code completion resumed.<br />
+Here&#8217;s to hoping the Xcode 4 continues to be improved. In the meantime, hope this fix saves you the headache I&#8217;ve been having.</p>
+</div>
+  <footer>
+    <a rel="full-article" href="/2011/06/fixing-xcode-4s-broken-code-completion/">Read on &rarr;</a>
+  </footer>
+
+
+  </article>
+
+
+  <article>
+    
+  <header>
+    
       <h1 class="entry-title"><a href="/2011/06/creating-proper-ipa-files-in-xcode-4/">Creating Proper IPA Files in Xcode 4</a></h1>
     
     
@@ -1326,61 +1415,6 @@ Now that I have that implemented, all I have to do is include my header file any
 
   </article>
 
-
-  <article>
-    
-  <header>
-    
-      <h1 class="entry-title"><a href="/2011/04/book-review-crafting-rails-applications/">Book Review: Crafting Rails Applications</a></h1>
-    
-    
-      <p class="meta">
-
-
-
-
-<time datetime="2011-04-13 00:00:00 -0500" pubdate  updated >Apr 13<span>th</span>, 2011</time>
-
-
-</p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><img src="/images/capa_crafting.png"  style="float:left; margin-right:10px; margin-bottom:10px;"  /></p>
-
-<p>I just finished with <a href="http://www.amazon.com/gp/product/1934356735/ref=as_li_ss_tl?ie=UTF8&amp;tag=flux88com-20&amp;linkCode=as2&amp;camp=1789&amp;creative=390957&amp;creativeASIN=1934356735">Crafting Rails Applications</a><img src="http://www.assoc-amazon.com/e/ir?t=&amp;l=as2&amp;o=1&amp;a=1934356735" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" /> by <a href="http://blog.plataformatec.com.br/author/josevalim/">José Valim</a>. The book claims to teach Expert Practices for Everyday Rails Development. I didn&#8217;t find it to be exactly that, however I did enjoy it and I learned a ton.</p>
-
-
-<h2>The Good</h2>
-
-
-<p>The book flows pretty well. Each chapter contains a challenge or set of related challenges and it&#8217;s pretty easy to follow along with the code. Each example contains automated tests, and he creates a gem for almost each solution, so that it is easy to see how to modularize things.<br />
-The coverage of Rails internals is really enlightening. Sometimes it can be a bit dry, but you&#8217;ll learn quite a few things about Renderers, Responders, Engines, Railties, Routing, Rack, Instruments, and more.<br />
-The book also contains a wide range of technology topics. José doesn&#8217;t just utilize Rails &amp; ActiveRecord. Other examples include MongoMapper, Redis, and Sinatra.<br /></p>
-
-<h2>The Bad</h2>
-
-
-<p>Even though each of the examples contains unit tests, they are written in a style that I find to be problematic in real systems. The concise nature of the tests is probably an artifact of being printed, but most of the testing examples utilize few test classes with many assertions per test method.<br />
-In addition, though he &#8220;writes&#8221; the tests before implementation, this actually hurts understandability in some cases. The reason is most of the tests read as if he already knew the implementation and knew exactly how to test it. But it isn&#8217;t apparent to the reader.<br />
-I tend to prefer RSpec with 1 assertion per test method and many fine-grained methods that test various behaviors in each context my system is in. The book&#8217;s Test::Unit style wasn&#8217;t something I&#8217;d suggest as a good way to test real applications.<br /></p>
-
-<h2>The Bottom Line</h2>
-
-
-<p>Ultimately I think the book is excellent, and certainly gives plenty of information about Rails 3 internals. I think newcomers would probably be lost, but if you&#8217;re past the newbie stage with Rails then this book is recommended.<br /></p>
-
-<br />
-
-</div>
-  <footer>
-    <a rel="full-article" href="/2011/04/book-review-crafting-rails-applications/">Read on &rarr;</a>
-  </footer>
-
-
-  </article>
-
 <nav role="pagination">
   <div>
     
@@ -1415,6 +1449,10 @@ I tend to prefer RSpec with 1 assertion per test method and many fine-grained me
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2011/09/creating-a-glow-effect-for-uilabel-and-uibutton/">Creating a Glow Effect for UILabel and UIButton</a>
+      </li>
+    
+      <li class="post">
         <a href="/2011/09/introducing-appsites/">Introducing App Sites</a>
       </li>
     
@@ -1428,10 +1466,6 @@ I tend to prefer RSpec with 1 assertion per test method and many fine-grained me
     
       <li class="post">
         <a href="/2011/08/is-rails-exempt-from-software-principles/">Is Rails Exempt?</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2011/08/when-viewwillappear-isnt-called/">When viewWillAppear: Isn&#8217;t Called</a>
       </li>
     
   </ul>

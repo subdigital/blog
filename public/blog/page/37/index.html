@@ -106,6 +106,53 @@
     
   <header>
     
+      <h1 class="entry-title"><a href="/2005/06/server-control-page-reference/">Server Control Page Reference</a></h1>
+    
+    
+      <p class="meta">
+
+
+
+
+<time datetime="2005-06-27 00:00:00 -0500" pubdate  updated >Jun 27<span>th</span>, 2005</time>
+
+
+</p>
+    
+  </header>
+
+
+  <div class="entry-content"><div style="clear:both;"></div>
+
+
+<p>Why does the following code generate a null reference exception?</p>
+
+
+<p>&nbsp;</p>
+
+
+<br /><br /><div id="code"><br />
+
+
+<div><figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>&lt;br />&lt;br />public class MyServerControl : WebControl, INamingContainer&lt;br />{&lt;br /> private TextBox textbox1; &lt;br />&lt;br /> protected override CreateChildControls()&lt;br /> {&lt;br /> if(! Page.IsPostBack) &lt;br /> {&lt;br /> &lt;span class="comments">//do stuff&lt;/span>&lt;br /> }&lt;br /> }&lt;br />}</div></code></pre></td></tr></table></div></figure></div>
+
+
+<br /></div><br />The page reference is not set. I see this sort of example all the time on the web regarding server controls. Why is it that I can not get this to work?<div style="clear:both; padding-bottom: 0.25em;"></div>
+
+</div>
+  <footer>
+    <a rel="full-article" href="/2005/06/server-control-page-reference/">Read on &rarr;</a>
+  </footer>
+
+
+  </article>
+
+
+  <article>
+    
+  <header>
+    
       <h1 class="entry-title"><a href="/2005/06/my-worst-job-ever/">My Worst Job Ever</a></h1>
     
     
@@ -398,39 +445,6 @@
 
   </article>
 
-
-  <article>
-    
-  <header>
-    
-      <h1 class="entry-title"><a href="/2005/05/vs-2005-beta-2-has-arrived/">Vs 2005 Beta 2 Has Arrived!</a></h1>
-    
-    
-      <p class="meta">
-
-
-
-
-<time datetime="2005-05-17 00:00:00 -0500" pubdate  updated >May 17<span>th</span>, 2005</time>
-
-
-</p>
-    
-  </header>
-
-
-  <div class="entry-content"><div style="clear:both;"></div>
-
-
-<p>I walked in my office today and opened the yellow envelope on the floor by the door to find:<br /><br /><ul> <li><span style="font-weight: bold;">Visual Studio 2005 Beta 2</span> - Team Suite CD</li> <li><span style="font-weight: bold;">Visual Studio 2005 Beta 2</span> - Team Foundation Server</li> <li><span style="font-weight: bold;">SQL Server 2005 </span>Developer Edition - 365 day trial</li> </ul> Now I have to find the time to reformat my machine because there is no way I am installing anything heavy on it right now&#8230; it&#8217;s running too slow.<br /><br />Why in the world does VS2003 start moving like molasses after a couple months of use?When I add a new item to my solution I have to wait 3 full minutes before I regain control of the computer&#8230;how <span style="font-style: italic;">ghey</span>.<div style="clear:both; padding-bottom: 0.25em;"></div></p>
-</div>
-  <footer>
-    <a rel="full-article" href="/2005/05/vs-2005-beta-2-has-arrived/">Read on &rarr;</a>
-  </footer>
-
-
-  </article>
-
 <nav role="pagination">
   <div>
     
@@ -465,6 +479,10 @@
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2011/09/creating-a-glow-effect-for-uilabel-and-uibutton/">Creating a Glow Effect for UILabel and UIButton</a>
+      </li>
+    
+      <li class="post">
         <a href="/2011/09/introducing-appsites/">Introducing App Sites</a>
       </li>
     
@@ -478,10 +496,6 @@
     
       <li class="post">
         <a href="/2011/08/is-rails-exempt-from-software-principles/">Is Rails Exempt?</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2011/08/when-viewwillappear-isnt-called/">When viewWillAppear: Isn&#8217;t Called</a>
       </li>
     
   </ul>

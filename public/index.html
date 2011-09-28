@@ -106,6 +106,76 @@
     
   <header>
     
+      <h1 class="entry-title"><a href="/2011/09/creating-a-glow-effect-for-uilabel-and-uibutton/">Creating a Glow Effect for UILabel and UIButton</a></h1>
+    
+    
+      <p class="meta">
+
+
+
+
+<time datetime="2011-09-27 19:57:00 -0500" pubdate  updated >Sep 27<span>th</span>, 2011</time>
+
+
+</p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>One recent iPhone design mockup called for a glowing effect for a
+<code>UIButton</code>.</p>
+
+<p>This can be accomplished with images, however I needed a series of
+buttons to have the same glow effect, and it can easily be accomplished
+with Core Graphics.</p>
+
+<p>The first step is to include the Core Graphics headers:</p>
+
+<figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+</pre></td><td class='code' width='100%'><pre><code class='objc'><div class='line'><span class="cp">#import &lt;QuartzCore/QuartzCore.h&gt;</span>
+</div></code></pre></td></tr></table></div></figure>
+
+<p>Next, the effect is achieved by using a shadow with no offset (meaning
+the shadow will be directly underneath the text, not shifted down or to
+the right).  The layer is then given a shadow radius &amp; opacity to allow
+the shadow to bleed outward.  Unsetting <code>masksToBounds</code> will allow the
+glow to be drawn even outside of the label&#8217;s frame. Finally the shadow color is set to either the
+foreground color or something a bit lighter.</p>
+
+<figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+<span class='line'>2</span>
+<span class='line'>3</span>
+<span class='line'>4</span>
+<span class='line'>5</span>
+<span class='line'>6</span>
+</pre></td><td class='code' width='100%'><pre><code class='objc'><div class='line'><span class="n">UIColor</span> <span class="o">*</span><span class="n">color</span> <span class="o">=</span> <span class="n">button</span><span class="p">.</span><span class="n">currentTitleColor</span><span class="p">;</span>
+</div><div class='line'><span class="n">button</span><span class="p">.</span><span class="n">titleLabel</span><span class="p">.</span><span class="n">layer</span><span class="p">.</span><span class="n">shadowColor</span> <span class="o">=</span> <span class="p">[</span><span class="n">color</span> <span class="n">CGColor</span><span class="p">];</span>
+</div><div class='line'><span class="n">button</span><span class="p">.</span><span class="n">titleLabel</span><span class="p">.</span><span class="n">layer</span><span class="p">.</span><span class="n">shadowRadius</span> <span class="o">=</span> <span class="mf">4.0f</span><span class="p">;</span>
+</div><div class='line'><span class="n">button</span><span class="p">.</span><span class="n">titleLabel</span><span class="p">.</span><span class="n">layer</span><span class="p">.</span><span class="n">shadowOpacity</span> <span class="o">=</span> <span class="mf">.9</span><span class="p">;</span>
+</div><div class='line'><span class="n">button</span><span class="p">.</span><span class="n">titleLabel</span><span class="p">.</span><span class="n">layer</span><span class="p">.</span><span class="n">shadowOffset</span> <span class="o">=</span> <span class="n">CGSizeZero</span><span class="p">;</span>
+</div><div class='line'><span class="n">button</span><span class="p">.</span><span class="n">titleLabel</span><span class="p">.</span><span class="n">layer</span><span class="p">.</span><span class="n">masksToBounds</span> <span class="o">=</span> <span class="n">NO</span><span class="p">;</span>
+</div></code></pre></td></tr></table></div></figure>
+
+<p>This effect works on plain <code>UILabel</code> or the <code>titleLabel</code> property of a
+<code>UIButton</code>.  You can see the results of the effect here:</p>
+
+<p><img class='image ' src='/images/uibutton-gloweffect.png' width='' height='' alt='' title=''></p>
+
+<p>Don&#8217;t go overboard with this.  It&#8217;s a subtle effect, but looks great
+when used effectively.</p>
+</div>
+  <footer>
+    <a rel="full-article" href="/2011/09/creating-a-glow-effect-for-uilabel-and-uibutton/">Read on &rarr;</a>
+  </footer>
+
+
+  </article>
+
+
+  <article>
+    
+  <header>
+    
       <h1 class="entry-title"><a href="/2011/09/introducing-appsites/">Introducing App Sites</a></h1>
     
     
@@ -1057,95 +1127,6 @@ of features. Just epic content, that&#8217;s it!</p>
 
   </article>
 
-
-  <article>
-    
-  <header>
-    
-      <h1 class="entry-title"><a href="/2011/06/fixing-xcode-4s-broken-code-completion/">Fixing Xcode 4&#8217;s Broken Code Completion</a></h1>
-    
-    
-      <p class="meta">
-
-
-
-
-<time datetime="2011-06-08 00:00:00 -0500" pubdate  updated >Jun 8<span>th</span>, 2011</time>
-
-
-</p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>In my continued quest to actually use Xcode 4 full time, I&#8217;ve run into yet another major issue: Xcode 4&#8217;s code index sometimes gets borked and syntax highlighting &amp; code completion stop working.</p>
-
-<p>In the past, this has been fixed (temporarily) by deleting the Derived Data folder in Organizer, restarting Xcode, changing the compiler from LLVM to GCC &amp; back again or some random combination of the 3. This doesn&#8217;t always work, and today I sat down to figure out what the cause was and how to fix it.</p>
-
-<p>In searching stackoverflow and the developer forums, I found that Xcode&#8217;s code index can hang on recursive and/or relative search paths.</p>
-
-<p>My project utilizes 2 static libraries, so I must provide proper header search paths, otherwise the compiler doesn&#8217;t recognize any of the symbols.</p>
-
-<p>So if you have a Header Search Path setting of <code>../lib/MyAwesomeLib</code> or <code>../lib/MyAwesomeLib/**</code> then you might be having this problem too.</p>
-
-<h2>Step 1: Correcting relative paths</h2>
-
-<p>You might be tempted to hard code the path to the file. Don&#8217;t! This will break on somebody else&#8217;s machine, and most of the time you&#8217;re not working on this stuff alone.
-You can utilize the <code>$(SOURCE_ROOT)</code> build variable to construct a dynamic path relative to the Xcode project directory.</p>
-
-<p>This step might be all you need, but in my case I needed to follow the next step as well&#8230;</p>
-
-<h2>Step 2: Remove the need for recursive searches</h2>
-
-<p>I have two subprojects, each of which symlink their build output to a build/current folder. This makes it easy to add a non-recursive library search path reference for similar reasons. I also want to copy headers into this folder so there&#8217;s always a deterministic location to find the headers, regardless of the platform &amp; configuration we&#8217;re building for.<br />
-So I added a Run Script build phase to do this work for me:<br /></p>
-
-<div><figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
-<span class='line'>2</span>
-<span class='line'>3</span>
-<span class='line'>4</span>
-<span class='line'>5</span>
-<span class='line'>6</span>
-<span class='line'>7</span>
-</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'># Symlink build output to a common directory for easy referencing in other projects
-</div><div class='line'>rm -rf "$BUILD_DIR/current"
-</div><div class='line'>ln -s "$BUILT_PRODUCTS_DIR" "$BUILD_DIR/current"
-</div><div class='line'>
-</div><div class='line'># Copy headers to a shared location
-</div><div class='line'>mkdir -p "$BUILD_DIR/current/headers"
-</div><div class='line'>for file in `find . -name "*.h"`; do cp $file "$BUILD_DIR/current/headers/"; done;</div></code></pre></td></tr></table></div></figure></div>
-
-
-<p>The line is a bash for loop that copies all the header files in any subfolder &amp; flattens it out for a single headers folder reference.<br /></p>
-
-<h2>Step 3: Add the new common header search paths</h2>
-
-
-<p>In my case I exchanged a relative, recursive search path of:<br /></p>
-
-<div><figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
-</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>../lib/**</div></code></pre></td></tr></table></div></figure></div>
-
-
-<br />
-
-
-<p>to the more explicit, and more Xcode 4 friendly:<br /></p>
-
-<br />
-
-
-<p><img src="/images/Xcode4.png"  alt="Xcode.png"  /><br />
-As soon as I did that, my code lit up like a Christmas tree! Symbols were recognized, code was highlighted, and best of all&#8230; code completion resumed.<br />
-Here&#8217;s to hoping the Xcode 4 continues to be improved. In the meantime, hope this fix saves you the headache I&#8217;ve been having.</p>
-</div>
-  <footer>
-    <a rel="full-article" href="/2011/06/fixing-xcode-4s-broken-code-completion/">Read on &rarr;</a>
-  </footer>
-
-
-  </article>
-
 <nav role="pagination">
   <div>
     
@@ -1178,6 +1159,10 @@ Here&#8217;s to hoping the Xcode 4 continues to be improved. In the meantime, ho
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2011/09/creating-a-glow-effect-for-uilabel-and-uibutton/">Creating a Glow Effect for UILabel and UIButton</a>
+      </li>
+    
+      <li class="post">
         <a href="/2011/09/introducing-appsites/">Introducing App Sites</a>
       </li>
     
@@ -1191,10 +1176,6 @@ Here&#8217;s to hoping the Xcode 4 continues to be improved. In the meantime, ho
     
       <li class="post">
         <a href="/2011/08/is-rails-exempt-from-software-principles/">Is Rails Exempt?</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2011/08/when-viewwillappear-isnt-called/">When viewWillAppear: Isn&#8217;t Called</a>
       </li>
     
   </ul>

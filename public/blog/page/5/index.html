@@ -106,6 +106,161 @@
     
   <header>
     
+      <h1 class="entry-title"><a href="/2010/06/iphone-apps-dont-live-in-a-vacuum/">iPhone Apps Don&#8217;t Live in a Vacuum</a></h1>
+    
+    
+      <p class="meta">
+
+
+
+
+<time datetime="2010-06-03 00:00:00 -0500" pubdate  updated >Jun 3<span>rd</span>, 2010</time>
+
+
+</p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Most of the iPhone apps that I work on don&#8217;t exist in a vacuum. &nbsp;That is, they require data that exists somewhere on the server. &nbsp;Grabbing data from the server is seemingly simple, but you have to dig deeper if you want a truly seamless experience for the user.</p>
+
+
+<p>Consider the naive approach:</p>
+
+
+<ul>
+<li>App Starts up</li>
+<li>App Fetches http://someserver/foo.xml</li>
+<li>App updates the UI with fresh data</li>
+</ul>
+
+
+<p>If we do this then the server is pinged <strong>every single time the app loads</strong>. &nbsp;There are numerous problems with this approach. &nbsp;The user notices a delay every time they use the app, and most of the time you&#8217;re loading the same data over and over again. &nbsp;What happens if the user is offline?</p>
+
+
+<p>&quot;Aha!&quot; You say. &nbsp;Let&#8217;s just enable caching. &nbsp;That&#8217;s not a terrible idea. &nbsp;So you go down the route of implementing a naive caching strategy: &nbsp;After fetching a resource from the server, cache it on disk so that you don&#8217;t load it again.</p>
+
+
+<blockquote>
+<p>Side note: &nbsp;TTURLRequest from the <a href="http://github.com/facebook/three20">Three20</a> Library does this out of the box.</p>
+</blockquote>
+
+
+<p>Now what happens?</p>
+
+
+<ul>
+<li>App Starts up</li>
+<li>App Fetches http://someserver/foo.xml</li>
+<li>App updates the UI with fresh data</li>
+<li>User quits app</li>
+<li>User launches app again</li>
+<li>App Loads data from local cache</li>
+<li>App updates the UI with cached data</li>
+</ul>
+
+
+<p>Our 2nd launch is improved immensely, and now the app even works offline! &nbsp;Yipee! &nbsp;What could be wrong now? &nbsp;Well now we have another problem: &nbsp;If we update data on the server, the clients won&#8217;t know about it and will continue to server stale data to the UI. &nbsp;At what point should you invalidate the cache? &nbsp;Hourly? &nbsp;Daily? &nbsp;Weekly?</p>
+
+
+<p>To answer that you really have to examine your domain. &nbsp;For one of our clients, they have data that fits all over this spectrum:</p>
+
+
+<p><img border="0" alt="data-change-frequency" width="512" height="80" src="https://flux88.s3.amazonaws.com/assets/data-change-frequency.png" /></p>
+
+
+<p>Not much data falls on the left side of this chart, but occasionally you find some that matches. &nbsp;US States for example might be categorized as &quot;Never Changes&quot;. &nbsp; This app in question is about sports stats, so stats for past seasons literally never change. &nbsp;They are recorded in history.</p>
+
+
+<p>On the flip side, this app also shows stats up to the minute as a sports match is in progress.</p>
+
+
+<p>Clearly we can&#8217;t use the naive caching approach to serve both of these needs.</p>
+
+
+<h2>Pulling our your HTTP Hat</h2>
+
+
+<p>If you have control over the server and the client, you can take advantage of an excellent-but-not-so-well-known HTTP header called &nbsp;<span style="font-family: monospace; white-space: pre;">IF-MODIFIED-SINCE.</span></p>
+
+
+<p>This is how the technique would flow:</p>
+
+
+<p><img border="0" alt="IF-MODIFIED-SINCE" width="431" height="381" src="https://flux88.s3.amazonaws.com/assets/if-mod-since.png" /></p>
+
+
+<p>With this scenario, we can make a request to the server very quickly, and if nothing has been changed then we simply serve up the file we have cached locally. &nbsp;We can also follow this same process for offline scenarios (just use cached data).</p>
+
+
+<h2>Using a descriptor file</h2>
+
+
+<p>Unfortunately, we don&#8217;t always have access to have the server respond to such a header. &nbsp;Another option is to utilize a small file that is fetched at the beginning. &nbsp;We call it meta.xml, and it has the filenames &amp; dates of when the content last changed. &nbsp;This still requires at least 1 network connection at the beginning, but after that, cached data will stay on the phone&#8217;s local file system until it is proven to be out of date by meta.xml.</p>
+
+
+<h2>That&#8217;s great, but my app still feels sluggish!</h2>
+
+
+<p>iPhone apps have to have a significant amount of code written in order to make sure that applications are continually responsive (that means NO BLOCKING CODE ON THE MAIN THREAD!). &nbsp;All network operations should happen on a background thread.</p>
+
+
+<blockquote><strong>Update</strong><em>: &nbsp;A friend mentioned that perhaps not ALL network operations need to happen on a background thread&#8230; you can utilize non-blocking APIs for some scenarios. &nbsp;Check out Jeff LaMarche&#8217;s </em><a target="_blank" href="http://iphonedevelopment.blogspot.com/2010/05/downloading-images-for-table-without.html"><em>detailed post</em></a><em> on the topic for more information.</em>
+</blockquote>
+
+
+<p>In the event that cached data exists, but is proven to be out of date via one of the methods above, we can still bind the UI &amp; show some data to the user so they aren&#8217;t staring at a blank screen. &nbsp; &nbsp;We can then kick off a thread to fetch the updated data and notify the UI when updated data has arrived.</p>
+
+
+<p><img border="0" alt="Activity Diagram for Update &amp; Fetch" width="500" height="328" src="https://flux88.s3.amazonaws.com/assets/activity-update-and-fetch.png" /></p>
+
+
+<p>You can see that this scenario is far more complicated than your simple <em>fetch the data and update</em>. &nbsp;We must use background processing and callbacks in order to keep the UI responsive. &nbsp;We immediately return cached data if it exists, so the user can be looking at a screen right away. &nbsp;Before returning, however, the repository kicks off a background thread to load the data. &nbsp;When the data comes back, the Repository sends a message to its delegate:</p>
+
+
+<ul>
+<li>
+
+<div><figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>didUpdateWithData:</div></code></pre></td></tr></table></div></figure></div>
+
+</li>
+<li>
+
+<div><figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>noUpdateNeeded</div></code></pre></td></tr></table></div></figure></div>
+
+</li>
+<li>
+
+<div><figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>updateFailedWithError:</div></code></pre></td></tr></table></div></figure></div>
+
+</li>
+</ul>
+
+
+<p>&nbsp;</p>
+
+
+<p>Armed with this architecture, we can build a UI that loads fresh data from the server only when needed, is responsive to user interaction during the remote call to fetch updated data, and will even work offline.</p>
+
+
+<p>As with most things in software development (and in life)&#8230; &nbsp;doing it the easy way is easy, but doing it the right way takes some time, thought, and effort.</p>
+
+</div>
+  <footer>
+    <a rel="full-article" href="/2010/06/iphone-apps-dont-live-in-a-vacuum/">Read on &rarr;</a>
+  </footer>
+
+
+  </article>
+
+
+  <article>
+    
+  <header>
+    
       <h1 class="entry-title"><a href="/2010/05/my-xcode-theme/">My Xcode Theme</a></h1>
     
     
@@ -672,223 +827,6 @@
 
   </article>
 
-
-  <article>
-    
-  <header>
-    
-      <h1 class="entry-title"><a href="/2010/02/a-code-example-of-ruby-metaprogramming/">A Code Example of Ruby Metaprogramming</a></h1>
-    
-    
-      <p class="meta">
-
-
-
-
-<time datetime="2010-02-12 00:00:00 -0600" pubdate  updated >Feb 12<span>th</span>, 2010</time>
-
-
-</p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>I&#8217;ll let the code speak for itself:</p>
-
-<div><figure role=code> <div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
-<span class='line'>2</span>
-<span class='line'>3</span>
-<span class='line'>4</span>
-<span class='line'>5</span>
-<span class='line'>6</span>
-<span class='line'>7</span>
-<span class='line'>8</span>
-<span class='line'>9</span>
-<span class='line'>10</span>
-<span class='line'>11</span>
-<span class='line'>12</span>
-<span class='line'>13</span>
-<span class='line'>14</span>
-<span class='line'>15</span>
-<span class='line'>16</span>
-<span class='line'>17</span>
-<span class='line'>18</span>
-<span class='line'>19</span>
-<span class='line'>20</span>
-<span class='line'>21</span>
-<span class='line'>22</span>
-<span class='line'>23</span>
-<span class='line'>24</span>
-<span class='line'>25</span>
-<span class='line'>26</span>
-<span class='line'>27</span>
-<span class='line'>28</span>
-<span class='line'>29</span>
-<span class='line'>30</span>
-<span class='line'>31</span>
-<span class='line'>32</span>
-<span class='line'>33</span>
-<span class='line'>34</span>
-<span class='line'>35</span>
-<span class='line'>36</span>
-<span class='line'>37</span>
-<span class='line'>38</span>
-<span class='line'>39</span>
-<span class='line'>40</span>
-<span class='line'>41</span>
-<span class='line'>42</span>
-<span class='line'>43</span>
-<span class='line'>44</span>
-<span class='line'>45</span>
-<span class='line'>46</span>
-<span class='line'>47</span>
-<span class='line'>48</span>
-<span class='line'>49</span>
-<span class='line'>50</span>
-<span class='line'>51</span>
-<span class='line'>52</span>
-<span class='line'>53</span>
-<span class='line'>54</span>
-<span class='line'>55</span>
-<span class='line'>56</span>
-<span class='line'>57</span>
-<span class='line'>58</span>
-<span class='line'>59</span>
-<span class='line'>60</span>
-<span class='line'>61</span>
-<span class='line'>62</span>
-<span class='line'>63</span>
-<span class='line'>64</span>
-<span class='line'>65</span>
-<span class='line'>66</span>
-<span class='line'>67</span>
-<span class='line'>68</span>
-<span class='line'>69</span>
-<span class='line'>70</span>
-<span class='line'>71</span>
-<span class='line'>72</span>
-<span class='line'>73</span>
-<span class='line'>74</span>
-<span class='line'>75</span>
-<span class='line'>76</span>
-<span class='line'>77</span>
-<span class='line'>78</span>
-<span class='line'>79</span>
-</pre></td><td class='code' width='100%'><pre><code class='ruby'><div class='line'><span class="k">class</span> <span class="nc">Animal</span>
-</div><div class='line'>  <span class="k">def</span> <span class="nf">sound</span>
-</div><div class='line'>    <span class="nb">puts</span> <span class="s1">&#39;A non-descript sound is emitted from the animal&#39;</span>
-</div><div class='line'>  <span class="k">end</span>
-</div><div class='line'><span class="k">end</span>
-</div><div class='line'>
-</div><div class='line'><span class="k">class</span> <span class="nc">Frog</span> <span class="o">&lt;</span> <span class="no">Animal</span>
-</div><div class='line'>  <span class="k">def</span> <span class="nf">sound</span>
-</div><div class='line'>    <span class="nb">puts</span> <span class="s1">&#39;Ribbit!&#39;</span>
-</div><div class='line'>  <span class="k">end</span>
-</div><div class='line'><span class="k">end</span>
-</div><div class='line'>
-</div><div class='line'><span class="k">class</span> <span class="nc">Cat</span> <span class="o">&lt;</span> <span class="no">Animal</span>
-</div><div class='line'>  <span class="k">def</span> <span class="nf">sound</span>
-</div><div class='line'>    <span class="nb">puts</span> <span class="s1">&#39;Meow!&#39;</span>
-</div><div class='line'>  <span class="k">end</span>
-</div><div class='line'><span class="k">end</span>
-</div><div class='line'>
-</div><div class='line'><span class="k">class</span> <span class="nc">Person</span>
-</div><div class='line'>  <span class="kp">attr_accessor</span> <span class="ss">:name</span>
-</div><div class='line'>  <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="nb">name</span><span class="p">)</span>
-</div><div class='line'>    <span class="vi">@injured</span> <span class="o">=</span> <span class="kp">false</span>
-</div><div class='line'>    <span class="vi">@name</span> <span class="o">=</span> <span class="nb">name</span>
-</div><div class='line'>  <span class="k">end</span>
-</div><div class='line'>
-</div><div class='line'>  <span class="k">def</span> <span class="nf">injure!</span><span class="p">(</span><span class="n">by</span> <span class="o">=</span> <span class="kp">nil</span><span class="p">)</span>
-</div><div class='line'>    <span class="nb">print</span> <span class="s2">&quot;</span><span class="si">#{</span><span class="nb">name</span><span class="si">}</span><span class="s2">: Help I&#39;m being attacked&quot;</span>
-</div><div class='line'>    <span class="nb">print</span> <span class="s2">&quot; by a </span><span class="si">#{</span><span class="n">by</span><span class="o">.</span><span class="n">class</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">if</span> <span class="n">by</span>
-</div><div class='line'>    <span class="nb">print</span> <span class="s1">&#39;!&#39;</span>
-</div><div class='line'>    <span class="nb">puts</span>
-</div><div class='line'>    <span class="vi">@injured</span> <span class="o">=</span> <span class="kp">true</span>
-</div><div class='line'>  <span class="k">end</span>
-</div><div class='line'>
-</div><div class='line'>  <span class="k">def</span> <span class="nf">injured?</span>
-</div><div class='line'>    <span class="vi">@injured</span>
-</div><div class='line'>  <span class="k">end</span>
-</div><div class='line'><span class="k">end</span>
-</div><div class='line'>
-</div><div class='line'><span class="k">module</span> <span class="nn">Aggression</span>
-</div><div class='line'>  <span class="k">def</span> <span class="nc">self</span><span class="o">.</span><span class="nf">apply_to_all_animals</span>
-</div><div class='line'>    <span class="n">animal_classes</span> <span class="o">=</span> <span class="no">Module</span><span class="o">.</span><span class="n">constants</span><span class="o">.</span><span class="n">map</span> <span class="p">{</span> <span class="o">|</span><span class="n">x</span><span class="o">|</span>
-</div><div class='line'>      <span class="no">Module</span><span class="o">.</span><span class="n">const_get</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="p">}</span><span class="o">.</span><span class="n">select</span> <span class="p">{</span> <span class="o">|</span><span class="n">x</span><span class="o">|</span>
-</div><div class='line'>        <span class="n">x</span><span class="o">.</span><span class="n">respond_to?</span><span class="p">(</span><span class="ss">:superclass</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="n">x</span><span class="o">.</span><span class="n">superclass</span> <span class="o">==</span> <span class="no">Animal</span> <span class="p">}</span>
-</div><div class='line'>    <span class="n">animal_classes</span><span class="o">.</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">animal_class</span><span class="o">|</span>
-</div><div class='line'>      <span class="n">animal_class</span><span class="o">.</span><span class="n">module_eval</span> <span class="k">do</span>
-</div><div class='line'>        <span class="kp">include</span> <span class="no">Aggression</span>
-</div><div class='line'>      <span class="k">end</span>
-</div><div class='line'>    <span class="k">end</span>
-</div><div class='line'>  <span class="k">end</span>
-</div><div class='line'>
-</div><div class='line'>  <span class="k">def</span> <span class="nf">attack</span><span class="p">(</span><span class="n">person</span><span class="p">)</span>
-</div><div class='line'>    <span class="n">sound</span>
-</div><div class='line'>    <span class="nb">puts</span> <span class="s2">&quot;*Munch*&quot;</span>
-</div><div class='line'>    <span class="n">person</span><span class="o">.</span><span class="n">injure!</span><span class="p">(</span><span class="nb">self</span><span class="p">)</span>
-</div><div class='line'>    <span class="n">sound</span>
-</div><div class='line'>    <span class="nb">puts</span>
-</div><div class='line'>  <span class="k">end</span>
-</div><div class='line'><span class="k">end</span>
-</div><div class='line'>
-</div><div class='line'><span class="n">bonsai</span> <span class="o">=</span> <span class="no">Cat</span><span class="o">.</span><span class="n">new</span>
-</div><div class='line'><span class="n">brian</span> <span class="o">=</span> <span class="no">Frog</span><span class="o">.</span><span class="n">new</span>
-</div><div class='line'><span class="n">people</span> <span class="o">=</span> <span class="o">[</span><span class="no">Person</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s1">&#39;Ollie&#39;</span><span class="p">),</span> <span class="no">Person</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s1">&#39;manitoba98&#39;</span><span class="p">)</span><span class="o">]</span>
-</div><div class='line'><span class="k">begin</span>
-</div><div class='line'>  <span class="n">bonsai</span><span class="o">.</span><span class="n">attack</span><span class="p">(</span><span class="n">people</span><span class="o">[</span><span class="mi">0</span><span class="o">]</span><span class="p">)</span>
-</div><div class='line'><span class="k">rescue</span> <span class="o">=&gt;</span> <span class="n">e</span>
-</div><div class='line'>  <span class="nb">puts</span> <span class="s1">&#39;Aww bonsai isn\&#39;t capable of agressition. How cute&#39;</span>
-</div><div class='line'><span class="k">end</span>
-</div><div class='line'>
-</div><div class='line'><span class="k">begin</span>
-</div><div class='line'>  <span class="n">brian</span><span class="o">.</span><span class="n">attack</span><span class="p">(</span><span class="n">people</span><span class="o">[</span><span class="mi">0</span><span class="o">]</span><span class="p">)</span>
-</div><div class='line'><span class="k">rescue</span> <span class="o">=&gt;</span> <span class="n">e</span>
-</div><div class='line'>  <span class="nb">puts</span> <span class="s1">&#39;Nor is brian awwww&#39;</span>
-</div><div class='line'><span class="k">end</span>
-</div><div class='line'><span class="nb">puts</span>
-</div><div class='line'>
-</div><div class='line'><span class="c1"># and then god said:</span>
-</div><div class='line'><span class="no">Aggression</span><span class="o">.</span><span class="n">apply_to_all_animals</span>
-</div><div class='line'><span class="n">bonsai</span><span class="o">.</span><span class="n">attack</span><span class="p">(</span><span class="n">people</span><span class="o">[</span><span class="mi">0</span><span class="o">]</span><span class="p">)</span>
-</div><div class='line'><span class="n">brian</span><span class="o">.</span><span class="n">attack</span><span class="p">(</span><span class="n">people</span><span class="o">[</span><span class="mi">1</span><span class="o">]</span><span class="p">)</span>
-</div></code></pre></td></tr></table></div></figure></div>
-
-
-
-
-<p>
-Output:
-</p>
-
-
-<pre style='background-color:#333; border-color: #333; color: #ccc; font-weight: thin; font-size: 1.2em; padding: 15px;'>
-Aww bonsai isn't capable of agressition. How cute
-Nor is brian awwww
-Meow!
-*Munch*
-Ollie: Help I'm being attacked by a Cat!
-Meow!
-Ribbit!
-*Munch*
-manitoba98: Help I'm being attacked by a Frog!
-Ribbit!
-</pre>
-
-
-
-
-<p>Needless to say, I&#8217;m really enjoying Ruby.</p>
-
-</div>
-  <footer>
-    <a rel="full-article" href="/2010/02/a-code-example-of-ruby-metaprogramming/">Read on &rarr;</a>
-  </footer>
-
-
-  </article>
-
 <nav role="pagination">
   <div>
     
@@ -923,6 +861,10 @@ Ribbit!
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2011/09/creating-a-glow-effect-for-uilabel-and-uibutton/">Creating a Glow Effect for UILabel and UIButton</a>
+      </li>
+    
+      <li class="post">
         <a href="/2011/09/introducing-appsites/">Introducing App Sites</a>
       </li>
     
@@ -936,10 +878,6 @@ Ribbit!
     
       <li class="post">
         <a href="/2011/08/is-rails-exempt-from-software-principles/">Is Rails Exempt?</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2011/08/when-viewwillappear-isnt-called/">When viewWillAppear: Isn&#8217;t Called</a>
       </li>
     
   </ul>

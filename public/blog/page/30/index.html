@@ -106,6 +106,64 @@
     
   <header>
     
+      <h1 class="entry-title"><a href="/2006/10/compiled-vs-dynamic-laguages-and-the-code-feedback-loop/">Compiled vs Dynamic Laguages and the Code Feedback Loop</a></h1>
+    
+    
+      <p class="meta">
+
+
+
+
+<time datetime="2006-10-06 00:00:00 -0500" pubdate  updated >Oct 6<span>th</span>, 2006</time>
+
+
+</p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>So I bit the bullet and installed Ruby on Rails.&nbsp; I&rsquo;ve been reading a lot about Ruby (mainly blogs) and decided that it&rsquo;s about&nbsp;time to learn another language.&nbsp; The Pragmatic Programmers believe that you should dedicate some time to learn a new language every year.</p>
+
+
+<p>My first impressions are probably pretty common.&nbsp; Ruby is not easy to jump into.&nbsp; They have a lot of great information on the internet, but I found that things didn&rsquo;t go as smoothly as I had hoped.&nbsp; This is probably due to the fact that there are major changes between each version of ruby/rails, and there are old&nbsp;tutorials directed at older versions of Ruby or Rails.</p>
+
+
+<p>The second hinderance I found was that, with Ruby (among other dynamic languages), you don&rsquo;t get any intellisense.&nbsp; Being brought up with Visual Studio made me spoiled, I suppose.&nbsp; The fact is, with any dynamic language, such as Ruby, Python, or Javascript&hellip;&nbsp; Intellisense is difficult to provide.&nbsp; <em>Type information often isn&rsquo;t available until runtime.</em></p>
+
+
+<p>This really annoyed me at first, and I was quick to dismiss dynamic languages.&nbsp; </p>
+
+
+<p>Intellisense really makes your learning experience much easier.&nbsp; When I started in .NET, I had a few books, but mainly I just used Intellisense to navigate my way around the framework.&nbsp; If you didn&rsquo;t know how to send email with .NET, you could easily just type <strong>System.Web.Mail. </strong>and you&rsquo;d see the relevant classes involved.&nbsp; Intellisense is an extremely effective discoverability tool.&nbsp;&nbsp; </p>
+
+
+<p>Now that I am an experienced .NET developer, I know all of these things by heart.&nbsp; There&rsquo;s not much stopping me from writing my programs in Notepad2.&nbsp; I don&rsquo;t rely as heavily on Intellisense like I did before.&nbsp; I still use Visual Studio, though, because having your compiler and debugger integrated with your editor is almost a necessity.</p>
+
+
+<p>This isn&rsquo;t the case with dynamic languages.&nbsp; You write a program (often times in a single file with FAR fewer lines of code) and you run it.&nbsp; That&rsquo;s it.&nbsp; There&rsquo;s no compilation or startup time.&nbsp; You get your results right there.&nbsp; If you mispell a type or call a method on the wrong class of course you&rsquo;ll get an error.&nbsp; But you find this out&nbsp;<strong>sooner that your C# / Java program will compile</strong>.&nbsp; If you can write 5 lines of code and push a button to see if it worked&hellip;&nbsp; without waiting for a compiler or debugger, then your code-feedback-loop is MUCH tighter.&nbsp; Agile principles thrive on having small feedback loops.&nbsp; This is (in my opinion) the single largest reason why Agile is so effective.</p>
+
+
+<p>The compiler is becoming less and less popular these days because it cannot protect your program from logic flaws.&nbsp; It&rsquo;s becoming much like the spell-check feature of word processors.&nbsp; They can tell you that you mispelled the word&nbsp;<strike>definate</strike> definite, but a sentence like this one will pass spell-check just fine:&nbsp; <strong>We will meat at the movie theater.</strong>&nbsp; A compiler can only take you so far.&nbsp; To verify your program works, you have to compile it, run it, navigate to the section, and test it.&nbsp; In a dynamic language, half of these steps are removed, leaving you with a much tighter code-feedback-loop.</p>
+
+
+<p>We all love intellisense (and I will welcome it for Ruby with open-arms), but don&rsquo;t let that stop you from writing your next small program in a language like Python or Ruby.&nbsp; It will give you another tool in your developer toolbox and make you a better programmer in *any* language.</p>
+
+
+<p><em></em>&nbsp;</p>
+
+</div>
+  <footer>
+    <a rel="full-article" href="/2006/10/compiled-vs-dynamic-laguages-and-the-code-feedback-loop/">Read on &rarr;</a>
+  </footer>
+
+
+  </article>
+
+
+  <article>
+    
+  <header>
+    
       <h1 class="entry-title"><a href="/2006/09/im-not-dead/">I&#8217;m Not Dead</a></h1>
     
     
@@ -635,79 +693,6 @@ gin: -moz-initial; -moz-background-inline-policy: -moz-initial; color: black; fo
 
   </article>
 
-
-  <article>
-    
-  <header>
-    
-      <h1 class="entry-title"><a href="/2006/08/making-divs-stay-next-to-each-other/">Making DIVs Stay Next to Each Other</a></h1>
-    
-    
-      <p class="meta">
-
-
-
-
-<time datetime="2006-08-17 00:00:00 -0500" pubdate  updated >Aug 17<span>th</span>, 2006</time>
-
-
-</p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>A colleague came to me with a very simple issue yesterday.&nbsp; He had a table surrounding the area he was working on, and he wanted to have 2 DIVs side-by-side, one of them containing a table.</p>
-
-
-<p>Here&rsquo;s what he had:</p>
-
-
-<p><font face="Courier" color="#0080c0" size="2">&lt;table&gt;<br />&nbsp;&lt;tr&gt;<br />&nbsp;&nbsp;&lt;td&gt;<br />&nbsp;&nbsp;<br />&nbsp;&nbsp;&nbsp;&lt;div style=&#8221;padding: 2px; margin: 2px; border: #ccc; background-color:#eee;&#8221;&gt;<br />&nbsp;&nbsp;&nbsp;&nbsp;here&#8217;s the first div<br />&nbsp;&nbsp;&nbsp;&lt;/div&gt;</font></p>
-
-
-<p><font face="Courier" color="#0080c0" size="2">&nbsp;&nbsp;&nbsp;&lt;div style=&#8221;padding: 2px; margin: 2px; border: #ccc; background-color:#eee;&#8221;&gt;<br />&nbsp;&nbsp;&nbsp;&nbsp;..and here&#8217;s the 2nd<br />&nbsp;&nbsp;&nbsp;&nbsp;&lt;table border=1&gt;<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;tr&gt;<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;td&gt;with a table&lt;/td&gt;<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/td&gt;<br />&nbsp;&nbsp;&nbsp;&nbsp;&lt;/table&gt;<br />&nbsp;&nbsp;&nbsp;&lt;/div&gt;<br />&nbsp;&nbsp;&lt;/td&gt;<br />&nbsp;&lt;/tr&gt;<br />&lt;/table&gt;</font></p>
-
-
-<p>&#8230;which looks like: </p>
-
-
-<table><tbody><tr><td><div style="BORDER-RIGHT: #ccc; PADDING-RIGHT: 2px; BORDER-TOP: #ccc; PADDING-LEFT: 2px; PADDING-BOTTOM: 2px; MARGIN: 2px; BORDER-LEFT: #ccc; PADDING-TOP: 2px; BORDER-BOTTOM: #ccc; BACKGROUND-COLOR: #eee">here&#8217;s the first div </div><div style="BORDER-RIGHT: #ccc; PADDING-RIGHT: 2px; BORDER-TOP: #ccc; PADDING-LEFT: 2px; PADDING-BOTTOM: 2px; MARGIN: 2px; BORDER-LEFT: #ccc; PADDING-TOP: 2px; BORDER-BOTTOM: #ccc; BACKGROUND-COLOR: #eee">..and here&#8217;s the 2nd <table border="1"><tbody><tr><td>with a table</td></td></tr></tbody></table></div><p>&nbsp;</p></td></tr></tbody></table>
-
-
-<p>He tried a number of things that didn&rsquo;t work.&nbsp; Here&rsquo;s the solution:</p>
-
-
-<p>DIVs are block level elements that stretch to 100% of the width of the parent container.&nbsp; So to get them to sit next to each other you first need to give them some room to do so.&nbsp; Set the width so that they will both fit (be sure to account for border + margin as well).</p>
-
-
-<p>The next thing to do is set the DIVs to float:left;&nbsp; This will make them push up next to each other until there is no more room, then they will wrap.</p>
-
-
-<p>Here it is in action:</p>
-
-
-<p>&nbsp;<font face="Courier" color="#0080c0" size="2">&lt;table&gt;<br />&nbsp;&lt;tr&gt;<br />&nbsp;&nbsp;&lt;td width=&#8221;300&#8221;&gt;<br />&nbsp;&nbsp;&nbsp;<br />&nbsp;&nbsp;&nbsp;&lt;div style=&#8221;margin:2px; padding:2px; border: solid 1px #bbb; background-color: #eee; float: left; width: 75px;&#8221;&gt;<br />&nbsp;&nbsp;&nbsp;&nbsp;here&#8217;s the 1st div<br />&nbsp;&nbsp;&nbsp;&lt;/div&gt;</font></p>
-
-
-<p><font face="Courier" color="#0080c0" size="2">&nbsp;&nbsp;&nbsp;&lt;div style=&#8221;margin:2px; padding:2px; border: solid 1px #bbb; background-color: #eee; float: left; width: 75px;&#8221;&gt;<br />&nbsp;&nbsp;&nbsp;&nbsp;..and here&#8217;s the 2nd<br />&nbsp;&nbsp;&nbsp;&nbsp;&lt;table border=1&gt;<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;tr&gt;&lt;td&gt;with a table&lt;/td&gt;&lt;/tr&gt;<br />&nbsp;&nbsp;&nbsp;&nbsp;&lt;/table&gt;<br />&nbsp;&nbsp;&nbsp;&lt;/div&gt;<br />&nbsp;&nbsp;&lt;/td&gt;<br />&nbsp;&lt;/tr&gt;<br />&lt;/table&gt;</font></p>
-
-
-<table><tbody><tr><td width="300"><div style="BORDER-RIGHT: #bbb 1px solid; PADDING-RIGHT: 2px; BORDER-TOP: #bbb 1px solid; PADDING-LEFT: 2px; FLOAT: left; PADDING-BOTTOM: 2px; MARGIN: 2px; BORDER-LEFT: #bbb 1px solid; WIDTH: 75px; PADDING-TOP: 2px; BORDER-BOTTOM: #bbb 1px solid; BACKGROUND-COLOR: #eee">here&#8217;s the 1st div </div><div style="BORDER-RIGHT: #bbb 1px solid; PADDING-RIGHT: 2px; BORDER-TOP: #bbb 1px solid; PADDING-LEFT: 2px; FLOAT: left; PADDING-BOTTOM: 2px; MARGIN: 2px; BORDER-LEFT: #bbb 1px solid; WIDTH: 75px; PADDING-TOP: 2px; BORDER-BOTTOM: #bbb 1px solid; BACKGROUND-COLOR: #eee">..and here&#8217;s the 2nd <table border="1"><tbody><tr><td>with a table</td></tr></tbody></table></div></td></tr></tbody></table>
-
-
-<p>&nbsp;</p>
-
-
-<p>Understanding how floating works is an important part of effective CSS web design.&nbsp; I may consider some more of these simple examples if they are of help to my readers.</p>
-
-</div>
-  <footer>
-    <a rel="full-article" href="/2006/08/making-divs-stay-next-to-each-other/">Read on &rarr;</a>
-  </footer>
-
-
-  </article>
-
 <nav role="pagination">
   <div>
     
@@ -742,6 +727,10 @@ gin: -moz-initial; -moz-background-inline-policy: -moz-initial; color: black; fo
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2011/09/creating-a-glow-effect-for-uilabel-and-uibutton/">Creating a Glow Effect for UILabel and UIButton</a>
+      </li>
+    
+      <li class="post">
         <a href="/2011/09/introducing-appsites/">Introducing App Sites</a>
       </li>
     
@@ -755,10 +744,6 @@ gin: -moz-initial; -moz-background-inline-policy: -moz-initial; color: black; fo
     
       <li class="post">
         <a href="/2011/08/is-rails-exempt-from-software-principles/">Is Rails Exempt?</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2011/08/when-viewwillappear-isnt-called/">When viewWillAppear: Isn&#8217;t Called</a>
       </li>
     
   </ul>
