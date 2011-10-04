@@ -72,7 +72,7 @@ view, and was done.
 
 The effect can be seen below.
 
-{% video /videos/button_flip.m4v 389 336 /videos/button_flip1.jpeg %}
+{% video https://flux88.s3.amazonaws.com/videos/button_flip.m4v 389 336 https://flux88.s3.amazonaws.com/videos/button_flip1.jpeg %}
 
 Note that the flip effect on the main view is achieved separately, but
 the 2 strategies share identical values for the animation, so the flip
