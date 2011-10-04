@@ -4,7 +4,7 @@
   <title>Fickle Bits</title>
   <link href="http://benscheirman.com/atom.xml" rel="self"/>
   <link href="http://benscheirman.com/"/>
-  <updated>2011-10-04T10:40:05-05:00</updated>
+  <updated>2011-10-04T10:51:19-05:00</updated>
   <id>http://benscheirman.com/</id>
   <author>
     <name>Ben Scheirman</name>
@@ -23,7 +23,7 @@ the button in the top right corner flips over synchronized with the flip
 animation of the main view.&lt;/p&gt;
 
 &lt;p&gt;I wanted to achieve a similar effect for the iPhone app that I'm
-building, Deli Radio (&lt;a href=&quot;app%20store%20link&quot;&gt;http://itunes.com/apps/deliradio&lt;/a&gt;).&lt;/p&gt;
+building, Deli Radio (&lt;a href=&quot;http://itunes.com/apps/deliradio&quot;&gt;app store link&lt;/a&gt;).&lt;/p&gt;
 
 &lt;p&gt;If you've ever struggled with the flip transitions before, you probably
 know how finicky it can be to get it all working. The best way to set it
@@ -213,7 +213,7 @@ self.navigationItem.rightBarButtonItem = [[[UIBarButtonItem alloc]
 the 2 strategies share identical values for the animation, so the flip
 transition types match, as well as the duration &amp;amp; animation curve.&lt;/p&gt;
 
-&lt;p&gt;The code for this can be seen in the &lt;a href=&quot;ChaiOneUI%20project%20on%0AGithub&quot;&gt;https://github.com/chaione/chaioneui&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;The code for this can be seen in the &lt;a href=&quot;https://github.com/chaione/chaioneui&quot;&gt;ChaiOneUI project on Github&lt;/a&gt;.&lt;/p&gt;
 </content>
   </entry>
   

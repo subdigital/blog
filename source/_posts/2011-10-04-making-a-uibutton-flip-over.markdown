@@ -12,7 +12,7 @@ the button in the top right corner flips over synchronized with the flip
 animation of the main view.
 
 I wanted to achieve a similar effect for the iPhone app that I'm
-building, Deli Radio ([http://itunes.com/apps/deliradio](app store link)).
+building, Deli Radio ([app store link](http://itunes.com/apps/deliradio)).
 
 If you've ever struggled with the flip transitions before, you probably
 know how finicky it can be to get it all working. The best way to set it
@@ -78,5 +78,4 @@ Note that the flip effect on the main view is achieved separately, but
 the 2 strategies share identical values for the animation, so the flip
 transition types match, as well as the duration & animation curve.
 
-The code for this can be seen in the [https://github.com/chaione/chaioneui](ChaiOneUI project on
-Github).
+The code for this can be seen in the [ChaiOneUI project on Github](https://github.com/chaione/chaioneui).
