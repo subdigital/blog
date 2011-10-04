@@ -4,13 +4,218 @@
   <title>Fickle Bits</title>
   <link href="http://benscheirman.com/atom.xml" rel="self"/>
   <link href="http://benscheirman.com/"/>
-  <updated>2011-09-27T20:19:33-05:00</updated>
+  <updated>2011-10-04T10:40:05-05:00</updated>
   <id>http://benscheirman.com/</id>
   <author>
     <name>Ben Scheirman</name>
     
   </author>
 
+  
+  <entry>
+    <title>Making a UIButton Flip Over</title>
+    <link href="http://benscheirman.com/2011/10/making-a-uibutton-flip-over/"/>
+    <updated>2011-10-04T08:44:00-05:00</updated>
+    <id>http://benscheirman.com/2011/10/making-a-uibutton-flip-over</id>
+    <content type="html">&lt;p&gt;If you've used the iPod app on the iPhone, you've probably seen an
+interesting trick when switching from album art to the track listing:
+the button in the top right corner flips over synchronized with the flip
+animation of the main view.&lt;/p&gt;
+
+&lt;p&gt;I wanted to achieve a similar effect for the iPhone app that I'm
+building, Deli Radio (&lt;a href=&quot;app%20store%20link&quot;&gt;http://itunes.com/apps/deliradio&lt;/a&gt;).&lt;/p&gt;
+
+&lt;p&gt;If you've ever struggled with the flip transitions before, you probably
+know how finicky it can be to get it all working. The best way to set it
+up is to have a parent view contain both views that you want to swap,
+and set the animation transition type on &lt;em&gt;that&lt;/em&gt; view.&lt;/p&gt;
+
+&lt;p&gt;For a button (either in the navigation bar or elsewhere) we'd need to
+introduce a parent view to achieve this effect.  This is how I achieved
+the effect.&lt;/p&gt;
+
+&lt;p&gt;&lt;img class='right ' src='http://benscheirman.com/images/btn-info-border@2x.png' width='' height='' alt='' title=''&gt;
+&lt;img class='right ' src='http://benscheirman.com/images/btn-images@2x.png' width='' height='' alt='' title=''&gt;&lt;/p&gt;
+
+&lt;p&gt;First, I had two images I wanted to use for my &lt;code&gt;UIBarButtonItem&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;I wanted this to be easily reusable (since I need to do this in more
+than one place in this application), so I created a category method on
+&lt;code&gt;UIButton&lt;/code&gt;.&lt;/p&gt;
+
+&lt;div&gt;&lt;script src='https://gist.github.com/1261810.js?file=UIButtonCHButtonFlip.h'&gt;&lt;/script&gt;
+&lt;noscript&gt;&lt;pre&gt;&lt;code&gt;@interface UIButton (CHFlipButton)
+
++ (UIView *)flipButtonWithFirstImage:(UIImage *)firstImage 
+                         secondImage:(UIImage *)secondImage
+                     firstTransition:(UIViewAnimationTransition)firstTransition
+                    secondTransition:(UIViewAnimationTransition)secondTransition
+                      animationCurve:(UIViewAnimationCurve)curve
+                            duration:(NSTimeInterval)duration
+                              target:(id)target
+                            selector:(SEL)selector;
+
+
+@end
+&lt;/code&gt;&lt;/pre&gt;&lt;/noscript&gt;&lt;/div&gt;
+
+
+&lt;p&gt;It may look strange that a &lt;code&gt;UIButton&lt;/code&gt; class method returns a &lt;code&gt;UIView&lt;/code&gt;
+instance, but we need to have a container view to base the animations
+off of.&lt;/p&gt;
+
+&lt;p&gt;Here is the implementation:&lt;/p&gt;
+
+&lt;div&gt;&lt;script src='https://gist.github.com/1261810.js?file=UIButtonCHButtonFlip.m'&gt;&lt;/script&gt;
+&lt;noscript&gt;&lt;pre&gt;&lt;code&gt;#import &amp;lt;objc/runtime.h&amp;gt;
+
+#import &amp;quot;UIButton+CHFlipButton.h&amp;quot;
+
+// keys used for assigning associated objects
+static char UIButtonFlipBlockKey;
+static char UIButtonFlipAltButtonKey;
+static char UIButtonFlipTransitionKey;
+static char UIButtonFlipContainerViewKey;
+
+typedef void (^UIButtonFlipActionBlock)(id sender);
+
+@implementation UIButton (CHFlipButton)
+
+// associate the block with the button instance, then set the default button handler
+
+- (void)chFlipButton_handleControlEvent:(UIControlEvents)event withBlock:(UIButtonFlipActionBlock)block {
+    objc_setAssociatedObject(self, &amp;amp;UIButtonFlipBlockKey, block, OBJC_ASSOCIATION_COPY);
+    [self addTarget:self action:@selector(chFlipButton_callFlipBlock:) forControlEvents:UIControlEventTouchUpInside];
+}
+
+// the default button handler just calls the block
+
+- (void)chFlipButton_callFlipBlock:(id)sender {
+    UIButtonFlipActionBlock block = objc_getAssociatedObject(self, &amp;amp;UIButtonFlipBlockKey);
+    if (block) {
+        block(sender);
+    }
+}
+
++ (UIView *)flipButtonWithFirstImage:(UIImage *)firstImage 
+                         secondImage:(UIImage *)secondImage
+                     firstTransition:(UIViewAnimationTransition)firstTransition
+                    secondTransition:(UIViewAnimationTransition)secondTransition
+                      animationCurve:(UIViewAnimationCurve)curve
+                            duration:(NSTimeInterval)duration
+                              target:(id)target
+                            selector:(SEL)selector {
+    
+    UIButtonFlipActionBlock flipButtonAction = ^(id sender) { /* shown further down */ };
+    
+    //create the first button
+    UIButton *button1 = [UIButton buttonWithType:UIButtonTypeCustom];
+    [button1 setBackgroundImage:firstImage forState:UIControlStateNormal];
+    [button1 chFlipButton_handleControlEvent:UIControlEventTouchUpInside withBlock:flipButtonAction];
+    [button1 setFrame:CGRectMake(0, 0, firstImage.size.width, firstImage.size.height)];
+
+    //create the 2nd button
+    UIButton *button2 = [UIButton buttonWithType:UIButtonTypeCustom];
+    [button2 setBackgroundImage:secondImage forState:UIControlStateNormal];
+    [button2 chFlipButton_handleControlEvent:UIControlEventTouchUpInside withBlock:flipButtonAction];
+    [button2 setFrame:CGRectMake(0, 0, secondImage.size.width, secondImage.size.height)];    
+ 
+    //create a container to hold them
+    UIView *container = [[[UIView alloc] initWithFrame:button1.bounds] autorelease];
+    [container addSubview:button1];
+    
+    //record state so we can access it later (in the block)
+    objc_setAssociatedObject(button1, &amp;amp;UIButtonFlipAltButtonKey, button2, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    objc_setAssociatedObject(button1, &amp;amp;UIButtonFlipTransitionKey, [NSNumber numberWithInt:firstTransition], OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    objc_setAssociatedObject(button1, &amp;amp;UIButtonFlipContainerViewKey, container, OBJC_ASSOCIATION_ASSIGN);
+    
+    objc_setAssociatedObject(button2, &amp;amp;UIButtonFlipAltButtonKey, button1, OBJC_ASSOCIATION_ASSIGN);
+    objc_setAssociatedObject(button2, &amp;amp;UIButtonFlipTransitionKey, [NSNumber numberWithInt:secondTransition], OBJC_ASSOCIATION_ASSIGN);  //button1 is in charge of the retains initially
+    objc_setAssociatedObject(button2, &amp;amp;UIButtonFlipContainerViewKey, container, OBJC_ASSOCIATION_ASSIGN);
+    
+    //returns the container, because this is what needs to be added to your view
+    return container;
+}
+
+@end
+&lt;/code&gt;&lt;/pre&gt;&lt;/noscript&gt;&lt;/div&gt;
+
+
+&lt;p&gt;I am using a little-known technique of setting associated objects
+using &lt;code&gt;objc_setAssociatedObject(...)&lt;/code&gt;.  This uses the runtime to attach
+state to an existing class without needing to subclass.&lt;/p&gt;
+
+&lt;p&gt;Now that you understand how it is all setup, the block body will now
+make sense:&lt;/p&gt;
+
+&lt;div&gt;&lt;script src='https://gist.github.com/1261810.js?file=UIButtonCHButtonFlipBlock.m'&gt;&lt;/script&gt;
+&lt;noscript&gt;&lt;pre&gt;&lt;code&gt;/* Here is that block definition from above */
+
+    UIButtonFlipActionBlock flipButtonAction = ^(id sender) {
+
+        //get the alternate button &amp;amp; container
+        UIButton *otherButton = (UIButton *)objc_getAssociatedObject(sender, &amp;amp;UIButtonFlipAltButtonKey);
+        UIView *container = (UIView *)objc_getAssociatedObject(sender, &amp;amp;UIButtonFlipContainerViewKey);
+        
+        //figure out our transition
+        NSNumber *transitionNumber = (NSNumber *)objc_getAssociatedObject(sender, &amp;amp;UIButtonFlipTransitionKey);
+        UIViewAnimationTransition transition = (UIViewAnimationTransition)[transitionNumber intValue];
+                
+        [UIView animateWithDuration:duration animations:^ {
+            
+            [UIView setAnimationTransition:transition forView:container cache:YES];
+            [UIView setAnimationCurve:curve];
+            
+            //the view has the last retain count on the sender button, so we need to retain it first
+            objc_setAssociatedObject(otherButton, &amp;amp;UIButtonFlipAltButtonKey, sender, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+            
+            [sender removeFromSuperview];
+            [container addSubview:otherButton];
+            
+            //sender no longer needs to retain the other button, because the view now is...
+            objc_setAssociatedObject(sender, &amp;amp;UIButtonFlipAltButtonKey, otherButton, OBJC_ASSOCIATION_ASSIGN);
+            
+        }];
+        
+        //call the original button handler
+        [target performSelector:selector withObject:self];
+    };
+&lt;/code&gt;&lt;/pre&gt;&lt;/noscript&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Usage is really easy.  I just created a bar button item with a custom
+view, and was done.&lt;/p&gt;
+
+&lt;p&gt;```objc&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;UIImage *firstImage  = [UIImage imageNamed:@&quot;btn-info.png&quot;];
+UIImage *secondImage = [UIImage imageNamed:@&quot;btn-images.png&quot;];
+UIView *container    = [UIButton flipButtonWithFirstImage:firstImage
+                                              secondImage:secondImage
+                                          firstTransition:UIViewAnimationTransitionFlipFromRight
+                                         secondTransition:UIViewAnimationTransitionFlipFromLeft
+                                           animationCurve:UIViewAnimationCurveEaseInOut
+                                                 duration:0.8
+                                                   target:self
+                                                 selector:@selector(flipContent)];
+
+self.navigationItem.rightBarButtonItem = [[[UIBarButtonItem alloc] 
+  initWithCustomView:container] autorelease];
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;```&lt;/p&gt;
+
+&lt;p&gt;The effect can be seen below.&lt;/p&gt;
+
+&lt;p&gt;&lt;video width='389' height='336' preload='none' controls poster=' /videos/button_flip1.jpeg'&gt;&lt;source src='http://benscheirman.com/videos/button_flip.m4v' type='video/mp4; codecs=&quot;avc1.42E01E, mp4a.40.2&quot;'/&gt;&lt;/video&gt;&lt;/p&gt;
+
+&lt;p&gt;Note that the flip effect on the main view is achieved separately, but
+the 2 strategies share identical values for the animation, so the flip
+transition types match, as well as the duration &amp;amp; animation curve.&lt;/p&gt;
+
+&lt;p&gt;The code for this can be seen in the &lt;a href=&quot;ChaiOneUI%20project%20on%0AGithub&quot;&gt;https://github.com/chaione/chaioneui&lt;/a&gt;.&lt;/p&gt;
+</content>
+  </entry>
   
   <entry>
     <title>Creating a Glow Effect for UILabel and UIButton</title>
@@ -1876,46 +2081,6 @@ Now that I have that implemented, all I have to do is include my header file any
 
 
 &lt;p&gt;You'll need to reboot, but once you're back up you should be able to create more Postgres databases with ease.&lt;br /&gt;&lt;/p&gt;
-
-</content>
-  </entry>
-  
-  <entry>
-    <title>Presentations from iPhone Dev Con Boston</title>
-    <link href="http://benscheirman.com/2011/04/presentations-from-iphone-dev-con-boston/"/>
-    <updated>2011-04-13T00:00:00-05:00</updated>
-    <id>http://benscheirman.com/2011/04/presentations-from-iphone-dev-con-boston</id>
-    <content type="html">&lt;p&gt;I gave 2 talks at iPhone Dev Con in Boston. I've posted the slides &amp;amp; material online.&lt;/p&gt;
-
-
-&lt;h2&gt;Effective iOS Network Programming Techniques&lt;/h2&gt;
-
-
-&lt;div style=&quot;width:425px&quot; id=&quot;__ss_7615089&quot;&gt;
-  &lt;strong style=&quot;display:block;margin:12px 0 4px&quot;&gt;&lt;a href=&quot;http://www.slideshare.net/subdigital/effective-ios-network-programming-techniques&quot; title=&quot;Effective iOS Network Programming Techniques&quot;&gt;Effective iOS Network Programming Techniques&lt;/a&gt;&lt;/strong&gt; &lt;iframe src=&quot;http://www.slideshare.net/slideshow/embed_code/7615089&quot; width=&quot;425&quot; height=&quot;355&quot; frameborder=&quot;0&quot; marginwidth=&quot;0&quot; marginheight=&quot;0&quot; scrolling=&quot;no&quot;&gt;&lt;/iframe&gt;
-
-  &lt;div style=&quot;padding:5px 0 12px&quot;&gt;
-    View more &lt;a href=&quot;http://www.slideshare.net/&quot;&gt;presentations&lt;/a&gt; from &lt;a href=&quot;http://www.slideshare.net/subdigital&quot;&gt;subdigital&lt;/a&gt;
-  &lt;/div&gt;
-&lt;/div&gt;
-
-
-&lt;h2&gt;Objective-C &amp;amp; iPhone for .NET Developers&lt;/h2&gt;
-
-
-&lt;div style=&quot;width:425px&quot; id=&quot;__ss_7615068&quot;&gt;
-  &lt;strong style=&quot;display:block;margin:12px 0 4px&quot;&gt;&lt;a href=&quot;http://www.slideshare.net/subdigital/objectivec-iphone-for-net-developers&quot; title=&quot;Objective-C &amp;amp; iPhone for .NET Developers&quot;&gt;Objective-C &amp;amp; iPhone for .NET Developers&lt;/a&gt;&lt;/strong&gt; &lt;iframe src=&quot;http://www.slideshare.net/slideshow/embed_code/7615068&quot; width=&quot;425&quot; height=&quot;355&quot; frameborder=&quot;0&quot; marginwidth=&quot;0&quot; marginheight=&quot;0&quot; scrolling=&quot;no&quot;&gt;&lt;/iframe&gt;
-
-  &lt;div style=&quot;padding:5px 0 12px&quot;&gt;
-    View more &lt;a href=&quot;http://www.slideshare.net/&quot;&gt;presentations&lt;/a&gt; from &lt;a href=&quot;http://www.slideshare.net/subdigital&quot;&gt;subdigital&lt;/a&gt;
-  &lt;/div&gt;
-&lt;/div&gt;
-
-
-&lt;p&gt;Demo code &amp;amp; slides for both sessions &lt;a href=&quot;https://github.com/subdigital/iphonedevcon-boston&quot;&gt;can be found on github&lt;/a&gt;.&lt;/p&gt;
-
-
-&lt;p&gt;Thanks to all who attended and left me such great reviews!&lt;/p&gt;
 
 </content>
   </entry>

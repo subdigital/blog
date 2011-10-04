@@ -106,6 +106,42 @@
     
   <header>
     
+      <h1 class="entry-title"><a href="/2005/06/lessons-learned-viewstate-server-controls-and-control-lifecycle/">Lessons Learned &#8211; ViewState, Server Controls, and Control Lifecycle.</a></h1>
+    
+    
+      <p class="meta">
+
+
+
+
+<time datetime="2005-06-29 00:00:00 -0500" pubdate  updated >Jun 29<span>th</span>, 2005</time>
+
+
+</p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Ugh, well&#8230; I finally fixed the major issue that has held up my development for 2 days now.It really boileddown to the fact that I had properties that were persisting themselveswith ViewState like this:<br><textarea name="code" language="c#" rows="8" cols="50">private const string MYNAME_KEY = &#8220;__MyName&#8221;;public string MyName{ get { return ViewState[MYNAME_KEY].ToString(); } set { ViewState[MYNAME_KEY] = value; }}</textarea><br>Which will work perfectly well as long as you don&#8217;t access this propertybefore the control&#8217;s Init event&#8230; This is what I have come up with,(and someone please correct me if I am wrong) is that ViewState isreally an IStateBag instance that is given to your control, which isdifferent for each control&#8230; This helps eliminate conflicts if I addmultiple controls on the same page&#8230; If I try to access the propertybefore this instance is created (which may be when our control is addedto the parent controls collection&#8230; I&#8217;m not yet sure of this) then Iget a brand new string, not the one that was previously persisted&#8230;.NET doesn&#8217;t give you any error or warning that this is happening,which makes it very hard to track down.<br><br>The above worked for most of myserver controls, but one in particular was giving me problems. I movedthe persistance code away from the property itself, which I think Ilike better visually anyway, and this seems to have relieved theproblem.This is how you tinker with your controls viewstate:<br><div id="code"><br></p>
+
+<div><figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>&lt;br>private string _myName;&lt;br>public string MyName&lt;br>{ &lt;br>get { return _myName; } &lt;br>set { _myName = value; }&lt;br>} &lt;br>&lt;br>protected override object SaveViewState()&lt;br>{ &lt;br>Pair p = new Pair(); &lt;br>p.First = this._myName; &lt;br>p.Second = base.SaveViewState(); &lt;br> &lt;br>return p;&lt;br>}&lt;br>&lt;br>protected override void LoadViewState(object savedState)&lt;br>{ &lt;br>Pair p = savedState as Pair; &lt;br>this._myName = p.First as ArrayList; &lt;br>base.LoadViewState (p.Second);&lt;br>}&lt;br></div></code></pre></td></tr></table></div></figure></div>
+
+
+<p></div>Hopefully this might save someone a few hours of head-scratchin&#8230;. it certainly cost me a lot more than a couple headaches.<div style="clear: both; padding-bottom: 0.25em;"></div></p>
+</div>
+  <footer>
+    <a rel="full-article" href="/2005/06/lessons-learned-viewstate-server-controls-and-control-lifecycle/">Read on &rarr;</a>
+  </footer>
+
+
+  </article>
+
+
+  <article>
+    
+  <header>
+    
       <h1 class="entry-title"><a href="/2005/06/server-control-page-reference/">Server Control Page Reference</a></h1>
     
     
@@ -412,39 +448,6 @@
 
   </article>
 
-
-  <article>
-    
-  <header>
-    
-      <h1 class="entry-title"><a href="/2005/05/forza-motorsport/">Forza Motorsport</a></h1>
-    
-    
-      <p class="meta">
-
-
-
-
-<time datetime="2005-05-19 00:00:00 -0500" pubdate  updated >May 19<span>th</span>, 2005</time>
-
-
-</p>
-    
-  </header>
-
-
-  <div class="entry-content"><div style="clear:both;"></div>
-
-
-<p>My new fix is Forza Motorsport for XBox.I am really getting into it.I particularly like how you can search for cars that match certain criteria;searching is a feature that is common to most applications (be it web, windows, whatever) but not so much in games&#8230; I&#8217;d like to see more of this.<br /><br />Also, IREALLY like the fact that they licensed Porsche and Ferrari, these were missing from Gran Turismo 3 and it was disappointing (yes, I know that RUF&#8217;s cars are really Porsches, but still)<br /><br />I haven&#8217;t yet played GT4 and was wondering how it stacks up against Forza&#8230;. I have a PS2, so I might pick it up if it&#8217;s better than Forza.<div style="clear:both; padding-bottom: 0.25em;"></div></p>
-</div>
-  <footer>
-    <a rel="full-article" href="/2005/05/forza-motorsport/">Read on &rarr;</a>
-  </footer>
-
-
-  </article>
-
 <nav role="pagination">
   <div>
     
@@ -479,6 +482,10 @@
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2011/10/making-a-uibutton-flip-over/">Making a UIButton Flip Over</a>
+      </li>
+    
+      <li class="post">
         <a href="/2011/09/creating-a-glow-effect-for-uilabel-and-uibutton/">Creating a Glow Effect for UILabel and UIButton</a>
       </li>
     
@@ -492,10 +499,6 @@
     
       <li class="post">
         <a href="/2011/08/vim---could-not-invoke-jslint/">Vim - Could Not Invoke JSLint</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2011/08/is-rails-exempt-from-software-principles/">Is Rails Exempt?</a>
       </li>
     
   </ul>

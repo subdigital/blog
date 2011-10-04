@@ -106,6 +106,85 @@
     
   <header>
     
+      <h1 class="entry-title"><a href="/2008/03/debugging-routes/">Debugging Routes</a></h1>
+    
+    
+      <p class="meta">
+
+
+
+
+<time datetime="2008-03-15 00:00:00 -0500" pubdate  updated >Mar 15<span>th</span>, 2008</time>
+
+
+</p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Previously Scott Hanselman <a href="http://www.hanselman.com/blog/TheWeeklySourceCode17ASPNETMVCCommunityCodeEdition.aspx" target="_blank">pointed out</a> that in CodeCampServer we are using a tiny wrapper around MvcRouteHandler in order to catch all exceptions and provide the route information along with the error message.&nbsp; I called this (for lack of a better name) <strong>Better</strong>MvcRouteHandler.&nbsp; That&rsquo;s right, Better!</p>
+
+
+<p>Scott took this a mile further and created a nice route debugging table that you can use while debugging.&nbsp; You can <a href="http://haacked.com/archive/2008/03/13/url-routing-debugger.aspx" target="_blank">download this route debugger on Phil&rsquo;s blog</a> (with source).</p>
+
+
+<p>To enable the route table debugger, you have to add this line to your global.asax:</p>
+
+
+<p>`RouteDebug.RouteDebugger.DebugRoutes(RouteTable.Routes);`</p>
+
+
+<p>I think it would be better to be able to add <strong>?routedebug</strong> to the end of ANY url and have this happen automatically.&nbsp; To accomplish this I created an HttpModule.&nbsp; It looks at each request for the <strong>?routedebug</strong> querystring key and, if found, calls the line above.&nbsp; I ran into a hiccup, though&hellip; once you set the route handler to the debug one, all future requests use it as well (even without the url parameter).&nbsp; </p>
+
+
+<p>Good &lsquo;ol Phil released the source for this route debugger, so I added a method to revert the routes back to their original values if the query parameter doesn&rsquo;t exist.</p>
+
+
+<p>Here is the RouteDebugModule:</p>
+
+
+<p><img src="/images/routedebugmodule.png" alt="Route_debug_module"  border="0"  /></p>
+
+
+<p><em>(remember:&nbsp; this code would <strong>NOT</strong> be appropriate for production use, both for the awkward setting of route handlers on every request and the fact that you don&rsquo;t want your users to be able to see your route information.)</em></p>
+
+
+<p>And the RevertRouteHandlers method (in Phil&rsquo;s RouteDebugger.cs):</p>
+
+
+<p><img src="/images/revertroutes.png" alt="Revert_routes"  border="0"  /></p>
+
+
+<p>The _oldRouteHandlers is just a static dictionary that hangs on to the route before swapping with the debug one.</p>
+
+
+<p>I added the HttpModule to my web.config, and now I can do this:</p>
+
+
+<p><a href="http://www.flux88.com/uploads/route_2Ddebug_2Din_2Daction.png"><img src="/images/route_2Ddebug_2Din_2Daction_thumb.jpg" alt="Route-debug-in-action"  border="0"  /></a></p>
+
+
+<p>&hellip;and also flip back to the regular request without recompiling.</p>
+
+
+<p>I&rsquo;m thinking they should call this <strong>BettererRouteHandler</strong> instead of RouteDebugHandler, who&rsquo;s with me?</p>
+
+
+<div class="bjtags">Tags:<a rel="tag" href="http://technorati.com/tag/asp.net+mvc">asp.net+mvc</a>, <a rel="tag" href="http://technorati.com/tag/routing">routing</a></div>
+
+</div>
+  <footer>
+    <a rel="full-article" href="/2008/03/debugging-routes/">Read on &rarr;</a>
+  </footer>
+
+
+  </article>
+
+
+  <article>
+    
+  <header>
+    
       <h1 class="entry-title"><a href="/2008/03/asp-net-mvc-preview-2-thoughts/">ASP.NET MVC - Preview 2 Thoughts</a></h1>
     
     
@@ -530,67 +609,6 @@
 
   </article>
 
-
-  <article>
-    
-  <header>
-    
-      <h1 class="entry-title"><a href="/2008/02/yikesi-spoke-too-soon/">Yikes!I Spoke Too Soon!</a></h1>
-    
-    
-      <p class="meta">
-
-
-
-
-<time datetime="2008-02-19 00:00:00 -0600" pubdate  updated >Feb 19<span>th</span>, 2008</time>
-
-
-</p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>I previously noted that I was outgrowing shared hosting and I migrated to a VPS account with VPSLAND.&nbsp;</p>
-
-
-<p>I spoke too soon.&nbsp; <strong>Their prices are the lowest for a reason</strong>.</p>
-
-
-<p>VPSLAND&rsquo;s support was good for the first 24&ndash;hours, but after that they neglected me.&nbsp; I opened a critical ticket because my sites (including this blog) were down for over an hour.&nbsp; I eventually fixed it on my own by some strange combination of disabling services and rebooting the server 3 or 4 times.&nbsp; 6 hours later a tech chimes in and says &ldquo;we checked your sites and everything is fine!&rdquo;&nbsp; &mdash; yeah, great help.</p>
-
-
-<p><img alt="servers" hspace="10" src="http://www.flux88.com/uploads/480552_cmts.jpg" align="left" vspace="10" border="0" / /></p>
-
-
-<p>I inquire as to why the system won&rsquo;t even serve up an empty subtext application and they told me that I should upgrade to a 1GB RAM plan (from 512mb).&nbsp; I figured I&rsquo;d need it eventually, so I obliged.&nbsp; It took them 12 hours to respond to my request.&nbsp; Meanwhile, one of my sites was acting sluggish and I couldn&rsquo;t get my friend&rsquo;s blog started b/c subtext kept timing out.</p>
-
-
-<p>The next morning they told me my server was upgraded and everything was fine.&nbsp; But it wasn&rsquo;t.&nbsp; I was seeing the same sluggish behavior and subtext was continually timing out (at the database level &mdash; but remember, this is an empty database).&nbsp; This time I know it&rsquo;s not RAM because I have 700 freakin megabytes free.</p>
-
-
-<p>I eventually broke down and got a VPS plan at godaddy (512MB ram) for $37/month.&nbsp; It&rsquo;s a little more money, but they set it up in about 45 minutes and it&rsquo;s worked flawlessly so far!</p>
-
-
-<p>I also want to apologize to a certain reader who decided to go with VPSLAND after reading my post.&nbsp; He is also having troubles with them and I wish I had not posted such a glowing review so quickly after signing up.&nbsp; VPSLAND refunded my payment, so hopefully if you still have problems you can do the same.</p>
-
-
-<p>Anyway, I will say that so far godaddy&rsquo;s plan is good, but I will not give them my Seal of Approval (TM) until I&rsquo;ve used it for a couple months.</p>
-
-
-<p><em>(if you noticed the downtime, I apologize!)</em></p>
-
-
-<div class="bjtags">Tags:<a rel="tag" href="http://technorati.com/tag/godaddy">godaddy</a>, <a rel="tag" href="http://technorati.com/tag/vpsland">vpsland</a>, <a rel="tag" href="http://technorati.com/tag/vps">vps</a>, <a rel="tag" href="http://technorati.com/tag/hosting">hosting</a></div>
-
-</div>
-  <footer>
-    <a rel="full-article" href="/2008/02/yikesi-spoke-too-soon/">Read on &rarr;</a>
-  </footer>
-
-
-  </article>
-
 <nav role="pagination">
   <div>
     
@@ -625,6 +643,10 @@
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2011/10/making-a-uibutton-flip-over/">Making a UIButton Flip Over</a>
+      </li>
+    
+      <li class="post">
         <a href="/2011/09/creating-a-glow-effect-for-uilabel-and-uibutton/">Creating a Glow Effect for UILabel and UIButton</a>
       </li>
     
@@ -638,10 +660,6 @@
     
       <li class="post">
         <a href="/2011/08/vim---could-not-invoke-jslint/">Vim - Could Not Invoke JSLint</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2011/08/is-rails-exempt-from-software-principles/">Is Rails Exempt?</a>
       </li>
     
   </ul>

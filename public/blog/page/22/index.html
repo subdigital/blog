@@ -106,6 +106,70 @@
     
   <header>
     
+      <h1 class="entry-title"><a href="/2007/08/professional-xna-game-programming-review/">Professional XNA Game Programming - Review</a></h1>
+    
+    
+      <p class="meta">
+
+
+
+
+<time datetime="2007-08-30 00:00:00 -0500" pubdate  updated >Aug 30<span>th</span>, 2007</time>
+
+
+</p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><img src="/images/xna_2Dbook.jpg" hspace="10"  border="0"  />I just finished reading Professional <a href="http://www.amazon.com/Professional-XNA-Game-Programming-Windows/dp/0470126779/ref=pd_bbs_sr_1/104-8400577-8532738?ie=UTF8&amp;s=books&amp;qid=1188482950&amp;sr=8-1">XNA Game Development</a> by <a href="http://abi.exdream.com/">Benjamin Nitchske</a>.&nbsp; It was my first attempt at using the XNA Framework.&nbsp; I have some experience with DirectX, as I have been tinkering with it since version 5. Most of my work has been with the Managed DirectX bits for .NET 1.1. I found it to be much easier and readable than C++, just because of the language differences.</p>
+
+
+<p>XNA takes that next productivity leap and really allows you to hit the ground running.&nbsp; You start out with a game loop (complete with elapsed time already calculated for you), a graphics device already setup, and a managed content pipeline for imported models, sounds, and textures.&nbsp; Things like graphics memory getting lost when you alt-tab are already handled for you.</p>
+
+
+<p>But enough about XNA, this post is a review for Benjamin&#8217;s book.&nbsp; If you haven&#8217;t heard of him before, he was the author of the first Managed DirectX game called Arena Wars, and later wrote RocketCommander. Both games are very well done and he ported RocketCommander to XNA so that you can play it on the XBOX 360. XNA Racer was also done completely by himself, which is very impressive.&nbsp; Needless to say, with all that background and expertise&#8230; I had high hopes for this book.</p>
+
+
+<p>The first few chapters introduced how Benjamin approaches game development.&nbsp; He calls them &#8220;Unit Tests&#8221; but that term often implies that the tests are automated.&nbsp; His tests are basically slices of game functionality that he calls manually.&nbsp; For example he might have a unit test to verify that shadows work properly, or that a specific collision detection algorithm works.&nbsp; He is able to setup the update and render loops using anonymous methods and execute them using batch files or manually calling the unit test instead of the main game.&nbsp; I found this to be very interesting, however the code that he used to write it was somewhat ugly and unintuitive.&nbsp; I coded the Pong game following his coding style and was disappointed the whole way through it.&nbsp; While he does say that we will utilize better code for the next game, the code he wrote here was inexcusably bad. I got the game working, however new features and modifications would prove to be difficult because it is just spaghetti code.&nbsp; I swallowed my pride and told myself, &#8220;.. it will get better.&#8221;</p>
+
+
+<p>So then I started to follow his next example: Breakout.&nbsp; I have built breakout before using Managed DirectX, and it was quite fun.&nbsp; I was disappointed to find out that he didn&#8217;t really <em>buid</em> the game through the book, he rather took the reader on an exploration of code already written. And he was true to his word, the code pulled a lot of functionality into &#8220;helper&#8221; classes which made them reusable.&nbsp; And yes, the code was still horrid.</p>
+
+
+<p>I mentioned reusable code.&nbsp; It wasn&#8217;t reusable like you&#8217;re thinking.&nbsp; He actually tells you to copy the code from the previous game and paste it into the new game.&nbsp; I&#8217;m not kidding.&nbsp; I&#8217;m a professional developer.&nbsp; This book is called&nbsp;<em>Professional</em> XNA.&nbsp; Professionals don&#8217;t write code like that. He begins to talk about 3D programming in a way that is &#8211; while full of information &#8211; poorly organized and generally boring.&nbsp; I learned a lot in this section, but nothing I can really refer to later.&nbsp; It was more like a stream of conciousness than organized writing. </p>
+
+
+<p>Let me give you a hard example of how bad the code is.&nbsp; At one point he is talking about how he handles car physics, which was very interesting.&nbsp; Then I saw the class diagram where he implemented it.&nbsp; It looked something like this: </p>
+
+
+<p><img src="/images/carPhysics_2Dcrap_small.jpg" alt="CarPhysics-crap"  border="0"  /></p>
+
+
+<p>What!?!? So `ChaseCamera` inherits from `CarPhysics` which in turn inherits from `Player?`&nbsp; Sounds like an object model from the Twilight Zone. This is pure junk as an object model, and is really only there because the CarPhysics object needs to know details about what the player is doing, and indeed so does the camera. But that doesn&#8217;t mean you should break all rules of OO just to achieve a hack that works.&nbsp; I was so appalled by this I almost didn&#8217;t finish the book.</p>
+
+
+<p>Benjamin knows his stuff, no doubt.&nbsp; I think it&rsquo;s amazing that someone can build something as beautiful as RocketCommander or XNA Racer in less than a month <strong>by yourself</strong>.&nbsp; But I just can&rsquo;t recommend this book because of the code quality.</p>
+
+
+<p>I will wrap this up by saying that I *did* enjoy the book because it got me into game programming again, but I find this type of writing almost intolerable.&nbsp; I enjoyed to learn about some nuances around XBOX 360 vs. PC versions of XNA Games, and I especially liked his Unit Testing technique. The information on Shaders was mildly useful, albeit boring. But if you&#8217;re going to be reading this book, be fore-warned that the code sucks.</p>
+
+
+<p>I give it 2.5 / 5 stars. </p>
+
+</div>
+  <footer>
+    <a rel="full-article" href="/2007/08/professional-xna-game-programming-review/">Read on &rarr;</a>
+  </footer>
+
+
+  </article>
+
+
+  <article>
+    
+  <header>
+    
       <h1 class="entry-title"><a href="/2007/08/houstontechfest-2007-was-a-hit/">HoustonTechFest 2007 Was a Hit</a></h1>
     
     
@@ -592,37 +656,6 @@
 
   </article>
 
-
-  <article>
-    
-  <header>
-    
-      <h1 class="entry-title"><a href="/2007/08/e-goes-gold/">E Goes Gold</a></h1>
-    
-    
-      <p class="meta">
-
-
-
-
-<time datetime="2007-08-08 00:00:00 -0500" pubdate  updated >Aug 8<span>th</span>, 2007</time>
-
-
-</p>
-    
-  </header>
-
-
-  <div class="entry-content"><div><p>My favorite text editor for HTML, CSS, JavaScript, Ruby/Rails, etc development just announced its 1.0 stable release.&nbsp; The beta versions were very good and I rarely ran into issues.</p><p></p><p>If you aren’t using e, you should check it out:</p><p><img src="/images/image001_.jpg" alt="e"  border="0" /></p><p>If you’re like me and jealous of the Mac crowd who gets to use TextMate ( /drool ) then this is the best alternative for Windows.&nbsp; (I hear there is a Linux version coming soon).</p><p></p><p>But if you’re not privy to what coolness awaits you, allow me to tantalize you with some e-excellence:</p><ul><li>Keep looking up the exact doctype syntax?&nbsp; Type <strong>doctype&lt;TAB&gt;</strong> and a context menu appears allowing you to select your doctype (XHTML 1.0 Transitional for example).&nbsp; &nbsp;(And you <strong>should be using a doctype</strong> header).</li><li>Type head&lt;TAB&gt;, it creates the header section for you, places the cursor right where you put the title, press &lt;TAB&gt; again and you&#8217;re ready to enter scripts and style sheets.</li><li>Want more?Try link, style, body, div, table, ul li &#8230; the list goes on. </li></ul><p>These are just the HTML bundles.There are a crap-ton of bundles that already exist for TextMate, and they are supported with e.</p><p>So head on over to <a href="http://www.e-texteditor.com/" target="_blank">http://www.e-texteditor.com</a> and pick up a trial copy.If you like it, consider buying it.The time you save will surpass the measly $35 you spent in no time.time.</p><div class="bjtags">Tags:<a rel="tag" href="http://technorati.com/tag/Tools">Tools</a></div></div>
-
-</div>
-  <footer>
-    <a rel="full-article" href="/2007/08/e-goes-gold/">Read on &rarr;</a>
-  </footer>
-
-
-  </article>
-
 <nav role="pagination">
   <div>
     
@@ -657,6 +690,10 @@
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2011/10/making-a-uibutton-flip-over/">Making a UIButton Flip Over</a>
+      </li>
+    
+      <li class="post">
         <a href="/2011/09/creating-a-glow-effect-for-uilabel-and-uibutton/">Creating a Glow Effect for UILabel and UIButton</a>
       </li>
     
@@ -670,10 +707,6 @@
     
       <li class="post">
         <a href="/2011/08/vim---could-not-invoke-jslint/">Vim - Could Not Invoke JSLint</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2011/08/is-rails-exempt-from-software-principles/">Is Rails Exempt?</a>
       </li>
     
   </ul>

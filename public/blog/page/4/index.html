@@ -106,6 +106,318 @@
     
   <header>
     
+      <h1 class="entry-title"><a href="/2010/08/load-testing-our-heroku-app/">Load Testing Our Heroku App</a></h1>
+    
+    
+      <p class="meta">
+
+
+
+
+<time datetime="2010-08-06 00:00:00 -0500" pubdate  updated >Aug 6<span>th</span>, 2010</time>
+
+
+</p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I&#8217;ve said many times before how much I love Heroku. Though they&#8217;ve had an unusually large amount of downtime this week (~1 hour), I&#8217;m still loving their service. One of the applications that we&#8217;re building is expecting a large wave of traffic shortly following a blitz PR campaign. The golden question of the hour is: How much traffic can we handle?</p>
+
+<p>Currently we&#8217;re on the Koi 1 plan, which gives us a 20GB database (shared) and 1 dyno. A &#8220;dyno&#8221; is basically 1 concurrent request. It&#8217;s very similar to a super market. You get in line and you are served in the order in which you came. If some jackass has a cartload of Natural Light &amp; Cheeze Whiz in front of you, you&#8217;re gonna have to wait a while. Adding another Dyno is like opening a 2nd lane.</p>
+
+<p>The key to good performance on Heroku is to watch the Queue Depth. If you ever reach too many people in the queue at one time your app will stop serving up requests past that mark, you&#8217;ll get a Backlog Too Deep error. I&#8217;m not sure what the limit is, but I&#8217;m guessing it&#8217;s around 100 (which is HUGE).</p>
+
+<p>For more information on Heroku performance, see their <a href="http://docs.heroku.com/performance" target="_blank">excellent docs</a>.</p>
+
+<p>To perform my tests I&#8217;m using 2 tools: <a href="http://httpd.apache.org/docs/2.0/programs/ab.html" target="_blank">Apache Bench</a> &amp; <a href="http://www.newrelic.com/" target="_blank">New Relic RPM</a>. Both are stellar.</p>
+
+<h2>Test 1: Serving up the landing page (1 Dyno, 5000 requests, 20 at a time)</h2>
+
+
+<p>This is a simple GET request that the Heroku routing mesh likely caches heavily. There&#8217;s no database queries on the homepage and no logic.</p>
+
+<h1>Requests: 5000Concurrency: 20# of Requests/Sec: 85</h1>
+
+<p>This is pretty darn good. 50% of the requests are served in under 300ms and the max request took less than 1 second. No requests failed.</p>
+
+<h2>Test 2: A simple API read operation (1 Dyno, 5000 requests, 20 at a time)</h2>
+
+
+
+
+<div><figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+<span class='line'>2</span>
+<span class='line'>3</span>
+<span class='line'>4</span>
+<span class='line'>5</span>
+<span class='line'>6</span>
+<span class='line'>7</span>
+<span class='line'>8</span>
+<span class='line'>9</span>
+<span class='line'>10</span>
+<span class='line'>11</span>
+<span class='line'>12</span>
+<span class='line'>13</span>
+<span class='line'>14</span>
+<span class='line'>15</span>
+<span class='line'>16</span>
+<span class='line'>17</span>
+<span class='line'>18</span>
+<span class='line'>19</span>
+<span class='line'>20</span>
+<span class='line'>21</span>
+<span class='line'>22</span>
+<span class='line'>23</span>
+<span class='line'>24</span>
+<span class='line'>25</span>
+<span class='line'>26</span>
+</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>Concurrency Level: 20
+</div><div class='line'>Time taken for tests:   68.067 seconds
+</div><div class='line'>Complete requests:      5000
+</div><div class='line'>Failed requests:        0
+</div><div class='line'>Write errors:           0
+</div><div class='line'>Total transferred:      4276315 bytes
+</div><div class='line'>HTML transferred:       2665000 bytes
+</div><div class='line'>&lt;strong>Requests per second:    73.46 [#/sec] (mean)&lt;/strong>
+</div><div class='line'>Time per request:       272.267 [ms] (mean)
+</div><div class='line'>Time per request:       13.613 [ms] (mean, across all concurrent requests)
+</div><div class='line'>Transfer rate:          61.35 [Kbytes/sec] received
+</div><div class='line'>Connection Times (ms)min  mean[+/-sd] median
+</div><div class='line'>maxConnect:       68   75   4.2     74      97
+</div><div class='line'>Processing:    85  197  73.9    180     607
+</div><div class='line'>Waiting:       85  197  73.9    180     607
+</div><div class='line'>Total:        157  272  73.8    255     685
+</div><div class='line'>Percentage of the requests served within a certain time (ms)
+</div><div class='line'>50%    255
+</div><div class='line'>66%    291
+</div><div class='line'>75%    313
+</div><div class='line'>80%    325
+</div><div class='line'>90%    365
+</div><div class='line'>95%    407
+</div><div class='line'>98%    477
+</div><div class='line'>99%    535
+</div><div class='line'>100%    685 (longest request)</div></code></pre></td></tr></table></div></figure></div>
+
+
+<p>Again, great results. This is due to caching of course, but at least we know we can handle lots of requests on this API.</p>
+
+<h2>Test 3: A simple API write operation (1 Dyno, 5000 requests, 20 at a time)</h2>
+
+
+<p>This API operation inserts 2 records in the database. Again, 5000 requests, 20 at a time.</p>
+
+<div><figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+<span class='line'>2</span>
+<span class='line'>3</span>
+<span class='line'>4</span>
+<span class='line'>5</span>
+<span class='line'>6</span>
+<span class='line'>7</span>
+<span class='line'>8</span>
+<span class='line'>9</span>
+<span class='line'>10</span>
+<span class='line'>11</span>
+<span class='line'>12</span>
+<span class='line'>13</span>
+<span class='line'>14</span>
+<span class='line'>15</span>
+<span class='line'>16</span>
+<span class='line'>17</span>
+<span class='line'>18</span>
+<span class='line'>19</span>
+<span class='line'>20</span>
+<span class='line'>21</span>
+<span class='line'>22</span>
+<span class='line'>23</span>
+<span class='line'>24</span>
+<span class='line'>25</span>
+<span class='line'>26</span>
+<span class='line'>27</span>
+<span class='line'>28</span>
+<span class='line'>29</span>
+<span class='line'>30</span>
+</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>Concurrency Level:      20
+</div><div class='line'>Time taken for tests:   320.981 seconds
+</div><div class='line'>Complete requests:      5000
+</div><div class='line'>&lt;strong>Failed requests:        4165
+</div><div class='line'>&lt;/strong>   (Connect: 0, Receive: 0, Length: 4165, Exceptions: 0)
+</div><div class='line'>Write errors:           0
+</div><div class='line'>Total transferred:      4022365 bytes
+</div><div class='line'>Total POSTed:           1935387
+</div><div class='line'>HTML transferred:       2651618 bytes
+</div><div class='line'>Requests per second:    15.58 [#/sec] (mean)
+</div><div class='line'>Time per request:       1283.923 [ms] (mean)
+</div><div class='line'>Time per request:       64.196 [ms] (mean, across all concurrent requests)
+</div><div class='line'>Transfer rate:          12.24 [Kbytes/sec] received 5.89 kb/s sent  18.13 kb/s totalConnection 
+</div><div class='line'>
+</div><div class='line'>Times     (ms)min  mean[+/-sd] median
+</div><div class='line'>maxConnect:   68   71   3.9     70     104
+</div><div class='line'>Processing:   134 1210 865.8    975    5559
+</div><div class='line'>Waiting:      134 1210 865.8    975    5558
+</div><div class='line'>Total:        202 1281 865.7   1048    5627
+</div><div class='line'>
+</div><div class='line'>Percentage of the requests served within a certain time (ms)
+</div><div class='line'>50%   1048
+</div><div class='line'>66%   1364
+</div><div class='line'>75%   1638
+</div><div class='line'>80%   1819
+</div><div class='line'>90%   2430
+</div><div class='line'>95%   3176
+</div><div class='line'>98%   3898
+</div><div class='line'>99%   4248
+</div><div class='line'>100%   5627 (longest request)</div></code></pre></td></tr></table></div></figure></div>
+
+
+<p>You can see here that we failed 4165 requests. That&#8217;s not good! Let&#8217;s try adding a dyno and do it again.</p>
+
+<h2>Test 4: A simple API write operation (2 Dynos, 5000 requests, 20 at a time)</h2>
+
+
+
+
+<div><figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+<span class='line'>2</span>
+<span class='line'>3</span>
+<span class='line'>4</span>
+<span class='line'>5</span>
+<span class='line'>6</span>
+<span class='line'>7</span>
+<span class='line'>8</span>
+<span class='line'>9</span>
+<span class='line'>10</span>
+<span class='line'>11</span>
+<span class='line'>12</span>
+<span class='line'>13</span>
+<span class='line'>14</span>
+<span class='line'>15</span>
+<span class='line'>16</span>
+<span class='line'>17</span>
+<span class='line'>18</span>
+<span class='line'>19</span>
+<span class='line'>20</span>
+<span class='line'>21</span>
+<span class='line'>22</span>
+<span class='line'>23</span>
+<span class='line'>24</span>
+<span class='line'>25</span>
+<span class='line'>26</span>
+<span class='line'>27</span>
+<span class='line'>28</span>
+</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>Concurrency Level: 20
+</div><div class='line'>Time taken for tests:   135.882 seconds
+</div><div class='line'>Complete requests:      5000
+</div><div class='line'>Failed requests:        0
+</div><div class='line'>Write errors:           0
+</div><div class='line'>Total transferred:      4045448 bytes
+</div><div class='line'>Total POSTed:           1935774
+</div><div class='line'>HTML transferred:       2675000 bytes
+</div><div class='line'>Requests per second:    36.80 [#/sec] (mean)
+</div><div class='line'>Time per request:       543.530 [ms] (mean)
+</div><div class='line'>Time per request:       27.176 [ms] (mean, across all concurrent requests)
+</div><div class='line'>Transfer rate:          29.07 [Kbytes/sec] received
+</div><div class='line'>13.91 kb/s sent
+</div><div class='line'>42.99 kb/s totalConnection Times (ms)min  mean[+/-sd] median
+</div><div class='line'>maxConnect:       67   95  32.7     72     979
+</div><div class='line'>Processing:   121  448 162.4    420    1481
+</div><div class='line'>Waiting:      121  448 162.5    419    1481
+</div><div class='line'>Total:        199  543 154.4    515    1549
+</div><div class='line'>Percentage of the requests served within a certain time (ms)
+</div><div class='line'>50%    515
+</div><div class='line'>66%    580
+</div><div class='line'>75%    624
+</div><div class='line'>80%    654
+</div><div class='line'>90%    751
+</div><div class='line'>95%    840
+</div><div class='line'>98%    946
+</div><div class='line'>99%   1034
+</div><div class='line'>100%   1549 (longest request)</div></code></pre></td></tr></table></div></figure></div>
+
+
+<p>We&#8217;re getting a pretty healthy 36 requests per second now, and look, no errors!</p>
+
+<h2>Test 5: A simple API write operation (2 Dynos, 10000 requests, 20 at a time)</h2>
+
+
+
+
+<div><figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+<span class='line'>2</span>
+<span class='line'>3</span>
+<span class='line'>4</span>
+<span class='line'>5</span>
+<span class='line'>6</span>
+<span class='line'>7</span>
+<span class='line'>8</span>
+<span class='line'>9</span>
+<span class='line'>10</span>
+<span class='line'>11</span>
+<span class='line'>12</span>
+<span class='line'>13</span>
+<span class='line'>14</span>
+<span class='line'>15</span>
+<span class='line'>16</span>
+<span class='line'>17</span>
+<span class='line'>18</span>
+<span class='line'>19</span>
+<span class='line'>20</span>
+<span class='line'>21</span>
+<span class='line'>22</span>
+<span class='line'>23</span>
+<span class='line'>24</span>
+<span class='line'>25</span>
+<span class='line'>26</span>
+<span class='line'>27</span>
+<span class='line'>28</span>
+</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>Concurrency Level: 20
+</div><div class='line'>Time taken for tests:   326.317 seconds
+</div><div class='line'>Complete requests:      10000
+</div><div class='line'>Failed requests:        0
+</div><div class='line'>Write errors:           0
+</div><div class='line'>Total transferred:      8091062 bytes
+</div><div class='line'>Total POSTed:           3870000
+</div><div class='line'>HTML transferred:       5350000 bytes
+</div><div class='line'>Requests per second:    30.65 [#/sec] (mean)
+</div><div class='line'>Time per request:       652.634 [ms] (mean)
+</div><div class='line'>Time per request:       32.632 [ms] (mean, across all concurrent requests)
+</div><div class='line'>Transfer rate:          24.21 [Kbytes/sec] received
+</div><div class='line'>11.58 kb/s sent
+</div><div class='line'>35.80 kb/s totalConnection Times (ms)min  mean[+/-sd] median
+</div><div class='line'>maxConnect:       68   72  13.8     70    1004
+</div><div class='line'>Processing:   113  580 233.1    539    2145
+</div><div class='line'>Waiting:      113  580 233.1    539    2145
+</div><div class='line'>Total:        183  652 233.5    610    2213
+</div><div class='line'>Percentage of the requests served within a certain time (ms)
+</div><div class='line'>50%    610
+</div><div class='line'>66%    701
+</div><div class='line'>75%    771
+</div><div class='line'>80%    822
+</div><div class='line'>90%    971
+</div><div class='line'>95%   1103
+</div><div class='line'>98%   1254
+</div><div class='line'>99%   1374
+</div><div class='line'>100%   2213 (longest request)</div></code></pre></td></tr></table></div></figure></div>
+
+
+<p>We slipped a tad on overall throughput (down to 30 reqs/sec) but we still served up all of the requests in a reasonable time without any failures.
+Let&#8217;s check out New Relic &amp; See what it says.
+<img src="/images/newrelic-heroku-testing2.png"  height="282"  /> In this graph you can see the overall HTTP Throughput (higher is better) against the Heroku backlog depth. The more dynos you have, the quicker your backlog is cleared out, equating to more throughput. You can clearly see that we are now hitting a limit on the throughput we can handle because the queue depth is increasing. We might choose to optimize the site or add another dyno to squeeze some more perf out of this.
+Also in the image if you were to mouseover on the queue stacks on the website, you&#8217;d see that my peak queue depth was 29. That&#8217;s pretty high, and you can definitely see a cap in the total # of requests that we can serve.
+In the end, I&#8217;m able to pretty reliably say that we can handle a 10k request spike when running on 2 dynos. I&#8217;d suggest more dynos if the client wanted to handle more than that.
+Gotta love tools that make investigation like this easy. Props to Heroku &amp; New Relic.</p>
+</div>
+  <footer>
+    <a rel="full-article" href="/2010/08/load-testing-our-heroku-app/">Read on &rarr;</a>
+  </footer>
+
+
+  </article>
+
+
+  <article>
+    
+  <header>
+    
       <h1 class="entry-title"><a href="/2010/07/using-carrierwave-with-mongoid/">Using CarrierWave With Mongoid</a></h1>
     
     
@@ -792,207 +1104,6 @@ happened. It <a target="_blank" href="http://github.com/jnicklas/carrierwave/iss
 
   </article>
 
-
-  <article>
-    
-  <header>
-    
-      <h1 class="entry-title"><a href="/2010/06/building-an-iphone-app-for-tekpub-splash-screen/">Building an iPhone App for Tekpub - Splash Screen</a></h1>
-    
-    
-      <p class="meta">
-
-
-
-
-<time datetime="2010-06-07 00:00:00 -0500" pubdate  updated >Jun 7<span>th</span>, 2010</time>
-
-
-</p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>I hope that many of you have watched the <a href="http://tekpub.com/production/iphone">iPhone Development series</a> over at <a href="http://tekpub.com">Tekpub</a> by yours truly.  To wrap up the series, Rob and I wanted to show you exactly what is required to get an ad-hoc build out for beta testers, how to get a certificate from Apple in order to code-sign your application, and finally how to submit it to the App Store.</p>
-
-
-<p>In the end, we&#8217;ll be submitted the actual official Tekpub iPhone application, which I am currently building as I type this.  I plan on posting about some of the interesting bits as I go.  So on that note&#8230;.</p>
-
-
-<h2>Building a Splash Screen</h2>
-
-
-<p>Any iPhone app that requires data off of the network in order to function will require some up front loading cost.  After all, <a href="http://flux88.com/blog/iphone-apps-don-t-live-in-a-vacuum/">iPhone apps don&#8217;t live in a vacuum</a>.</p>
-
-
-<p>You might think of simply adding some network code into the applicationDidFinishLaunching: event, however this would cause problems.  Though strangely missing from the official documentation, it is known that the <a href="http://stackoverflow.com/questions/169470/does-the-iphone-timeout-if-a-function-takes-too-long-to-execute">iPhone OS will kill an application if appears to hang for more than a couple seconds</a>.  So it is imperative to utilize asynchronous operations in order to load up the data that is needed.</p>
-
-
-<p>A good place to do that is a splash screen.  Instead of using one of the application templates for Tab Bar or Navigation-Based application, I chose to simply utilize a View Based application template.  This is because while the splash screen is visible, there shouldn&#8217;t be any tabs or toolbars.</p>
-
-
-<p>The root controller is called SplashScreenController.  It handles the asynchronous data loading, utilizes a progress bar so it doesn&#8217;t feel like the app is doing nothing, and notifies the Application Delegate once it is done loading.</p>
-
-
-
-
-<div><figure role=code> <div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
-<span class='line'>2</span>
-<span class='line'>3</span>
-<span class='line'>4</span>
-<span class='line'>5</span>
-<span class='line'>6</span>
-<span class='line'>7</span>
-<span class='line'>8</span>
-<span class='line'>9</span>
-<span class='line'>10</span>
-<span class='line'>11</span>
-<span class='line'>12</span>
-<span class='line'>13</span>
-<span class='line'>14</span>
-<span class='line'>15</span>
-<span class='line'>16</span>
-<span class='line'>17</span>
-<span class='line'>18</span>
-<span class='line'>19</span>
-<span class='line'>20</span>
-<span class='line'>21</span>
-<span class='line'>22</span>
-<span class='line'>23</span>
-<span class='line'>24</span>
-<span class='line'>25</span>
-<span class='line'>26</span>
-<span class='line'>27</span>
-<span class='line'>28</span>
-<span class='line'>29</span>
-<span class='line'>30</span>
-<span class='line'>31</span>
-<span class='line'>32</span>
-<span class='line'>33</span>
-<span class='line'>34</span>
-<span class='line'>35</span>
-<span class='line'>36</span>
-<span class='line'>37</span>
-</pre></td><td class='code' width='100%'><pre><code class='objc'><div class='line'><span class="k">@implementation</span> <span class="nc">SplashScreenController</span>
-</div><div class='line'><span class="o">-</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">viewDidLoad</span> <span class="p">{</span>
-</div><div class='line'>  <span class="n">UIProgressView</span> <span class="o">*</span><span class="n">progressView</span> <span class="o">=</span> <span class="p">[[[</span><span class="n">UIProgressView</span> <span class="n">alloc</span><span class="p">]</span> <span class="nl">initWithProgressViewStyle:</span><span class="n">UIProgressViewStyleBar</span><span class="p">]</span> <span class="n">autorelease</span><span class="p">];</span>
-</div><div class='line'>  <span class="kt">int</span> <span class="n">width</span> <span class="o">=</span> <span class="mi">200</span><span class="p">;</span>
-</div><div class='line'>  <span class="n">progressView</span><span class="p">.</span><span class="n">frame</span> <span class="o">=</span> <span class="n">CGRectMake</span><span class="p">((</span><span class="mi">320</span><span class="o">-</span><span class="n">width</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="p">(</span><span class="mi">480</span><span class="o">-</span><span class="mi">10</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span> <span class="o">+</span> <span class="mi">20</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="mi">10</span><span class="p">);</span>
-</div><div class='line'>  <span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">view</span> <span class="nl">addSubview:</span><span class="n">progressView</span><span class="p">];</span>
-</div><div class='line'>
-</div><div class='line'>  <span class="n">UILabel</span> <span class="o">*</span><span class="n">label</span> <span class="o">=</span> <span class="p">[[[</span><span class="n">UILabel</span> <span class="n">alloc</span><span class="p">]</span> <span class="nl">initWithFrame:</span><span class="n">CGRectMake</span><span class="p">((</span><span class="mi">320</span><span class="o">-</span><span class="n">width</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="p">(</span><span class="mi">480</span><span class="o">-</span><span class="mi">10</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="mi">20</span><span class="p">)]</span> <span class="n">autorelease</span><span class="p">];</span>
-</div><div class='line'>  <span class="n">label</span><span class="p">.</span><span class="n">font</span> <span class="o">=</span> <span class="p">[</span><span class="n">UIFont</span> <span class="nl">fontWithName:</span><span class="s">@&quot;Courier&quot;</span> <span class="nl">size:</span><span class="mi">12</span><span class="p">];</span>
-</div><div class='line'>  <span class="n">label</span><span class="p">.</span><span class="n">backgroundColor</span> <span class="o">=</span> <span class="p">[</span><span class="n">UIColor</span> <span class="n">clearColor</span><span class="p">];</span>
-</div><div class='line'>  <span class="n">label</span><span class="p">.</span><span class="n">textColor</span> <span class="o">=</span> <span class="p">[</span><span class="n">UIColor</span> <span class="n">darkGrayColor</span><span class="p">];</span>
-</div><div class='line'>  <span class="n">label</span><span class="p">.</span><span class="n">textAlignment</span> <span class="o">=</span> <span class="n">UITextAlignmentCenter</span><span class="p">;</span>
-</div><div class='line'>  <span class="n">label</span><span class="p">.</span><span class="n">text</span> <span class="o">=</span> <span class="s">@&quot;Preparing the awesome ...&quot;</span><span class="p">;</span>
-</div><div class='line'>  <span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">view</span> <span class="nl">addSubview:</span><span class="n">label</span><span class="p">];</span>
-</div><div class='line'>
-</div><div class='line'>  <span class="n">proxy</span> <span class="o">=</span> <span class="p">[[</span><span class="n">TekpubProxy</span> <span class="n">alloc</span><span class="p">]</span> <span class="n">init</span><span class="p">];</span>
-</div><div class='line'>  <span class="n">proxy</span><span class="p">.</span><span class="n">delegate</span> <span class="o">=</span> <span class="n">self</span><span class="p">;</span>
-</div><div class='line'>  <span class="n">proxy</span><span class="p">.</span><span class="n">progressDelegate</span> <span class="o">=</span> <span class="n">progressView</span><span class="p">;</span>
-</div><div class='line'>  <span class="p">[</span><span class="n">proxy</span> <span class="n">asyncUpdateProductions</span><span class="p">];</span>
-</div><div class='line'><span class="p">}</span>
-</div><div class='line'>
-</div><div class='line'><span class="o">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">doneUpdatingProductions</span> <span class="p">{</span>
-</div><div class='line'>  <span class="n">proxy</span><span class="p">.</span><span class="n">delegate</span> <span class="o">=</span> <span class="nb">nil</span><span class="p">;</span>
-</div><div class='line'>  <span class="n">proxy</span><span class="p">.</span><span class="n">progressDelegate</span> <span class="o">=</span> <span class="nb">nil</span><span class="p">;</span>
-</div><div class='line'>  <span class="p">[</span><span class="n">proxy</span> <span class="n">release</span><span class="p">];</span>
-</div><div class='line'>  <span class="n">tekpubAppDelegate</span> <span class="o">*</span><span class="n">appDelegate</span> <span class="o">=</span> <span class="p">(</span><span class="n">tekpubAppDelegate</span> <span class="o">*</span><span class="p">)[[</span><span class="n">UIApplication</span> <span class="n">sharedApplication</span><span class="p">]</span> <span class="n">delegate</span><span class="p">];</span>
-</div><div class='line'>  <span class="p">[</span><span class="n">appDelegate</span> <span class="n">doneLoading</span><span class="p">];</span>
-</div><div class='line'><span class="p">}</span>
-</div><div class='line'>
-</div><div class='line'><span class="o">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">failedUpatingProductions</span> <span class="p">{</span>
-</div><div class='line'>  <span class="n">UIAlertView</span> <span class="o">*</span><span class="n">alert</span> <span class="o">=</span> <span class="p">[[[</span><span class="n">UIAlertView</span> <span class="n">alloc</span><span class="p">]</span> <span class="nl">initWithTitle:</span><span class="s">@&quot;Error connecting!&quot;</span>
-</div><div class='line'>    <span class="nl">message:</span><span class="s">@&quot;We couldn&#39;t fetch the `awesome` from tekpub.com.  Are you connected to the internet?&quot;</span>
-</div><div class='line'>    <span class="nl">delegate:</span><span class="nb">nil</span>
-</div><div class='line'>    <span class="nl">cancelButtonTitle:</span><span class="s">@&quot;OK&quot;</span> <span class="nl">otherButtonTitles:</span><span class="nb">nil</span><span class="p">]</span> <span class="n">autorelease</span><span class="p">];</span>
-</div><div class='line'>  <span class="p">[</span><span class="n">alert</span> <span class="n">show</span><span class="p">];</span>
-</div><div class='line'><span class="p">}</span>
-</div><div class='line'><span class="k">@end</span>
-</div></code></pre></td></tr></table></div></figure></div>
-
-
-
-
-<p>The first few lines of code simply set up some UI elements that weren&#8217;t part of the NIB file.  Doing it this way is certainly a matter of preference, and I find that occasionally building UI controls is easier than in Interface Builder.</p>
-
-
-<p>Next up, we kick off the async process via a separate class called TekpubProxy.  This class utilizes the excellent <a href="http://allseeing-i.com/ASIHTTPRequest/">ASIHTTPRequest</a> library to do easy asynchronous network requests, complete with progress callbacks.  A bonus is that the progressDelegate automatically detects when you set it to a UIProgressView and automatically updates the status.  <em>How cool is that?! </em></p>
-
-
-<p>Finally, when the splash screen is notified that the loading has completed, we call a method on the App Delegate in order to proceed with the rest of the application.</p>
-
-
-<p>Here is the AppDelegate class:</p>
-
-
-
-
-<div><figure role=code> <div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
-<span class='line'>2</span>
-<span class='line'>3</span>
-<span class='line'>4</span>
-<span class='line'>5</span>
-<span class='line'>6</span>
-<span class='line'>7</span>
-<span class='line'>8</span>
-<span class='line'>9</span>
-<span class='line'>10</span>
-<span class='line'>11</span>
-<span class='line'>12</span>
-<span class='line'>13</span>
-<span class='line'>14</span>
-<span class='line'>15</span>
-<span class='line'>16</span>
-<span class='line'>17</span>
-<span class='line'>18</span>
-<span class='line'>19</span>
-<span class='line'>20</span>
-<span class='line'>21</span>
-<span class='line'>22</span>
-<span class='line'>23</span>
-<span class='line'>24</span>
-<span class='line'>25</span>
-</pre></td><td class='code' width='100%'><pre><code class='objc'><div class='line'><span class="k">@implementation</span> <span class="nc">tekpubAppDelegate</span>
-</div><div class='line'>
-</div><div class='line'><span class="k">@synthesize</span> <span class="n">window</span><span class="p">;</span>
-</div><div class='line'><span class="k">@synthesize</span> <span class="n">splashScreenController</span><span class="p">;</span>
-</div><div class='line'>
-</div><div class='line'><span class="o">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nl">applicationDidFinishLaunching:</span><span class="p">(</span><span class="n">UIApplication</span> <span class="o">*</span><span class="p">)</span><span class="n">application</span> <span class="p">{</span>
-</div><div class='line'>  <span class="c1">// Add the tab bar controller&#39;s current view as a subview of the window</span>
-</div><div class='line'>  <span class="p">[</span><span class="n">window</span> <span class="nl">addSubview:</span><span class="n">splashScreenController</span><span class="p">.</span><span class="n">view</span><span class="p">];</span>
-</div><div class='line'><span class="p">}</span>
-</div><div class='line'>
-</div><div class='line'><span class="o">-</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">doneLoading</span> <span class="p">{</span>
-</div><div class='line'>  <span class="n">ProductionsController</span> <span class="o">*</span><span class="n">controller</span> <span class="o">=</span> <span class="p">[[</span><span class="n">ProductionsController</span> <span class="n">alloc</span><span class="p">]</span> <span class="nl">initWithStyle:</span><span class="n">UITableViewStylePlain</span><span class="p">];</span>
-</div><div class='line'>  <span class="n">navController</span> <span class="o">=</span> <span class="p">[[</span><span class="n">UINavigationController</span> <span class="n">alloc</span><span class="p">]</span> <span class="nl">initWithRootViewController:</span><span class="n">controller</span><span class="p">];</span>
-</div><div class='line'>  <span class="n">navController</span><span class="p">.</span><span class="n">navigationBar</span><span class="p">.</span><span class="n">tintColor</span> <span class="o">=</span> <span class="p">[</span><span class="n">UIColor</span> <span class="n">blackColor</span><span class="p">];</span>
-</div><div class='line'>  <span class="p">[</span><span class="n">window</span> <span class="nl">insertSubview:</span><span class="n">navController</span><span class="p">.</span><span class="n">view</span> <span class="nl">belowSubview:</span><span class="n">splashScreenController</span><span class="p">.</span><span class="n">view</span><span class="p">];</span>
-</div><div class='line'>
-</div><div class='line'>  <span class="p">[</span><span class="n">UIView</span> <span class="nl">beginAnimations:</span><span class="s">@&quot;fadeIn&quot;</span> <span class="nl">context:</span><span class="nb">nil</span><span class="p">];</span>
-</div><div class='line'>  <span class="p">[</span><span class="n">UIView</span> <span class="nl">setAnimationDuration:</span><span class="mf">1.5</span><span class="p">];</span>
-</div><div class='line'>  <span class="n">splashScreenController</span><span class="p">.</span><span class="n">view</span><span class="p">.</span><span class="n">alpha</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-</div><div class='line'>  <span class="p">[</span><span class="n">UIView</span> <span class="n">commitAnimations</span><span class="p">];</span>
-</div><div class='line'>
-</div><div class='line'>  <span class="p">[</span><span class="n">controller</span> <span class="n">release</span><span class="p">];</span>
-</div><div class='line'><span class="p">}</span>
-</div><div class='line'>
-</div><div class='line'><span class="k">@end</span>
-</div></code></pre></td></tr></table></div></figure></div>
-
-
-<p>We utilize a nice cross-fade animation to bring the navigation controller stack into view. The end result is quite nice, and makes the 2-3 second loading time much more bearable.</p>
-
-<p><img src="https://flux88.s3.amazonaws.com/images/tekpub-splash.png" alt="tekpub-splash-screen" /></p>
-</div>
-  <footer>
-    <a rel="full-article" href="/2010/06/building-an-iphone-app-for-tekpub-splash-screen/">Read on &rarr;</a>
-  </footer>
-
-
-  </article>
-
 <nav role="pagination">
   <div>
     
@@ -1027,6 +1138,10 @@ happened. It <a target="_blank" href="http://github.com/jnicklas/carrierwave/iss
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2011/10/making-a-uibutton-flip-over/">Making a UIButton Flip Over</a>
+      </li>
+    
+      <li class="post">
         <a href="/2011/09/creating-a-glow-effect-for-uilabel-and-uibutton/">Creating a Glow Effect for UILabel and UIButton</a>
       </li>
     
@@ -1040,10 +1155,6 @@ happened. It <a target="_blank" href="http://github.com/jnicklas/carrierwave/iss
     
       <li class="post">
         <a href="/2011/08/vim---could-not-invoke-jslint/">Vim - Could Not Invoke JSLint</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2011/08/is-rails-exempt-from-software-principles/">Is Rails Exempt?</a>
       </li>
     
   </ul>

@@ -106,6 +106,39 @@
     
   <header>
     
+      <h1 class="entry-title"><a href="/2009/03/right-click-new-visual-studio-solution/">Right Click, New Visual Studio Solution</a></h1>
+    
+    
+      <p class="meta">
+
+
+
+
+<time datetime="2009-03-11 00:00:00 -0500" pubdate  updated >Mar 11<span>th</span>, 2009</time>
+
+
+</p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I&#8217;ve often struggled with the way that Visual Studio&#8217;s Blank Solution template creates projects.&nbsp; Essentially you&#8217;re given a folder for the solution, and projects go inside of it.&nbsp; When you consider the fact that most projects have a host of other things related to it, not just source code, the structure found in most open source projects is more appealing.</p>
+
+
+<p> <p>For an example, this is what I&#8217;m talking about:</p> <p>&nbsp;</p> <p><img src="/images/image_3.png" alt="image"  border="0" /> </p> <p>The project is well-organized and has places for build artifacts, 3rd party assemblies, documentation, etc.</p> <p>For new projects, I find myself frequently performing these steps:</p> <ul> <li>Open Visual Studio, File -&gt; New Project, Blank Solution  <li>Close Visual Studio  <li>Navigate to the folder in Explorer  <li>Create a new folder called src  <li>Move the .sln file into the src folder  <li>Double-click the new .sln file</li></ul> <p>Today I figured out how to just add a new right-click menu option in Windows Explorer.&nbsp; It involved a simple registry hack, and a little hex editing.&nbsp; The end result:</p> <p><img style="border-top-width: 0px; border-left-width: 0px; border-bottom-width: 0px; border-right-width: 0px" height="545" alt="" src="http://flux88.com/files/media/image/WindowsLiveWriter/RightclickNewVisualStudioSolution_E781/image_6.png" width="729" border="0"> </p> <p>Choosing this new option adds a new file and opens it for rename:</p> <p><img src="/images/image_7c77b2e2-9224-41f5-9d5e-90f3217d7063.png" alt="image"  border="0" /> </p> <p>Rename the file, and presto!</p> <p><img src="/images/image_8ddbb0d4-934e-4cf5-95ef-1383dee243a5.png" alt="image"  border="0" /> </p> <p>&nbsp;</p> <p>To add this to your system, copy &amp; run this registry file (make sure remove the .txt):&nbsp; <a href="http://flux88.com/uploads/right-click-sln.reg.txt" target="_blank">right-click-sln.reg</a></p> <p>Of course, you should be sure to back up your registry before running this file.&nbsp; I&#8217;m not responsible for jacking up your system :).&nbsp; Tested on XP SP3 &amp; Vista x64 SP1.</p></p>
+</div>
+  <footer>
+    <a rel="full-article" href="/2009/03/right-click-new-visual-studio-solution/">Read on &rarr;</a>
+  </footer>
+
+
+  </article>
+
+
+  <article>
+    
+  <header>
+    
       <h1 class="entry-title"><a href="/2009/02/houston-alt-net-open-spaces-registration-is-now-open/">Houston ALT.NET Open Spaces Registration Is Now Open!</a></h1>
     
     
@@ -590,37 +623,6 @@ You can get this at an Apple store, ebay, craigslist, or the usual places. I fou
 
   </article>
 
-
-  <article>
-    
-  <header>
-    
-      <h1 class="entry-title"><a href="/2008/12/hello-world-x-2/">Hello World X 2</a></h1>
-    
-    
-      <p class="meta">
-
-
-
-
-<time datetime="2008-12-10 00:00:00 -0600" pubdate  updated >Dec 10<span>th</span>, 2008</time>
-
-
-</p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>&#160;<img src="/images/image0_6.jpg" alt="sonogram"  border="0"  /></p>
-
-</div>
-  <footer>
-    <a rel="full-article" href="/2008/12/hello-world-x-2/">Read on &rarr;</a>
-  </footer>
-
-
-  </article>
-
 <nav role="pagination">
   <div>
     
@@ -655,6 +657,10 @@ You can get this at an Apple store, ebay, craigslist, or the usual places. I fou
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2011/10/making-a-uibutton-flip-over/">Making a UIButton Flip Over</a>
+      </li>
+    
+      <li class="post">
         <a href="/2011/09/creating-a-glow-effect-for-uilabel-and-uibutton/">Creating a Glow Effect for UILabel and UIButton</a>
       </li>
     
@@ -668,10 +674,6 @@ You can get this at an Apple store, ebay, craigslist, or the usual places. I fou
     
       <li class="post">
         <a href="/2011/08/vim---could-not-invoke-jslint/">Vim - Could Not Invoke JSLint</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2011/08/is-rails-exempt-from-software-principles/">Is Rails Exempt?</a>
       </li>
     
   </ul>

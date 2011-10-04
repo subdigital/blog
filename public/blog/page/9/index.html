@@ -106,6 +106,97 @@
     
   <header>
     
+      <h1 class="entry-title"><a href="/2009/06/jquery-autocomplete-with-a-hidden-value/">jQuery Autocomplete With a Hidden Value</a></h1>
+    
+    
+      <p class="meta">
+
+
+
+
+<time datetime="2009-06-02 00:00:00 -0500" pubdate  updated >Jun 2<span>nd</span>, 2009</time>
+
+
+</p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>A number of people commented on my post about a <a href="http://flux88.com/blog/jquery-auto-complete-text-box-with-asp-net-mvc/">jQuery Autocomplete Textbox in ASP.NET MVC</a> wanting to know how to provide a value for the items being displayed.&#160; It’s not an uncommon request.&#160; For many pieces of data you’ll have display values as well as unique identifiers to distinguish &amp; provide reference to the items.</p>
+
+
+<p>  <p>Unfortunately it’s not well document, however this is fully supported with <a href="http://dyve.net/jquery/?autocomplete">Dylan Verheul’s jQuery autocomplete plugin</a>.</p>  <p>The first step is to separate your display names from the values in your result from the server.&#160; We were retuning cities before, like this:</p></p>
+
+<div><figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+<span class='line'>2</span>
+<span class='line'>3</span>
+<span class='line'>4</span>
+<span class='line'>5</span>
+</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>HOUSTON, AK
+</div><div class='line'>HOUSTON, AL
+</div><div class='line'>HOUSTON, TX
+</div><div class='line'>HOUCK, AR
+</div><div class='line'>HOUGHTON, IA</div></code></pre></td></tr></table></div></figure></div>
+
+
+
+
+<p>The individual items are separated by a new line character.&#160; In order to provide a value for each of these, you have to separate the item with a pipe “|”.</p>
+
+
+
+
+<div><figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+<span class='line'>2</span>
+<span class='line'>3</span>
+<span class='line'>4</span>
+<span class='line'>5</span>
+</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>HOUSTON, AK&lt;strong>|456&lt;/strong>
+</div><div class='line'>HOUSTON, AL&lt;strong>|1245&lt;/strong>
+</div><div class='line'>HOUSTON, TX&lt;strong>|553&lt;/strong>
+</div><div class='line'>HOUCK, AR&lt;strong>|99&lt;/strong>
+</div><div class='line'>HOUGHTON, IA&lt;strong>|401&lt;/strong></div></code></pre></td></tr></table></div></figure></div>
+
+
+
+
+<p><em>If your display items might contain a pipe character, then you’ll have to change the separator setting for the plugin.&#160; You can do by providing the option <strong>cellSeparator</strong>.</em></p>
+
+
+<p>Now that our items have a value coming back from the server, how can we retrieve it when an item is selected?&#160; That is done via the onSelectItem function.&#160; This is a callback that will send you the formatted &lt;li&gt; tag.&#160; If there was a value specified, it will be placed in the <em>extra</em> attribute.</p>
+
+
+<p>Here’s an example:</p>
+
+
+<p>$(cities).autocomplete(action_url, {
+<br />&#160;&#160;&#160; lineSeparator: &#8216;\n&#8217;,
+<br />&#160;&#160;&#160; cellSeparator: &#8216;|&#8217;,
+<br />&#160;&#160;&#160; onItemSelect: function(li) {&#160; if(li.extra) alert(&quot;You selected &quot; + li.extra[0]); }
+<br /> });</p>
+
+
+<p>I’ve specified the options for lineSeparator and cellSeparator.&#160; These are the default values, but you can easily change them if the character is a valid portion of the text being returned by the server. </p>
+
+
+<p>You can use this handler to place the selected value in a hidden field to save it for a form submission.</p>
+
+
+<p>Hope this helps!&#160; For more information, I suggest you read the source code and examine the <a href="http://dyve.net/jquery/?autocomplete" target="_blank">plugin page source</a> for more examples.</p>
+
+</div>
+  <footer>
+    <a rel="full-article" href="/2009/06/jquery-autocomplete-with-a-hidden-value/">Read on &rarr;</a>
+  </footer>
+
+
+  </article>
+
+
+  <article>
+    
+  <header>
+    
       <h1 class="entry-title"><a href="/2009/06/hello-isaac-isabella/">Hello Isaac & Isabella!</a></h1>
     
     
@@ -1268,39 +1359,6 @@ margin: 0em;
 
   </article>
 
-
-  <article>
-    
-  <header>
-    
-      <h1 class="entry-title"><a href="/2009/03/right-click-new-visual-studio-solution/">Right Click, New Visual Studio Solution</a></h1>
-    
-    
-      <p class="meta">
-
-
-
-
-<time datetime="2009-03-11 00:00:00 -0500" pubdate  updated >Mar 11<span>th</span>, 2009</time>
-
-
-</p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>I&#8217;ve often struggled with the way that Visual Studio&#8217;s Blank Solution template creates projects.&nbsp; Essentially you&#8217;re given a folder for the solution, and projects go inside of it.&nbsp; When you consider the fact that most projects have a host of other things related to it, not just source code, the structure found in most open source projects is more appealing.</p>
-
-
-<p> <p>For an example, this is what I&#8217;m talking about:</p> <p>&nbsp;</p> <p><img src="/images/image_3.png" alt="image"  border="0" /> </p> <p>The project is well-organized and has places for build artifacts, 3rd party assemblies, documentation, etc.</p> <p>For new projects, I find myself frequently performing these steps:</p> <ul> <li>Open Visual Studio, File -&gt; New Project, Blank Solution  <li>Close Visual Studio  <li>Navigate to the folder in Explorer  <li>Create a new folder called src  <li>Move the .sln file into the src folder  <li>Double-click the new .sln file</li></ul> <p>Today I figured out how to just add a new right-click menu option in Windows Explorer.&nbsp; It involved a simple registry hack, and a little hex editing.&nbsp; The end result:</p> <p><img style="border-top-width: 0px; border-left-width: 0px; border-bottom-width: 0px; border-right-width: 0px" height="545" alt="" src="http://flux88.com/files/media/image/WindowsLiveWriter/RightclickNewVisualStudioSolution_E781/image_6.png" width="729" border="0"> </p> <p>Choosing this new option adds a new file and opens it for rename:</p> <p><img src="/images/image_7c77b2e2-9224-41f5-9d5e-90f3217d7063.png" alt="image"  border="0" /> </p> <p>Rename the file, and presto!</p> <p><img src="/images/image_8ddbb0d4-934e-4cf5-95ef-1383dee243a5.png" alt="image"  border="0" /> </p> <p>&nbsp;</p> <p>To add this to your system, copy &amp; run this registry file (make sure remove the .txt):&nbsp; <a href="http://flux88.com/uploads/right-click-sln.reg.txt" target="_blank">right-click-sln.reg</a></p> <p>Of course, you should be sure to back up your registry before running this file.&nbsp; I&#8217;m not responsible for jacking up your system :).&nbsp; Tested on XP SP3 &amp; Vista x64 SP1.</p></p>
-</div>
-  <footer>
-    <a rel="full-article" href="/2009/03/right-click-new-visual-studio-solution/">Read on &rarr;</a>
-  </footer>
-
-
-  </article>
-
 <nav role="pagination">
   <div>
     
@@ -1335,6 +1393,10 @@ margin: 0em;
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2011/10/making-a-uibutton-flip-over/">Making a UIButton Flip Over</a>
+      </li>
+    
+      <li class="post">
         <a href="/2011/09/creating-a-glow-effect-for-uilabel-and-uibutton/">Creating a Glow Effect for UILabel and UIButton</a>
       </li>
     
@@ -1348,10 +1410,6 @@ margin: 0em;
     
       <li class="post">
         <a href="/2011/08/vim---could-not-invoke-jslint/">Vim - Could Not Invoke JSLint</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2011/08/is-rails-exempt-from-software-principles/">Is Rails Exempt?</a>
       </li>
     
   </ul>

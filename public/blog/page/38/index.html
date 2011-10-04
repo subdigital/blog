@@ -106,6 +106,39 @@
     
   <header>
     
+      <h1 class="entry-title"><a href="/2005/05/forza-motorsport/">Forza Motorsport</a></h1>
+    
+    
+      <p class="meta">
+
+
+
+
+<time datetime="2005-05-19 00:00:00 -0500" pubdate  updated >May 19<span>th</span>, 2005</time>
+
+
+</p>
+    
+  </header>
+
+
+  <div class="entry-content"><div style="clear:both;"></div>
+
+
+<p>My new fix is Forza Motorsport for XBox.I am really getting into it.I particularly like how you can search for cars that match certain criteria;searching is a feature that is common to most applications (be it web, windows, whatever) but not so much in games&#8230; I&#8217;d like to see more of this.<br /><br />Also, IREALLY like the fact that they licensed Porsche and Ferrari, these were missing from Gran Turismo 3 and it was disappointing (yes, I know that RUF&#8217;s cars are really Porsches, but still)<br /><br />I haven&#8217;t yet played GT4 and was wondering how it stacks up against Forza&#8230;. I have a PS2, so I might pick it up if it&#8217;s better than Forza.<div style="clear:both; padding-bottom: 0.25em;"></div></p>
+</div>
+  <footer>
+    <a rel="full-article" href="/2005/05/forza-motorsport/">Read on &rarr;</a>
+  </footer>
+
+
+  </article>
+
+
+  <article>
+    
+  <header>
+    
       <h1 class="entry-title"><a href="/2005/05/vs-2005-beta-2-has-arrived/">Vs 2005 Beta 2 Has Arrived!</a></h1>
     
     
@@ -423,39 +456,6 @@
 
   </article>
 
-
-  <article>
-    
-  <header>
-    
-      <h1 class="entry-title"><a href="/2005/02/annoyances-while-combining-vb-net-and-c/">Annoyances While Combining VB.NET and C#</a></h1>
-    
-    
-      <p class="meta">
-
-
-
-
-<time datetime="2005-02-26 00:00:00 -0600" pubdate  updated >Feb 26<span>th</span>, 2005</time>
-
-
-</p>
-    
-  </header>
-
-
-  <div class="entry-content"><div style="clear:both;"></div>
-
-
-<p>I ran across this annoyance today, probably a bug in Visual Studio.I have a custom collection that encapsulates an arraylist, and it basically has 5 different overloads for the Add() method.<br /><br />well this is written in VB.NET, while 1 of the instances of this class is in C#.When I added a new overload to the collection, I named it add() instead of Add() (VB.NET takes the first declared name as the correct case usage for variables and methods, so my other methods were changed as well, but the compiler doesn&#8217;t actually show this change unless you visit the line again &#8211; and hit a carriage return). <br /><br />My C# project complained no method named Add() existed.Hrm, so I use intellisense to find out that the method is now called add() &#8211; weird.So I change it to add() to get it to compile, then go fix it.<br /><br />Well the compiler this time complained that there didn&#8217;t exist an add() method.Ok, now I&#8217;m a little upset.This is just stupid.The compiler is obviously confused.I go back in to the VB.NET project, fix the case to read Add(), and I get ANOTHER compile error.This time saying that there was no Add() method.Arg!<br /><br />Viewing the object in intellisense must&#8217;ve slapped VS back into shape because it showed the correct method: Add().Rewriting the line verbatim solved the problem and compiled just fine.<br /><br />Ahh, that&#8217;s why they say,&#8221;Where do you want to go today?&#8221; (one of my old professors used to say that&#8230;.)<div style="clear:both; padding-bottom: 0.25em;"></div></p>
-</div>
-  <footer>
-    <a rel="full-article" href="/2005/02/annoyances-while-combining-vb-net-and-c/">Read on &rarr;</a>
-  </footer>
-
-
-  </article>
-
 <nav role="pagination">
   <div>
     
@@ -490,6 +490,10 @@
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2011/10/making-a-uibutton-flip-over/">Making a UIButton Flip Over</a>
+      </li>
+    
+      <li class="post">
         <a href="/2011/09/creating-a-glow-effect-for-uilabel-and-uibutton/">Creating a Glow Effect for UILabel and UIButton</a>
       </li>
     
@@ -503,10 +507,6 @@
     
       <li class="post">
         <a href="/2011/08/vim---could-not-invoke-jslint/">Vim - Could Not Invoke JSLint</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2011/08/is-rails-exempt-from-software-principles/">Is Rails Exempt?</a>
       </li>
     
   </ul>

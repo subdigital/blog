@@ -106,6 +106,207 @@
     
   <header>
     
+      <h1 class="entry-title"><a href="/2010/06/building-an-iphone-app-for-tekpub-splash-screen/">Building an iPhone App for Tekpub - Splash Screen</a></h1>
+    
+    
+      <p class="meta">
+
+
+
+
+<time datetime="2010-06-07 00:00:00 -0500" pubdate  updated >Jun 7<span>th</span>, 2010</time>
+
+
+</p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I hope that many of you have watched the <a href="http://tekpub.com/production/iphone">iPhone Development series</a> over at <a href="http://tekpub.com">Tekpub</a> by yours truly.  To wrap up the series, Rob and I wanted to show you exactly what is required to get an ad-hoc build out for beta testers, how to get a certificate from Apple in order to code-sign your application, and finally how to submit it to the App Store.</p>
+
+
+<p>In the end, we&#8217;ll be submitted the actual official Tekpub iPhone application, which I am currently building as I type this.  I plan on posting about some of the interesting bits as I go.  So on that note&#8230;.</p>
+
+
+<h2>Building a Splash Screen</h2>
+
+
+<p>Any iPhone app that requires data off of the network in order to function will require some up front loading cost.  After all, <a href="http://flux88.com/blog/iphone-apps-don-t-live-in-a-vacuum/">iPhone apps don&#8217;t live in a vacuum</a>.</p>
+
+
+<p>You might think of simply adding some network code into the applicationDidFinishLaunching: event, however this would cause problems.  Though strangely missing from the official documentation, it is known that the <a href="http://stackoverflow.com/questions/169470/does-the-iphone-timeout-if-a-function-takes-too-long-to-execute">iPhone OS will kill an application if appears to hang for more than a couple seconds</a>.  So it is imperative to utilize asynchronous operations in order to load up the data that is needed.</p>
+
+
+<p>A good place to do that is a splash screen.  Instead of using one of the application templates for Tab Bar or Navigation-Based application, I chose to simply utilize a View Based application template.  This is because while the splash screen is visible, there shouldn&#8217;t be any tabs or toolbars.</p>
+
+
+<p>The root controller is called SplashScreenController.  It handles the asynchronous data loading, utilizes a progress bar so it doesn&#8217;t feel like the app is doing nothing, and notifies the Application Delegate once it is done loading.</p>
+
+
+
+
+<div><figure role=code> <div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+<span class='line'>2</span>
+<span class='line'>3</span>
+<span class='line'>4</span>
+<span class='line'>5</span>
+<span class='line'>6</span>
+<span class='line'>7</span>
+<span class='line'>8</span>
+<span class='line'>9</span>
+<span class='line'>10</span>
+<span class='line'>11</span>
+<span class='line'>12</span>
+<span class='line'>13</span>
+<span class='line'>14</span>
+<span class='line'>15</span>
+<span class='line'>16</span>
+<span class='line'>17</span>
+<span class='line'>18</span>
+<span class='line'>19</span>
+<span class='line'>20</span>
+<span class='line'>21</span>
+<span class='line'>22</span>
+<span class='line'>23</span>
+<span class='line'>24</span>
+<span class='line'>25</span>
+<span class='line'>26</span>
+<span class='line'>27</span>
+<span class='line'>28</span>
+<span class='line'>29</span>
+<span class='line'>30</span>
+<span class='line'>31</span>
+<span class='line'>32</span>
+<span class='line'>33</span>
+<span class='line'>34</span>
+<span class='line'>35</span>
+<span class='line'>36</span>
+<span class='line'>37</span>
+</pre></td><td class='code' width='100%'><pre><code class='objc'><div class='line'><span class="k">@implementation</span> <span class="nc">SplashScreenController</span>
+</div><div class='line'><span class="o">-</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">viewDidLoad</span> <span class="p">{</span>
+</div><div class='line'>  <span class="n">UIProgressView</span> <span class="o">*</span><span class="n">progressView</span> <span class="o">=</span> <span class="p">[[[</span><span class="n">UIProgressView</span> <span class="n">alloc</span><span class="p">]</span> <span class="nl">initWithProgressViewStyle:</span><span class="n">UIProgressViewStyleBar</span><span class="p">]</span> <span class="n">autorelease</span><span class="p">];</span>
+</div><div class='line'>  <span class="kt">int</span> <span class="n">width</span> <span class="o">=</span> <span class="mi">200</span><span class="p">;</span>
+</div><div class='line'>  <span class="n">progressView</span><span class="p">.</span><span class="n">frame</span> <span class="o">=</span> <span class="n">CGRectMake</span><span class="p">((</span><span class="mi">320</span><span class="o">-</span><span class="n">width</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="p">(</span><span class="mi">480</span><span class="o">-</span><span class="mi">10</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span> <span class="o">+</span> <span class="mi">20</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="mi">10</span><span class="p">);</span>
+</div><div class='line'>  <span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">view</span> <span class="nl">addSubview:</span><span class="n">progressView</span><span class="p">];</span>
+</div><div class='line'>
+</div><div class='line'>  <span class="n">UILabel</span> <span class="o">*</span><span class="n">label</span> <span class="o">=</span> <span class="p">[[[</span><span class="n">UILabel</span> <span class="n">alloc</span><span class="p">]</span> <span class="nl">initWithFrame:</span><span class="n">CGRectMake</span><span class="p">((</span><span class="mi">320</span><span class="o">-</span><span class="n">width</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="p">(</span><span class="mi">480</span><span class="o">-</span><span class="mi">10</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="mi">20</span><span class="p">)]</span> <span class="n">autorelease</span><span class="p">];</span>
+</div><div class='line'>  <span class="n">label</span><span class="p">.</span><span class="n">font</span> <span class="o">=</span> <span class="p">[</span><span class="n">UIFont</span> <span class="nl">fontWithName:</span><span class="s">@&quot;Courier&quot;</span> <span class="nl">size:</span><span class="mi">12</span><span class="p">];</span>
+</div><div class='line'>  <span class="n">label</span><span class="p">.</span><span class="n">backgroundColor</span> <span class="o">=</span> <span class="p">[</span><span class="n">UIColor</span> <span class="n">clearColor</span><span class="p">];</span>
+</div><div class='line'>  <span class="n">label</span><span class="p">.</span><span class="n">textColor</span> <span class="o">=</span> <span class="p">[</span><span class="n">UIColor</span> <span class="n">darkGrayColor</span><span class="p">];</span>
+</div><div class='line'>  <span class="n">label</span><span class="p">.</span><span class="n">textAlignment</span> <span class="o">=</span> <span class="n">UITextAlignmentCenter</span><span class="p">;</span>
+</div><div class='line'>  <span class="n">label</span><span class="p">.</span><span class="n">text</span> <span class="o">=</span> <span class="s">@&quot;Preparing the awesome ...&quot;</span><span class="p">;</span>
+</div><div class='line'>  <span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">view</span> <span class="nl">addSubview:</span><span class="n">label</span><span class="p">];</span>
+</div><div class='line'>
+</div><div class='line'>  <span class="n">proxy</span> <span class="o">=</span> <span class="p">[[</span><span class="n">TekpubProxy</span> <span class="n">alloc</span><span class="p">]</span> <span class="n">init</span><span class="p">];</span>
+</div><div class='line'>  <span class="n">proxy</span><span class="p">.</span><span class="n">delegate</span> <span class="o">=</span> <span class="n">self</span><span class="p">;</span>
+</div><div class='line'>  <span class="n">proxy</span><span class="p">.</span><span class="n">progressDelegate</span> <span class="o">=</span> <span class="n">progressView</span><span class="p">;</span>
+</div><div class='line'>  <span class="p">[</span><span class="n">proxy</span> <span class="n">asyncUpdateProductions</span><span class="p">];</span>
+</div><div class='line'><span class="p">}</span>
+</div><div class='line'>
+</div><div class='line'><span class="o">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">doneUpdatingProductions</span> <span class="p">{</span>
+</div><div class='line'>  <span class="n">proxy</span><span class="p">.</span><span class="n">delegate</span> <span class="o">=</span> <span class="nb">nil</span><span class="p">;</span>
+</div><div class='line'>  <span class="n">proxy</span><span class="p">.</span><span class="n">progressDelegate</span> <span class="o">=</span> <span class="nb">nil</span><span class="p">;</span>
+</div><div class='line'>  <span class="p">[</span><span class="n">proxy</span> <span class="n">release</span><span class="p">];</span>
+</div><div class='line'>  <span class="n">tekpubAppDelegate</span> <span class="o">*</span><span class="n">appDelegate</span> <span class="o">=</span> <span class="p">(</span><span class="n">tekpubAppDelegate</span> <span class="o">*</span><span class="p">)[[</span><span class="n">UIApplication</span> <span class="n">sharedApplication</span><span class="p">]</span> <span class="n">delegate</span><span class="p">];</span>
+</div><div class='line'>  <span class="p">[</span><span class="n">appDelegate</span> <span class="n">doneLoading</span><span class="p">];</span>
+</div><div class='line'><span class="p">}</span>
+</div><div class='line'>
+</div><div class='line'><span class="o">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">failedUpatingProductions</span> <span class="p">{</span>
+</div><div class='line'>  <span class="n">UIAlertView</span> <span class="o">*</span><span class="n">alert</span> <span class="o">=</span> <span class="p">[[[</span><span class="n">UIAlertView</span> <span class="n">alloc</span><span class="p">]</span> <span class="nl">initWithTitle:</span><span class="s">@&quot;Error connecting!&quot;</span>
+</div><div class='line'>    <span class="nl">message:</span><span class="s">@&quot;We couldn&#39;t fetch the `awesome` from tekpub.com.  Are you connected to the internet?&quot;</span>
+</div><div class='line'>    <span class="nl">delegate:</span><span class="nb">nil</span>
+</div><div class='line'>    <span class="nl">cancelButtonTitle:</span><span class="s">@&quot;OK&quot;</span> <span class="nl">otherButtonTitles:</span><span class="nb">nil</span><span class="p">]</span> <span class="n">autorelease</span><span class="p">];</span>
+</div><div class='line'>  <span class="p">[</span><span class="n">alert</span> <span class="n">show</span><span class="p">];</span>
+</div><div class='line'><span class="p">}</span>
+</div><div class='line'><span class="k">@end</span>
+</div></code></pre></td></tr></table></div></figure></div>
+
+
+
+
+<p>The first few lines of code simply set up some UI elements that weren&#8217;t part of the NIB file.  Doing it this way is certainly a matter of preference, and I find that occasionally building UI controls is easier than in Interface Builder.</p>
+
+
+<p>Next up, we kick off the async process via a separate class called TekpubProxy.  This class utilizes the excellent <a href="http://allseeing-i.com/ASIHTTPRequest/">ASIHTTPRequest</a> library to do easy asynchronous network requests, complete with progress callbacks.  A bonus is that the progressDelegate automatically detects when you set it to a UIProgressView and automatically updates the status.  <em>How cool is that?! </em></p>
+
+
+<p>Finally, when the splash screen is notified that the loading has completed, we call a method on the App Delegate in order to proceed with the rest of the application.</p>
+
+
+<p>Here is the AppDelegate class:</p>
+
+
+
+
+<div><figure role=code> <div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+<span class='line'>2</span>
+<span class='line'>3</span>
+<span class='line'>4</span>
+<span class='line'>5</span>
+<span class='line'>6</span>
+<span class='line'>7</span>
+<span class='line'>8</span>
+<span class='line'>9</span>
+<span class='line'>10</span>
+<span class='line'>11</span>
+<span class='line'>12</span>
+<span class='line'>13</span>
+<span class='line'>14</span>
+<span class='line'>15</span>
+<span class='line'>16</span>
+<span class='line'>17</span>
+<span class='line'>18</span>
+<span class='line'>19</span>
+<span class='line'>20</span>
+<span class='line'>21</span>
+<span class='line'>22</span>
+<span class='line'>23</span>
+<span class='line'>24</span>
+<span class='line'>25</span>
+</pre></td><td class='code' width='100%'><pre><code class='objc'><div class='line'><span class="k">@implementation</span> <span class="nc">tekpubAppDelegate</span>
+</div><div class='line'>
+</div><div class='line'><span class="k">@synthesize</span> <span class="n">window</span><span class="p">;</span>
+</div><div class='line'><span class="k">@synthesize</span> <span class="n">splashScreenController</span><span class="p">;</span>
+</div><div class='line'>
+</div><div class='line'><span class="o">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nl">applicationDidFinishLaunching:</span><span class="p">(</span><span class="n">UIApplication</span> <span class="o">*</span><span class="p">)</span><span class="n">application</span> <span class="p">{</span>
+</div><div class='line'>  <span class="c1">// Add the tab bar controller&#39;s current view as a subview of the window</span>
+</div><div class='line'>  <span class="p">[</span><span class="n">window</span> <span class="nl">addSubview:</span><span class="n">splashScreenController</span><span class="p">.</span><span class="n">view</span><span class="p">];</span>
+</div><div class='line'><span class="p">}</span>
+</div><div class='line'>
+</div><div class='line'><span class="o">-</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">doneLoading</span> <span class="p">{</span>
+</div><div class='line'>  <span class="n">ProductionsController</span> <span class="o">*</span><span class="n">controller</span> <span class="o">=</span> <span class="p">[[</span><span class="n">ProductionsController</span> <span class="n">alloc</span><span class="p">]</span> <span class="nl">initWithStyle:</span><span class="n">UITableViewStylePlain</span><span class="p">];</span>
+</div><div class='line'>  <span class="n">navController</span> <span class="o">=</span> <span class="p">[[</span><span class="n">UINavigationController</span> <span class="n">alloc</span><span class="p">]</span> <span class="nl">initWithRootViewController:</span><span class="n">controller</span><span class="p">];</span>
+</div><div class='line'>  <span class="n">navController</span><span class="p">.</span><span class="n">navigationBar</span><span class="p">.</span><span class="n">tintColor</span> <span class="o">=</span> <span class="p">[</span><span class="n">UIColor</span> <span class="n">blackColor</span><span class="p">];</span>
+</div><div class='line'>  <span class="p">[</span><span class="n">window</span> <span class="nl">insertSubview:</span><span class="n">navController</span><span class="p">.</span><span class="n">view</span> <span class="nl">belowSubview:</span><span class="n">splashScreenController</span><span class="p">.</span><span class="n">view</span><span class="p">];</span>
+</div><div class='line'>
+</div><div class='line'>  <span class="p">[</span><span class="n">UIView</span> <span class="nl">beginAnimations:</span><span class="s">@&quot;fadeIn&quot;</span> <span class="nl">context:</span><span class="nb">nil</span><span class="p">];</span>
+</div><div class='line'>  <span class="p">[</span><span class="n">UIView</span> <span class="nl">setAnimationDuration:</span><span class="mf">1.5</span><span class="p">];</span>
+</div><div class='line'>  <span class="n">splashScreenController</span><span class="p">.</span><span class="n">view</span><span class="p">.</span><span class="n">alpha</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</div><div class='line'>  <span class="p">[</span><span class="n">UIView</span> <span class="n">commitAnimations</span><span class="p">];</span>
+</div><div class='line'>
+</div><div class='line'>  <span class="p">[</span><span class="n">controller</span> <span class="n">release</span><span class="p">];</span>
+</div><div class='line'><span class="p">}</span>
+</div><div class='line'>
+</div><div class='line'><span class="k">@end</span>
+</div></code></pre></td></tr></table></div></figure></div>
+
+
+<p>We utilize a nice cross-fade animation to bring the navigation controller stack into view. The end result is quite nice, and makes the 2-3 second loading time much more bearable.</p>
+
+<p><img src="https://flux88.s3.amazonaws.com/images/tekpub-splash.png" alt="tekpub-splash-screen" /></p>
+</div>
+  <footer>
+    <a rel="full-article" href="/2010/06/building-an-iphone-app-for-tekpub-splash-screen/">Read on &rarr;</a>
+  </footer>
+
+
+  </article>
+
+
+  <article>
+    
+  <header>
+    
       <h1 class="entry-title"><a href="/2010/06/iphone-apps-dont-live-in-a-vacuum/">iPhone Apps Don&#8217;t Live in a Vacuum</a></h1>
     
     
@@ -708,125 +909,6 @@
 
   </article>
 
-
-  <article>
-    
-  <header>
-    
-      <h1 class="entry-title"><a href="/2010/02/scripting-heroku-backups/">Scripting Heroku Backups</a></h1>
-    
-    
-      <p class="meta">
-
-
-
-
-<time datetime="2010-02-28 00:00:00 -0600" pubdate  updated >Feb 28<span>th</span>, 2010</time>
-
-
-</p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>With any website, having a regular backup is critical.  <a href="http://heroku.com">Heroku</a>, the awesome Rails cloud service that hosts <a href="http://pockettabs.com">Pocket Tabs</a> and a handful of other sites for me, provides the ability to do backups of code and data through a concept called <strong>bundles</strong>.</p>
-
-
-<p>When you enable the free bundles support on Heroku, you only get 1 bundle.  You can download it and destroy it to free up the space for the next bundle, but results in 3-4 commands just to get a backup of the site.  You can pay for additional bundles, but with a little script we can get by with just one.</p>
-
-
-<p>Here&#8217;s the typical workflow:</p>
-
-
-
-
-<div><figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
-<span class='line'>2</span>
-<span class='line'>3</span>
-<span class='line'>4</span>
-</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>&gt; heroku bundles:capture my-site-2010-02-28
-</div><div class='line'>&gt; heroku bundles:download my-site-2010-02-28
-</div><div class='line'>#places my-site.tar.gz in the current directory
-</div><div class='line'>&gt; heroku bundles:destroy my-site-2010-02-28</div></code></pre></td></tr></table></div></figure></div>
-
-
-
-
-<p>With <a target="_blank" href="http://www.mail-archive.com/heroku@googlegroups.com/msg02903.html">some help</a>, I created a rake task to do this work for me.</p>
-
-
-<p>In your rails project, place a new rake file in the `lib/tasks` folder. I called mine `backup_site.rake`.  The standard Rails Rakefile knows how to load up any of your custom rake files in this folder.  It&#8217;s a good idea to give your rake tasks a namespace to keep everything tidy.  Here&#8217;s mine:</p>
-
-
-
-
-<div><figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
-<span class='line'>2</span>
-<span class='line'>3</span>
-<span class='line'>4</span>
-<span class='line'>5</span>
-<span class='line'>6</span>
-<span class='line'>7</span>
-<span class='line'>8</span>
-<span class='line'>9</span>
-<span class='line'>10</span>
-<span class='line'>11</span>
-<span class='line'>12</span>
-<span class='line'>13</span>
-<span class='line'>14</span>
-<span class='line'>15</span>
-<span class='line'>16</span>
-<span class='line'>17</span>
-<span class='line'>18</span>
-<span class='line'>19</span>
-</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>namespace :pockettabs do
-</div><div class='line'>desc 'Captures a heroku bundle and downloads it.  The downloaded files are stored in backups/'
-</div><div class='line'>task :backup do
-</div><div class='line'>timestamp = `date -u '+%Y-%m-%d-%H-%M'`.chomp
-</div><div class='line'>bundle_name = &quot;pockettabs-#{timestamp}&quot;
-</div><div class='line'>puts &quot;Capturing bundle #{bundle_name}...&quot;
-</div><div class='line'>`heroku bundles:capture --app pockettabs '#{bundle_name}'`
-</div><div class='line'># poll for completion (warning, a little hacky)
-</div><div class='line'>begin
-</div><div class='line'>bundles = `heroku bundles --app pockettabs`
-</div><div class='line'>end while bundles.match(/complete/).nil?
-</div><div class='line'># download &amp; destroy the bundle we just captured
-</div><div class='line'>%w(download destroy).each do | action |
-</div><div class='line'>`heroku bundles:#{action} --app pockettabs '#{bundle_name}'`
-</div><div class='line'>end
-</div><div class='line'>`mv pockettabs.tar.gz backups/#{bundle_name}.tar.gz`
-</div><div class='line'>puts &quot;Bundle captured and stored in backups/#{bundle_name}.tar.gz&quot;
-</div><div class='line'>end
-</div><div class='line'>end</div></code></pre></td></tr></table></div></figure></div>
-
-
-
-
-<p>Now I can easily just run a rake task any time I want to backup the site.</p>
-
-
-
-
-<div><figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
-<span class='line'>2</span>
-<span class='line'>3</span>
-</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>&gt; rake pockettabs:backup
-</div><div class='line'># Capturing bundle pockettabs-2010-02-28-02-40...
-</div><div class='line'># Bundle captured and stored in backups/pockettabs-2010-02-28-02-40.tar.gz</div></code></pre></td></tr></table></div></figure></div>
-
-
-
-
-<p>Next step is to put this in a cron job so that I don&#8217;t have to remember to do it.</p>
-
-</div>
-  <footer>
-    <a rel="full-article" href="/2010/02/scripting-heroku-backups/">Read on &rarr;</a>
-  </footer>
-
-
-  </article>
-
 <nav role="pagination">
   <div>
     
@@ -861,6 +943,10 @@
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2011/10/making-a-uibutton-flip-over/">Making a UIButton Flip Over</a>
+      </li>
+    
+      <li class="post">
         <a href="/2011/09/creating-a-glow-effect-for-uilabel-and-uibutton/">Creating a Glow Effect for UILabel and UIButton</a>
       </li>
     
@@ -874,10 +960,6 @@
     
       <li class="post">
         <a href="/2011/08/vim---could-not-invoke-jslint/">Vim - Could Not Invoke JSLint</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2011/08/is-rails-exempt-from-software-principles/">Is Rails Exempt?</a>
       </li>
     
   </ul>

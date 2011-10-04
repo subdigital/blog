@@ -106,6 +106,43 @@
     
   <header>
     
+      <h1 class="entry-title"><a href="/2006/08/newshutch-is-my-friend/">Newshutch Is My Friend</a></h1>
+    
+    
+      <p class="meta">
+
+
+
+
+<time datetime="2006-08-17 00:00:00 -0500" pubdate  updated >Aug 17<span>th</span>, 2006</time>
+
+
+</p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>For my RSS Feeds I had previously used RssReader.&nbsp; I used it because I wanted a windows application that would notify me of new posts and not be too obtrusive.&nbsp; RssReader is pretty nice, but the interface needs quite a bit of polishing.&nbsp; I also disliked not having a distributed opml or something so that I could access all of my feeds on another computer.</p>
+
+
+<p>I have since crossed over and succumbd to web-based RSS Feed readers.&nbsp; I&rsquo;ve tried Google Reader, Newsgator, Bloglines, and others&hellip; but I didn&rsquo;t like any of them.</p>
+
+
+<p>My new friend for RSS feeds is <a title="newshutch rss reader" href="http://newshutch.com/" target="_blank">Newshutch</a>.&nbsp; Incredbily simplistic, but functional.&nbsp; The interface doesn&rsquo;t get in my way and the nice use of Ajax means that I can leave the window open and it will automatically get my feeds for me.&nbsp; As I read an entry, I can click 1 button and have that entry fade away and the ones below it to float to the top.&nbsp; This fits nicely with the way I like to read blog posts, so this one is most-likely here to stay.</p>
+
+</div>
+  <footer>
+    <a rel="full-article" href="/2006/08/newshutch-is-my-friend/">Read on &rarr;</a>
+  </footer>
+
+
+  </article>
+
+
+  <article>
+    
+  <header>
+    
       <h1 class="entry-title"><a href="/2006/08/making-divs-stay-next-to-each-other/">Making DIVs Stay Next to Each Other</a></h1>
     
     
@@ -811,58 +848,6 @@ pan>.AreEqual(2001, superTroopers.Year, <span style="color: maroon;">&#8220;Year
 
   </article>
 
-
-  <article>
-    
-  <header>
-    
-      <h1 class="entry-title"><a href="/2006/06/adding-connection-strings-at-runtime/">Adding Connection Strings at Runtime</a></h1>
-    
-    
-      <p class="meta">
-
-
-
-
-<time datetime="2006-06-21 00:00:00 -0500" pubdate  updated >Jun 21<span>st</span>, 2006</time>
-
-
-</p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Today I noticed how non-intuitive it is to write to the configuration file programatically for an application.&nbsp; What I needed to do was dynamically create a connection string, then write it to the app.config file.</p>
-
-
-<p>Here’s how you do it:</p>
-
-
-<p>first, you need to add a project reference to the <strong>System.Configuration </strong>assembly.&nbsp; Add a corresponding using clause to the top of your class.</p>
-
-
-<div style="border: 1px solid rgb(102, 102, 102); background: white none repeat scroll 0% 50%; overflow: auto; font-size: 9pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial; color: black; font-family: Courier New;"><span style="color: rgb(43, 145, 175);">&nbsp; &nbsp;</span><span style="color: blue;">using</span> System.Configuration;</div>
-
-
-<p>Next you need to find and open the configuration file.&nbsp; In win forms, you do this by specifying the full path to your application’s executable.&nbsp; If you project is at <strong>c:\code\project1</strong> then you would pass in something like this: “<strong>c:\code\project1\bin\debug\project1.exe</strong>”.</p>
-
-
-<div style="border: 1px solid rgb(102, 102, 102); background: white none repeat scroll 0% 50%; overflow: auto; font-size: 9pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial; color: black; font-family: Courier New;"><p style="margin: 0px;"><span style="color: rgb(43, 145, 175);">&nbsp;</span><span style="color: teal;">Configuration</span> config = <span style="color: teal;">ConfigurationManager</span>.OpenExeConfiguration(FULL_EXE_PATH);</p><p style="margin: 0px;"><span style="color: rgb(43, 145, 175);">&nbsp;</span></p><p style="margin: 0px;"><span style="color: rgb(43, 145, 175);"></span><span style="color: teal;">&nbsp;ConnectionStringSettings</span> connStringSettings = <span style="color: blue;">new</span> <span style="color: teal;">ConnectionStringSettings</span>(<span style="color: maroon;">&#8220;database&#8221;</span>, </p><p style="margin: 0px;"><span style="color: maroon;"><font color="#000000">&nbsp;&nbsp;&nbsp;&nbsp; </font>&#8220;connection_string_here&#8221;</span>);</p><p style="margin: 0px;">&nbsp;</p><p style="margin: 0px;"><span style="color: rgb(43, 145, 175);">&nbsp;</span>config.ConnectionStrings.ConnectionStrings.Add(connStringSettings);</p><p style="margin: 0px;"><span style="color: rgb(43, 145, 175);">&nbsp;</span></p><p style="margin: 0px;"><span style="color: rgb(43, 145, 175);"></span>&nbsp;config.Save();</p></div>
-
-
-<p>For ASP.NET, you can follow the same principle, but use the <strong>System.Web.Configuration</strong> namespace in conjunction with WebConfigurationManager.OpenWebConfiguration(<em>path</em>) where <em>path </em>is the url of your root, for example <em>http://localhost/webapp1</em>&nbsp;(notice there is no trailing slash).</p>
-
-
-<p><!--EndFragment--><!--EndFragment--></p>
-
-</div>
-  <footer>
-    <a rel="full-article" href="/2006/06/adding-connection-strings-at-runtime/">Read on &rarr;</a>
-  </footer>
-
-
-  </article>
-
 <nav role="pagination">
   <div>
     
@@ -897,6 +882,10 @@ pan>.AreEqual(2001, superTroopers.Year, <span style="color: maroon;">&#8220;Year
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2011/10/making-a-uibutton-flip-over/">Making a UIButton Flip Over</a>
+      </li>
+    
+      <li class="post">
         <a href="/2011/09/creating-a-glow-effect-for-uilabel-and-uibutton/">Creating a Glow Effect for UILabel and UIButton</a>
       </li>
     
@@ -910,10 +899,6 @@ pan>.AreEqual(2001, superTroopers.Year, <span style="color: maroon;">&#8220;Year
     
       <li class="post">
         <a href="/2011/08/vim---could-not-invoke-jslint/">Vim - Could Not Invoke JSLint</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2011/08/is-rails-exempt-from-software-principles/">Is Rails Exempt?</a>
       </li>
     
   </ul>

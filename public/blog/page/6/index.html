@@ -106,6 +106,125 @@
     
   <header>
     
+      <h1 class="entry-title"><a href="/2010/02/scripting-heroku-backups/">Scripting Heroku Backups</a></h1>
+    
+    
+      <p class="meta">
+
+
+
+
+<time datetime="2010-02-28 00:00:00 -0600" pubdate  updated >Feb 28<span>th</span>, 2010</time>
+
+
+</p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>With any website, having a regular backup is critical.  <a href="http://heroku.com">Heroku</a>, the awesome Rails cloud service that hosts <a href="http://pockettabs.com">Pocket Tabs</a> and a handful of other sites for me, provides the ability to do backups of code and data through a concept called <strong>bundles</strong>.</p>
+
+
+<p>When you enable the free bundles support on Heroku, you only get 1 bundle.  You can download it and destroy it to free up the space for the next bundle, but results in 3-4 commands just to get a backup of the site.  You can pay for additional bundles, but with a little script we can get by with just one.</p>
+
+
+<p>Here&#8217;s the typical workflow:</p>
+
+
+
+
+<div><figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+<span class='line'>2</span>
+<span class='line'>3</span>
+<span class='line'>4</span>
+</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>&gt; heroku bundles:capture my-site-2010-02-28
+</div><div class='line'>&gt; heroku bundles:download my-site-2010-02-28
+</div><div class='line'>#places my-site.tar.gz in the current directory
+</div><div class='line'>&gt; heroku bundles:destroy my-site-2010-02-28</div></code></pre></td></tr></table></div></figure></div>
+
+
+
+
+<p>With <a target="_blank" href="http://www.mail-archive.com/heroku@googlegroups.com/msg02903.html">some help</a>, I created a rake task to do this work for me.</p>
+
+
+<p>In your rails project, place a new rake file in the `lib/tasks` folder. I called mine `backup_site.rake`.  The standard Rails Rakefile knows how to load up any of your custom rake files in this folder.  It&#8217;s a good idea to give your rake tasks a namespace to keep everything tidy.  Here&#8217;s mine:</p>
+
+
+
+
+<div><figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+<span class='line'>2</span>
+<span class='line'>3</span>
+<span class='line'>4</span>
+<span class='line'>5</span>
+<span class='line'>6</span>
+<span class='line'>7</span>
+<span class='line'>8</span>
+<span class='line'>9</span>
+<span class='line'>10</span>
+<span class='line'>11</span>
+<span class='line'>12</span>
+<span class='line'>13</span>
+<span class='line'>14</span>
+<span class='line'>15</span>
+<span class='line'>16</span>
+<span class='line'>17</span>
+<span class='line'>18</span>
+<span class='line'>19</span>
+</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>namespace :pockettabs do
+</div><div class='line'>desc 'Captures a heroku bundle and downloads it.  The downloaded files are stored in backups/'
+</div><div class='line'>task :backup do
+</div><div class='line'>timestamp = `date -u '+%Y-%m-%d-%H-%M'`.chomp
+</div><div class='line'>bundle_name = &quot;pockettabs-#{timestamp}&quot;
+</div><div class='line'>puts &quot;Capturing bundle #{bundle_name}...&quot;
+</div><div class='line'>`heroku bundles:capture --app pockettabs '#{bundle_name}'`
+</div><div class='line'># poll for completion (warning, a little hacky)
+</div><div class='line'>begin
+</div><div class='line'>bundles = `heroku bundles --app pockettabs`
+</div><div class='line'>end while bundles.match(/complete/).nil?
+</div><div class='line'># download &amp; destroy the bundle we just captured
+</div><div class='line'>%w(download destroy).each do | action |
+</div><div class='line'>`heroku bundles:#{action} --app pockettabs '#{bundle_name}'`
+</div><div class='line'>end
+</div><div class='line'>`mv pockettabs.tar.gz backups/#{bundle_name}.tar.gz`
+</div><div class='line'>puts &quot;Bundle captured and stored in backups/#{bundle_name}.tar.gz&quot;
+</div><div class='line'>end
+</div><div class='line'>end</div></code></pre></td></tr></table></div></figure></div>
+
+
+
+
+<p>Now I can easily just run a rake task any time I want to backup the site.</p>
+
+
+
+
+<div><figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+<span class='line'>2</span>
+<span class='line'>3</span>
+</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>&gt; rake pockettabs:backup
+</div><div class='line'># Capturing bundle pockettabs-2010-02-28-02-40...
+</div><div class='line'># Bundle captured and stored in backups/pockettabs-2010-02-28-02-40.tar.gz</div></code></pre></td></tr></table></div></figure></div>
+
+
+
+
+<p>Next step is to put this in a cron job so that I don&#8217;t have to remember to do it.</p>
+
+</div>
+  <footer>
+    <a rel="full-article" href="/2010/02/scripting-heroku-backups/">Read on &rarr;</a>
+  </footer>
+
+
+  </article>
+
+
+  <article>
+    
+  <header>
+    
       <h1 class="entry-title"><a href="/2010/02/a-code-example-of-ruby-metaprogramming/">A Code Example of Ruby Metaprogramming</a></h1>
     
     
@@ -703,39 +822,6 @@ Ribbit!
 
   </article>
 
-
-  <article>
-    
-  <header>
-    
-      <h1 class="entry-title"><a href="/2009/12/interview-online-at-infoq/">Interview Online at InfoQ</a></h1>
-    
-    
-      <p class="meta">
-
-
-
-
-<time datetime="2009-12-09 00:00:00 -0600" pubdate  updated >Dec 9<span>th</span>, 2009</time>
-
-
-</p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><a href="http://infoq.com" target="_blank">InfoQ</a> has become on of my favorite sites for software developer news, and I’m extremely glad to say that they interviewed me, <a href="http://jeffreypalermo.com/" target="_blank">Jeffrey</a>, and <a href="http://www.lostechies.com/blogs/jimmy_bogard/default.aspx" target="_blank">Jimmy</a> about ASP.NET MVC in Action.</p>
-
-
-<p>  <p>You can read the interview <a href="http://www.infoq.com/articles/aspnet-mvc-in-action" target="_blank">here</a>.</p></p>
-</div>
-  <footer>
-    <a rel="full-article" href="/2009/12/interview-online-at-infoq/">Read on &rarr;</a>
-  </footer>
-
-
-  </article>
-
 <nav role="pagination">
   <div>
     
@@ -770,6 +856,10 @@ Ribbit!
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2011/10/making-a-uibutton-flip-over/">Making a UIButton Flip Over</a>
+      </li>
+    
+      <li class="post">
         <a href="/2011/09/creating-a-glow-effect-for-uilabel-and-uibutton/">Creating a Glow Effect for UILabel and UIButton</a>
       </li>
     
@@ -783,10 +873,6 @@ Ribbit!
     
       <li class="post">
         <a href="/2011/08/vim---could-not-invoke-jslint/">Vim - Could Not Invoke JSLint</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2011/08/is-rails-exempt-from-software-principles/">Is Rails Exempt?</a>
       </li>
     
   </ul>
