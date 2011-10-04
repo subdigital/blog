@@ -4,7 +4,7 @@
   <title>Fickle Bits</title>
   <link href="http://benscheirman.com/atom.xml" rel="self"/>
   <link href="http://benscheirman.com/"/>
-  <updated>2011-10-04T10:51:19-05:00</updated>
+  <updated>2011-10-04T11:22:19-05:00</updated>
   <id>http://benscheirman.com/</id>
   <author>
     <name>Ben Scheirman</name>
@@ -207,7 +207,7 @@ self.navigationItem.rightBarButtonItem = [[[UIBarButtonItem alloc]
 
 &lt;p&gt;The effect can be seen below.&lt;/p&gt;
 
-&lt;p&gt;&lt;video width='389' height='336' preload='none' controls poster=' /videos/button_flip1.jpeg'&gt;&lt;source src='http://benscheirman.com/videos/button_flip.m4v' type='video/mp4; codecs=&quot;avc1.42E01E, mp4a.40.2&quot;'/&gt;&lt;/video&gt;&lt;/p&gt;
+&lt;p&gt;&lt;video width='389' height='336' preload='none' controls poster=' https://flux88.s3.amazonaws.com/videos/button_flip1.jpeg'&gt;&lt;source src='https://flux88.s3.amazonaws.com/videos/button_flip.m4v' type='video/mp4; codecs=&quot;avc1.42E01E, mp4a.40.2&quot;'/&gt;&lt;/video&gt;&lt;/p&gt;
 
 &lt;p&gt;Note that the flip effect on the main view is achieved separately, but
 the 2 strategies share identical values for the animation, so the flip
