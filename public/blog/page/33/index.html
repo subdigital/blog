@@ -5,7 +5,10 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Fickle Bits</title>
+  <title>
+    
+    Fickle Bits
+  </title>
   <meta name="author" content="Ben Scheirman">
   
 
@@ -100,6 +103,40 @@
     <div id="content">
       <div class="blog-index">
 
+
+
+  <article>
+    
+  <header>
+    
+      <h1 class="entry-title"><a href="/2006/03/feedburner-rss-feed/">Feedburner Rss Feed</a></h1>
+    
+    
+      <p class="meta">
+
+
+
+
+<time datetime="2006-03-28 00:00:00 -0600" pubdate  updated >Mar 28<span>th</span>, 2006</time>
+
+
+</p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I added a <a title="feedburner" href="http://www.feedburner.com/" target="_blank">Feedburner</a> feed to my blog.&nbsp; Hopefully I&rsquo;ll be able to automatically redirect any of the other feed links to the feedburner one, so I can track my readers.</p>
+
+
+<p>If you subscribe to my blog, please change the feed url to <a href="http://feeds.feedburner.com/flux88">http://feeds.feedburner.com/flux88</a></p>
+
+</div>
+  <footer>
+    <a rel="full-article" href="/2006/03/feedburner-rss-feed/">Read on &rarr;</a>
+  </footer>
+
+
+  </article>
 
 
   <article>
@@ -538,58 +575,6 @@
 
   </article>
 
-
-  <article>
-    
-  <header>
-    
-      <h1 class="entry-title"><a href="/2005/11/gridview-commandfield-validation-woes/">GridView CommandField Validation Woes</a></h1>
-    
-    
-      <p class="meta">
-
-
-
-
-<time datetime="2005-11-29 00:00:00 -0600" pubdate  updated >Nov 29<span>th</span>, 2005</time>
-
-
-</p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Today I was working with a simple form, a single textbox at the top with a button for adding items, and a gridview below for editing/deleting.</p>
-
-
-<p>With 2.0&rsquo;s validation groups, we can have validation on the &ldquo;Add&rdquo; form by setting <em>validationgroup=&rsquo;AddGroup&rsquo; </em>and we can have our CommandField column of the GridView have <em>validationGroup=&rsquo;editDelete&rsquo;</em>.&nbsp; Ideally this will separate the 2 actions into their own validation groups and they won&rsquo;t bother each other.</p>
-
-
-<p>Well, if you are using ImageButtons instead of LinkButtons for your CommandField, there is&nbsp;a slight problem.&nbsp; The ImageButton actually gets instantiated as DataControlImageButton, which cannot use the <em>CausesValidation </em>property.&nbsp; Here&rsquo;s what happens:</p>
-
-
-<p><img height="228" alt="DumbException" src="http://ben.lyntonweb.com/blog/uploads/dumbException_small.jpg" width="500" border="1" /></p>
-
-
-<p>Now why does this generate a <strong>NotSupportedException</strong>?&nbsp; This is a perfectly valid scenario for validation?&nbsp; In this particular case I do not care about the edit/delete validation, but I do care about the Add validation.&nbsp; </p>
-
-
-<p>If I change this scenario to work with LinkButton or just Plain Button, it all works out fine.</p>
-
-
-<p>I have another rant regarding this same concept.&nbsp; The above screenclip is showing the RowDataBound event handler, and I am looping through the controls in the last column of the GridView.&nbsp; Now the last column is going to be the CommandField, so I know that there will be some commandcontrols in there.&nbsp; At this point I should not care whether it is a Button, an LinkButton, or an ImageButton because I will be treating them all the same:&nbsp; I will compare their <em>CommandName</em> properties<em> </em>to see what they are doing.&nbsp; So why can&rsquo;t I just cast the control as Button?&nbsp; Well ImageButton doesn&rsquo;t even derive from Button!&nbsp; I am sure there are reasons for that, but I don&rsquo;t see them.&nbsp; This means I have to recompile my code if some UI guy decides they want a link instead of an image for their Edit command.&nbsp; Dumb, I say.&nbsp; An ImageButton, by nature, is a button, not an image.&nbsp; It&rsquo;s behavior is a button.&nbsp; The way we treat it as developers is just like a button.&nbsp; It&rsquo;s <em>view</em> or <em>representation</em> however is an Image, just like a standard button has a raised, rounded rectange as its <em>view.</em>&nbsp; Someone please explain to me why I&rsquo;m wrong&hellip;.</p>
-
-
-<p><strong>Now playing:</strong> <a href="http://phobos.apple.com/WebObjects/MZSearch.woa/wa/advancedSearchResults?artistTerm=Jimi Hendrix">Jimi Hendrix</a> - <a href="http://phobos.apple.com/WebObjects/MZSearch.woa/wa/advancedSearchResults?songTerm=Red House&amp;artistTerm=Jimi Hendrix">Red House</a></p>
-
-</div>
-  <footer>
-    <a rel="full-article" href="/2005/11/gridview-commandfield-validation-woes/">Read on &rarr;</a>
-  </footer>
-
-
-  </article>
-
 <nav role="pagination">
   <div>
     
@@ -624,6 +609,10 @@
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2011/10/appsites-is-now-appkickstand/">Appsites Is Now AppKickstand</a>
+      </li>
+    
+      <li class="post">
         <a href="/2011/10/sharing-vim-configuration-between-machines/">Sharing Vim Configuration Between Machines</a>
       </li>
     
@@ -637,10 +626,6 @@
     
       <li class="post">
         <a href="/2011/09/introducing-appsites/">Introducing App Sites</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2011/09/firebug-style-debugging-for-ios/">Firebug-Style Visual Debugging for iOS</a>
       </li>
     
   </ul>

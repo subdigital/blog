@@ -4,13 +4,37 @@
   <title>Fickle Bits</title>
   <link href="http://benscheirman.com/atom.xml" rel="self"/>
   <link href="http://benscheirman.com/"/>
-  <updated>2011-10-06T18:14:10-05:00</updated>
+  <updated>2011-10-13T22:17:33-05:00</updated>
   <id>http://benscheirman.com/</id>
   <author>
     <name>Ben Scheirman</name>
     
   </author>
 
+  
+  <entry>
+    <title>Appsites Is Now AppKickstand</title>
+    <link href="http://benscheirman.com/2011/10/appsites-is-now-appkickstand/"/>
+    <updated>2011-10-13T21:50:00-05:00</updated>
+    <id>http://benscheirman.com/2011/10/appsites-is-now-appkickstand</id>
+    <content type="html">&lt;p&gt;A few weeks ago I launched Appsites, a free way to quickly host an
+attractive splash page for iPhone applications.&lt;/p&gt;
+
+&lt;p&gt;Instead of competing with another site with the same name for traffic
+when we could be sharing it, I decided a new name was in order.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;I now present to you:  &lt;a href=&quot;http://appkickstand.com&quot;&gt;AppKickstand&lt;/a&gt;.&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://appkickstand.com&quot;&gt;&lt;img src=&quot;http://benscheirman.com/images/appkickstand.png&quot;
+alt=&quot;AppKickstand&quot; border=&quot;0&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;For an example of what it looks like with real apps, check out
+&lt;a href=&quot;http://appkickstand.com/giggletouch&quot;&gt;Giggle Touch&lt;/a&gt; or
+&lt;a href=&quot;http://appkickstand.com/tallythings&quot;&gt;Tally Things&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;If you have an iPhone app, what are you waiting for?  It's &lt;strong&gt;FREE&lt;/strong&gt;!&lt;/p&gt;
+</content>
+  </entry>
   
   <entry>
     <title>Sharing Vim Configuration Between Machines</title>
@@ -1958,174 +1982,6 @@ You might be saying, &lt;em&gt;&quot;What the hell are all these gems for?!?!&qu
 
 &lt;p&gt;For a great discussion about how to make your specs fast without requiring the complexity of Spork, check out the latest episode of Destroy All Software: &lt;a href=&quot;https://www.destroyallsoftware.com/screencasts/catalog/fast-tests-with-and-without-rails&quot;&gt;Fast Specs with and without Rails&lt;/a&gt;. These screencasts are excellent..&lt;/p&gt;
 
-</content>
-  </entry>
-  
-  <entry>
-    <title>Private Categories in Objective-C</title>
-    <link href="http://benscheirman.com/2011/04/private-categories-in-objective-c/"/>
-    <updated>2011-04-16T00:00:00-05:00</updated>
-    <id>http://benscheirman.com/2011/04/private-categories-in-objective-c</id>
-    <content type="html">&lt;p&gt;Sometimes properties can vastly simplify the memory management code when working with your private instance variables (or &lt;em&gt;ivars&lt;/em&gt;). Here is an example:&lt;/p&gt;
-
-&lt;p&gt;&lt;em&gt;MyTableViewController.h&lt;/em&gt;&lt;/p&gt;
-
-&lt;div&gt;&lt;figure role=code&gt; &lt;div class=&quot;highlight&quot;&gt;&lt;table cellpadding=&quot;0&quot; cellspacing=&quot;0&quot;&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre class=&quot;line-numbers&quot;&gt;&lt;span class='line'&gt;1&lt;/span&gt;
-&lt;span class='line'&gt;2&lt;/span&gt;
-&lt;span class='line'&gt;3&lt;/span&gt;
-&lt;span class='line'&gt;4&lt;/span&gt;
-&lt;span class='line'&gt;5&lt;/span&gt;
-&lt;span class='line'&gt;6&lt;/span&gt;
-&lt;span class='line'&gt;7&lt;/span&gt;
-&lt;span class='line'&gt;8&lt;/span&gt;
-&lt;span class='line'&gt;9&lt;/span&gt;
-&lt;/pre&gt;&lt;/td&gt;&lt;td class='code' width='100%'&gt;&lt;pre&gt;&lt;code class='objc'&gt;&lt;div class='line'&gt;&lt;span class=&quot;k&quot;&gt;@interface&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;MyTableViewController&lt;/span&gt; : &lt;span class=&quot;nc&quot;&gt;UITableViewController&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-&lt;/div&gt;&lt;div class='line'&gt;    &lt;span class=&quot;n&quot;&gt;NSArray&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;items&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;/div&gt;&lt;div class='line'&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;/div&gt;&lt;div class='line'&gt;
-&lt;/div&gt;&lt;div class='line'&gt;&lt;span class=&quot;k&quot;&gt;@property&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;nonatomic&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;retain&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;NSArray&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;items&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;/div&gt;&lt;div class='line'&gt;
-&lt;/div&gt;&lt;div class='line'&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;somethingChanged&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;/div&gt;&lt;div class='line'&gt;
-&lt;/div&gt;&lt;div class='line'&gt;&lt;span class=&quot;k&quot;&gt;@end&lt;/span&gt;
-&lt;/div&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;&lt;/figure&gt;&lt;/div&gt;
-
-
-&lt;p&gt;&lt;em&gt;MyTableViewController.m&lt;/em&gt;&lt;/p&gt;
-
-&lt;div&gt;&lt;figure role=code&gt; &lt;div class=&quot;highlight&quot;&gt;&lt;table cellpadding=&quot;0&quot; cellspacing=&quot;0&quot;&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre class=&quot;line-numbers&quot;&gt;&lt;span class='line'&gt;1&lt;/span&gt;
-&lt;span class='line'&gt;2&lt;/span&gt;
-&lt;span class='line'&gt;3&lt;/span&gt;
-&lt;span class='line'&gt;4&lt;/span&gt;
-&lt;span class='line'&gt;5&lt;/span&gt;
-&lt;span class='line'&gt;6&lt;/span&gt;
-&lt;span class='line'&gt;7&lt;/span&gt;
-&lt;span class='line'&gt;8&lt;/span&gt;
-&lt;span class='line'&gt;9&lt;/span&gt;
-&lt;span class='line'&gt;10&lt;/span&gt;
-&lt;span class='line'&gt;11&lt;/span&gt;
-&lt;span class='line'&gt;12&lt;/span&gt;
-&lt;span class='line'&gt;13&lt;/span&gt;
-&lt;span class='line'&gt;14&lt;/span&gt;
-&lt;span class='line'&gt;15&lt;/span&gt;
-&lt;span class='line'&gt;16&lt;/span&gt;
-&lt;span class='line'&gt;17&lt;/span&gt;
-&lt;span class='line'&gt;18&lt;/span&gt;
-&lt;span class='line'&gt;19&lt;/span&gt;
-&lt;span class='line'&gt;20&lt;/span&gt;
-&lt;span class='line'&gt;21&lt;/span&gt;
-&lt;/pre&gt;&lt;/td&gt;&lt;td class='code' width='100%'&gt;&lt;pre&gt;&lt;code class='objc'&gt;&lt;div class='line'&gt;&lt;span class=&quot;k&quot;&gt;@implementation&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;MyTableViewController&lt;/span&gt;
-&lt;/div&gt;&lt;div class='line'&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;viewDidLoad&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-&lt;/div&gt;&lt;div class='line'&gt;    &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;super&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;viewDidLoad&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
-&lt;/div&gt;&lt;div class='line'&gt;    &lt;span class=&quot;c1&quot;&gt;//using the ivar&lt;/span&gt;
-&lt;/div&gt;&lt;div class='line'&gt;    &lt;span class=&quot;n&quot;&gt;items&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;NSArray&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;arrayWithObjects:&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;@&amp;quot;Item 1&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;@&amp;quot;Item 2&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;nil&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;retain&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
-&lt;/div&gt;&lt;div class='line'&gt;    &lt;span class=&quot;c1&quot;&gt;//using the property&lt;/span&gt;
-&lt;/div&gt;&lt;div class='line'&gt;    &lt;span class=&quot;n&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;items&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;NSArray&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;arrayWithObjects:&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;@&amp;quot;Item 1&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;@&amp;quot;Item 2&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;nil&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];}&lt;/span&gt;
-&lt;/div&gt;&lt;div class='line'&gt;
-&lt;/div&gt;&lt;div class='line'&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;somethingChanged&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-&lt;/div&gt;&lt;div class='line'&gt;    &lt;span class=&quot;c1&quot;&gt;//using the ivar&lt;/span&gt;
-&lt;/div&gt;&lt;div class='line'&gt;    &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;items&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;release&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
-&lt;/div&gt;&lt;div class='line'&gt;    &lt;span class=&quot;n&quot;&gt;items&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;NSArray&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;arrayWithObjects:&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;@&amp;quot;New Item 1&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;@&amp;quot;New Item 2&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;nil&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;retain&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
-&lt;/div&gt;&lt;div class='line'&gt;    &lt;span class=&quot;c1&quot;&gt;//using the property&lt;/span&gt;
-&lt;/div&gt;&lt;div class='line'&gt;    &lt;span class=&quot;n&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;items&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;NSArray&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;arrayWithObjects:&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;@&amp;quot;New Item 1&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;@&amp;quot;New Item 2&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;nil&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
-&lt;/div&gt;&lt;div class='line'&gt;    &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;tableView&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;reloadData&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
-&lt;/div&gt;&lt;div class='line'&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;/div&gt;&lt;div class='line'&gt;
-&lt;/div&gt;&lt;div class='line'&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dealloc&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-&lt;/div&gt;&lt;div class='line'&gt;    &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;items&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;release&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
-&lt;/div&gt;&lt;div class='line'&gt;    &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;super&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dealloc&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
-&lt;/div&gt;&lt;div class='line'&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;@end&lt;/span&gt;
-&lt;/div&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;&lt;/figure&gt;&lt;/div&gt;
-
-
-&lt;p&gt;Notice that in each use of the ivar, we have to take special care to manage the memory properly. In the first case, we have to make sure to retain the value, because &lt;code&gt;[NSArray arrayWithObjects:]&lt;/code&gt; returns an autoreleased instance. In the second case, we have to make sure and release the first array before assigning it to the second array.&lt;/p&gt;
-
-&lt;p&gt;The only questionable part of using properties is probably obvious: &lt;strong&gt;You have exposed your internal state to outside classes, but only for the benefit of your implentation.&lt;/strong&gt; It seems odd to change your public API simply to make the implementation a bit cleaner. How can we fix this?&lt;/p&gt;
-
-&lt;h2&gt;Categories&lt;/h2&gt;
-
-
-&lt;p&gt;Before we solve the above problem, let's take a slight detour and learn about categories. A category in Objective-C is similar to an extension method in .NET. You basically re-open the class, define a method (or many) and provide your implementation. The result is it appears as if those methods were part of the original class all along.&lt;/p&gt;
-
-&lt;p&gt;Here's an example of putting a startsWith method on the string class:&lt;/p&gt;
-
-&lt;p&gt;&lt;em&gt;NSString+FLUXAdditions.h&lt;/em&gt;&lt;/p&gt;
-
-&lt;div&gt;&lt;figure role=code&gt; &lt;div class=&quot;highlight&quot;&gt;&lt;table cellpadding=&quot;0&quot; cellspacing=&quot;0&quot;&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre class=&quot;line-numbers&quot;&gt;&lt;span class='line'&gt;1&lt;/span&gt;
-&lt;span class='line'&gt;2&lt;/span&gt;
-&lt;span class='line'&gt;3&lt;/span&gt;
-&lt;/pre&gt;&lt;/td&gt;&lt;td class='code' width='100%'&gt;&lt;pre&gt;&lt;code class='objc'&gt;&lt;div class='line'&gt;&lt;span class=&quot;k&quot;&gt;@interface&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;NSString&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;(FLUXAdditions)&lt;/span&gt;
-&lt;/div&gt;&lt;div class='line'&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;BOOL&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;startsWith:&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;NSString&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;prefix&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;/div&gt;&lt;div class='line'&gt;&lt;span class=&quot;k&quot;&gt;@end&lt;/span&gt;
-&lt;/div&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;&lt;/figure&gt;&lt;/div&gt;
-
-
-&lt;p&gt;&lt;em&gt;NSString+FLUXAdditions.m&lt;/em&gt;&lt;/p&gt;
-
-&lt;div&gt;&lt;figure role=code&gt; &lt;div class=&quot;highlight&quot;&gt;&lt;table cellpadding=&quot;0&quot; cellspacing=&quot;0&quot;&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre class=&quot;line-numbers&quot;&gt;&lt;span class='line'&gt;1&lt;/span&gt;
-&lt;span class='line'&gt;2&lt;/span&gt;
-&lt;span class='line'&gt;3&lt;/span&gt;
-&lt;span class='line'&gt;4&lt;/span&gt;
-&lt;span class='line'&gt;5&lt;/span&gt;
-&lt;/pre&gt;&lt;/td&gt;&lt;td class='code' width='100%'&gt;&lt;pre&gt;&lt;code class='objc'&gt;&lt;div class='line'&gt;&lt;span class=&quot;k&quot;&gt;@implementation&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;NSString&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;(FLUXAdditions)&lt;/span&gt;
-&lt;/div&gt;&lt;div class='line'&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;BOOL&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;startsWith:&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;NSString&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;prefix&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-&lt;/div&gt;&lt;div class='line'&gt;&lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;self&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;substringToIndex:&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;prefix&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;length&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;isEqualTo:&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;prefix&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
-&lt;/div&gt;&lt;div class='line'&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;/div&gt;&lt;div class='line'&gt;&lt;span class=&quot;k&quot;&gt;@end&lt;/span&gt;
-&lt;/div&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;&lt;/figure&gt;&lt;/div&gt;
-
-
-&lt;p&gt;[box type=&quot;info&quot;]Notice the naming of the filename &amp;amp; the category name. Most people use the + syntax to denote a category on the class they're adding on to. The prefix is also important. If you just name your category &quot;Additions&quot; then it's possible that other libraries you include (or future versions of the SDK) could have the same name, leading to a collision. The common practice is to utilize a company prefix on classes that could be reused by others or that could cause collisions in the future.[/box]
-Now that I have that implemented, all I have to do is include my header file anywhere I want to use this method. You can even do this in a global header file.&lt;/p&gt;
-
-&lt;div&gt;&lt;figure role=code&gt; &lt;div class=&quot;highlight&quot;&gt;&lt;table cellpadding=&quot;0&quot; cellspacing=&quot;0&quot;&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre class=&quot;line-numbers&quot;&gt;&lt;span class='line'&gt;1&lt;/span&gt;
-&lt;/pre&gt;&lt;/td&gt;&lt;td class='code' width='100%'&gt;&lt;pre&gt;&lt;code class='objc'&gt;&lt;div class='line'&gt;&lt;span class=&quot;cp&quot;&gt;#import &amp;quot;NSString+FLUXAdditions.h&amp;quot;&lt;/span&gt;
-&lt;/div&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;&lt;/figure&gt;&lt;/div&gt;
-
-
-
-
-&lt;div&gt;&lt;figure role=code&gt; &lt;div class=&quot;highlight&quot;&gt;&lt;table cellpadding=&quot;0&quot; cellspacing=&quot;0&quot;&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre class=&quot;line-numbers&quot;&gt;&lt;span class='line'&gt;1&lt;/span&gt;
-&lt;span class='line'&gt;2&lt;/span&gt;
-&lt;/pre&gt;&lt;/td&gt;&lt;td class='code' width='100%'&gt;&lt;pre&gt;&lt;code class='objc'&gt;&lt;div class='line'&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;@&amp;quot;My awesome string&amp;quot;&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;startsWith:&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;@&amp;quot;My&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;  &lt;span class=&quot;c1&quot;&gt;//returns YES&lt;/span&gt;
-&lt;/div&gt;&lt;div class='line'&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;@&amp;quot;My awesome string&amp;quot;&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;startsWith:&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;@&amp;quot;Foo&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;//returns NO;&lt;/span&gt;
-&lt;/div&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;&lt;/figure&gt;&lt;/div&gt;
-
-
-&lt;p&gt;So now that we understand how categories work, how can we utilize this to solve our original problem?&lt;/p&gt;
-
-&lt;h2&gt;Private Categories&lt;/h2&gt;
-
-
-&lt;p&gt;We can utilize private categories to give us the benefit of properties for our ivars, but at the same time, NOT expose those to the outside world. Here's how it works (using our example from above):&lt;/p&gt;
-
-&lt;p&gt;&lt;em&gt;MyTableViewController.m&lt;/em&gt;&lt;/p&gt;
-
-&lt;div&gt;&lt;figure role=code&gt; &lt;div class=&quot;highlight&quot;&gt;&lt;table cellpadding=&quot;0&quot; cellspacing=&quot;0&quot;&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre class=&quot;line-numbers&quot;&gt;&lt;span class='line'&gt;1&lt;/span&gt;
-&lt;span class='line'&gt;2&lt;/span&gt;
-&lt;span class='line'&gt;3&lt;/span&gt;
-&lt;/pre&gt;&lt;/td&gt;&lt;td class='code' width='100%'&gt;&lt;pre&gt;&lt;code class='objc'&gt;&lt;div class='line'&gt;&lt;span class=&quot;k&quot;&gt;@interface&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;MyTableViewController&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
-&lt;/div&gt;&lt;div class='line'&gt;&lt;span class=&quot;k&quot;&gt;@property&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;nonatomic&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;retain&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;NSArray&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;items&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;/div&gt;&lt;div class='line'&gt;&lt;span class=&quot;k&quot;&gt;@end@implementation&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;MyTableViewController&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;@synthesize&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;items&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;...&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;@end&lt;/span&gt;
-&lt;/div&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;&lt;/figure&gt;&lt;/div&gt;
-
-
-&lt;p&gt;Notice how we declared the category interface directly the implementation file. This works because the .m file will only be loaded once, and since it's inside the .m file, no other classes will ever know it existed. We can remove the property declaration from the header file and everything should work the same.&lt;/p&gt;
-
-&lt;p&gt;Private categories can also be used to provide method declarations, which can help you order your methods in a way that makes sense, and not worry about the compiler complaining about methods that haven't been declared yet.&lt;/p&gt;
-
-&lt;h2&gt;Private Category Gotcha&lt;/h2&gt;
-
-
-&lt;p&gt;One thing that tripped me up is the name of the private category. When first doing this I originally chose the name &quot;Private&quot;. But there's something peculiar about named category methods versus unnamed ones (like I have above).&lt;/p&gt;
-
-&lt;p&gt;Unfortunately Xcode4 wasn't very smart about telling me what was wrong, instead giving me conflicting error messages:&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&quot;http://flux88.com/wp-content/uploads/2011/04/xcode4-private-category-error.png&quot;&gt;&lt;img src=&quot;http://benscheirman.com/images/xcode4-private-category-error-tm.jpg&quot;  height=&quot;124&quot;  /&gt;&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;This &lt;a href=&quot;http://stackoverflow.com/questions/1052233/iphone-obj-c-anonymous-category-or-private-category/1055213#1055213&quot; target=&quot;_blank&quot;&gt;stack overflow answer&lt;/a&gt; helped explain the difference between the two styles.&lt;/p&gt;
-
-&lt;p&gt;Hopefully this helped you understand how to leverage categories to clean up your public APIs!&lt;/p&gt;
 </content>
   </entry>
   

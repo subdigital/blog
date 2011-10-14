@@ -5,7 +5,10 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Fickle Bits</title>
+  <title>
+    
+    Fickle Bits
+  </title>
   <meta name="author" content="Ben Scheirman">
   
 
@@ -100,6 +103,62 @@
     <div id="content">
       <div class="blog-index">
 
+
+
+  <article>
+    
+  <header>
+    
+      <h1 class="entry-title"><a href="/2008/09/using-extension-methods-to-clean-up-tests/">Using Extension Methods to Clean Up Tests</a></h1>
+    
+    
+      <p class="meta">
+
+
+
+
+<time datetime="2008-09-10 00:00:00 -0500" pubdate  updated >Sep 10<span>th</span>, 2008</time>
+
+
+</p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>A lot of unit tests for ASP.NET MVC projects will look a lot like this: </p>
+
+
+<div><figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>[Test]public void list_action_should_render_default_view(){  var controller = CreateProductController(); //defined elsewhere var result = controller.List(); Assert.That(result, Is.TypeOf(typeof(ViewResult));  var viewResult = (ViewResult)result;    Assert.That(viewResult.ViewName, Is.EqualTo(string.Empty));}</div></code></pre></td></tr></table></div></figure></div>
+
+
+<p>We basically create the controller, invoke the desired action, and verify that the result is of type ViewResult, and that the name of the view is an empty string.&nbsp; <p>This test isn&#8217;t necessarily all bad.&nbsp; It is easy to read and consists of only 5 lines of code.&nbsp; Here&#8217;s another test, this time testing that an action redirects the user:</p><p></p>
+<div><figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>[Test]public void login_action_should_redirect_to_home_index_on_successful_login(){  string username = "bob";    string password = "pass123";    var loginService = MockRepository.GenerateStub&lt;iloginservice>(); loginService.Stub(x =&gt; x.Authenticate(username, password).Return(true);  var controller = new AccountController(loginService);   var result = controller.Login(username, password);  Assert.That(result, Is.TypeOf(typeof(RedirectToRouteResult)));  var redirectResult = (RedirectToRouteResult)result; Assert.That(result.RouteValues["controller"], Is.EqualTo("home"));  Assert.That(result.RouteValues["action"], Is.EqualTo("index"));}</div></code></pre></td></tr></table></div></figure></div>
+<p></p><p>Notice the duplication?&nbsp; When the tests are all starting to look like this, your spidey-sense should be tingling.&nbsp; The DRY principle (Don&#8217;t Repeat Yourself) applies to your unit tests as well!</p><p>Let&#8217;s see if we can do better.&nbsp; I&#8217;m just going to type some code that I <em>wish</em> I had:</p><p></p>
+<div><figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>controller.List().ShouldRenderDefaultView();</div></code></pre></td></tr></table></div></figure></div>
+<p></p><p>That&#8217;s a lot more concise!&nbsp; It reads very well, and can easily eliminate 3-4 lines of repetitive test code.&nbsp; With .NET 3.5, we were given Extension Methods.&nbsp; If you aren&#8217;t yet aware, extension methods allow us to bolt-on methods onto existing types.&nbsp; In this case, we want to add a method to the return value of our List() action, which is ActionResult.</p><p>I created a static class called TestHelperExtensions.cs, and in it, placed our new method:</p><p></p>
+<div><figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>public static void ShouldRenderDefaultView(this ActionResult result){    Assert.That(result, Is.TypeOf(ViewResult)); Assert.That(((ViewResult)result).ViewName, Is.EqualTo(string.Empty));}</div></code></pre></td></tr></table></div></figure></div>
+<p>That&#8217;s it?&nbsp; That was easy.&nbsp; Let&#8217;s extend this to support rendering a view of any name&#8230;.</p><p></p>
+<div><figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>public static void ShouldRenderView(this ActionResult result, string viewName){  Assert.That(result, Is.TypeOf(ViewResult)); Assert.That(((ViewResult)result).ViewName, Is.EqualTo(viewName));}public static void ShouldRenderDefaultView(this ActionResult result){ ShouldRenderView(result, string.Empty);}</div></code></pre></td></tr></table></div></figure></div>
+<p>We can extend this idea further and capture the redirect family of asserts into another extension method:</p><p></p>
+<div><figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>controller.Login(username, password).ShouldRedirectTo("home", "index");//we should also support custom route valuesproductController.Save(...).ShouldRedirectTo("products", "show").WithRouteValue("id", 5);</div></code></pre></td></tr></table></div></figure></div>
+<p></p><p>This can be implemented similarly&#8230; <p></p>
+<div><figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>//supports just passing in an actionpublic static RedirectToRouteResult ShouldRedirectTo(this ActionResult result, string action){   return ShouldRedirectTo(result, null, action);}public static RedirectToRouteResult ShouldRedirectTo(this ActionResult result, string controller, string action){    Assert.That(result, Is.TypeOf(typeof(RedirectToRouteResult)), "Should have redirected");    var redirectResult = (RedirectToRouteResult) result;    WithRouteValue(redirectResult, "Controller", controller);   WithRouteValue(redirectResult, "Action", action);   return redirectResult;}public static RedirectToRouteResult WithRouteValue(this RedirectToRouteResult result, string key, object value){ Assert.That(result.Values[key], Is.EqualTo(value)); return result;}</div></code></pre></td></tr></table></div></figure></div>
+<p></p><p>This supports basic redirects with just an action, an action and a controller, and arbitrary route values that we need to test as well.</p><p>Leveraging simple extension methods to make your tests more concise and readable can really help reduce the overall weight of your tests (especially if you want to change behavior later).&nbsp; This stands as an excellent reminder to write high-quality test code, just as you would for production code.</p>
+
+</div>
+  <footer>
+    <a rel="full-article" href="/2008/09/using-extension-methods-to-clean-up-tests/">Read on &rarr;</a>
+  </footer>
+
+
+  </article>
 
 
   <article>
@@ -643,40 +702,6 @@
 
   </article>
 
-
-  <article>
-    
-  <header>
-    
-      <h1 class="entry-title"><a href="/2008/07/asp-net-mvc-preview-4-available/">ASP.NET MVC Preview 4 Available</a></h1>
-    
-    
-      <p class="meta">
-
-
-
-
-<time datetime="2008-07-16 00:00:00 -0500" pubdate  updated >Jul 16<span>th</span>, 2008</time>
-
-
-</p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>This will be 1 of 4 billion posts you read on this subject, but ASP.NET MVC Preview 4 is <a href="http://www.codeplex.com/aspnet/Release/ProjectReleases.aspx?ReleaseId=15389" target="_blank">now available</a>.&#160; Read Scott Gu&#8217;s <a href="http://weblogs.asp.net/scottgu/archive/2008/07/14/asp-net-mvc-preview-4-release-part-1.aspx" target="_blank">initial notes</a> and then go download it.</p>
-
-
-<p>Over the next few days I&#8217;ll be working on converting <a href="http://codecampserver.org" target="_blank">CodeCampServer</a> and a few other small projects to preview 4.&#160; Good stuff!</p>
-
-</div>
-  <footer>
-    <a rel="full-article" href="/2008/07/asp-net-mvc-preview-4-available/">Read on &rarr;</a>
-  </footer>
-
-
-  </article>
-
 <nav role="pagination">
   <div>
     
@@ -711,6 +736,10 @@
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2011/10/appsites-is-now-appkickstand/">Appsites Is Now AppKickstand</a>
+      </li>
+    
+      <li class="post">
         <a href="/2011/10/sharing-vim-configuration-between-machines/">Sharing Vim Configuration Between Machines</a>
       </li>
     
@@ -724,10 +753,6 @@
     
       <li class="post">
         <a href="/2011/09/introducing-appsites/">Introducing App Sites</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2011/09/firebug-style-debugging-for-ios/">Firebug-Style Visual Debugging for iOS</a>
       </li>
     
   </ul>

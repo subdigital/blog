@@ -5,7 +5,10 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Fickle Bits</title>
+  <title>
+    
+    Fickle Bits
+  </title>
   <meta name="author" content="Ben Scheirman">
   
 
@@ -100,6 +103,180 @@
     <div id="content">
       <div class="blog-index">
 
+
+
+  <article>
+    
+  <header>
+    
+      <h1 class="entry-title"><a href="/2009/07/detecting-a-tap-on-a-uitextview/">Detecting a Tap on a UITextView</a></h1>
+    
+    
+      <p class="meta">
+
+
+
+
+<time datetime="2009-07-09 00:00:00 -0500" pubdate  updated >Jul 9<span>th</span>, 2009</time>
+
+
+</p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I&rsquo;ve been working on a little side project (that I&rsquo;ll announce soon).&nbsp; It is an iPhone application that I intend to sell.&nbsp; Being a .NET guy, I&rsquo;m certainly a bit lost when it comes to troubleshooting problems with Objective-C and Cocoa.&nbsp; Hopefully this post will help someone else out that ran into a similar issue.</p>
+
+
+<p>In Cocoa, any class that derives from UIResponder (which means UIView and all of it&rsquo;s subclasses) can get touch events by implementing these 4 optional methods:</p>
+
+
+
+
+<div><figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+<span class='line'>2</span>
+<span class='line'>3</span>
+<span class='line'>4</span>
+</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event;
+</div><div class='line'>- (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event;
+</div><div class='line'>- (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event;
+</div><div class='line'>- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event;</div></code></pre></td></tr></table></div></figure></div>
+
+
+
+
+<p>With this raw data you can construct any number of touch schemes, such as knowing when to scroll and when to select something, as is the case with UITableView.</p>
+
+
+<p>UIControl derivatives (such as UIButton) get a simpler abstraction:&nbsp; they use that data &amp; translate it to different events such as <codetouchdowninside>&lt; code&gt;and `touchUpInside`.&nbsp; These don&rsquo;t work for all views, so sometimes to detect a tap you have to roll your own.</codetouchdowninside></p>
+
+
+<p>In general, you can just look at the touchesEnded event and check the tapCount property to see if the user tapped an element:</p>
+
+
+
+
+<div><figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+<span class='line'>2</span>
+<span class='line'>3</span>
+<span class='line'>4</span>
+<span class='line'>5</span>
+<span class='line'>6</span>
+</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>-(void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
+</div><div class='line'>UITouch *touch = [touches anyObject]; //assume just 1 touch
+</div><div class='line'>if(touch.tapCount == 1) {
+</div><div class='line'>//single tap occurred
+</div><div class='line'>}
+</div><div class='line'>}</div></code></pre></td></tr></table></div></figure></div>
+
+
+
+
+<p>&nbsp;<a href="http://flux88.com/files/media/image/WindowsLiveWriter/DetectingataponaUITextView_8AB1/uitextview_4.png"><img src="/images/uitextview_thumb_1.png" height="283"   /></a></p>
+
+
+<p>I wanted to use this on a view that contained a full-screen UITextView.&nbsp;</p>
+
+
+<p>Unfortunately, as of the iPhone SDK 3.0, UITextView swallows this event completely.&nbsp; I imagine because of the new feature where you can select text to copy &amp; paste.&nbsp; You can get touchesBegan, touchesMoved, and touchesCancelled, but no touchesEnded.&nbsp; (In fact, the touch actually gets cancelled by the UITextView).&nbsp; Even by subclassing UITextView I could not get this event.</p>
+
+
+<p>Luckily I found a work-around.&nbsp; It&rsquo;s not exactly pretty, but it works for me.</p>
+
+
+<p>First I needed to subclass UIWindow so that I can get control at the very beginning of every touch.</p>
+
+
+<p>Next I needed to change my MainViewController.xib, which creates the window, to point to my new class.</p>
+
+
+<p>Then, in the sendEvent method, I need to check for 3 things:</p>
+
+
+<ul>
+<li>is this touch ending?</li>
+<li>is this touch hitting my custom text view?</li>
+<li>is this touch a single tap?</li>
+</ul>
+
+
+<p>Here&#8217; is the code for my custom window:</p>
+
+
+
+
+<div><figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+<span class='line'>2</span>
+<span class='line'>3</span>
+<span class='line'>4</span>
+<span class='line'>5</span>
+<span class='line'>6</span>
+<span class='line'>7</span>
+<span class='line'>8</span>
+<span class='line'>9</span>
+<span class='line'>10</span>
+<span class='line'>11</span>
+<span class='line'>12</span>
+<span class='line'>13</span>
+<span class='line'>14</span>
+<span class='line'>15</span>
+<span class='line'>16</span>
+<span class='line'>17</span>
+<span class='line'>18</span>
+<span class='line'>19</span>
+<span class='line'>20</span>
+<span class='line'>21</span>
+<span class='line'>22</span>
+<span class='line'>23</span>
+<span class='line'>24</span>
+<span class='line'>25</span>
+</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>//CustomWindow.h
+</div><div class='line'>@interface CustomWindow : UIWindow {
+</div><div class='line'>}
+</div><div class='line'>@end
+</div><div class='line'>//CustomWindow.m
+</div><div class='line'>#import &quot;CustomTextView.h&quot;
+</div><div class='line'>@implementation CustomWindow
+</div><div class='line'>-(void)sendEvent:(UIEvent *)event {
+</div><div class='line'>//loop over touches for this event
+</div><div class='line'>for(UITouch *touch in [event allTouches]) {
+</div><div class='line'>BOOL touchEnded = (touch.phase == UITouchPhaseEnded);
+</div><div class='line'>BOOL isSingleTap = (touch.tapCount == 1);
+</div><div class='line'>BOOL isHittingCustomTextView =
+</div><div class='line'>(touch.view.class == [CustomTextView class]);
+</div><div class='line'>if(touchEnded &amp;&amp; isSingleTap &amp;&amp; isHittingCustomTextView) {
+</div><div class='line'>CustomTextView *tv = (CustomTextView*)touch.view;
+</div><div class='line'>[tv tapOccurred:touch withEvent:event];
+</div><div class='line'>}
+</div><div class='line'>}
+</div><div class='line'>&lt;span class="Apple-style-span" style="font-family: Arial; white-space: normal; ">
+</div><div class='line'>&lt;div>&lt;figure role=code>&lt;div class="highlight">&lt;table cellpadding="0" cellspacing="0">&lt;tr>&lt;td class="gutter">&lt;pre class="line-numbers">&lt;span class='line'>1&lt;/span>
+</div><div class='line'>&lt;/pre>&lt;/td>&lt;td class='code' width='100%'>&lt;pre>&lt;code class=''>&lt;div class='line'>[super sendEvent:event];&lt;/div>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>&lt;/div>&lt;/figure>&lt;/div>
+</div><div class='line'>
+</div><div class='line'>&lt;/span>}
+</div><div class='line'>@end</div></code></pre></td></tr></table></div></figure></div>
+
+
+
+
+<p>If all the 3 BOOLs turn out to be true, then I simply call a method I defined on my CustomTextView.</p>
+
+
+<p>This CustomTextView then calls a similar method on it&rsquo;s tapDelegate (which I created).&nbsp; My view controller then adheres to the TapDelegateProtocol (which contains this method) and can now detech taps over a UITextView!</p>
+
+
+<p>Now my textview becomes fullscreen when you tap it, and another tap brings back the tab bar at the bottom and navigation bar at the top.</p>
+
+
+<div style="padding-bottom: 0px; margin: 0px; padding-left: 0px; padding-right: 0px; display: inline; float: none; padding-top: 0px" id="scid:0767317B-992E-4b12-91E0-4F059A8CECA8:e51873d5-b699-4cc4-832d-e6102c491eba" class="wlWriterEditableSmartContent">Technorati Tags: <a rel="tag" href="http://technorati.com/tags/iPhone">iPhone</a>,<a rel="tag" href="http://technorati.com/tags/Cocoa">Cocoa</a>,<a rel="tag" href="http://technorati.com/tags/Objective-C">Objective-C</a></div>
+
+</div>
+  <footer>
+    <a rel="full-article" href="/2009/07/detecting-a-tap-on-a-uitextview/">Read on &rarr;</a>
+  </footer>
+
+
+  </article>
 
 
   <article>
@@ -1433,39 +1610,6 @@ margin: 0em;
 
   </article>
 
-
-  <article>
-    
-  <header>
-    
-      <h1 class="entry-title"><a href="/2009/04/post-alt-net-houston-thoughts/">Post ALT.NET Houston Thoughts</a></h1>
-    
-    
-      <p class="meta">
-
-
-
-
-<time datetime="2009-04-08 00:00:00 -0500" pubdate  updated >Apr 8<span>th</span>, 2009</time>
-
-
-</p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><img src="/images/altnet-thisway.png" alt="altnet-thisway"  height="335" /></p>
-
-
-<p> <p>&nbsp;</p> <p>Last weekend I helped organize the <a href="http://houston.altnetconf.com" target="_blank">Houston ALT.NET Open Space</a> conference.&nbsp; About 100 people came to share, learn, and grow as developers in the .NET (and surrounding) communities.</p> <p><img src="/images/thewall.png" alt="thewall"  height="337" /></p> <p>We had the pleasure of having <a href="http://www.stevenlist.com/blog/" target="_blank">Doc List</a> facilitate our gathering.&nbsp; It has been said before that Doc is the &#8220;adult supervision&#8221; to keep the developers in line.&nbsp; This is certainly true, as it is really easy for a bunch of geeks to get off topic and go play Rock Band all day.&nbsp; I really feel that he helped us be self-organized, rather than self-propelled chaos.&nbsp; Thanks, Doc!</p> <p><img src="/images/doc.png" alt="doc"  height="335" /> </p> <p>The topics were very technical, which I like.&nbsp; I enjoy process oriented talks, but I&#8217;m more drawn to the technical ones.&nbsp; There was a healthy dose of F# &amp; functional programming, Ruby (IronRuby, Rake), NHibernate (with FluentNHibernate &amp; NHibernate.Linq), Deployment automation, BDD, DDDD &amp; Command Query separation, and more.&nbsp; There were more talks proposed in this conference than any I have attended previously.&nbsp; I think that is one metric for success in a conference like this. </p> <p>I specifically noticed one session, labeled &#8220;Should I even be programming?&#8221;&nbsp; This guy had the courage to stand up in front of 100 people and admit that he wasn&#8217;t sure if this was the career for him.&nbsp; I truly wish I had gone to this session, as I heard it was really good.&nbsp; I hope that he was given the type of advice he needed.&nbsp; One thing I was sure to mention is that we are all out there, on blogs, twitter, or simply around for lunch to continue the conversation.&nbsp; We don&#8217;t have to be stuck in our job, isolated from the rest of the developer community.</p> <p><img src="/images/group1.png" alt="group1"  height="336" /> </p> <p>&nbsp;</p> <p>The space that we had was graciously donated by Microsoft.&nbsp; It turned out to be a fantastic space for this type of event.&nbsp; Most rooms had projectors, it was all within one small area, so hallway conversations were very abundant.&nbsp; I have to send out a great thanks to <a href="http://blog.microsoft-j.net/" target="_blank">J Sawyer</a>, who gave me support to put this on.</p> <p><img src="/images/image_c5fd77a1-44a1-4c4a-a4ba-4192c732f7d1.png" alt="image"  height="338" /> </p> <p>Throughout the event, especially at the closing, many people thanked me directly, or thanked me &#8220;and the other organizers.&#8221;&nbsp; Unfortunately, I neglected to mention their names!&nbsp; I did have help, folks!</p> <p>Here they are:</p> <p><img src="/images/organizers.png" alt="organizers"  height="337" /> </p> <p><em>From left to right:&nbsp; <a href="http://wizardsofsmart.net/" target="_blank">Jonathan Birkholz</a>, <a href="http://claudiolassala.spaces.live.com" target="_blank">Claudio Lassala</a>, <a href="http://stevenlist.com" target="_blank">Doc List</a>, <a href="http://www.jphamilton.net/" target="_blank">JP Hamilton</a>, <a href="http://pseale.com/blog" target="_blank">Peter Seale</a>, and myself</em>.&nbsp; I really appreciate all of your help!</p> <p>&nbsp;</p> <p>I mentioned that the number of topics was a good metric for success.&nbsp; The other major one, in my opinion, was the fact that the conference seemed to spark a certain fire for some of the attendees.&nbsp; Some of them asked for another conference next month!&nbsp; Others asked how they could join in with the monthly geek dinners.&nbsp; There&#8217;s been some serious talk about organizing some Code Dojos in the area.&nbsp; All of these things make me feel proud to have been a part in this event.&nbsp; I hope that the passion spreads.</p> <p><a href="http://houstonaltnet.pbwiki.com" target="_blank">Our wiki</a> has some of the notes from the event.&nbsp; You can also check out the <a href="http://www.kyte.tv/ch/272888-altnethouston" target="_blank">videos</a>, and the photos, <a href="http://www.flickr.com/photos/silviascheirman/sets/72157616293330415/" target="_blank">taken by my wife</a> (our beautiful official photographer) and <a href="http://www.flickr.com/photos/stevenlist/sets/72157616360308310/" target="_blank">by Doc</a> (who is less beautiful, but still takes good pictures).&nbsp; The videos are of webcam quality, and some higher quality ones will be posted at some point.&nbsp; I&#8217;ll link to all of this on the <a href="http://houston.altnetconf.com" target="_blank">official conference website</a> whenever I get around to it.</p> <p>As for me, I&#8217;m taking a break from stuff for a while.&nbsp; I&#8217;ve been really quiet on this blog, mostly because of <a href="http://manning.com/palermo" target="_blank">my book</a>, but also life has become incredibly busy.&nbsp; I plan on spending some more time at night with the family, catching up on my never-ending reading list, and doing some programming for fun.&nbsp; Most of you know that <a href="http://flux88.com/blog/hello-world-x-2/" target="_blank">I have twins on the way</a>, and a little less than one month to prepare!</p> <h2>Thanks ALT.NET Houston!&nbsp; See you next year!</h2></p>
-</div>
-  <footer>
-    <a rel="full-article" href="/2009/04/post-alt-net-houston-thoughts/">Read on &rarr;</a>
-  </footer>
-
-
-  </article>
-
 <nav role="pagination">
   <div>
     
@@ -1500,6 +1644,10 @@ margin: 0em;
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2011/10/appsites-is-now-appkickstand/">Appsites Is Now AppKickstand</a>
+      </li>
+    
+      <li class="post">
         <a href="/2011/10/sharing-vim-configuration-between-machines/">Sharing Vim Configuration Between Machines</a>
       </li>
     
@@ -1513,10 +1661,6 @@ margin: 0em;
     
       <li class="post">
         <a href="/2011/09/introducing-appsites/">Introducing App Sites</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2011/09/firebug-style-debugging-for-ios/">Firebug-Style Visual Debugging for iOS</a>
       </li>
     
   </ul>

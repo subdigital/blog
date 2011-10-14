@@ -5,7 +5,10 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Fickle Bits</title>
+  <title>
+    
+    Fickle Bits
+  </title>
   <meta name="author" content="Ben Scheirman">
   
 
@@ -100,6 +103,55 @@
     <div id="content">
       <div class="blog-index">
 
+
+
+  <article>
+    
+  <header>
+    
+      <h1 class="entry-title"><a href="/2005/08/the-battle-of-the-data-access-layers/">The Battle of the Data Access Layers</a></h1>
+    
+    
+      <p class="meta">
+
+
+
+
+<time datetime="2005-08-16 00:00:00 -0500" pubdate  updated >Aug 16<span>th</span>, 2005</time>
+
+
+</p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I have heard so many discussions (read: arguments) about which DAL method is the best and nobody ever has a clear-cut case for all solutions.&nbsp; Previously I have sort of&nbsp; &ldquo;rolled my own&rdquo; data layer, with a simple helper class and some parametrized queries.&nbsp; This has slowly grown into a very lite version of the Data Access Application Block from Microsoft (which kinda makes me grin, b/c that wasn&rsquo;t the intent).</p>
+
+
+<p>The last project I started used NHibernate.&nbsp; It really did make a lot of things easy, and definitely sped up development.&nbsp; I was a little weary of the learning curve (which only gets steeper the more complex your schema gets), but I eventually came up with a solid solution that has held up well.&nbsp; I did have to make certain design considerations using NHibernate, which I didn&rsquo;t like, but I got over it.</p>
+
+
+<p>Anyway, I get to start fresh on a new project again and I&rsquo;m back at the same step:&nbsp; how should I shape my data layer?&nbsp; Should I use NHibernate again?&nbsp; Should I use CSLA.NET?</p>
+
+
+<p>Here&rsquo;s what I am considering:</p>
+
+
+<ul><li>My own hand-made DAL.</li><li>CSLA.NET</li><li>Use Enterprise Library (specifically the Data Access Application Block)</li><li>NHibernate </li></ul>
+
+
+<p>Right now I&rsquo;m leaning toward CSLA, because I think it might integrate quite nicely with a large project we currently have, where the DAL it uses (well, only about 25% of the code even uses the middle tier) is sort of primitive. (anyway, don&rsquo;t get me started on this, it&rsquo;s a mess that needs to be cleaned up)</p>
+
+
+<p>My goal is to provide a boilerplate DAL that ALL of our upcoming projects can utilize effectively (large or small).&nbsp; Any suggestions?</p>
+
+</div>
+  <footer>
+    <a rel="full-article" href="/2005/08/the-battle-of-the-data-access-layers/">Read on &rarr;</a>
+  </footer>
+
+
+  </article>
 
 
   <article>
@@ -475,46 +527,6 @@
 
   </article>
 
-
-  <article>
-    
-  <header>
-    
-      <h1 class="entry-title"><a href="/2005/07/controlinjector-article-updated/">ControlInjector Article Updated</a></h1>
-    
-    
-      <p class="meta">
-
-
-
-
-<time datetime="2005-07-01 00:00:00 -0500" pubdate  updated >Jul 1<span>st</span>, 2005</time>
-
-
-</p>
-    
-  </header>
-
-
-  <div class="entry-content"><div style="clear:both;"></div>
-
-
-<p>I updated my article on Code Project, the new Control Injector is <strong>much </strong>better and more useful than before.&nbsp; If you haven&rsquo;t yet read it, please do so and rate the article.</p>
-
-
-<p>The link is on the right under <strong>My Articles</strong>.</p>
-
-
-<div style="clear:both; padding-bottom: 0.25em;"></div>
-
-</div>
-  <footer>
-    <a rel="full-article" href="/2005/07/controlinjector-article-updated/">Read on &rarr;</a>
-  </footer>
-
-
-  </article>
-
 <nav role="pagination">
   <div>
     
@@ -549,6 +561,10 @@
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2011/10/appsites-is-now-appkickstand/">Appsites Is Now AppKickstand</a>
+      </li>
+    
+      <li class="post">
         <a href="/2011/10/sharing-vim-configuration-between-machines/">Sharing Vim Configuration Between Machines</a>
       </li>
     
@@ -562,10 +578,6 @@
     
       <li class="post">
         <a href="/2011/09/introducing-appsites/">Introducing App Sites</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2011/09/firebug-style-debugging-for-ios/">Firebug-Style Visual Debugging for iOS</a>
       </li>
     
   </ul>

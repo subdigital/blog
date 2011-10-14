@@ -2,8 +2,8 @@
 layout: page
 title: "Speaking"
 date: 2011-08-29 22:28
-comments: true
-sharing: true
+comments: false
+sharing: false
 footer: true
 ---
 
@@ -11,7 +11,7 @@ footer: true
 
 ### Upcoming Presentations
 
-* October 13th - [Houston Tech Fest](http://houstontechfest.com)
+* October 15th - [Houston Tech Fest](http://houstontechfest.com)
 
 ### Past Presentations
 

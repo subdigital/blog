@@ -5,7 +5,10 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Fickle Bits</title>
+  <title>
+    
+    Fickle Bits
+  </title>
   <meta name="author" content="Ben Scheirman">
   
 
@@ -100,6 +103,127 @@
     <div id="content">
       <div class="blog-index">
 
+
+
+  <article>
+    
+  <header>
+    
+      <h1 class="entry-title"><a href="/2007/07/dasblog-theme-contest/">dasBlog Theme Contest!</a></h1>
+    
+    
+      <p class="meta">
+
+
+
+
+<time datetime="2007-07-03 00:00:00 -0500" pubdate  updated >Jul 3<span>rd</span>, 2007</time>
+
+
+</p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>In an effort to get some more good quality themes ready for the next release of dasBlog, I&rsquo;m going to host a little contest.</p>
+
+
+<p>Introducing&#8230;</p>
+
+
+<h2>The dasBlog Theme Contest</h2>
+
+
+<p>The idea is simple.&nbsp; Submit a new dasBlog theme, created by you, using valid XHTML and CSS.&nbsp; Entries should be original and should be zipped up and sent to me at <a href="mailto:subdigital_AT_gmail_DOT_com">subdigital_AT_gmail_DOT_com.</p>
+
+
+<p></a>Are you ready for the prize?&nbsp; How about &hellip;</p>
+
+
+<h3>A <span>$100 (US)</span> Amazon Gift Card !</h3>
+
+
+<p>The rules:</p>
+
+
+<ul><li>Mockups do not count.&nbsp; They have to be either running online in dasBlog or submit the relevant files so that I can install them on a test blog.</li><li><em>Hint:&nbsp; we respect valid XHTML and CSS.&nbsp; Don&rsquo;t abuse tables!</em></li><li>Multiple entries may be sumitted by the same person</li><li>Entries must be submitted to <strong>me</strong> no later than Midnight, <strike>July 12<sup>th</sup>. (That doesn&rsquo;t leave much time!)</strike> <font color="#ff6600">The deadline has been extended to July 22<sup>nd</sup>, 2007.&nbsp; Get started!</font></li><li>Send them to my email address (above) with the subject line <strong>dasBlog Theme Contest Submission</strong></li><li>No&nbsp;licensed material on the&nbsp;theme &mdash; all images and artifacts must be made by you or publicly available</li><li>By submitting&nbsp; you agree to allow us to package the theme along with dasBlog, if we so desire</li><li>You are allowed to place a small link at the bottom of the page identifying you or company, but no logos</li><li>The dasBlog team will judge the designs and the winner will be announced <strike>July 16<sup>th</sup> </strike><font color="#ff6600">July 25<sup>th</sup>.</font></li></ul>
+
+
+<p>&nbsp;<em>The&nbsp;prize for this contest has been donated by <a href="http://www.computerzen.com/" target="_blank">Scott Hanselman</a> and myself.</em></p>
+
+
+<h3>So how do I create a theme?</h3>
+
+
+<p>Creating a theme is simple!&nbsp; The best way to learn is to open up one of the existing themes and take a look.&nbsp; The basic structure of a theme is this:</p>
+
+
+<p>Inside of your dasBlog directory there is a <strong>themes</strong> folder:</p>
+
+
+<p><img src="/images/blog_theme1_small.jpg" alt="Blog_theme1"  border="0"  /></p>
+
+
+<p>Each theme that you want to create (or install) goes in its own folder.&nbsp; dasBlog ships with over 20 themes currently, so there are a lot to choose from as a starting point.&nbsp; If you open the directory and take a look, you&rsquo;ll see a folder for each.</p>
+
+
+<p><img src="/images/blog_theme2_small.jpg" alt="Blog_theme2"  border="0"  /></p>
+
+
+<p>Let&rsquo;s take a look at <strong>mono</strong>.</p>
+
+
+<p>Inside of the specific theme&rsquo;s folder you&rsquo;ll find all artifacts for the theme.&nbsp; Any images, css, or template files go in here.</p>
+
+
+<p>As you can see, there isn&rsquo;t much to it&hellip;</p>
+
+
+<p><img src="/images/blog_theme3_small1.jpg" alt="Blog_theme3"  border="0"  /></p>
+
+
+<p>&nbsp;Notice the <strong>theme.manifest</strong> file here.&nbsp; This is just a text file telling dasBlog that this folder is a theme and <em>mono</em> is its name.</p>
+
+
+<p><img src="/images/blog_theme4_small.jpg" alt="Blog_theme4"  border="0"  /></p>
+
+
+<p>You also have the opportunity to add named images, but you don&rsquo;t have to do that if you don&rsquo;t want to.</p>
+
+
+<p>The next thing I want to open up are the 3 template files:</p>
+
+
+<ul><li><strong>homeTemplate.blogtemplate</strong> &ndash; this is the main site layout.&nbsp; This will be the most complicated template.<br /></li><li><strong>dayTemplate.blogtemplate</strong> &ndash; each day there are zero or more posts, usually with a date header at the top, but possibly other groupings by day.&nbsp; This template will be rendered once per day (as long as there are posts on that day).<br /></li><li><strong>itemTemplate.blogtemplate</strong> &ndash; this is the post template.&nbsp; Included is the template for the entire comments structure.</li></ul>
+
+
+<p>I will show the homeTemplate right here, just to give you an idea of what it&rsquo;s like to edit the themes.</p>
+
+
+<p><img src="/images/blog_theme5_small.jpg" alt="Blog_theme5"  border="0"  /></p>
+
+
+<p>Most of this is standard XHTML, however you&rsquo;ll notice the macro tags marked with &lt;% %&gt;.&nbsp; These will be picked up by the renderer and replaced with whatever the macro calls for.&nbsp; For example, to tell dasBlog to output your administration bar at a certain location, you&rsquo;d write <strong>&lt;% newtelliigence.adminBar()%&gt;.</strong></p>
+
+
+<p>For a complete list of dasBlog macros, check John Forsythe&rsquo;s page on macros:&nbsp; <a href="http://www.jforsythe.com/jforsythe/projects/dasBlogMacros.html">http://www.jforsythe.com/jforsythe/projects/dasBlogMacros.html</a></p>
+
+
+<p>That&rsquo;s enough of an introduction to get you started, so&hellip;.</p>
+
+
+<h2>Good Luck!</h2>
+
+
+<div class="bjtags">Tags:<a rel="tag" href="http://technorati.com/tag/dasBlog">dasBlog</a>, <a rel="tag" href="http://technorati.com/tag/contest">contest</a>, <a rel="tag" href="http://technorati.com/tag/theme">theme</a>, <a rel="tag" href="http://technorati.com/tag/css">css</a>, <a rel="tag" href="http://technorati.com/tag/xhtml">xhtml</a></div>
+
+</div>
+  <footer>
+    <a rel="full-article" href="/2007/07/dasblog-theme-contest/">Read on &rarr;</a>
+  </footer>
+
+
+  </article>
 
 
   <article>
@@ -761,36 +885,6 @@ ed it.&nbsp; It&rsquo;s full of useful tools and tricks to make your computer wo
 
   </article>
 
-
-  <article>
-    
-  <header>
-    
-      <h1 class="entry-title"><a href="/2007/05/microsoft-surface/">Microsoft Surface</a></h1>
-    
-    
-      <p class="meta">
-
-
-
-
-<time datetime="2007-05-30 00:00:00 -0500" pubdate  updated >May 30<span>th</span>, 2007</time>
-
-
-</p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><a href="http://www.microsoft.com/surface/">http://www.microsoft.com/surface/</a><br><br>This is so cool I just had to blog about it.&nbsp; Take a minute to watch the videos, they are quite impressive.<br><br>Basically it&#8217;s a 30 inch surface that is monitored by tiny wireless cameras.&nbsp; Hand gestures can rotate and resize images and videos and things.&nbsp; I don&#8217;t think we&#8217;re at a point where we can give up the keyboard or the mouse, but think of some of the other uses it would be good for.<br><br>In the videos they show a simple paint program that kids would enjoy.&nbsp; They also show it at a restaurant where the menu is all digital and you flip through it using your fingers.&nbsp; When you&#8217;re ready to order, you just drag the item to the center.&nbsp; The same would go for paying the bill.&nbsp; Set your credit card on the table, split the checks up, calculate the tip, and charge the card all without waiting for a server to do it for you.<br><br>I think we&#8217;re going to see some really cool uses for this thing outside of normal computing.<br><p></p></p>
-</div>
-  <footer>
-    <a rel="full-article" href="/2007/05/microsoft-surface/">Read on &rarr;</a>
-  </footer>
-
-
-  </article>
-
 <nav role="pagination">
   <div>
     
@@ -825,6 +919,10 @@ ed it.&nbsp; It&rsquo;s full of useful tools and tricks to make your computer wo
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2011/10/appsites-is-now-appkickstand/">Appsites Is Now AppKickstand</a>
+      </li>
+    
+      <li class="post">
         <a href="/2011/10/sharing-vim-configuration-between-machines/">Sharing Vim Configuration Between Machines</a>
       </li>
     
@@ -838,10 +936,6 @@ ed it.&nbsp; It&rsquo;s full of useful tools and tricks to make your computer wo
     
       <li class="post">
         <a href="/2011/09/introducing-appsites/">Introducing App Sites</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2011/09/firebug-style-debugging-for-ios/">Firebug-Style Visual Debugging for iOS</a>
       </li>
     
   </ul>
