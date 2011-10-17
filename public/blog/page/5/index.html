@@ -109,6 +109,136 @@
     
   <header>
     
+      <h1 class="entry-title"><a href="/2010/06/installing-postgresql-for-rails-on-mac-os-x/">Installing PostgreSQL for Rails on Mac OS X</a></h1>
+    
+    
+      <p class="meta">
+
+
+
+
+<time datetime="2010-06-10 00:00:00 -0500" pubdate  updated >Jun 10<span>th</span>, 2010</time>
+
+
+</p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>If you&#8217;re doing any serious Rails work with <a target="_blank" href="http://heroku.com">Heroku</a> you&#8217;ll eventually want to run the same database server they are, namely PostgreSQL.  One such reason is if you plan on using <a target="_blank" href="http://geokit.rubyforge.org/">Geokit</a>, all of the geo math is done at the database level and thus not available on Sqlite.</p>
+
+
+<p>There are numerous ways of installing it on Mac OS X, (including a nice &amp; easy MacPorts installer) however I opted for the easier Mac installer.  Why?  Because it installs a nice management console into your Applications folder along with some quick shortcuts to Start &amp; Stop your server.  This is nice because I don&#8217;t plan on using PostgreSQL <strong>all</strong> the time, only when I work on some projects.</p>
+
+
+<p><img alt="" style="float: left; margin: 0 20px 20px 20px;" src="https://flux88.s3.amazonaws.com/images/happy-elephant-01.jpg" /></p>
+
+
+<h2>Installing PostgreSQL Database Server</h2>
+
+
+<p><strike>First, download the </strike><a target="_blank" href="http://www.postgresql.org/download/macosx"><strike>Precompiled 8.4 binary for Mac OS X 10.4+</strike></a><strike> from the Postgres website.  Alternatively, you might want to use MacPorts.  For this, type:</strike></p>
+
+
+<p style="color: #f00">Update: &nbsp;Turns out I had problems with this package. &nbsp;Something about 64 bit ruby, 32 bit gems &#8211; anyway the MacPorts method works for me on Snow Leopard. &nbsp;</p>
+
+
+
+
+<div><figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>sudo port install postgresql83 postgresql83-server</div></code></pre></td></tr></table></div></figure></div>
+
+
+
+
+<p><span style="font-size: .8em">Note that 8.4 is out, but some recommend using the same version that Heroku uses, namely 8.3.  For a good MacPort installation walkthrough, check <a target="_blank" href="http://www.gregbenedict.com/2009/08/31/installing-postgresql-on-snow-leopard-10-6/">this article</a>.</span></p>
+
+
+<p>Next, make sure that the bin folder is in your path.</p>
+
+
+
+
+<div><figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>sudo vim /etc/profile</div></code></pre></td></tr></table></div></figure></div>
+
+
+
+
+<p>Find the line that looks like this:</p>
+
+
+
+
+<div><figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>PATH=&quot;/opt/local/bin:/opt/local/sbin:....&quot;</div></code></pre></td></tr></table></div></figure></div>
+
+
+
+
+<p>Add your path at the end.  Make sure to separate it with a colon to distinguish it from other paths.  If you installed with MacPorts, your path is likely `/opt/local/var/postgresql83/bin`, but if you used the installer, then it would be `/Library/PostgreSQL/8.4/bin`.  Note that you&#8217;ll have to reload your terminal (or open a new tab) to pick up this change.</p>
+
+
+<h2>Setting up the pg gem</h2>
+
+
+<p>Next you&#8217;ll want the pg gem, which is a native adapter for postgres.  This is much faster than the postgres-pr gem, which is written in ruby.</p>
+
+
+<p>Make sure you pick the correct architecture for your installation. This part tripped me up.  Following instructions for a MacPorts installation, I used the wrong arch flags.  If you used MacPorts to install it, then you&#8217;ll use `x86_64` (64-bit) but if you used the standalone installer then you&#8217;ll use `i386` (32-bit).</p>
+
+
+
+
+<div><figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>sudo env ARCHFLAGS='-arch i386' gem install pg</div></code></pre></td></tr></table></div></figure></div>
+
+
+
+
+<p>If you get an error like `checking for pg_config&#8230; no` then make sure that the correct bin folder is in your path.  If instead you get an error like `Can&#8217;t find the PostgreSQL client library (libpq)` then check your architecture flag and make sure you chose the right one (not for your system, but for the installation of PostgreSQL that you chose).</p>
+
+
+<h2>Hook it up to rails</h2>
+
+
+<p>Now we can alter our database.yml file to utilize postgresql for development.</p>
+
+
+
+
+<div><figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+<span class='line'>2</span>
+<span class='line'>3</span>
+<span class='line'>4</span>
+<span class='line'>5</span>
+</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>development:
+</div><div class='line'>adapter: postgresql
+</div><div class='line'>database: my_database
+</div><div class='line'>username: rails
+</div><div class='line'>password: password</div></code></pre></td></tr></table></div></figure></div>
+
+
+
+
+<p>Note that you&#8217;ll need to create the database &amp; user ahead of time.</p>
+
+
+<p>Now you should be good to go!</p>
+
+</div>
+  <footer>
+    <a rel="full-article" href="/2010/06/installing-postgresql-for-rails-on-mac-os-x/">Read on &rarr;</a>
+  </footer>
+
+
+  </article>
+
+
+  <article>
+    
+  <header>
+    
       <h1 class="entry-title"><a href="/2010/06/give-your-eyes-a-break-with-safari-5-reader/">Give Your Eyes a Break With Safari 5 Reader</a></h1>
     
     
@@ -901,39 +1031,6 @@
 
   </article>
 
-
-  <article>
-    
-  <header>
-    
-      <h1 class="entry-title"><a href="/2010/03/geek-dinner-with-glenn-block/">Geek Dinner With Glenn Block!</a></h1>
-    
-    
-      <p class="meta">
-
-
-
-
-<time datetime="2010-03-29 00:00:00 -0500" pubdate  updated >Mar 29<span>th</span>, 2010</time>
-
-
-</p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><img src="/images/4TD9YS3EVPN2.png-60x60_5.png" align="left"  height="78"  />We&#8217;re holding our April ALT.NET Geek Dinner a little early because we have a special guest! </p>
-
-
-<p>  <p><a href="http://codebetter.com/blogs/glenn.block/" target="_blank">Glenn Block</a> (of MEF &amp; Code Better fame) will be here from Redmond.&#160;&#160; </p>  <p>Come, eat pizza, drink beer, and geek out with some other local developers. </p>  <p><strong>When?</strong>     <br />Wednesday, March 31st - <strike>6:00pm - 8:30pm </strike></p>  <p><strong><font color="#ff0000">update:&#160; time has been moved to 7:00pm – 10pm.&#160; Sorry for the inconvenience.</font></strong></p>  <p><strong>Where?      <br /></strong><a href="http://maps.google.com/maps?f=q&amp;source=s_q&amp;hl=en&amp;geocode=&amp;q=2111+Norfolk+St,+Houston,+TX+77098&amp;sll=37.0625,-95.677068&amp;sspn=32.252269,58.798828&amp;ie=UTF8&amp;hq=&amp;hnear=2111+Norfolk+St,+Houston,+Harris,+Texas+77098&amp;ll=29.732409,-95.409865&amp;spn=0.017254,0.02871&amp;z=15" target="_blank">Star Pizza, 2111 Norfolk</a> </p>  <p>Please leave a comment if you&#8217;re going to come so that I can have a semi-accurate head count for the restaurant.&#160; Thanks!</p></p>
-</div>
-  <footer>
-    <a rel="full-article" href="/2010/03/geek-dinner-with-glenn-block/">Read on &rarr;</a>
-  </footer>
-
-
-  </article>
-
 <nav role="pagination">
   <div>
     
@@ -968,6 +1065,10 @@
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2011/10/houston-tech-fest-2011-recap/">Houston Tech Fest 2011 Recap</a>
+      </li>
+    
+      <li class="post">
         <a href="/2011/10/appsites-is-now-appkickstand/">Appsites Is Now AppKickstand</a>
       </li>
     
@@ -981,10 +1082,6 @@
     
       <li class="post">
         <a href="/2011/09/creating-a-glow-effect-for-uilabel-and-uibutton/">Creating a Glow Effect for UILabel and UIButton</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2011/09/introducing-appsites/">Introducing App Sites</a>
       </li>
     
   </ul>

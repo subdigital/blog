@@ -4,13 +4,39 @@
   <title>Fickle Bits</title>
   <link href="http://benscheirman.com/atom.xml" rel="self"/>
   <link href="http://benscheirman.com/"/>
-  <updated>2011-10-13T22:17:33-05:00</updated>
+  <updated>2011-10-17T10:32:54-05:00</updated>
   <id>http://benscheirman.com/</id>
   <author>
     <name>Ben Scheirman</name>
     
   </author>
 
+  
+  <entry>
+    <title>Houston Tech Fest 2011 Recap</title>
+    <link href="http://benscheirman.com/2011/10/houston-tech-fest-2011-recap/"/>
+    <updated>2011-10-17T10:27:00-05:00</updated>
+    <id>http://benscheirman.com/2011/10/houston-tech-fest-2011-recap</id>
+    <content type="html">&lt;p&gt;Houston Tech Fest 2011 came and went, and yet again was a great success.
+I believe it was the biggest one ever, with over 1,300 registrants.&lt;/p&gt;
+
+&lt;p&gt;I gave three talks:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;http://speakerrate.com/talks/8761-rails-intrigue&quot;&gt;Rails Intrigue&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://speakerrate.com/talks/8744-introducing-a-new-feature-to-a-rails-app-from-beginning-to-end&quot;&gt;Introducing a new feature to a Rails app using Cucumber&lt;/a&gt; (with Claudio Lasalla)&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://speakerrate.com/talks/8760-wrangle-your-source-like-a-boss-with-git&quot;&gt;Wrangle your source like a boss with git&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+
+&lt;p&gt;You can find the slides &amp;amp; code used in the presentations &lt;a href=&quot;http://github.com/subdigital/houston-tech-fest-2011&quot;&gt;here on github&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;If you attended any of these sessions, I'd really appreciate if you
+rate them using the links above.&lt;/p&gt;
+
+&lt;p&gt;See you next year, Houston Tech Fest!&lt;/p&gt;
+</content>
+  </entry>
   
   <entry>
     <title>Appsites Is Now AppKickstand</title>
@@ -1855,132 +1881,6 @@ Here's to hoping the Xcode 4 continues to be improved. In the meantime, hope thi
 
 
 &lt;p&gt;Phew! That's a big list. I'm sure that I've left out some gems, so if there's something blatantly obvious that I should have included in this list, please feel free to leave a comment.&lt;/p&gt;
-
-</content>
-  </entry>
-  
-  <entry>
-    <title>Using Guard & Spork with Mongoid & Devise</title>
-    <link href="http://benscheirman.com/2011/04/using-guard-spork-with-mongoid-devise/"/>
-    <updated>2011-04-22T00:00:00-05:00</updated>
-    <id>http://benscheirman.com/2011/04/using-guard-spork-with-mongoid-devise</id>
-    <content type="html">&lt;p&gt;On my last project, I eventually settled on using Guard along with Spork to allow for quicker testing. Specifically, I used:&lt;/p&gt;
-
-
-&lt;ul&gt;
-  &lt;li&gt;rspec&lt;/li&gt;
-
-  &lt;li&gt;spork&lt;/li&gt;
-
-  &lt;li&gt;rb-fsevent&lt;/li&gt;
-
-  &lt;li&gt;guard&lt;/li&gt;
-
-  &lt;li&gt;guard-rspec&lt;/li&gt;
-
-  &lt;li&gt;guard-pow&lt;/li&gt;
-
-  &lt;li&gt;guard-spork&lt;/li&gt;
-&lt;/ul&gt;
-
-
-&lt;p&gt;
-You might be saying, &lt;em&gt;&quot;What the hell are all these gems for?!?!&quot;&lt;/em&gt;
-&lt;/p&gt;
-
-
-
-
-&lt;h3&gt;Guard&lt;/h3&gt;
-
-
-&lt;p&gt;This is a lot of development gem dependencies, but once working, it can vastly grease your testing workflow. &lt;a href=&quot;https://github.com/guard/guard&quot;&gt;Guard&lt;/a&gt; is a framework for watching files &amp;amp; doing something when they change. Make sure to use &lt;a href=&quot;https://github.com/thibaudgg/rb-fsevent&quot;&gt;rb-fsevent&lt;/a&gt; as well to make detecting files not melt your machine polling for changes.&lt;/p&gt;
-
-
-&lt;h3&gt;Guard-rspec&lt;/h3&gt;
-
-
-&lt;p&gt;&lt;a href=&quot;https://github.com/guard/guard-rspec&quot;&gt;guard-rspec&lt;/a&gt; notices that models and/or specs change, and runs the related spec file automatically. Just running one test makes things faster, but you still have to reload all of rails with each run, making the feedback loop completely undesirable.&lt;/p&gt;
-
-
-&lt;h3&gt;Spork&lt;/h3&gt;
-
-
-&lt;p&gt;This is where &lt;a href=&quot;https://github.com/timcharper/spork&quot;&gt;Spork&lt;/a&gt; comes in. Spork pre-loads your environment, allowing rspec files to run with --drb mode &amp;amp; essentially caching your environment for multiple, fast test runs. That is, unless you change something in the environment (such as config/environment, routes.rb, or Gemile). These changes require spork to be restarted, which is SLOOOOW.&lt;/p&gt;
-
-
-&lt;p&gt;It's not always obvious when spork needs reloading, so sometimes you'd find yourself scratching your head, saying, &quot;this test should be failing... but it's not!&quot; Followed by a head-slap, when you realize you need to bounce spork.&lt;/p&gt;
-
-
-&lt;h3&gt;Guard-spork&lt;/h3&gt;
-
-
-&lt;p&gt;So &lt;a href=&quot;https://github.com/guard/guard-spork&quot;&gt;guard-spork&lt;/a&gt; is a nice way of automatically detecting these changes and reloading spork for you.&lt;/p&gt;
-
-
-&lt;h3&gt;Guard-pow&lt;/h3&gt;
-
-
-&lt;p&gt;Lastly, I'm using &lt;a href=&quot;http://pow.cx&quot;&gt;pow&lt;/a&gt; from 37signals, so any env related changes that require a server restart automatically call touch tmp/restart.txt and pow restarts the app. Guard-pow does this for you.&lt;/p&gt;
-
-
-&lt;h2&gt;Workflow&lt;/h2&gt;
-
-
-&lt;p&gt;It's hard to say what all this means for the developer's workflow, but basically all you need to do is run `guard` in a Terminal tab of its own and let it run. I run `guard` almost all day, and it generally does what I need it to.&lt;/p&gt;
-
-
-&lt;p&gt;Life is good, until you try to use this on another project that uses Mongoid &amp;amp; Devise...&lt;/p&gt;
-
-
-&lt;p&gt;The Problem with Mongoid + Spork&lt;/p&gt;
-
-
-&lt;p&gt;Mongoid include its models with Rails, so that means if you change your models you have to reload rails. Not very friendly with a Spork-type model. Hopefully they'll add a lifecycle hook in the future, but until they do, we can utilize a feature of Spork that can save the day: `trap_method/trap_class_method`.&lt;/p&gt;
-
-
-&lt;p&gt;The details are found &lt;a href=&quot;https://github.com/timcharper/spork/wiki/Spork.trap_method-Jujutsu%20(found%20from%20http://ihswebdesign.com/blog/spork-not-reloading/)https://github.com/timcharper/spork/wiki/Spork.trap_method-Jujutsu%20(found%20from%20http://ihswebdesign.com/blog/spork-not-reloading/)https://github.com/timcharper/spork/wiki/Spork.trap_method-Jujutsu%20(found%20from%20http://ihswebdesign.com/blog/spork-not-reloading/&quot;&gt;here&lt;/a&gt;, but for the impatient, I modified my `spec_helper`'s prefork block to look like this:&lt;/p&gt;
-
-
-
-
-&lt;div&gt;&lt;figure role=code&gt; &lt;div class=&quot;highlight&quot;&gt;&lt;table cellpadding=&quot;0&quot; cellspacing=&quot;0&quot;&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre class=&quot;line-numbers&quot;&gt;&lt;span class='line'&gt;1&lt;/span&gt;
-&lt;span class='line'&gt;2&lt;/span&gt;
-&lt;span class='line'&gt;3&lt;/span&gt;
-&lt;span class='line'&gt;4&lt;/span&gt;
-&lt;span class='line'&gt;5&lt;/span&gt;
-&lt;span class='line'&gt;6&lt;/span&gt;
-&lt;span class='line'&gt;7&lt;/span&gt;
-&lt;span class='line'&gt;8&lt;/span&gt;
-&lt;/pre&gt;&lt;/td&gt;&lt;td class='code' width='100%'&gt;&lt;pre&gt;&lt;code class='ruby'&gt;&lt;div class='line'&gt;&lt;span class=&quot;no&quot;&gt;Spork&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;prefork&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;br&lt;/span&gt;&lt;span class=&quot;sr&quot;&gt; /&amp;gt;  ENV[&amp;quot;RAILS_ENV&amp;quot;] ||= &amp;#39;test&amp;#39;&amp;lt;br /&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;br&lt;/span&gt;&lt;span class=&quot;sr&quot;&gt; /&amp;gt;&lt;/span&gt;
-&lt;/div&gt;&lt;div class='line'&gt;&lt;span class=&quot;sr&quot;&gt;  require &amp;#39;rails/mon&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;goid&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;&lt;/span&gt;
-&lt;/div&gt;&lt;div class='line'&gt;&lt;span class=&quot;s1&quot;&gt;  Spork.trap_class_method(Rails::Mongoid, :load_models)&lt;/span&gt;
-&lt;/div&gt;&lt;div class='line'&gt;
-&lt;/div&gt;&lt;div class='line'&gt;&lt;span class=&quot;s1&quot;&gt;  # Now load our environment&lt;/span&gt;
-&lt;/div&gt;&lt;div class='line'&gt;&lt;span class=&quot;s1&quot;&gt;  require File.expand_path(&amp;quot;../../config/environment&amp;quot;, __FILE__)&lt;/span&gt;
-&lt;/div&gt;&lt;div class='line'&gt;&lt;span class=&quot;s1&quot;&gt;  require &amp;#39;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;rspec&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;rails&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;&amp;#39;&lt;/span&gt;
-&lt;/div&gt;&lt;div class='line'&gt;  &lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;
-&lt;/div&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;&lt;/figure&gt;&lt;/div&gt;
-
-
-
-
-&lt;p&gt;Basically this forces that call to be loaded later on in the lifecycle.&lt;/p&gt;
-
-
-&lt;p&gt;There's a similar interception done for Device, which likes to load models along with Rails routes. You might also need to use this technique to deal with similar issues with Factory Girl, Machinist, and Shoulda Macros as well.&lt;/p&gt;
-
-
-&lt;p&gt;And now my specs are faster again. Yay!&lt;br /&gt;&lt;/p&gt;
-
-
-&lt;h2&gt;Is the Complexity Worth it?&lt;/h2&gt;
-
-
-&lt;p&gt;Is this complexity worth it? &lt;a href=&quot;http://twitter.com/garybernhardt&quot;&gt;Some&lt;/a&gt; would say no, and I'm certainly aware of how much additional &quot;gem weight&quot; this adds to a project.&lt;/p&gt;
-
-
-&lt;p&gt;For a great discussion about how to make your specs fast without requiring the complexity of Spork, check out the latest episode of Destroy All Software: &lt;a href=&quot;https://www.destroyallsoftware.com/screencasts/catalog/fast-tests-with-and-without-rails&quot;&gt;Fast Specs with and without Rails&lt;/a&gt;. These screencasts are excellent..&lt;/p&gt;
 
 </content>
   </entry>

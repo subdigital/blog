@@ -109,6 +109,49 @@
     
   <header>
     
+      <h1 class="entry-title"><a href="/2008/04/the-importance-of-writing-the-test-first/">The Importance of Writing the Test First</a></h1>
+    
+    
+      <p class="meta">
+
+
+
+
+<time datetime="2008-04-08 00:00:00 -0500" pubdate  updated >Apr 8<span>th</span>, 2008</time>
+
+
+</p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I had a skype call today with <a href="http://blog.wekeroad.com/" target="_blank">Rob Conery</a> and <a href="http://twitter.com/sbellware" target="_blank">Scott Bellware</a>&nbsp;(twitter) today to talk mainly about how to improve the &ldquo;TDD message&rdquo; of his <a href="http://blog.wekeroad.com/mvc-storefront/mvc-storefront-part-1/" target="_blank">latest ASP.NET</a> <a href="http://blog.wekeroad.com/mvc-storefront/asp-net-mvc-mvc-storefront-part-2/" target="_blank">screencasts</a>.</p>
+
+
+<p>One of the points of feedback Rob got on his screencast is that he had stubbed the code he wanted to test before actually writing the test.&nbsp; While there was no &ldquo;meat&rdquo; of the code he wrote, there was still code.&nbsp; And that code had some sort of design baked in already.</p>
+
+
+<p>The topic in question was about Products.&nbsp; Rob had a fictitious requirement that the discount should be displayed next to the price.&nbsp; So he created something like this as a stub:</p>
+
+
+<p>`
+<div><figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>public class Product{    public float DiscountPercent { get; set; }  public decimal ListPrice { get; set; }  public decimal AdjustedPrice    {       get { return 0.0m; }    }   public decimal DiscountAmount   {       get { return 0.0m; }    }}</div></code></pre></td></tr></table></div></figure></div>
+`<p>The intent was to test that a discount was properly applied to the product.&nbsp; Of course, the test fails initially, and then you can easily go make it pass, but the first activity performed was stubbing out code, and that is <em>design</em>.</p><p>Instead, a failing test should show with absolute opactity that there is even a need for those properties.&nbsp; The fact that you&rsquo;ve written a <strike>test</strike>&nbsp;specification that says:</p><p><em>A Product with a discount percent of 10 and a list price of $100 should yield a discount amount of $10.</em></p><p>This becomes executable, and you know immediately that you have to implement those properties.&nbsp; </p><p>&ldquo;But wait?&rdquo; I can hear you say, &ldquo;&hellip;didn&rsquo;t you just come to the same end result?&rdquo;&nbsp; Well, yes, here I did.&nbsp; But what if while writing this code you realized that you really need to calculate this amount when you are calculating an order total, then you might introduce an order object.&nbsp; Or you might have a completely different need.&nbsp; The point here is that you shouldn&rsquo;t just assume&nbsp;that you&rsquo;ll need those 4 properties, or this 1 method, because you&rsquo;ll likely be wrong.</p><p>This also brings out the point of having good test naming.&nbsp; The test name should be so descriptive, it&rsquo;s like a rule for the application.&nbsp; Any new developer can come onto a project and decipher the meaning &amp; intent of broken tests.&nbsp; That is a very valuable thing to have.</p><p>If you recall the original fictitious requirement, it was &ldquo;the discount should be displayed next to the price&rdquo; you can see that it is a UI requirement.&nbsp; It doesn&rsquo;t necessarily dictate the model that you must use.</p><p>In fact, you might even come to the conclusion to use a data transfer object as a presentation model and then this piece of information could literally come from anywhere.</p><p><strong>TDD is about design</strong>.&nbsp; You&rsquo;ve heard that a million times.&nbsp; The obvious corollary benefit is the enforced existence of automated tests for every possible specification.&nbsp; Even if you intend to write the tests immediately afterwards, you may have missed out on some critical aspects of design, such as loose coupling, or eliminating waste.&nbsp; You&rsquo;re also tempted to just not write tests at all.</p><p>If you skip on the test-first nature of TDD, then you&rsquo;re really just unit testing, and you&rsquo;re missing out on the real design benefits of TDD.</p><p>I also want to point out that I&rsquo;m not picking on Rob.&nbsp; He&rsquo;s had&nbsp;<a href="http://twitter.com/sbellware/statuses/785180922" target="_blank">way</a> <a href="http://twitter.com/sbellware/statuses/785181761" target="_blank">too</a> <a href="http://twitter.com/codinghorror/statuses/784783370" target="_blank">much</a> of that.&nbsp;&nbsp; I think he&rsquo;s doing a great job and (if done correctly) he can definitely reach a larger audience than I can, seeing that he works for Microsoft.&nbsp; I also think it takes guts to submit your work to the world and, in the face of some pretty harsh criticisms, stand up and say&hellip; &ldquo;Hey, why don&rsquo;t you get on skype and we can talk about how much I suck!&rdquo; &mdash; Keep it up, Rob!</p><p>So here&rsquo;s a challenge:&nbsp; those of you who think that Rob did a &ldquo;disservice&rdquo; to the community, I&rsquo;d like to see your screencast on the subject.&nbsp; Obviously there is a gaping void instead of widespread adoption, so we as a community could definitely use the material.</p><div class="bjtags">Tags:<a rel="tag" href="http://technorati.com/tag/TDD">TDD</a></div>
+
+</div>
+  <footer>
+    <a rel="full-article" href="/2008/04/the-importance-of-writing-the-test-first/">Read on &rarr;</a>
+  </footer>
+
+
+  </article>
+
+
+  <article>
+    
+  <header>
+    
       <h1 class="entry-title"><a href="/2008/04/a-refreshing-take-on-usability/">A Refreshing Take on Usability</a></h1>
     
     
@@ -525,90 +568,6 @@
 
   </article>
 
-
-  <article>
-    
-  <header>
-    
-      <h1 class="entry-title"><a href="/2008/02/updatepanel-who/">UpdatePanel, Who?</a></h1>
-    
-    
-      <p class="meta">
-
-
-
-
-<time datetime="2008-02-24 00:00:00 -0600" pubdate  updated >Feb 24<span>th</span>, 2008</time>
-
-
-</p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>I don&rsquo;t know why people are so enamoured with ASP.NET AJAX.&nbsp; Sure it works and is developed by Microsoft, but what&rsquo;s wrong with the dozen other alternatives out there?&nbsp; Many developers I talk to will say &ldquo;yeah I used Ajax on this&rdquo; (with a capital A) and what they are referring to is ASP.NET AJAX.&nbsp; While I don&rsquo;t think it is a <em>horrible</em> framework (I use it on occasion), I think it <em>is</em> too complicated and requires too much to get a simple example started.&nbsp; When people say they have ASP.NET AJAX experience, it means to me that they have experience with declarative controls and &lt;ScriptManager&gt; tags.&nbsp; It doesn&rsquo;t necessarily mean they know how ajax works <strong>and it definitely doesn&rsquo;t mean they know anything about javascript</strong>.&nbsp; This worries me.</p>
-
-
-<p>I often talk about how awesome <a href="http://prototypejs.org/" target="_blank">prototype</a> is (and lately I&rsquo;ve been digging <a href="http://jquery.com/" target="_blank">jquery</a>) and inevitably someone tells me it&rsquo;s just eaiser to wrap your sections in an UpdatePanel and be done with it.&nbsp; It is sometimes hard to argue with that, even though it is the most inefficient way of doing ajax.&nbsp; In addition, this can cause side-effects in WebForms because the entire lifecycle is being executed, even though only part of the page is rendered.&nbsp; This method is actually called &ldquo;partial html replacement&rdquo; or &ldquo;partial page rendering&rdquo; and can be achieved easily without needing ASP.NET AJAX.</p>
-
-
-<p>Now that ASP.NET MVC is out, which doesn&rsquo;t work with ASP.NET AJAX (not the full stack) people are foaming at the mouth for their UpdatePanel equivalent.&nbsp; (<em>I think we&rsquo;ll see an update for this in the coming weeks that will show ASP.NET AJAX working specifically in the MVC environment, but this point still stands.&nbsp; You don&rsquo;t have to use it.</em>)</p>
-
-
-<p>I&rsquo;m going to use <a href="http://www.jquery.com/" target="_blank">jquery</a> in my sample, but the technique will apply to <a href="http://prototypejs.org/" target="_blank">prototype</a>, <a href="http://mochikit.com/" target="_blank">mochikit</a>, and others.&nbsp; In this sample we will take a functioning page and turn it into an ajax enabled page, while preserving the non-ajax scenario (if javascript is disabled).</p>
-
-
-<p>For our example, I will borrow from an <a href="http://media.rubyonrails.org/video/flickr-rails-ajax.mov" target="_blank">impressive rails tutorial</a> [Quicktime] and implement the same thing in ASP.NET MVC.&nbsp; The&nbsp;basic concept is this:&nbsp;&nbsp;Search for flickr photos and display them on the page using ajax.&nbsp;</p>
-
-
-<p>We have our page:</p>
-
-
-<p><a href="http://www.flux88.com/uploads/photo_2Dsearch_2Dform.png"><img src="/images/photo_2Dsearch_2Dform_thumb.jpg" hspace="10"  border="0"  /></a></p>
-
-
-<p>if you search for &ldquo;flowers&rdquo;, you are taken to another action (physically) that shows you the results:</p>
-
-
-<p><a href="http://www.flux88.com/uploads/photo_2Dsearch_2Dresults.png"><img src="/images/photo_2Dsearch_2Dresults_thumb.jpg" hspace="10"  border="0"  /></a></p>
-
-
-<p>Now let&rsquo;s assume that you want this to happen with ajax.&nbsp; We&rsquo;d like the results to be displayed directly on the same page as the query.</p>
-
-
-<p>Here&rsquo;s the form from that first action:</p>
-
-
-<p>
-<div><figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
-</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>&lt;span class="kwrd">&lt;&lt;/span>&lt;span class="html">h1&lt;/span>&lt;span class="kwrd">&gt;&lt;/span>Photo Search&lt;span class="kwrd">&lt;/&lt;/span>&lt;span class="html">h1&lt;/span>&lt;span class="kwrd">&gt;&lt;/span>&lt;span class="kwrd">&lt;&lt;/span>&lt;span class="html">div&lt;/span> &lt;span class="attr">class&lt;/span>&lt;span class="kwrd">="box"&lt;/span>&lt;span class="kwrd">&gt;&lt;/span>&lt;span class="kwrd">&lt;&lt;/span>&lt;span class="html">form&lt;/span> &lt;span class="attr">id&lt;/span>&lt;span class="kwrd">="search-form"&lt;/span> &lt;span class="attr">method&lt;/span>&lt;span class="kwrd">="get"&lt;/span> &lt;span class="attr">action&lt;/span>&lt;span class="kwrd">="/photos/find"&lt;/span>&lt;span class="kwrd">&gt;&lt;/span> &lt;span class="kwrd">&lt;&lt;/span>&lt;span class="html">label&lt;/span> &lt;span class="attr">for&lt;/span>&lt;span class="kwrd">="query"&lt;/span>&lt;span class="kwrd">&gt;&lt;/span>Query:&lt;span class="kwrd">&lt;/&lt;/span>&lt;span class="html">label&lt;/span>&lt;span class="kwrd">&gt;&lt;/span>&lt;span class="kwrd">&lt;&lt;/span>&lt;span class="html">input&lt;/span> &lt;span class="attr">type&lt;/span>&lt;span class="kwrd">="text"&lt;/span> &lt;span class="attr">id&lt;/span>&lt;span class="kwrd">="query"&lt;/span> &lt;span class="attr">name&lt;/span>&lt;span class="kwrd">="query"&lt;/span> &lt;span class="kwrd">/&gt;&lt;/span>&lt;span class="kwrd">&lt;&lt;/span>&lt;span class="html">input&lt;/span> &lt;span class="attr">type&lt;/span>&lt;span class="kwrd">="submit"&lt;/span> &lt;span class="attr">id&lt;/span>&lt;span class="kwrd">="search"&lt;/span> &lt;span class="attr">value&lt;/span>&lt;span class="kwrd">="search"&lt;/span> &lt;span class="kwrd">/&gt;&lt;/span>&lt;span class="kwrd">&lt;&lt;/span>&lt;span class="html">img&lt;/span> &lt;span class="attr">id&lt;/span>&lt;span class="kwrd">="indicator"&lt;/span> &lt;span class="attr">style&lt;/span>&lt;span class="kwrd">="display:none"&lt;/span> &lt;span class="attr">src&lt;/span>&lt;span class="kwrd">="../../content/load.gif"&lt;/span> &lt;span class="attr">alt&lt;/span>&lt;span class="kwrd">="loading...."&lt;/span> &lt;span class="kwrd">/&gt;&lt;/span>&lt;span class="kwrd">&lt;/&lt;/span>&lt;span class="html">form&lt;/span>&lt;span class="kwrd">&gt;&lt;/span>&lt;span class="kwrd">&lt;/&lt;/span>&lt;span class="html">div&lt;/span>&lt;span class="kwrd">&gt;&lt;/span></div></code></pre></td></tr></table></div></figure></div>
-<p>And the action that the form submits to:</p><p>
-<div><figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
-</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>[ControllerAction]&lt;span class="kwrd">public&lt;/span> &lt;span class="kwrd">void&lt;/span> Find(&lt;span class="kwrd">string&lt;/span> query, &lt;span class="kwrd">string&lt;/span> format){var flickr = &lt;span class="kwrd">new&lt;/span> Flickr(ConfigurationManager.AppSettings[&lt;span class="str">"flickr.api.key"&lt;/span>]); var photos = flickr.PhotosSearch(query, TagMode.AnyTag, query, 40, 1); ViewData[&lt;span class="str">"query"&lt;/span>] = query; ViewData[&lt;span class="str">"photos"&lt;/span>] = photos; RenderView(&lt;span class="str">"results"&lt;/span>);}</div></code></pre></td></tr></table></div></figure></div>
-<p></p><p><em>(This uses the <a href="http://www.codeplex.com/FlickrNet" target="_blank">FlickrNet</a> library available on CodePlex)</em></p><p>In order to translate this into an ajax-enabled page (while preserving no-javascript behavior) we have to do 2 things.&nbsp; </p><ul><li>Prevent the form from posting, so that the browser doesn&rsquo;t take us off the page</li><li>Make the Find() action render <em>only</em> the partial html for the images (in the case of an ajax call</li></ul><p>Let&rsquo;s solve the first problem first.&nbsp; Using jquery, we can capture the form submit by doing this:</p>
-<div><figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
-</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>function init(){$(&lt;span class="str">'#search-form'&lt;/span>).submit(function() {$(&lt;span class="str">'#photos'&lt;/span>).hide();$(&lt;span class="str">'#indicator'&lt;/span>).show();hijack(&lt;span class="kwrd">this&lt;/span>, loadPhotos, &lt;span class="str">"html"&lt;/span>), &lt;span class="kwrd">return&lt;/span> &lt;span class="kwrd">false&lt;/span>;});}$(document).ready(init);</div></code></pre></td></tr></table></div></figure></div>
-<p>When the document has been loaded, init() is called.&nbsp; This finds our form and adds an onsubmit handler to it.&nbsp; Next, we hide the photos div (in case there were pictures there already) and then we start the ajax indicator.&nbsp; <strong>For the love of all that is good and holy, let the user know that you&rsquo;re doing something!</strong>&nbsp; Ok next up is this strange hijack() function.&nbsp; This guy takes the form and submits it via ajax instead.&nbsp; It accepts the form, the method to call when the result comes back (callback), and the data type of the return value.&nbsp; Finally, to cancel the browser from actually submitting the form, we return false.</p><p>Here is that &ldquo;photos&rdquo; div I mentioned a second ago:&nbsp; <em>(I put this directly under our form)</em></p>
-<div><figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
-<span class='line'>2</span>
-</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>&lt;span class="kwrd">&lt;&lt;/span>&lt;span class="html">div&lt;/span> &lt;span class="attr">id&lt;/span>&lt;span class="kwrd">="photos"&lt;/span> &lt;span class="attr">class&lt;/span>&lt;span class
-</div><div class='line'>="kwrd">="box"&lt;/span> &lt;span class="attr">style&lt;/span>&lt;span class="kwrd">="display: none"&lt;/span>&lt;span class="kwrd">&gt;&lt;/span>&lt;span class="kwrd">&lt;/&lt;/span>&lt;span class="html">div&lt;/span>&lt;span class="kwrd">&gt;&lt;/span></div></code></pre></td></tr></table></div></figure></div>
-<p>It&rsquo;s initially hidden because it will be empty when the page physically loads.</p><p>hijack() is a generic javascript function, and&nbsp;is defined as:</p>
-<div><figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
-</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>function hijack(form, callback, &lt;span class="kwrd">params&lt;/span>, format){ &lt;span class="kwrd">try&lt;/span> {$.ajax({url:form.action,type: form.method,data: $(form).serialize() + &lt;span class="str">"&amp;ajax=true"&lt;/span>,dataType: format,success:callback,failure:function(e) { alert(&lt;span class="str">"error! "&lt;/span> + e); }});} &lt;span class="kwrd">catch&lt;/span>(e) { alert(e);}}</div></code></pre></td></tr></table></div></figure></div>
-<p>This is pretty basic ajax stuff in jquery.&nbsp; The only thing different that I am doing here is notifying the controller that this is an ajax call, so that we may make it behave a little differently.&nbsp; After all, we don&rsquo;t want it to return a full html document&hellip; we only want the images!</p><p>That&rsquo;s the essense of issue #2.&nbsp; If we revisit our controller action, we can make the following change:</p>
-<div><figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
-</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>[ControllerAction]&lt;span class="kwrd">public&lt;/span> &lt;span class="kwrd">void&lt;/span> Find(&lt;span class="kwrd">string&lt;/span> query, &lt;b>&lt;span class="kwrd">bool&lt;/span>? ajax&lt;/b>){ var flickr = &lt;span class="kwrd">new&lt;/span> Flickr(ConfigurationManager.AppSettings[&lt;span class="str">"flickr.api.key"&lt;/span>]);var photos = flickr.PhotosSearch(query, TagMode.AnyTag, query, 40, 1);ViewData[&lt;span class="str">"query"&lt;/span>] = query;ViewData[&lt;span class="str">"photos"&lt;/span>] = photos;&lt;b>&lt;span class="kwrd">if&lt;/span>(ajax.HasValue &amp;&amp; ajax.Value){RenderView(&lt;span class="str">"_images"&lt;/span>, photos);}&lt;span class="kwrd">else&lt;/span>{RenderView(&lt;span class="str">"results"&lt;/span>);}&lt;/b> }</div></code></pre></td></tr></table></div></figure></div>
-<p>We&rsquo;ve added an optional parameter for the action to check for.&nbsp; There are a number of other ways you might accomplish the same thing by embedding this into the controller itself.&nbsp; You could make a convention that allows a base Controller class set an IsAjax boolean property to true if it detects this variable in form variables or querystring.&nbsp; Whatever you find the cleanest.</p><p>And, Here is our new form!</p><p><a href="http://www.flux88.com/uploads/photo_2Dsearch_2Dajax.png"><img src="/images/photo_2Dsearch_2Dajax_thumb.jpg" hspace="10"  border="0"  /></a></p><p>You couldn&rsquo;t see it in that still image, but there was an animated ajax indicator, and a nice slide down effect on the photo div.&nbsp; If you turn off javascript, the whole thing still works.</p><p>This entire process is basically what you get with UpdatePanel.&nbsp; The same techniques are used to accomplish partial page rendering.&nbsp; Granted, UpdatePanel works slightly different (it&rsquo;s parts of the same page that get updated) but you could easily return a full html document from the action and snip out the html you want to update.&nbsp; Or you might have a specific ViewFactory that knows to only serialize HTML starting with an element root.</p><p>With some conventions and a tiny bit of javascript, you could easily achieve partial page rendering with out any fuss.&nbsp; Plus you get to work with jquery, which is much mor enjoyable than ASP.NET AJAX.</p><p><strong>UPDATE:&nbsp; Download the code below.&nbsp; You&rsquo;ll need your own flickr api key (you can get one instantly from flickr.com).&nbsp; Place it in the web.config.</strong></p><p><a href="http://www.flux88.com/uploads/PhotoSearch.zip" target="_blank">PhotoSearch.zip (124 KB)</a>.&nbsp; </p>
-
-</div>
-  <footer>
-    <a rel="full-article" href="/2008/02/updatepanel-who/">Read on &rarr;</a>
-  </footer>
-
-
-  </article>
-
 <nav role="pagination">
   <div>
     
@@ -643,6 +602,10 @@
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2011/10/houston-tech-fest-2011-recap/">Houston Tech Fest 2011 Recap</a>
+      </li>
+    
+      <li class="post">
         <a href="/2011/10/appsites-is-now-appkickstand/">Appsites Is Now AppKickstand</a>
       </li>
     
@@ -656,10 +619,6 @@
     
       <li class="post">
         <a href="/2011/09/creating-a-glow-effect-for-uilabel-and-uibutton/">Creating a Glow Effect for UILabel and UIButton</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2011/09/introducing-appsites/">Introducing App Sites</a>
       </li>
     
   </ul>

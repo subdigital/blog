@@ -109,6 +109,49 @@
     
   <header>
     
+      <h1 class="entry-title"><a href="/2011/08/moving-my-blog/">Moving My Blog</a></h1>
+    
+    
+      <p class="meta">
+
+
+
+
+<time datetime="2011-08-21 00:00:00 -0500" pubdate  updated >Aug 21<span>st</span>, 2011</time>
+
+
+</p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I&#8217;ve decided to transition over to a new blog.</p>
+
+
+<p>The reasons? Mostly because I&#8217;m questioning more &amp; more the need to have a dynamic blog that I need to maintain. Static HTML blog generators are very interesting and I thought I&#8217;d give one a try.</p>
+
+
+<p>I&#8217;ll leave this one around for historical reasons. It gets a decent amount of traffic and has content going back to 2004.<br /></p>
+
+
+<p>So without further ado I present my new blog, <a href="http://benscheirman.com">Fickle Bits</a>.<br /></p>
+
+
+<p>(Note to RSS readers, your feeds will not auto-update. Subscribe to the new blog here: <a href="http://feeds.feedburner.com/ficklebits" target="_blank">Subscribe</a> )<br /></p>
+
+</div>
+  <footer>
+    <a rel="full-article" href="/2011/08/moving-my-blog/">Read on &rarr;</a>
+  </footer>
+
+
+  </article>
+
+
+  <article>
+    
+  <header>
+    
       <h1 class="entry-title"><a href="/2011/08/my-vim-journey/">My Vim Journey</a></h1>
     
     
@@ -1275,153 +1318,6 @@ Here&#8217;s to hoping the Xcode 4 continues to be improved. In the meantime, ho
 
   </article>
 
-
-  <article>
-    
-  <header>
-    
-      <h1 class="entry-title"><a href="/2011/04/using-guard-spork-with-mongoid-devise/">Using Guard & Spork With Mongoid & Devise</a></h1>
-    
-    
-      <p class="meta">
-
-
-
-
-<time datetime="2011-04-22 00:00:00 -0500" pubdate  updated >Apr 22<span>nd</span>, 2011</time>
-
-
-</p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>On my last project, I eventually settled on using Guard along with Spork to allow for quicker testing. Specifically, I used:</p>
-
-
-<ul>
-  <li>rspec</li>
-
-  <li>spork</li>
-
-  <li>rb-fsevent</li>
-
-  <li>guard</li>
-
-  <li>guard-rspec</li>
-
-  <li>guard-pow</li>
-
-  <li>guard-spork</li>
-</ul>
-
-
-<p>
-You might be saying, <em>&#8220;What the hell are all these gems for?!?!&#8221;</em>
-</p>
-
-
-
-
-<h3>Guard</h3>
-
-
-<p>This is a lot of development gem dependencies, but once working, it can vastly grease your testing workflow. <a href="https://github.com/guard/guard">Guard</a> is a framework for watching files &amp; doing something when they change. Make sure to use <a href="https://github.com/thibaudgg/rb-fsevent">rb-fsevent</a> as well to make detecting files not melt your machine polling for changes.</p>
-
-
-<h3>Guard-rspec</h3>
-
-
-<p><a href="https://github.com/guard/guard-rspec">guard-rspec</a> notices that models and/or specs change, and runs the related spec file automatically. Just running one test makes things faster, but you still have to reload all of rails with each run, making the feedback loop completely undesirable.</p>
-
-
-<h3>Spork</h3>
-
-
-<p>This is where <a href="https://github.com/timcharper/spork">Spork</a> comes in. Spork pre-loads your environment, allowing rspec files to run with &#8211;drb mode &amp; essentially caching your environment for multiple, fast test runs. That is, unless you change something in the environment (such as config/environment, routes.rb, or Gemile). These changes require spork to be restarted, which is SLOOOOW.</p>
-
-
-<p>It&#8217;s not always obvious when spork needs reloading, so sometimes you&#8217;d find yourself scratching your head, saying, &#8220;this test should be failing&#8230; but it&#8217;s not!&#8221; Followed by a head-slap, when you realize you need to bounce spork.</p>
-
-
-<h3>Guard-spork</h3>
-
-
-<p>So <a href="https://github.com/guard/guard-spork">guard-spork</a> is a nice way of automatically detecting these changes and reloading spork for you.</p>
-
-
-<h3>Guard-pow</h3>
-
-
-<p>Lastly, I&#8217;m using <a href="http://pow.cx">pow</a> from 37signals, so any env related changes that require a server restart automatically call touch tmp/restart.txt and pow restarts the app. Guard-pow does this for you.</p>
-
-
-<h2>Workflow</h2>
-
-
-<p>It&#8217;s hard to say what all this means for the developer&#8217;s workflow, but basically all you need to do is run `guard` in a Terminal tab of its own and let it run. I run `guard` almost all day, and it generally does what I need it to.</p>
-
-
-<p>Life is good, until you try to use this on another project that uses Mongoid &amp; Devise&#8230;</p>
-
-
-<p>The Problem with Mongoid + Spork</p>
-
-
-<p>Mongoid include its models with Rails, so that means if you change your models you have to reload rails. Not very friendly with a Spork-type model. Hopefully they&#8217;ll add a lifecycle hook in the future, but until they do, we can utilize a feature of Spork that can save the day: `trap_method/trap_class_method`.</p>
-
-
-<p>The details are found <a href="https://github.com/timcharper/spork/wiki/Spork.trap_method-Jujutsu%20(found%20from%20http://ihswebdesign.com/blog/spork-not-reloading/)https://github.com/timcharper/spork/wiki/Spork.trap_method-Jujutsu%20(found%20from%20http://ihswebdesign.com/blog/spork-not-reloading/)https://github.com/timcharper/spork/wiki/Spork.trap_method-Jujutsu%20(found%20from%20http://ihswebdesign.com/blog/spork-not-reloading/">here</a>, but for the impatient, I modified my `spec_helper`&#8217;s prefork block to look like this:</p>
-
-
-
-
-<div><figure role=code> <div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
-<span class='line'>2</span>
-<span class='line'>3</span>
-<span class='line'>4</span>
-<span class='line'>5</span>
-<span class='line'>6</span>
-<span class='line'>7</span>
-<span class='line'>8</span>
-</pre></td><td class='code' width='100%'><pre><code class='ruby'><div class='line'><span class="no">Spork</span><span class="o">.</span><span class="n">prefork</span> <span class="k">do</span><span class="o">&lt;</span><span class="n">br</span><span class="sr"> /&gt;  ENV[&quot;RAILS_ENV&quot;] ||= &#39;test&#39;&lt;br /</span><span class="o">&gt;&lt;</span><span class="n">br</span><span class="sr"> /&gt;</span>
-</div><div class='line'><span class="sr">  require &#39;rails/mon</span><span class="n">goid</span><span class="s1">&#39;</span>
-</div><div class='line'><span class="s1">  Spork.trap_class_method(Rails::Mongoid, :load_models)</span>
-</div><div class='line'>
-</div><div class='line'><span class="s1">  # Now load our environment</span>
-</div><div class='line'><span class="s1">  require File.expand_path(&quot;../../config/environment&quot;, __FILE__)</span>
-</div><div class='line'><span class="s1">  require &#39;</span><span class="n">rspec</span><span class="o">/</span><span class="n">rails</span><span class="err">&#39;</span>
-</div><div class='line'>  <span class="o">.</span><span class="n">.</span><span class="o">.</span>
-</div></code></pre></td></tr></table></div></figure></div>
-
-
-
-
-<p>Basically this forces that call to be loaded later on in the lifecycle.</p>
-
-
-<p>There&#8217;s a similar interception done for Device, which likes to load models along with Rails routes. You might also need to use this technique to deal with similar issues with Factory Girl, Machinist, and Shoulda Macros as well.</p>
-
-
-<p>And now my specs are faster again. Yay!<br /></p>
-
-
-<h2>Is the Complexity Worth it?</h2>
-
-
-<p>Is this complexity worth it? <a href="http://twitter.com/garybernhardt">Some</a> would say no, and I&#8217;m certainly aware of how much additional &#8220;gem weight&#8221; this adds to a project.</p>
-
-
-<p>For a great discussion about how to make your specs fast without requiring the complexity of Spork, check out the latest episode of Destroy All Software: <a href="https://www.destroyallsoftware.com/screencasts/catalog/fast-tests-with-and-without-rails">Fast Specs with and without Rails</a>. These screencasts are excellent..</p>
-
-</div>
-  <footer>
-    <a rel="full-article" href="/2011/04/using-guard-spork-with-mongoid-devise/">Read on &rarr;</a>
-  </footer>
-
-
-  </article>
-
 <nav role="pagination">
   <div>
     
@@ -1456,6 +1352,10 @@ You might be saying, <em>&#8220;What the hell are all these gems for?!?!&#8221;<
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2011/10/houston-tech-fest-2011-recap/">Houston Tech Fest 2011 Recap</a>
+      </li>
+    
+      <li class="post">
         <a href="/2011/10/appsites-is-now-appkickstand/">Appsites Is Now AppKickstand</a>
       </li>
     
@@ -1469,10 +1369,6 @@ You might be saying, <em>&#8220;What the hell are all these gems for?!?!&#8221;<
     
       <li class="post">
         <a href="/2011/09/creating-a-glow-effect-for-uilabel-and-uibutton/">Creating a Glow Effect for UILabel and UIButton</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2011/09/introducing-appsites/">Introducing App Sites</a>
       </li>
     
   </ul>

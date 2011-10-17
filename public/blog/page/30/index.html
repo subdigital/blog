@@ -109,6 +109,43 @@
     
   <header>
     
+      <h1 class="entry-title"><a href="/2006/11/agile-houston-finally/">Agile Houston - Finally!</a></h1>
+    
+    
+      <p class="meta">
+
+
+
+
+<time datetime="2006-11-13 00:00:00 -0600" pubdate  updated >Nov 13<span>th</span>, 2006</time>
+
+
+</p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I was very excited to hear the creation of the first Houston Agility User Group, <a href="http://groups.google.com/group/agilehouston">Agile Houston</a>.</p>
+
+
+<p>If you are interested in Agile practices and methodologies and live in the Houston area, I encourage you to join the group and attend the first meeting!</p>
+
+
+<p>Currently I expect the first meeting to occur sometime in January, so as soon as I find out a definite date, I&rsquo;ll post it here.</p>
+
+</div>
+  <footer>
+    <a rel="full-article" href="/2006/11/agile-houston-finally/">Read on &rarr;</a>
+  </footer>
+
+
+  </article>
+
+
+  <article>
+    
+  <header>
+    
       <h1 class="entry-title"><a href="/2006/11/a-journey-with-domain-driven-design-and-nhibernate-part-7/">A Journey With Domain Driven Design (and NHibernate) - Part 7</a></h1>
     
     
@@ -670,67 +707,6 @@ gin: -moz-initial; -moz-background-inline-policy: -moz-initial; color: black; fo
 
   </article>
 
-
-  <article>
-    
-  <header>
-    
-      <h1 class="entry-title"><a href="/2006/08/the-partial-function-in-mochikit/">The Partial Function in MochiKit</a></h1>
-    
-    
-      <p class="meta">
-
-
-
-
-<time datetime="2006-08-23 00:00:00 -0500" pubdate  updated >Aug 23<span>rd</span>, 2006</time>
-
-
-</p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><a title="MochiKit - Makes Javascript Suck Less" href="http://www.mochikit.com/" target="_blank">MochiKit</a>&nbsp;is awesome.&nbsp; I&rsquo;ve only begun to scratch the surface of the power in this framework.</p>
-
-
-<p>During my demo I had a hard time explaining what the <em><strong>partial</strong></em> function does.&nbsp; I have never been a Python developer, so MochiKit&rsquo;s influence is foreign to me.&nbsp; I do appreciate the simplicity of the syntax.</p>
-
-
-<p>Partial is aptly named.&nbsp; It is basically a partial function call, wrapped in an object.&nbsp; Why would you want this, I hear you say?&nbsp; Consider the following:</p>
-
-
-<div style="FONT-SIZE: 9pt; BACKGROUND: white; COLOR: black; FONT-FAMILY: Consolas"><div style="FONT-SIZE: 9pt; BACKGROUND: white; COLOR: black; FONT-FAMILY: Consolas"><p style="MARGIN: 0px"><span style="COLOR: green">// $(&#8216;ctrlid&#8217;) is MochiKits alias of document.getElementById(&#8216;ctrlid&#8217;)</span></p><p style="MARGIN: 0px">&nbsp;</p><p style="MARGIN: 0px">$(<span style="COLOR: maroon">&#8216;txtbox&#8217;</span>).onchange = filterText(<span style="COLOR: maroon">&#8216;some input&#8217;</span>); <span style="COLOR: green">//wrong!&nbsp; the function will be called immediately!</span></p><p style="MARGIN: 0px">&nbsp;</p><p style="MARGIN: 0px">$(<span style="COLOR: maroon">&#8216;txtbox&#8217;</span>).onchange = function() <span style="COLOR: green">//need an inline function wrapper to make the function call</span></p><p style="MARGIN: 0px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </p><p style="MARGIN: 0px">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; filterText(<span style="COLOR: maroon">&#8216;some input&#8217;</span>);</p><p style="MARGIN: 0px">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; }&nbsp; &nbsp; &nbsp; &nbsp; </p><p style="MARGIN: 0px">$(<span style="COLOR: maroon">&#8216;txtbox&#8217;</span>).onchange = partial(filterText, <span style="COLOR: maroon">&#8216;some input&#8217;</span>); <span style="COLOR: green">//partial separates the function from the argument(s)</span></p><p style="MARGIN: 0px"><span style="COLOR: green"></span>&nbsp;</p></div></div>
-
-
-<p>In this example, the top line is setting the onchange event handler of a textbox to a function call.&nbsp; But Javascript doesn&rsquo;t know that you want a function pointer here, it looks like you want to call the method and return something.&nbsp; So the solution that you can do is write a single function that wraps the function call that you want to make.&nbsp; This can be done inline like I do above.&nbsp; Partial comes in and cleans up those 3 lines and pushes them into 1 line.&nbsp; </p>
-
-
-<p>Next take a look at this:</p>
-
-
-<div style="FONT-SIZE: 9pt; BACKGROUND: white; COLOR: black; FONT-FAMILY: Consolas"><p style="MARGIN: 0px">&nbsp;function startsWith(character, target)</p><p style="MARGIN: 0px">&nbsp;{</p><p style="MARGIN: 0px">&nbsp; &nbsp; <span style="COLOR: green">//searches target for character, if found&#8230; returns true</span></p><p style="MARGIN: 0px">&nbsp;}</p><p style="MARGIN: 0px">&nbsp;</p><p style="MARGIN: 0px">&nbsp;var startsWithCapitalB = partial(startsWith, <span style="COLOR: maroon">&#8216;B&#8217;</span>);</p><p style="MARGIN: 0px">&nbsp;</p><p style="MARGIN: 0px">&nbsp;alert(startsWithCapitalB(<span style="COLOR: maroon">&#8216;Ben&#8217;</span>)); <span style="COLOR: green">//true</span></p><p style="MARGIN: 0px">&nbsp;alert(startsWithCapitalB(<span style="COLOR: maroon">&#8216;Henry&#8217;</span>)); <span style="COLOR: green">//false</span></p></div>
-
-
-<!--EndFragment-->
-
-
-<p>Here you see where partial gets its name.&nbsp; You can partially apply a function with <strong><em>partial</em></strong> and get a function variable returned!</p>
-
-
-<p>Partial is incredibly powerful when applied with other functional programming methods like <strong><em>map</em></strong>.</p>
-
-
-<p><strong>Now playing:</strong> <a href="http://phobos.apple.com/WebObjects/MZSearch.woa/wa/advancedSearchResults?artistTerm=Modest Mouse">Modest Mouse</a> - <a href="http://phobos.apple.com/WebObjects/MZSearch.woa/wa/advancedSearchResults?songTerm=Black Cadillacs&amp;artistTerm=Modest Mouse">Black Cadillacs</a></p>
-
-</div>
-  <footer>
-    <a rel="full-article" href="/2006/08/the-partial-function-in-mochikit/">Read on &rarr;</a>
-  </footer>
-
-
-  </article>
-
 <nav role="pagination">
   <div>
     
@@ -765,6 +741,10 @@ gin: -moz-initial; -moz-background-inline-policy: -moz-initial; color: black; fo
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2011/10/houston-tech-fest-2011-recap/">Houston Tech Fest 2011 Recap</a>
+      </li>
+    
+      <li class="post">
         <a href="/2011/10/appsites-is-now-appkickstand/">Appsites Is Now AppKickstand</a>
       </li>
     
@@ -778,10 +758,6 @@ gin: -moz-initial; -moz-background-inline-policy: -moz-initial; color: black; fo
     
       <li class="post">
         <a href="/2011/09/creating-a-glow-effect-for-uilabel-and-uibutton/">Creating a Glow Effect for UILabel and UIButton</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2011/09/introducing-appsites/">Introducing App Sites</a>
       </li>
     
   </ul>

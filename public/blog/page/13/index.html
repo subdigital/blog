@@ -109,6 +109,39 @@
     
   <header>
     
+      <h1 class="entry-title"><a href="/2008/09/ike-is-gone-were-okay/">Ike Is Gone, We&#8217;re Okay</a></h1>
+    
+    
+      <p class="meta">
+
+
+
+
+<time datetime="2008-09-15 00:00:00 -0500" pubdate  updated >Sep 15<span>th</span>, 2008</time>
+
+
+</p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Thanks to all who checked in with me during hurricane Ike.&nbsp; My family and I are okay, and we&#8217;re now in Dallas awaiting restoration of power.&nbsp; During the storm I still had Edge connectivity on my iPhone, so I was checking local tweets with Twinkle, and it was very interesting to see what folks within 10 miles of me were saying.&nbsp; What a cool feature.&nbsp; </p>
+
+
+<p> <p>As for damage, our house is fine.&nbsp; Luckily, all we lost was our fence!&nbsp; Some houses weren&#8217;t so lucky.</p> <p>Here are some pics that I took with my phone:</p> <p><a href="http://flux88.com/uploads/IkeisGoneWereOkay_79A5/HurricaneIke001.jpg"><a href="http://flux88.com/uploads/IkeisGoneWereOkay_79A5/HurricaneIke006.jpg"><img src="/images/HurricaneIke006_thumb.jpg" alt="Hurricane Ike 006"  border="0" /></a><img src="/images/HurricaneIke001_thumb.jpg" alt="Hurricane Ike 001"  border="0" /></a><a href="http://flux88.com/uploads/IkeisGoneWereOkay_79A5/HurricaneIke004.jpg"><img src="/images/HurricaneIke004_thumb.jpg" alt="Hurricane Ike 004"  border="0" /></a><a href="http://flux88.com/uploads/IkeisGoneWereOkay_79A5/HurricaneIke005.jpg"><img src="/images/HurricaneIke005_thumb.jpg" alt="Hurricane Ike 005"  border="0" /></a>&nbsp;&nbsp;&nbsp;&nbsp; <a href="http://flux88.com/uploads/IkeisGoneWereOkay_79A5/HurricaneIke009.jpg"><img src="/images/HurricaneIke009_thumb.jpg" alt="Hurricane Ike 009"  border="0" /><a href="http://flux88.com/uploads/IkeisGoneWereOkay_79A5/HurricaneIke010.jpg"><a href="http://flux88.com/uploads/IkeisGoneWereOkay_79A5/HurricaneIke010_3.jpg"><a href="http://flux88.com/uploads/IkeisGoneWereOkay_79A5/HurricaneIke.jpg"><img src="/images/HurricaneIke_thumb.jpg" alt="Hurricane Ike"  border="0" /></a></a><img src="/images/HurricaneIke010_thumb.jpg" alt="Hurricane Ike 010"  border="0" /><a href="http://flux88.com/uploads/IkeisGoneWereOkay_79A5/HurricaneIke002.jpg"><img src="/images/HurricaneIke002_thumb.jpg" alt="Hurricane Ike 002"  border="0" /></a></a></a> </p> <p>My wife took some pictures with a much better camera, so I&#8217;ll link to those soon.&nbsp; Time to clean up!</p></p>
+</div>
+  <footer>
+    <a rel="full-article" href="/2008/09/ike-is-gone-were-okay/">Read on &rarr;</a>
+  </footer>
+
+
+  </article>
+
+
+  <article>
+    
+  <header>
+    
       <h1 class="entry-title"><a href="/2008/09/using-extension-methods-to-clean-up-tests/">Using Extension Methods to Clean Up Tests</a></h1>
     
     
@@ -669,39 +702,6 @@
 
   </article>
 
-
-  <article>
-    
-  <header>
-    
-      <h1 class="entry-title"><a href="/2008/07/upgrading-code-camp-server-to-preview-4/">Upgrading Code Camp Server to Preview 4</a></h1>
-    
-    
-      <p class="meta">
-
-
-
-
-<time datetime="2008-07-17 00:00:00 -0500" pubdate  updated >Jul 17<span>th</span>, 2008</time>
-
-
-</p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>I&#8217;m currently upgrading <a href="http://codecampserver.org">Code Camp Server</a> to <a href="http://codeplex.com/aspnet">Preview 4</a>, and I thought it might be useful to some to see how to go about managing a (somewhat) volatile upgrade to a project.</p>
-
-
-<p> <h2>Step 1: Create a branch for your work</h2> <p>You don&#8217;t want these changes to break the build or anyone else&#8217;s pending changes.&nbsp; Often times in a long, complicated upgrade there will be many parts that need fixing and you can&#8217;t do it in one sitting.&nbsp; Creating a branch for your changes isolates you from the trunk.</p> <p>First this to do is make sure your local working copy is up to date and has no pending changes.&nbsp; I created a branch called <strong>mvcpreview4upgrade</strong> and switched my working copy to that branch.</p> <p><a href="http://flux88.com/uploads/UpgradingCodeCampServertoPreview4_13E84/mvcpreview4upgradebranch.png"><img src="/images/mvcpreview4upgradebranch_thumb.png" alt="mvcpreview4upgrade-branch"  border="0" /></a> </p> <p>Now we&#8217;re free to make some breaking changes.</p> <h2>Step 2:&nbsp; Upgrade the binaries to the new version of the framework</h2> <p>In Code Camp Server, all external dependencies are placed in the bin folder:</p> <p><a href="http://flux88.com/uploads/UpgradingCodeCampServertoPreview4_13E84/upgradingbinaries.png"><img src="/images/upgradingbinaries_thumb.png" alt="upgrading-binaries"  border="0" /></a> </p> <p>All of the projects get their references from here.&nbsp; We will definitely have to update <a href="http://mvccontrib.org">MVCContrib</a> to their latest once it is upgraded to Preview 4.&nbsp; I&#8217;ll leave this to last.</p> <h2>Step 3:&nbsp; Get it compiling</h2> <p>Normally I&#8217;d suggest the command line NAnt build because it will run all the tests, but I&#8217;m fully expecting compile errors and I want to be able to double click on them and navigate directly to it.</p> <p>Here are the issues I notice immediately:</p> <ul> <li>ComponentController has been removed completely.&nbsp; This hasn&#8217;t been updated in a long while and we kind of expected this to happen.&nbsp; Unfortunately we had 2 components that used this, so we have to re-implement them using another mechanism (I think I see one already, but I need to investigate more).</li> <li>TempDataDictionary now has a default constructor, so we don&#8217;t have to create a fake http context to build it.&nbsp; Finally!</li></ul> <p>That seems to be it, I fixed these issues and it compiles.&nbsp; Now to run the NAnt build (with all tests).</p> <h2>Step 4: Get the tests passing</h2> <p><em>Note to self:&nbsp; need to upgrade all the old mocking syntax to the new RhinoMocks syntax.</em></p> <p><a href="http://flux88.com/uploads/UpgradingCodeCampServertoPreview4_13E84/nantbuild.png"><img src="/images/nantbuild_thumb.png" alt="nant-build"  border="0" /></a> </p> <p>We can see that a unit test is failing (and we can also see a couple tests that I&#8217;m ignoring for now because ComponentController was removed).</p> <p>Since the FlashMessageComponent needs to be changed anyway, I&#8217;ll just ignore this test for now until we can finish the upgrade.</p> <p>Another test was failing in the IntegrationTests assembly which was fixed by deleting this line:</p> <p><a href="http://flux88.com/uploads/UpgradingCodeCampServertoPreview4_13E84/testresolvingcomponentcontroller.png"><img src="/images/testresolvingcomponentcontroller_thumb.png" alt="test-resolving-component-controller"  border="0" /></a> </p> <p>This test is used to make sure that we can build all controllers (with dependencies) at runtime.</p> <p>After fixing this we are now all passing!</p> <p><a href="http://flux88.com/uploads/UpgradingCodeCampServertoPreview4_13E84/buildsucceeding.png"><img src="/images/buildsucceeding_thumb.png" alt="build-succeeding"  border="0" /></a> </p> <p>Now it&#8217;s time to take a look at the changed features&#8230;</p> <h2>Step 5:&nbsp; Implement the new changes</h2> <p>Browsing the readme that is included with the release, we can see some changes in the following areas:</p> <ul> <li>New Membership</li> <ul> <li>not sure if we want to take advantage of this since we&#8217;ve already implemented it</li></ul> <li>Routes</li> <ul> <li>They are now namespaced to avoid issues with reflecting over the entire assembly</li></ul> <li>AuthorizationFilter</li> <ul> <li>I can remove the custom one we have</li></ul> <li>ErrorHandling Filter</li> <ul> <li>We were going to end up using [Rescue] from MVCContrib, but now I think we can use this</li></ul> <li>OutputCache Filter</li> <ul> <li>This will be better used once we have the functionality completed and we know where the best places to implement caching will be</li></ul> <li>Ajax</li> <ul> <li>These look like ASP.NET Ajax improvements.&nbsp; Not sure if they&#8217;ll apply to us since we use jquery.</li></ul> <li>ActionInvoker</li> <ul> <li>GetFiltersForAction method</li> <ul> <li>We can probably better test the integration of custom action filters with this</li></ul></ul> <li>ViewData</li> <ul> <li>Eval - we&#8217;ll probably just stick to ViewDataExtensions from MVCContrib for strong typing</li></ul> <li>ComponentController has been removed in favor on a RenderAction method on the view</li> <ul> <li>this means we can probably replace the sponsorcomponent controller with a standard Controller implementation</li></ul></ul> <p>Updating routes:</p> <p><a href="http://flux88.com/uploads/UpgradingCodeCampServertoPreview4_13E84/updatingroutenamspaces.png"><img src="/images/updatingroutenamspaces_thumb.png" alt="updating-route-namspaces"  border="0" /></a> </p> <p>I removed another remnant of ComponentController (looks like this came from MVCContrib).&nbsp; I also added the new namespace reference here.</p> <p>For authorization we had previously created 2 attributes, [AdminOnly], and [RequireLogin].&nbsp; RequireLogin will be replaced with the new [Authorize] attribute, however our AdminOnly attribute works a little differently, so some more work will be needed to get this to work with just a role name.</p> <p>Our implementation won&#8217;t be complete until we get MVCContrib integrated, so that&#8217;ll have to wait.&nbsp; But for now we&#8217;re at a good place to commit our work!</p> <h2>Why go through all this pain?</h2> <p>Upgrading projects to frequently released dependencies can be a pain, but I think it&#8217;s a small price to pay for the constant flow of improvements we&#8217;re getting from ASP.NET MVC releases.&nbsp; When the framework settles a bit more these updates will be mostly topical&#8230; meaning they won&#8217;t sweep the carpet out from under your feet.</p></p>
-</div>
-  <footer>
-    <a rel="full-article" href="/2008/07/upgrading-code-camp-server-to-preview-4/">Read on &rarr;</a>
-  </footer>
-
-
-  </article>
-
 <nav role="pagination">
   <div>
     
@@ -736,6 +736,10 @@
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2011/10/houston-tech-fest-2011-recap/">Houston Tech Fest 2011 Recap</a>
+      </li>
+    
+      <li class="post">
         <a href="/2011/10/appsites-is-now-appkickstand/">Appsites Is Now AppKickstand</a>
       </li>
     
@@ -749,10 +753,6 @@
     
       <li class="post">
         <a href="/2011/09/creating-a-glow-effect-for-uilabel-and-uibutton/">Creating a Glow Effect for UILabel and UIButton</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2011/09/introducing-appsites/">Introducing App Sites</a>
       </li>
     
   </ul>

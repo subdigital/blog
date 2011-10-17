@@ -109,6 +109,67 @@
     
   <header>
     
+      <h1 class="entry-title"><a href="/2007/03/getting-started-with-cab/">Getting Started With CAB</a></h1>
+    
+    
+      <p class="meta">
+
+
+
+
+<time datetime="2007-03-06 00:00:00 -0600" pubdate  updated >Mar 6<span>th</span>, 2007</time>
+
+
+</p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I&rsquo;m starting to scratch the massive surface that is CAB.&nbsp; CAB is better known as the Composite UI Application Block developed by the Patterns &amp; Practices Group at Microsoft.</p>
+
+
+<p>It&rsquo;s hard to define exactly what CAB gives you in one sentence, but I&rsquo;ll try.&nbsp; How about <em>manageable windows forms architecture with an emphasis on patterns </em>?&nbsp; I&rsquo;m an ASP.NET guy, so that&rsquo;s where my expertise lies, however I have built a few moderately sized WinForms apps and they get unwieldy very quickly.</p>
+
+
+<p>I plan on posting a bit about CAB as I dig into it, so stay tuned for that.&nbsp; For now I&rsquo;ll just post my first experience with it:&nbsp; Getting the darn thing installed.&nbsp; In tune with many CTP and early release software, it doesn&rsquo;t always go as smoothly as planned.</p>
+
+
+<p>First thing to do is install the following things <strong>in the correct order</strong>:<br />(<em>I assume you already have .NET 2.0 and Visual Studio 2005 installed)</em></p>
+
+
+<ul><li><a title="Microsoft - Download GAX" href="http://www.microsoft.com/downloads/details.aspx?FamilyID=C0A394C0-5EEB-47C4-9F7B-71E51866A7ED&amp;displaylang=en" target="_blank">Guidance Automation Extensions</a></li><li><a title="Microsoft - Download GAT" href="http://www.microsoft.com/downloads/details.aspx?FamilyID=E3D101DB-6EE1-4EC5-884E-97B27E49EAAE&amp;displaylang=en" target="_blank">Guidance Automation Toolkit for Visual Studio 2005</a></li><li><a title="Microsoft - Download CAB" href="http://www.microsoft.com/downloads/details.aspx?familyid=7b9ba1a7-dd6d-4144-8ac6-df88223aee19&amp;displaylang=en" target="_blank">Composite UI Application Block (CAB)</a></li><li><a title="Microsoft - Download EntLib" href="http://www.microsoft.com/downloads/details.aspx?familyid=5a14e870-406b-4f2a-b723-97ba84ae80b5&amp;displaylang=en" target="_blank">Enterprise Library (June 2006)</a></li></ul>
+
+
+<p>I found some sources on the internet that listed those in reverse, and I got an error at the Guidance Automation Toolkit installation that said &ldquo;<em>Operation invalid for the current state of the object</em>.&rdquo;</p>
+
+
+<p>In my case, I got the error even after uninstalling them all, but I was able to fix the error by modifying the registry.&nbsp; Open <em>regedit<strong> </strong></em>and navigate to <em>HKEY LOCAL MACHINE\SOFTWARE\MICROSOFT\COMMAND PROCESSOR&#46;</em>&nbsp; There should be a key in there called <em>AutoRun</em>.&nbsp; I renamed this to <em>AutoRunOld</em> and the installation worked.</p>
+
+
+<p>(I have a feeling that this setting was modified by an XPize installation, since they modify your command prompt settings&hellip; but I haven&rsquo;t confirmed this.)</p>
+
+
+<p>Now that everything is installed and running, check out these resources to get your feet wet with CAB:</p>
+
+
+<ul><li><a title="Bill Simser's blog (CAB)" href="http://weblogs.asp.net/bsimser/archive/tags/CAB/default.aspx" target="_blank">Bill Simser&rsquo;s blog</a> has a few nice gems about CAB</li><li><a title=".NET Developer's Journal article" href="http://dotnet.sys-con.com/read/133764.htm" target="_blank">A First Look at CAB</a> at .NET Developer&rsquo;s Journal</li><li><a title="Microsoft Whitepaper PDF" href="http://download.microsoft.com/download/1/0/3/103adb7f-1e45-42f8-8696-63e513875258/CAB%20SCSF%20-%20Architecture%20Guidance%20-%20Raiffeisen.pdf" target="_blank">Microsoft Whitepaper on Designing Smart Clients with CAB</a>&nbsp;(PDF)</li><li><a title="CAB Wiki" href="http://cabpedia.com/" target="_blank">CABPedia (wiki)</a></li></ul>
+
+
+<p>The next post will definitely contain more &ldquo;meat.&rdquo;</p>
+
+</div>
+  <footer>
+    <a rel="full-article" href="/2007/03/getting-started-with-cab/">Read on &rarr;</a>
+  </footer>
+
+
+  </article>
+
+
+  <article>
+    
+  <header>
+    
       <h1 class="entry-title"><a href="/2007/03/thats-just-plain-unprofessional/">That&#8217;s Just Plain Unprofessional</a></h1>
     
     
@@ -496,82 +557,6 @@
 
   </article>
 
-
-  <article>
-    
-  <header>
-    
-      <h1 class="entry-title"><a href="/2007/01/my-wedding/">My Wedding</a></h1>
-    
-    
-      <p class="meta">
-
-
-
-
-<time datetime="2007-01-22 00:00:00 -0600" pubdate  updated >Jan 22<span>nd</span>, 2007</time>
-
-
-</p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Many of you already know, I got married to Silvia on December 30th, 2006!</p>
-
-
-<p>We had a beautiful ceremony with lots of friends and family.&nbsp; Everyone had a good time.&nbsp; My wife and I are quite the happy couple!&nbsp; As promised, here are some pictures from the wedding.&nbsp; The entire album is avaiable on flickr.</p>
-
-
-<p><a href="http://www.flickr.com/photos/bensilvia/365824529/"><img alt="IMG_2246" src="http://static.flickr.com/128/365824529_e6e38372b1.jpg" border="1" /></a></p>
-
-
-<p><a href="http://www.flickr.com/photos/bensilvia/365824708/"><img alt="IMG_2258" src="http://static.flickr.com/173/365824708_9a582bcc99.jpg" border="1" /></a></p>
-
-
-<p><a href="http://www.flickr.com/photos/bensilvia/365825305/"><img alt="IMG_2293" src="http://static.flickr.com/105/365825305_2b12ac5daa.jpg" border="1" /></a></p>
-
-
-<p><a href="http://www.flickr.com/photos/bensilvia/365825604/"><img alt="IMG_2325" src="http://static.flickr.com/126/365825604_10bc8ed673.jpg" border="1" /></a></p>
-
-
-<p><a href="http://www.flickr.com/photos/bensilvia/365825992/"><img alt="IMG_2365" src="http://static.flickr.com/186/365825992_9c2516af95.jpg" border="1" /></a></p>
-
-
-<p><a href="http://www.flickr.com/photos/bensilvia/365827460/"><img alt="IMG_2456" src="http://static.flickr.com/126/365827460_ca6ce61c55.jpg" border="1" /></a></p>
-
-
-<p><a href="http://www.flickr.com/photos/bensilvia/365828647/"><img alt="IMG_2551" src="http://static.flickr.com/127/365828647_3edf52705c.jpg" border="1" /></a></p>
-
-
-<p><a href="http://www.flickr.com/photos/bensilvia/365829550/"><img alt="IMG_2604" src="http://static.flickr.com/102/365829550_ca7788a71c.jpg" border="1" /></a></p>
-
-
-<p><a href="http://www.flickr.com/photos/bensilvia/365829870/"><img alt="IMG_2635" src="http://static.flickr.com/163/365829870_ba36fd6389.jpg" border="1" /></a></p>
-
-
-<p><a href="http://www.flickr.com/photos/bensilvia/365830391/"><img alt="IMG_2714" src="http://static.flickr.com/185/365830391_d1136aae3c.jpg" border="1" /></a></p>
-
-
-<p><a href="http://www.flickr.com/photos/bensilvia/365830459/"><img alt="IMG_2725" src="http://static.flickr.com/137/365830459_148e3b38b0.jpg" border="1" /></a></p>
-
-
-<p><a href="http://www.flickr.com/photos/bensilvia/365830735/"><img alt="IMG_2741" src="http://static.flickr.com/123/365830735_8b18c67809.jpg" border="1" /></a></p>
-
-
-<p><a href="http://www.flickr.com/photos/bensilvia/365832150/"><img alt="IMG_2854" src="http://static.flickr.com/176/365832150_3fa244d1a8.jpg" border="1" /></a></p>
-
-
-<p>&nbsp;</p>
-
-</div>
-  <footer>
-    <a rel="full-article" href="/2007/01/my-wedding/">Read on &rarr;</a>
-  </footer>
-
-
-  </article>
-
 <nav role="pagination">
   <div>
     
@@ -606,6 +591,10 @@
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2011/10/houston-tech-fest-2011-recap/">Houston Tech Fest 2011 Recap</a>
+      </li>
+    
+      <li class="post">
         <a href="/2011/10/appsites-is-now-appkickstand/">Appsites Is Now AppKickstand</a>
       </li>
     
@@ -619,10 +608,6 @@
     
       <li class="post">
         <a href="/2011/09/creating-a-glow-effect-for-uilabel-and-uibutton/">Creating a Glow Effect for UILabel and UIButton</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2011/09/introducing-appsites/">Introducing App Sites</a>
       </li>
     
   </ul>
