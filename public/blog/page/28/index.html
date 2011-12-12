@@ -109,6 +109,64 @@
     
   <header>
     
+      <h1 class="entry-title"><a href="/2007/03/digging-into-cab-the-terminology/">Digging Into CAB - the Terminology</a></h1>
+    
+    
+      <p class="meta">
+
+
+
+
+<time datetime="2007-03-07 00:00:00 -0600" pubdate  updated >Mar 7<span>th</span>, 2007</time>
+
+
+</p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>The Composite UI Application Block (or CAB for short) has a lot of terminology to understand.&nbsp; In order to follow the downloadable samples you should first brush up on what the various components of CAB are.</p>
+
+
+<p><strong>Shell<br /></strong>The Shell is basically your application.&nbsp;&nbsp;The Shell&rsquo;s responsibility is to load and initialize UI services, modules, and other CAB components.&nbsp; The Shell itself won&rsquo;t contain many direct UI elements (these will be added later).&nbsp; The Shell will typically house <em>UIExtensionSites</em> and <em>Workspaces</em>.</p>
+
+
+<p><strong>Module<br /></strong>Modules are basically packages of <em>WorkItem</em>s, which we will see next.&nbsp; Modules are defined in the ProfileCatalog.xml file so CAB can load them and they have constructs for initializing.&nbsp; Each module resides it its own assembly.</p>
+
+
+<p><strong>WorkItem<br /></strong>Your use cases will generally become <em>WorkItems</em>.&nbsp; A <em>WorkItem</em> is a container for&nbsp;UI elements, model classes, state, and services that are required to satisfy the use-case.&nbsp; <em>If you were using NHibernate, this would be an ideal place to demarcate your ISession boundary.</em></p>
+
+
+<p><strong>Workspace<br /></strong><em>Workspaces</em> are the containers on your UI that <em>SmartParts</em> (User Controls) can be loaded.&nbsp; Examples include DeckWorkspace, TabWorkspace, etc.&nbsp; <em>Workspaces</em> can be moved around and replaced at runtime easily.</p>
+
+
+<p><strong>UI Extension Sites<br /></strong><em>UI Extension Sites</em> are static UI elements, such as Menus and Toolstrips, and as such are added directly to the shell.&nbsp; Different work items can access these to modify their contents.&nbsp; A good example is setting status text in a status bar at the bottom of the application shell or adding menu items depending on what tab has focus.</p>
+
+
+<p><strong>SmartParts</strong><br /><em>SmartParts</em> are your basic user controls, only denoted with a `[SmartPart]` attribute.&nbsp; Think of these as the &ldquo;View&rdquo; in Model-View-Controller.&nbsp; As such, these will contain controls, however all logic will be deferred to a controller or presenter class.</p>
+
+
+<p><strong>Service<br /></strong>As you might expect, <em>Services</em> are very vague.&nbsp; They can be any type of service that provides your UI with logic or data.&nbsp; In a CAB architecture, you will abstract most of the data and calculations to services that are consumed by the UI.&nbsp; Out of the box CAB comes with a Catalog service for loading modules, a State service for persisting WorkItem state to a file or isolated storage, and an authorization service.</p>
+
+
+<p>&nbsp;</p>
+
+
+<p>I think that gives us a good overview of the main terms and responsibilities.&nbsp; Until next time&hellip;</p>
+
+</div>
+  <footer>
+    <a rel="full-article" href="/2007/03/digging-into-cab-the-terminology/">Read on &rarr;</a>
+  </footer>
+
+
+  </article>
+
+
+  <article>
+    
+  <header>
+    
       <h1 class="entry-title"><a href="/2007/03/getting-started-with-cab/">Getting Started With CAB</a></h1>
     
     
@@ -496,67 +554,6 @@
 
   </article>
 
-
-  <article>
-    
-  <header>
-    
-      <h1 class="entry-title"><a href="/2007/01/my-presentation-on-continuous-integration/">My Presentation on Continuous Integration</a></h1>
-    
-    
-      <p class="meta">
-
-
-
-
-<time datetime="2007-01-26 00:00:00 -0600" pubdate  updated >Jan 26<span>th</span>, 2007</time>
-
-
-</p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>I gave a talk on Continuous Integration last night at the Houston Sark Office.&nbsp; Thanks to all who attended.</p>
-
-
-<p>We had pizza and discussed some of the processes and principles behind CI, as well as some of the tools to get you there.&nbsp; I did a live demo of an app, connected to source control and a build server. </p>
-
-
-<p>A-la <a href="http://codebetter.com/blogs/jeremy.miller/archive/2005/11/07/134400.aspx" target="_blank">Jeremy Miller</a>, I had my CCTray audio clips setup, so when the build failed, you&rsquo;d hear Napolean Dynamite say &ldquo;Freakin Idiot!&rdquo;</p>
-
-
-<p>I think it went well, however for those of you who attended, I&rsquo;d really like to hear your thoughts!&nbsp; Please take a second to leave a comment.</p>
-
-
-<p>Here are the files used in the demo:</p>
-
-
-<p><a href="http://www.flux88.com/uploads/continuous_20integration.zip">continuous integration.zip (8323 KB)</a></p>
-
-
-<p>(included are the sample project, cruise control config, and power-point slides)</p>
-
-
-<p><em>I left out the build server installation because it was over 70mb.&nbsp; It consisted of Subversion binaries, Nant, and a Cruise folder with some project state data.</em></p>
-
-
-<p>I got amazing help from <a href="http://jpboodhoo.com/blog" target="_blank">Jean-Paul Boodhoo</a>, who has a <a href="http://www.jpboodhoo.com/blog/NAntStarterSeries.aspx" target="_blank">9 part NAnt starter series</a>, which ends on a screencast of setting up CruiseControl!</p>
-
-
-<p>Additional resources were:</p>
-
-
-<ul><li><a href="http://jamesshore.com/Blog/Continuous-Integration-on-a-Dollar-a-Day.html" target="_blank">James Shore &ndash; Continuous Integration on a Dollar a Day</a></li><li><a href="http://martinfowler.com/articles/continuousIntegration.html" target="_blank">Martin Fowler &ndash; Continuous Integration</a></li><li><a href="http://www.amazon.com/Pragmatic-Project-Automation-Deploy-Monitor/dp/0974514039" target="_blank">Pragmatic Project Automation by Mike Clark</a>&nbsp;</li><li><a href="http://www.amazon.com/Expert-Delivery-Using-CruiseControl-NET-Experts/dp/1590594851" target="_blank">Expert .NET Delivery with CruiseControl and NAnt by Marc Holmes</a></li></ul>
-
-</div>
-  <footer>
-    <a rel="full-article" href="/2007/01/my-presentation-on-continuous-integration/">Read on &rarr;</a>
-  </footer>
-
-
-  </article>
-
 <nav role="pagination">
   <div>
     
@@ -591,6 +588,10 @@
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2011/12/formatting-json-from-terminal/">Formatting JSON From Terminal</a>
+      </li>
+    
+      <li class="post">
         <a href="/2011/10/houston-tech-fest-2011-recap/">Houston Tech Fest 2011 Recap</a>
       </li>
     
@@ -604,10 +605,6 @@
     
       <li class="post">
         <a href="/2011/10/making-a-uibutton-flip-over/">Making a UIButton Flip Over</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2011/09/creating-a-glow-effect-for-uilabel-and-uibutton/">Creating a Glow Effect for UILabel and UIButton</a>
       </li>
     
   </ul>

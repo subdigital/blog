@@ -109,6 +109,39 @@
     
   <header>
     
+      <h1 class="entry-title"><a href="/2008/09/now-you-have-no-excuse-not-to-know-jquery/">Now You Have No Excuse Not to Know jQuery</a></h1>
+    
+    
+      <p class="meta">
+
+
+
+
+<time datetime="2008-09-29 00:00:00 -0500" pubdate  updated >Sep 29<span>th</span>, 2008</time>
+
+
+</p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I&#8217;m not the <a href="http://www.hanselman.com/blog/jQuerytoshipwithASPNETMVCandVisualStudio.aspx" target="_blank">first</a> <a href="http://baley.codebetter.com/blogs/kyle.baley/archive/2008/09/28/asp-net-mvc-and-jquery-can-now-produce-legitimate-offspring.aspx" target="_blank">person</a> to <a href="http://blog.wekeroad.com/blog/jquery-and-visual-studio-bff/" target="_blank">report this</a>, but Scott Guthrie recently announced that <a href="http://weblogs.asp.net/scottgu/archive/2008/09/28/jquery-and-microsoft.aspx" target="_blank">jQuery will ship with Visual Studio 10</a>.&nbsp; <strong>This is huge news</strong>.&nbsp; When I talk to an audience about javascript, most people I talk to have never used a javascript library.&nbsp; Now I&#8217;m excited to have the ability to talk at length about jQuery and not have people raise their eyebrows at me and tell me that they hate javascript.</p>
+
+
+<p> <p>Recently at the ASP Insiders Summit I asked how many people actually <em>like</em> coding in javascript.&nbsp; About 6 people (out of 30) raised their hands.&nbsp; I then asked, &#8220;How many of you use jQuery?&#8221;&nbsp; The same 6 kept their hands in the air.&nbsp; Postulate what you want, this can either mean:</p> <blockquote> <p>jQuery makes you love javascript again.</p></blockquote> <p>or&#8230;</p> <blockquote> <p>Those who love javascript, choose jQuery.</p></blockquote> <p>Though I won&#8217;t laugh in your face, <a href="http://graysmatter.codivation.com/PermaLink,guid,f65b3bd2-d56b-4985-8102-a89b60e5fb3f.aspx" target="_blank">like some</a> :), but I will gently suggest that if you aren&#8217;t yet familiar with jQuery, <strong>now is the time to learn</strong>.&nbsp; I can recommend <a href="http://www.amazon.com/jQuery-Action-Bear-Bibeault/dp/1933988355" target="_blank">jQuery in Action</a> if you&#8217;re serious about it, but a simple <a href="http://www.google.com/search?hl=en&amp;safe=active&amp;rlz=1C1GGLS_enUS291&amp;q=learn+jquery&amp;btnG=Search" target="_blank">Google search</a> will get you most of what you need.</p> <p>The other reason why this is big news, is that soon you&#8217;ll be able to open up product support issues with Microsoft about jQuery.&nbsp; Let that sink in for a second.&nbsp; An open source project, under the MIT license, will be fully supported by Microsoft.</p> <p>I applaud Microsoft for making this decision.&nbsp; It&#8217;s not your typical Microsoft anymore.</p></p>
+</div>
+  <footer>
+    <a rel="full-article" href="/2008/09/now-you-have-no-excuse-not-to-know-jquery/">Read on &rarr;</a>
+  </footer>
+
+
+  </article>
+
+
+  <article>
+    
+  <header>
+    
       <h1 class="entry-title"><a href="/2008/09/ike-is-gone-were-okay/">Ike Is Gone, We&#8217;re Okay</a></h1>
     
     
@@ -636,72 +669,6 @@
 
   </article>
 
-
-  <article>
-    
-  <header>
-    
-      <h1 class="entry-title"><a href="/2008/07/upgrading-code-camp-server-to-preview-4-part-2/">Upgrading Code Camp Server to Preview 4 - Part 2</a></h1>
-    
-    
-      <p class="meta">
-
-
-
-
-<time datetime="2008-07-18 00:00:00 -0500" pubdate  updated >Jul 18<span>th</span>, 2008</time>
-
-
-</p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><a href="http://flux88.com/UpgradingCodeCampServerToPreview4.aspx">Last time</a> I went through some steps to upgrade Code Camp Server to the latest version of the <a href="http://codeplex.com/aspnet">ASP.NET MVC Framework</a>.&nbsp; I had to stop because <a href="http://mvccontrib.org">MVCContrib</a> hadn&#8217;t been upgraded yet.&nbsp; Now that their <a href="http://www.codeplex.com/MVCContrib/Release/ProjectReleases.aspx?ReleaseId=15416">4.0 release is out</a>, I can continue.</p>
-
-
-<p> <h2>Final Changes</h2> <p>I updated the mvccontrib binaries in our /bin folder and then ran all of the tests.&nbsp; All of the tests passed.&nbsp; Running the site I came to find a few errors in our views that referenced ComponentController (which should have been caught with tests&#8230; <em>Note to self:&nbsp; precompile the site in the NAnt build&#8230;</em>).</p> <p>&nbsp;</p> <p>&#8230;.And the site is alive again!</p> <p><a href="http://flux88.com/uploads/UpgradingCodeCampServertoPreview4Part2_133EE/sitelive.png"><img src="/images/sitelive_thumb.png" alt="site-live"  border="0" /></a> </p> <p>We&#8217;re now done with the upgrade, all tests are passing, and we need to commit our final changes to the branch we created in part 1.</p> <p><a href="http://flux88.com/uploads/UpgradingCodeCampServertoPreview4Part2_133EE/svncommit.png"><img src="/images/svncommit_thumb.png" alt="svn-commit"  border="0" /></a> </p> <p>Now we&#8217;re ready to merge our changes back into the trunk.&nbsp; </p> <h2>Merging the branch back to the trunk</h2> <p>To do this we will switch back over to the trunk with TortoiseSVN.</p> <p><a href="http://flux88.com/uploads/UpgradingCodeCampServertoPreview4Part2_133EE/switchbacktotrunk.png"><img src="/images/switchbacktotrunk_thumb.png" alt="switch-back-to-trunk"  border="0" /></a> </p> <p>Next, we open the Merge dialog from within the trunk.&nbsp; With TortoiseSVN you&#8217;re always merging from another branch to your current working copy.</p> <p>TortoiseSVN asks you how you want to merge your changes.&nbsp; What we&#8217;ve done is directly described in the second option, so we&#8217;ll choose that.</p> <p><a href="http://flux88.com/uploads/UpgradingCodeCampServertoPreview4Part2_133EE/mergeoptions1.png"><img src="/images/mergeoptions1_thumb.png" alt="merge-options1"  border="0" /></a> </p> <p>Next we select the branch from where we&#8217;d like to pull the changes&#8230;</p> <p><a href="http://flux88.com/uploads/UpgradingCodeCampServertoPreview4Part2_133EE/mergeoptions2.png"><img src="/images/mergeoptions2_thumb.png" alt="merge-options2"  border="0" /></a>&nbsp;</p> <p>The last dialog has some other options for you, but the defaults will be fine for us.</p> <p><a href="http://flux88.com/uploads/UpgradingCodeCampServertoPreview4Part2_133EE/image.png"><img src="/images/image_thumb.png" alt="image"  border="0" /></a>&nbsp;</p> <p>Now click on merge &amp; cross your fingers!</p> <p><a href="http://flux88.com/uploads/UpgradingCodeCampServertoPreview4Part2_133EE/mergeerror.png"><img src="/images/mergeerror_thumb.png" alt="merge-error"  border="0" /></a> </p> <h3>Doh! </h3> <p> We get an error because googlecode doesn&#8217;t yet support subversion 1.5.&nbsp; Well that sucks, <em>who planned this blog post anyway</em>?</p> <p>Time to drop down to command line to do the merge.&nbsp; That&#8217;s right, don&#8217;t be afraid of the command line.&nbsp; The first thing to do is to find out the revision that the code was branched.&nbsp; You can do that with a command on the branch working copy itself, by typing:</p></p>
-
-<div><figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
-</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>svn log --stop-on-copy</div></code></pre></td></tr></table></div></figure></div>
-
-
-<p>or I can cheat and look at the screen shot of the merge in part 1.&nbsp; I can see that the revision is 265.&nbsp; Now, back on the trunk I can type:</p>
-
-
-<div><figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
-</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>svn merge -r 265:HEAD href="http://codecampserver.googlecode.com/svn/branches/mvcpreview4upgrade</div></code></pre></td></tr></table></div></figure></div>
-
-
-<p>The result:</p>
-
-
-<p><a href="http://flux88.com/uploads/UpgradingCodeCampServertoPreview4Part2_133EE/cmdlinemerge.png"><img src="/images/cmdlinemerge_thumb.png" alt="cmd-line-merge"  border="0" /></a> </p>
-
-
-<p>Running the tests again just to make sure everything worked, and it does!</p>
-
-
-<p>Now to commit our changes into the trunk&#8230;</p>
-
-
-<div><figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
-</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>svn commit -m "integrating preview4 branch"</div></code></pre></td></tr></table></div></figure></div>
-
-
-<h2>&#8230;And we&#8217;re done!</h2>
-
-
-<p>I hope that my play-by-play upgrade has been helpful.&nbsp; Dealing with frequent updates to the projects we use is a price that we pay for the rapidly changing environment that we live in.&nbsp; Now, off to play with Preview 4 new features and hopefully get to delete some of our newly obsoleted code!</p>
-
-</div>
-  <footer>
-    <a rel="full-article" href="/2008/07/upgrading-code-camp-server-to-preview-4-part-2/">Read on &rarr;</a>
-  </footer>
-
-
-  </article>
-
 <nav role="pagination">
   <div>
     
@@ -736,6 +703,10 @@
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2011/12/formatting-json-from-terminal/">Formatting JSON From Terminal</a>
+      </li>
+    
+      <li class="post">
         <a href="/2011/10/houston-tech-fest-2011-recap/">Houston Tech Fest 2011 Recap</a>
       </li>
     
@@ -749,10 +720,6 @@
     
       <li class="post">
         <a href="/2011/10/making-a-uibutton-flip-over/">Making a UIButton Flip Over</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2011/09/creating-a-glow-effect-for-uilabel-and-uibutton/">Creating a Glow Effect for UILabel and UIButton</a>
       </li>
     
   </ul>

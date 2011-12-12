@@ -109,6 +109,40 @@
     
   <header>
     
+      <h1 class="entry-title"><a href="/2009/04/exporting-visual-studio-solutions-with-solutionfactory/">Exporting Visual Studio Solutions With SolutionFactory</a></h1>
+    
+    
+      <p class="meta">
+
+
+
+
+<time datetime="2009-04-13 00:00:00 -0500" pubdate  updated >Apr 13<span>th</span>, 2009</time>
+
+
+</p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><img src="/images/visual%20studio.png" align="right"  height="40" /></p>
+
+
+<p> <p>Part of my job is to create reusable code, patterns, designs, solutions, etc for other developers to leverage.&nbsp; Getting started using some of these things can be initially tough for someone who hasn&#8217;t had a lot of experience with long-term, maintainable solution structures for projects that use:</p> <ul> <li>an automated build  <li>3rd party libraries  <li>machine-specific configuration  <li><a href="http://en.wikipedia.org/wiki/Don't_repeat_yourself" target="_blank">D.R.Y.</a> for things like connection strings, etc.</li></ul> <p>Because of these things, I favor a folder structure similar to this one:</p> <p><img src="/images/image_146df75b-7e7a-46d3-b3a5-bfe159f7ad44.png" alt="image"  height="529" /> </p> <p>This keeps things tidy.&nbsp; There is a home for everything.&nbsp; Third party libraries get checked in to source control, as well as any light-weight developer tools that we use during the build.&nbsp; Everything you need to build the software on a developer&#8217;s machine should be here.&nbsp; (<em>Of course I assume that you already have the appropriate Visual Studio &amp; database server on your local machine.)</em></p> <p>In addition, <strong>many</strong> of our projects look something like this:</p> <ul> <li>App.UI  <li>App.Core  <li>App.Persistence  <li>App.Tests</li></ul> <p>Granted, this is very short-sighted and won&#8217;t be the end-all-be-all solution structure for all projects.&nbsp; <strong>But the goal here is to get you (a developer) started really quickly</strong>.&nbsp; These projects can already contains some things that get from nothing to something tangible in short time.</p> <p>My sample solution contains:</p> <ul> <li>An MVC project with a standard look &amp; feel  <ul> <li>images  <li>javascript files</li></ul> <li>A sample CRUD screen, showing a small example of the various players in displaying &amp; updating data.  <ul> <li>NHibernate  <li>FluentNHibernate  <li>NHibernate.Linq  <li>an IOC container  <li>an MVC Controller factory</li></ul> <li>A test project that shows both unit and integration style tests.&nbsp; Some nice fluent testing extensions are left in to show how it works. (the target audience will probably only have a C# 2.0 background).</li></ul> <p>All of this is pre-wired up.&nbsp; Dependencies are referenced in each project.&nbsp; The libraries are located in a relative URL, meaning other people who check out this code can build immediately.&nbsp; In addition, there is a sample NAnt script that shows how to build &amp; test the software.</p> <p>It&#8217;s about convention over configuration.&nbsp; For some applications, if they don&#8217;t want to do it this way, fine.&nbsp; It&#8217;s not about enforcement, it&#8217;s about gentle guidance &amp; encouragement.</p> <h2>Packaging it all up</h2> <p><img src="/images/Hell_Alamy460.jpg" align="left"  height="144" />So I went on the path of trying to export this into a set of Visual Studio project templates.&nbsp; I found the project templates to be less-than helpful for a few reasons.&nbsp; First, it assumes that you keep your projects in the root of the project folder structure.&nbsp; Second, there seemed to be no way to elegantly package up assemblies that the project depended on.&nbsp; I looked at <a href="http://code.google.com/p/sharp-architecture/" target="_blank">S#arp Architecture</a> for some help, but quickly realized that there isn&#8217;t an easy road to doing all of this.&nbsp; In addition, as far as I could tell there is no way to automatically create solution templates.&nbsp; You have to create project templates for each project and then manually stitch them together.</p> <p>This violated my #1 rule with the templates.&nbsp; <strong>In order for them to be successful, they must be really easy to change</strong>.&nbsp; I figure that in 2 months time, something in the template will have changed, or someone will want to tweak the design, or upgrade to a new version of a dependant assembly.&nbsp; If they have to go through all of those hoops to publish a new template, they just won&#8217;t do it.&nbsp; All of the effort on the initial template will be wasted.</p> <p><img src="/images/Factory-Yellow-256x256_dae50722-4932-4e9b-a70c-9f3883ba7050.png" align="right"  height="100" />Then I came across <a href="http://solutionfactory.codeplex.com" target="_blank">SolutionFactory</a>, which is a project started by <a href="http://www.lostechies.com/blogs/hex/" target="_blank">Eric Hexter</a> up on <a href="http://codeplex.com" target="_blank">Codeplex</a>.&nbsp; It consists of 2 major components:</p> <ul> <li>A template wizard that handles all of the post-launch tasks, such as moving the projects to the right location, fixing up references, etc.  <li>A Visual Studio add-in that creates a large solution template, containing multiple vstemplate files (project templates) and also respects my folder structure.&nbsp; Nice!</li></ul> <p>Usage is pretty dead simple.&nbsp; After installing, you get a new add-in.&nbsp; You have to enable the add-in before using it.</p> <p>&nbsp;<img src="/images/image_ee84c045-c405-4380-aa89-8e4d54bc1d61.png" alt="image"  height="545" /> </p> <p><img src="/images/image_202a8bd8-c38a-44a2-936c-e9bf8633bb46.png" alt="image"  height="358" /> </p> <p>Once you place the checkmark next to the Solution Factory add-in and click OK, you should see a new menu item in Visual Studio.</p> <p><img src="/images/image_d9932ca2-4bf1-4919-862f-c56d8874b0cd.png" alt="image"  height="545" /> </p> <p>When you select &#8220;Export Template&#8221; from the Solution Factory menu, you are presented with this dialog:</p> <p><img src="/images/image_898ce309-7205-469d-bfe9-479a7fe22b79.png" alt="image"  height="545" /> </p> <p>This controls your exported VSI file.&nbsp; One cool thing to note is that you can have a custom command run as part of the template invocation process.&nbsp; This is especially helpful if you have a firstTimeConfig.bat file or similar.&nbsp; Sometimes you just have to run the build once to make sure everything is in place.</p> <p><strong>During the export, any remnants of TFS source control will be stripped out in the target folder</strong>.&nbsp; Any read-only files will be unlocked, any <em>.</em>scc files will be deleted, and *.csproj files will be modified to remove the source control bindings.&nbsp; If this isn&#8217;t done, you&#8217;ll be prompted to remove source control bindings for each project every time you create a new project based on the template.&nbsp; Yuck!</p> <p>When the export is finished (it takes about a minute) you should see a message box like this:</p> <p><img src="/images/image_334964b7-3f86-4a73-9401-c47554670e03.png" alt="image"  height="130" /> </p> <p>Now if we look in our <strong>c:\temp</strong> folder, we should see some new files:</p> <p><img src="/images/image_b0d52aef-5cd9-4d96-8ab4-73f70a9cfc5f.png" alt="image"  height="67" /> </p> <p>The VSI is a <em>Visual Studio Installer</em> file, and it simplifies putting the template zip file into Visual Studio.&nbsp; All you
+really have to do is copy it to the appropriate Visual Studio 2008\Templates folder and run devenv.exe /installvstemplates to get it to rebuild the template cache.&nbsp; When you run the VSI, you&#8217;ll get a simple installer.&nbsp; <strong>It will warn you that the template is not signed, just press OK</strong>.</p> <p>There is one caveat though:&nbsp; Our template relies on SolutionFactory.Wizard.dll to run some custom actions when the template is invoked.&nbsp; The VSI file doesn&#8217;t have permissions to copy files into C:\Program Files, so until a custom installer (MSI) is made, you have to copy this dll manually.</p> <p>To do this, close down all instances of Visual Studio and copy SolutionFactory.Wizard.dll into c:\program files\Microsoft Visual Studio 9.0\Common 7\IDE\Private Assemblies.&nbsp; (on Vista/7 this path may be different, so adjust accordingly).&nbsp; This only has to be done once, and subsequent uses of the template will use this dll.</p> <p>Now, fire up a fresh copy of Visual Studio, choose File-&gt;New Project, and see our new template!</p> <p><img src="/images/image_5d06788c-0d01-4147-b773-e5d9200d4f58.png" alt="image"  height="496" /> </p> <p>When you click OK, Visual Studio will do a little dance, make sure you wait for it to finish!&nbsp; When it&#8217;s all done, you&#8217;ll end up with this:</p> <p><img src="/images/image_744bafa8-d6c6-4025-8a7e-4daea6ab88d8.png" alt="image"  height="480" />&nbsp;</p> <p>Every thing is completely packaged up, with multiple projects, 3rd party libraries, tools, and an automated build.&nbsp; The best part is that we can keep the template up to date and re-publish easily.</p></p>
+</div>
+  <footer>
+    <a rel="full-article" href="/2009/04/exporting-visual-studio-solutions-with-solutionfactory/">Read on &rarr;</a>
+  </footer>
+
+
+  </article>
+
+
+  <article>
+    
+  <header>
+    
       <h1 class="entry-title"><a href="/2009/04/excerpt-from-asp-net-mvc-in-action-chapter-6/">Excerpt From ASP.NET MVC in Action Chapter 6</a></h1>
     
     
@@ -900,184 +934,6 @@ margin: 0em;
 
   </article>
 
-
-  <article>
-    
-  <header>
-    
-      <h1 class="entry-title"><a href="/2009/01/building-a-hackintosh/">Building a Hackintosh</a></h1>
-    
-    
-      <p class="meta">
-
-
-
-
-<time datetime="2009-01-10 00:00:00 -0600" pubdate  updated >Jan 10<span>th</span>, 2009</time>
-
-
-</p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>I&#8217;m writing this post on my new hackintosh - that is - OS X Leopard running on PC hardware. So far the system is pretty stable and I&#8217;m liking it a lot.</p>
-
-
-<p><img src="/images/IMG_0734.jpg"  alt="IMG_0734.JPG"  /></p>
-
-
-<p><br />
-<img src="/images/leopard.png"  alt="osx desktop"  /></p>
-
-
-<p>Running OS X on PC hardware isn&#8217;t always easy, I just happened to have the lucky mix of hardware that pretty much just works. The motherboard is the most critical determining factor.</p>
-
-
-<h2>My hardware</h2>
-
-
-<ul>
-<li><a href="http://www.zipzoomfly.com/jsp/ProductDetail.jsp?ProductCode=10008509-OP&#38;prodlist=celebros">Gigabyte EP35-DS3L</a> ($70)</li>
-<li><a href="http://">Intel Core 2 Duo E8400 @ 3.0ghz</a> ($164)</li>
-<li><a href="http://www.newegg.com/Product/Product.aspx?Item=N82E16814150247">NVidia 8600GT 512MB</a> ($69)</li>
-<li><a href="http://www.newegg.com/Product/Product.aspx?Item=N82E16820145184">4GB Corsair Memory</a> ($55)</li>
-<li>Western Digital 500GB MyBook USB Hard drive</li>
-</ul>
-
-
-<p>You could easily build a PC based on this hardware for under $500. We have sound, lan, any hard drive will do, a decent video card, a fast processor, and 4 GB of memory. I&#8217;m using this on my existing Vista machine, so I decided to install on an external drive. Dual booting is possible, and with USB it&#8217;s easy: just unplug the USB drive to boot in windows. Other options allow you to have a boot menu to choose the OS.</p>
-
-
-<h2>Where to start</h2>
-
-
-<p>The definitive place to learn how to do this is the <a href="http://forum.insanelymac.com/">Insanely Mac Forums</a>. Expect to read a TON before you start. Spend most of your time initially in the OSx86 forum.</p>
-
-
-<h2>The software</h2>
-
-
-<ul>
-<li>I got most of my help from <a href="http://forum.insanelymac.com/index.php?showtopic=86167">this tutorial</a>. It is based on this same hardware, and pretty much worked right away for me.</li>
-<li>Kalyway 10.5.2 OS X Installer<br />
-You can get this from the usual places. I originally used this install and it worked okay, however I noticed a handful of application crashes and the occasional GSOD (Grey screen of death). We&#8217;re going to use this for the initial boot and to make a utility install. Utility installs will help when things go wrong, like for example if you decide to use a driver (known as kernel extensions or &#8220;kexts&#8221;) and the kext causes a kernel panic on boot, then you can boot in the utility partition and fix it.</li>
-<li>Retail Leopard OS X 10.5.5<br />
-You can get this at an Apple store, ebay, craigslist, or the usual places. I found one on craigslist for $50.</li>
-<li>10.5.6 combo updater</li>
-<li>v4.4 utility package from the tutorial author</li>
-</ul>
-
-
-<p>You can get the combo updater and the utility package from the tutorial post. Follow the tutorial and you should be fine.</p>
-
-
-<h2>BIOS</h2>
-
-
-<p>Having an updated BIOS is <em>usually</em> a good idea. In my case I had to update to F5. I also had to enable SATA AHCI, which is supposed to increase the reliability of OS X. This made Vista blue screen on boot. Apparently Vista removes unused drivers to speed up boot time. <a href="http://www.itwriting.com/blog/288-enabling-ahci-on-vista.html">Enabling a setting in the registry</a> fixed this.</p>
-
-
-<h2>Create a utility install with Kalyway</h2>
-
-
-<p>This is something that was confusing to me. Sort of a chicken and egg problem, but you need to install the retail install from an existing OS X installation. I used the Kalyway installer. I shrunk a partition in Windows by 40GB, then rebooted with the Kalyway DVD. It takes a while, but eventually the OS X installer came up. You then go to Disk Utility and format the partition. Choose Mac Journaled as the format. OSX should install after 10-15 minutes. This is where some folks have hardware issues. If your sound, lan, or video cards don&#8217;t work, then you have to roll up your sleeves and do some manual hacking. I lucked out and mine pretty much worked. It wasn&#8217;t very stable though.</p>
-
-
-<p>Once you&#8217;re in, you can continue to boot to this install using the boot DVD. I was unable to get any bootloaders to work. This utility install will be helpful to fix any problems that arise from tinkering with the main OS.</p>
-
-
-<p>From there, I followed this guide which provided me with most of what I needed to get the retail DVD installed, update to 10.5.6, run the postpatch.sh script and reboot. Then I ran the EFI hack which allows you to boot directly into OS X. At this point I set the USB drive to be first priority and viola! Leopard booted.</p>
-
-
-<h2>Getting 3D Graphics working</h2>
-
-
-<p>Upon booting the first time the graphics were sluggish and it could only run at 10204x768. There are a number of posts on the topic of video drivers, the problem is some of them are dated. NVinject worked for my 10.5.2 Kalyway install, but did not work for the 10.5.6 retail. Instead I had to use EFI Studio (found in the v4.4 package from earlier) and selected the 8600 GT 512 MB item.<img src="/images/efistudio.png"  alt="efistudio.png"  /></p>
-
-
-<p>Then I clicked &#8220;Add Device&#8221; which brought up this window:</p>
-
-
-<p><img src="/images/efistudio2.png"  alt="efistudio2.png"  /></p>
-
-
-<p>Then click &#8220;write to com.apple.Boot.plist&#8221;, reboot and you&#8217;re good! To get sound working I had to install the <a href="http://forum.insanelymac.com/index.php?act=attach&#38;type=post&#38;id=20698">ALC888 kext</a>.</p>
-
-
-<h2>Installing kexts</h2>
-
-
-<p>Installing kexts is basically copying a file to /System/Library/Extensions, fixing up the permissions on the file(s) with</p>
-
-
-
-
-<div><figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
-</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>sudo chmod -R 755 /System/Library/Extensions/yourkext.kext&lt;br />sudo chown -R root:wheel /System/Library/Extensions/yourkext.kext</div></code></pre></td></tr></table></div></figure></div>
-
-
-
-
-<p>then you need to remove the kext caches like so:</p>
-
-
-
-
-<div><figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
-</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>sudo rm -R /System/Library/Extensions.kextcache&lt;br />sudo rm -R /System/Library/Extensions.mkext</div></code></pre></td></tr></table></div></figure></div>
-
-
-
-
-<p>Reboot and cross your fingers! If you get a kernel panic, then just boot in single user mode (press F8 at boot and type -s at the prompt) (or boot your utility install) and remove the offending kexts.</p>
-
-
-<p>I found it easy to automate this process using <a href="http://cheetha.net/">KextHelper</a>.</p>
-
-
-<p>At this point I have a fully retail copy of 10.5.6, and I&#8217;m a &#8220;Mac Pro&#8221; in the eyes of Apple. This means (I think) that I can update to future versions with little to no tweaking!</p>
-
-
-<p><br />
-<img src="/images/about-this-mac.png"  alt="about-this-mac.png"  /></p>
-
-
-<p><br />
-<img src="/images/about-this-mac2.png"  alt="about-this-mac2.png"  /></p>
-
-
-<p>If I were to build a Mac Pro from apple.com with these specs, <strong>it would cost near $3000!</strong></p>
-
-
-<h2>Things still to figure out</h2>
-
-
-<p>My Microsoft Lifecam v1000 doesn&#8217;t quite work. I got it to work in iChat for a few minutes, but doesn&#8217;t work in Photobooth or Skype. This is a minor setback, as I can just buy a supported one.</p>
-
-
-<p>My RAID array isn&#8217;t visible. I have 2x250gb drives in RAID 1 (stripe). I need to investigate &#38; see if there are drivers for my SATA raid card. All in all it&#8217;s a small loss.</p>
-
-
-<p>VNC comes built-in with 10.5.6, however it&#8217;s SO SLOOOOWWW over the internet. Remote Desktop is far superior because they aren&#8217;t streaming bitmaps, it is actually rendering a desktop locally &#38; transmitting state changes. I really want to find a better solution for accessing my PC remotely.</p>
-
-
-<h2>Conclusion</h2>
-
-
-<p>This system has been really stable so far. I&#8217;ve had one crash, and I&#8217;m not sure what caused it, but a week has gone by with no lockups or crashes whatsoever. I&#8217;m really close to ditching my Vista install and put this on my fast Western Digital Raptor main drive.</p>
-
-
-<p>&nbsp;&#160;</p>
-
-</div>
-  <footer>
-    <a rel="full-article" href="/2009/01/building-a-hackintosh/">Read on &rarr;</a>
-  </footer>
-
-
-  </article>
-
 <nav role="pagination">
   <div>
     
@@ -1112,6 +968,10 @@ You can get this at an Apple store, ebay, craigslist, or the usual places. I fou
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2011/12/formatting-json-from-terminal/">Formatting JSON From Terminal</a>
+      </li>
+    
+      <li class="post">
         <a href="/2011/10/houston-tech-fest-2011-recap/">Houston Tech Fest 2011 Recap</a>
       </li>
     
@@ -1125,10 +985,6 @@ You can get this at an Apple store, ebay, craigslist, or the usual places. I fou
     
       <li class="post">
         <a href="/2011/10/making-a-uibutton-flip-over/">Making a UIButton Flip Over</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2011/09/creating-a-glow-effect-for-uilabel-and-uibutton/">Creating a Glow Effect for UILabel and UIButton</a>
       </li>
     
   </ul>

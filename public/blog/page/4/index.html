@@ -109,6 +109,64 @@
     
   <header>
     
+      <h1 class="entry-title"><a href="/2010/11/incorporating-3rd-party-libraries-in-iphone-apps/">Incorporating 3rd Party Libraries in iPhone Apps</a></h1>
+    
+    
+      <p class="meta">
+
+
+
+
+<time datetime="2010-11-02 00:00:00 -0500" pubdate  updated >Nov 2<span>nd</span>, 2010</time>
+
+
+</p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Having my hands in .NET, Rails, and iPhone for the past year I&#8217;ve come to appreciate and loathe the various ways that projects incorporate code from 3rd parties.</p>
+
+
+<p>Objective-C &amp; Xcode get the award for the least-awesome way of reusing libraries. I&#8217;ll cut them a tiny bit of slack since this technology is decades old, however it&#8217;s 2010 and I have work to do. Let&#8217;s just say there&#8217;s no &#8220;iPhoneGems&#8221; project and many projects (such as the excellent <a href="http://allseeing-i.com/ASIHTTPRequest/">ASIHTTPRequest</a>) simply suggest copying over source files into your project. This sucks for a number of reasons, but at the core it&#8217;s simply copy-paste code reuse.</p>
+
+
+<h2>No Dynamic Linking</h2>
+
+
+<p>The reason is mostly because there is no dynamic linking on the iPhone. You can&#8217;t simply &#8220;reference a dll&#8221; and have it work. You are limited to static linking, however that means that you need to pre-compile for each SDK version &amp; architecture. Not fun, nor do I even completely understand how all this works. This is how I originally used the <a href="http://code.google.com/p/json-framework/">JSON-Framework</a>, however I&#8217;ve since relegated to copying over source files into my project, after realizing that they hadn&#8217;t updated their static library for the 4.0 SDK.<br /></p>
+
+
+<h2>What do the big boys do?</h2>
+
+
+<p>As a larger example, <a href="http://github.com/facebook/three20">Facebook&#8217;s Three20 project</a> itself has many projects, and utilizes Xcode&#8217;s project dependencies. The setup is slightly more involved as you need to setup Header Search Paths, Linker Flags, and other (seemingly arcane) configurations, but if you follow the directions it is not too terrible.<br /></p>
+
+
+<p>This method sets up project dependencies, where the output of the sub-projects (in this case the suite of Three20&#8217;s projects) are static libraries for the SDK &amp; Architecture you&#8217;ve specified for your project.</p>
+
+
+<p>This is a pain to setup initially but does offer some additional benefits, such as having the other projects remain in a separate source tree. In our case, we&#8217;re pulling in Three20 from a git repository, and we are leveraging git submodules to make this happen. (Though git submodules are a bit of a pain to deal with).</p>
+
+
+<h2>What do you do?</h2>
+
+
+<p>Do you utilize this technique for your internal shared code? Or do you resort to copying around source files from project to project?</p>
+
+</div>
+  <footer>
+    <a rel="full-article" href="/2010/11/incorporating-3rd-party-libraries-in-iphone-apps/">Read on &rarr;</a>
+  </footer>
+
+
+  </article>
+
+
+  <article>
+    
+  <header>
+    
       <h1 class="entry-title"><a href="/2010/10/new-relic-hits-the-net-space/">New Relic Hits the .NET Space</a></h1>
     
     
@@ -1039,69 +1097,6 @@ happened. It <a target="_blank" href="http://github.com/jnicklas/carrierwave/iss
 
   </article>
 
-
-  <article>
-    
-  <header>
-    
-      <h1 class="entry-title"><a href="/2010/06/asp-net-mvc-2-in-action-has-arrived/">ASP.NET MVC 2 in Action Has Arrived</a></h1>
-    
-    
-      <p class="meta">
-
-
-
-
-<time datetime="2010-06-16 00:00:00 -0500" pubdate  updated >Jun 16<span>th</span>, 2010</time>
-
-
-</p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><img alt="ASP.NET MVC 2 in Action" src="http://flux88.s3.amazonaws.com/images/aspnetmvc2inaction.jpg" /></p>
-
-
-<p>You can order it from <a href="http://manning.com/palermo2/">Manning</a> or <a href="http://www.amazon.com/gp/product/193518279X?ie=UTF8&tag=flux88com-20&linkCode=as2&camp=1789&creative=390957&creativeASIN=193518279X">Amazon</a><img src="http://www.assoc-amazon.com/e/ir?t=flux88com-20&l=as2&o=1&a=193518279X" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" /> <span style="font-size:.7em">affiliate link</a>.</p>
-
-
-<p><strong>My thoughts on this edition:</strong></p>
-
-
-<p>In this edition we took a different approach.  The first edition, while it reviewed well, had a barrier of entry.  It was purposely for the intermediate to advanced developer.  We wanted to make this 2nd edition approachable to the same audience, but also appeal to people who aren&#8217;t expert developers.  I think we achieved that in the 2nd edition.</p>
-
-
-<p>The book is broken down into 4 parts, each building upon concepts in the previous.  The parts are:</p>
-
-
-<ul>
-<li>High Speed Fundamentals</li>
-<li>Journeyman Techniques</li>
-<li>Mastering ASP.NET MVC</li>
-<li>Cross-Cutting Advanced Topics</li>
-</ul>
-
-
-<p>Each chapter is completely self-contained as well.  It has its own examples, and they don&#8217;t require knowledge of a previous chapter in order to understand the concepts.  This allows you to use the book for reference as well, which is something I&#8217;m proud of.  We worked very hard making sure that the examples were easy to follow, so what you&#8217;ll find is clear instructions on the example pages themselves.</p>
-
-
-<p>&nbsp;</p>
-
-
-<p>And a hat tip to <a target="_blank" href="http://jeffreypalermo.com">Jeffrey Palermo</a>.  He could literally write a book about managing the book process.</p>
-
-
-<p>I really hope you enjoy this book.  And if you do pick it up, we&#8217;d certainly appreciate a review on Amazon.</p>
-
-</div>
-  <footer>
-    <a rel="full-article" href="/2010/06/asp-net-mvc-2-in-action-has-arrived/">Read on &rarr;</a>
-  </footer>
-
-
-  </article>
-
 <nav role="pagination">
   <div>
     
@@ -1136,6 +1131,10 @@ happened. It <a target="_blank" href="http://github.com/jnicklas/carrierwave/iss
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2011/12/formatting-json-from-terminal/">Formatting JSON From Terminal</a>
+      </li>
+    
+      <li class="post">
         <a href="/2011/10/houston-tech-fest-2011-recap/">Houston Tech Fest 2011 Recap</a>
       </li>
     
@@ -1149,10 +1148,6 @@ happened. It <a target="_blank" href="http://github.com/jnicklas/carrierwave/iss
     
       <li class="post">
         <a href="/2011/10/making-a-uibutton-flip-over/">Making a UIButton Flip Over</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2011/09/creating-a-glow-effect-for-uilabel-and-uibutton/">Creating a Glow Effect for UILabel and UIButton</a>
       </li>
     
   </ul>

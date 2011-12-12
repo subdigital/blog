@@ -109,6 +109,39 @@
     
   <header>
     
+      <h1 class="entry-title"><a href="/2010/03/is-uitableviewcontroller-useless/">Is UITableViewController Useless?</a></h1>
+    
+    
+      <p class="meta">
+
+
+
+
+<time datetime="2010-03-31 00:00:00 -0500" pubdate  updated >Mar 31<span>st</span>, 2010</time>
+
+
+</p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>In my experience writing iPhone apps, I’ve come to the conclusion that `UITableViewController` is useless.</p>
+
+
+<p>  <p>Since many of my readers aren’t iPhone developers, I’ll quickly describe what the <code>UITableViewController</code> is:<a href="http://flux88.com/files/media/image/WindowsLiveWriter/IsUITableViewControllerUseless_FC6C/Screen%20shot%202010-03-31%20at%205.56.09%20PM_5.png"><img src="/images/Screen%20shot%202010-03-31%20at%205.56.09%20PM_thumb_1.png" align="right"  height="240"  /></a></p>  <blockquote>   <p>Almost all of the iPhone apps on your phone utilize some sort of table.&#160; The table (which actually looks like a list) is implemented using a <code>UITableView</code> class.&#160; This class has 2 properties that help define its behavior:</p>    <table border="1" cellspacing="0" cellpadding="10" width="400"><tbody>       <tr>         <td valign="top" width="200"><code>delegate</code></td>          <td valign="top" width="200"><code>datasource</code></td>       </tr>        <tr>         <td valign="top" width="200">           <p>The <code>delegate</code>is a reference to a class (any class) that implements methods that tell the table view how to react to user input, such as tapping or editing.&#160; All of these methods are optional.</p>         </td>          <td valign="top" width="200">           <p>The <code>datasource</code>is a reference to a class (any class) that implements methods that tell the table view how many rows it has, what the content for each row is, what the headers are (if any), sections, footers, etc.&#160; 2 of these methods are required, the rest are optional.</p>            <p></p>         </td>       </tr>     </tbody></table>    <p>Most of the time, the <code>delegate</code>and <code>datasource</code>properties will be set to <font face="Courier New">self</font> in the controller which basically says: <em>my view controller is providing all of this functionality</em>.</p>    <p>So when you are wiring up your views in Interface Builder (or in code) you’ll frequently set it up so that it looks like this:</p>    <p><img src="/images/Screen%20shot%202010-03-31%20at%206.09.43%20PM_3.png" alt="Screen shot 2010-03-31 at 6.09.43 PM"  height="140"  />&#160; </p>    <p>This common scenario made a case for a reusable <font face="Courier New">UITableViewController </font>that set all of this up for you.&#160; The <font face="Courier New">UITableViewController </font>does all this for you:</p>    <p>&#160;<img src="/images/Screen%20shot%202010-03-31%20at%206.09.47%20PM%5B5%5D.png" alt="Screen shot 2010-03-31 at 6.09.47 PM"  height="124"  />&#160; </p>    <p>So that’s what <font face="Courier New">UITableViewController </font>is. now back to my post…</p> </blockquote>  <p><font face="Courier New">UITableViewController </font>sounds great, right?&#160; Less code is good… of course!&#160; Well not if less code means you put the shackles on and can’t do something more advanced later on.</p>  <p>What if you want to add a toolbar to your view?&#160; </p>  <p><img src="/images/pt1-thumb.png" align="right"   /></p>  <p>What if you want to have a transparent background so that you can have a custom image show through, similar to the way I did with Pocket Tabs?</p>  <p>Well it turns out that you can’t.&#160; Not easily anyway.&#160; If you add a toolbar as a subview of a table view, then your toolbar will scroll with the content.&#160; That’s not good.</p>  <p>Also if you try to get clever and <em>re-parent</em> the view controller class to point to a different <font face="Courier New">UIView </font>(one that has a toolbar &amp; background image set properly) then the <font face="Courier New">UITableViewController </font>complains.</p>  <p>It breaks a pretty well-known software rule:&#160; <a href="http://en.wikipedia.org/wiki/Liskov_substitution_principle" target="_blank">Liskov Substitution Principle</a>.&#160; <font face="Courier New">UITableViewController </font>inherits from UIViewController just like you’d expect.&#160; The problem is, <font face="Courier New">UITableViewController </font>enforces that its view property <em>be</em> a table view instance.&#160; It will crash at runtime if you set it to anything else.</p>  <p>&#160;</p>  <p><img src="/images/Screen%20shot%202010-03-31%20at%206.24.09%20PM_59027f6e-3b8a-4075-97ed-d6aeaf811b39.png" alt="Screen shot 2010-03-31 at 6.24.09 PM"  height="216"  /> </p>  <p>Literally every time I figured I’d save some time by using <font face="Courier New">UITableViewController </font>it has come back to bite me.</p>  <p>Am I missing something?&#160; Do you find <font face="Courier New">UITableViewController </font>useful at all?</p></p>
+</div>
+  <footer>
+    <a rel="full-article" href="/2010/03/is-uitableviewcontroller-useless/">Read on &rarr;</a>
+  </footer>
+
+
+  </article>
+
+
+  <article>
+    
+  <header>
+    
       <h1 class="entry-title"><a href="/2010/03/geek-dinner-with-glenn-block/">Geek Dinner With Glenn Block!</a></h1>
     
     
@@ -799,39 +832,6 @@ Ribbit!
 
   </article>
 
-
-  <article>
-    
-  <header>
-    
-      <h1 class="entry-title"><a href="/2010/01/greener-pastures/">Greener Pastures</a></h1>
-    
-    
-      <p class="meta">
-
-
-
-
-<time datetime="2010-01-18 00:00:00 -0600" pubdate  updated >Jan 18<span>th</span>, 2010</time>
-
-
-</p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Last week I gave my two weeks notice to my employer, <a href="http://www.us.sogeti.com" target="_blank">Sogeti</a>.&#160; I’ve been working there since 2006 (when we were Software Architects, or Sark) and have many fond memories.&#160; I’ve grown considerably as a software developer these past 4 years, and I’ve had the opportunity to work in many cool fields such as:</p>
-
-
-<p>  <ul>   <li>Offshore Drilling</li>    <li>Call out systems for after-hours emergency response</li>    <li>Smart Electric Metering Systems</li> </ul>  <p>I think Sogeti is a great place to work and I would encourage anyone coming into this field to consider them.</p>  <h2>So why am I leaving? </h2>  <p>   <br /> There are a few reasons.&#160; Mostly it is just time for me.</p>  <ul>   <li><strong>Vendor-slavery</strong>.&#160; I am not at all interested in latching myself to SharePoint, PerformancePoint, BizTalk, any of Oracle’s army of tools, IBM WebSphere whatever, or anything of the sort.&#160; It seems like this is a huge focus for the company and I couldn’t be less enthusiastic about such products.&#160; </li>    <li><strong>Agile?</strong>&#160; I’m keenly interested in agile software development, specifically Scrum and XP.&#160; Every project I’ve worked on I’ve met friction trying to introduce these things.&#160; It’s not like agile isn’t welcomed, it’s just really only considered if a client is clamoring for it.</li>    <li><strong>TFS TFS TFS</strong>.&#160; Seriously.&#160; This is a real reason.&#160; It might be good for some folks, but in my mind, life’s too short to learn to cope with the barrage of mini-frustrations that TFS brings.</li>    <li><strong>Cubicle-land</strong> is taxing on my soul.&#160; I’ve spent a long time in a gray carpeted building and it really weakens the morale.&#160; I’m looking forward to having a place (that isn’t temporary) that I can call my own and hang pictures of my awesome family up.</li>    <li>I’m becoming more and more interested in rails, Git, iPhone development, etc.&#160; This stuff isn’t really on the radar at my current employer.</li> </ul>  <h2>So where am I going?</h2>  <p><img style="margin: 0px 0px 5px; display: inline" align="right" src="http://www.chaione.com/wp-content/themes/chaione-rebrand/09-images/logo.gif" /></p>  <p>I’m joining <a href="http://chaione.com" target="_blank">ChaiONE</a>, a local web/iPhone firm here in Houston.&#160; I’ll be joining as Director of Development, leading the web &amp; iPhone teams.&#160; My role will be focused on choosing the technology direction for the company, leading the design &amp; architecture of our products, and spending a lot of time in code.&#160; It’s a much smaller company, where I’ll have a lot of responsibility and a lot of freedom to build out some excellent software using tools and technique that I know to work well.</p>  <p>I’ll be using a range of platforms and languages, such as .NET (Monorail / MVC, NHibernate, etc), Ruby (Rails), and iPhone (obj-c / MonoTouch).&#160; They currently use SVN, but I think I’ll start planting the Git seed.&#160; Either way, I’m happy to be off TFS.</p>  <p>Oh yeah, did I mention?&#160; I’ll be using a Mac.&#160; :)</p>  <p>I start on February 1, and I’m very excited to turn this page in my life.</p></p>
-</div>
-  <footer>
-    <a rel="full-article" href="/2010/01/greener-pastures/">Read on &rarr;</a>
-  </footer>
-
-
-  </article>
-
 <nav role="pagination">
   <div>
     
@@ -866,6 +866,10 @@ Ribbit!
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2011/12/formatting-json-from-terminal/">Formatting JSON From Terminal</a>
+      </li>
+    
+      <li class="post">
         <a href="/2011/10/houston-tech-fest-2011-recap/">Houston Tech Fest 2011 Recap</a>
       </li>
     
@@ -879,10 +883,6 @@ Ribbit!
     
       <li class="post">
         <a href="/2011/10/making-a-uibutton-flip-over/">Making a UIButton Flip Over</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2011/09/creating-a-glow-effect-for-uilabel-and-uibutton/">Creating a Glow Effect for UILabel and UIButton</a>
       </li>
     
   </ul>

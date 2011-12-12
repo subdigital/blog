@@ -109,6 +109,63 @@
     
   <header>
     
+      <h1 class="entry-title"><a href="/2006/01/sqlexpress-connection-under-remote-desktop/">SqlExpress Connection Under Remote Desktop</a></h1>
+    
+    
+      <p class="meta">
+
+
+
+
+<time datetime="2006-01-08 00:00:00 -0600" pubdate  updated >Jan 8<span>th</span>, 2006</time>
+
+
+</p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>While developing a small website this week I ran across an unusual error.&nbsp; </p>
+
+
+<p>When on my lapop, I generally remote into my desktop PC because it has Visual Studio and all the tools I need.</p>
+
+
+<p>I decided to use a SqlExpress file as the database, since there won&rsquo;t be much data for the application.&nbsp; This worked for about 2 weeks until I got this error upon opening a connection:</p>
+
+
+<p><!--StartFragment --><span><i><strong>Failed to generate a user instance of SQL Server due to a failure in starting the process for the user instance. The connection will be closed.</strong></i></span></p>
+
+
+<p><span>This error has to do with the fact that I am using remote desktop to develop.&nbsp; When I access a file-based sql express database, the data is actually copied locally, which is why it takes so long to start up.&nbsp; </span></p>
+
+
+<p><span><a href="http://blogs.advantaje.com/blog/kevin/Net/?permalink=SQLExpress-Problems.html" target="_blank">Kevin Jones</a> says:</span></p>
+
+
+<p><span><em>SQLExpress creates a directory per user in &#8220;c:\Documents and Settings\[user]\Local Settings\Application Data\Microsoft\Microsoft SQL Server Data\SQLEXPRESS&#8221; that it uses to store information. Deleting this directory has fixed both of my problems. </em></span></p>
+
+
+<p><span>I&rsquo;ll update this with my results.</span></p>
+
+
+<p style="'background-color:" lemonchiffon; border: 1px solid goldenrod; display: block;'><span><strong>Update:&nbsp; </strong>It worked!&nbsp; How weird.&nbsp; This fix definitely looks temporary but it&rsquo;s working for me so far.</p>
+
+
+<p></span></p>
+</div>
+  <footer>
+    <a rel="full-article" href="/2006/01/sqlexpress-connection-under-remote-desktop/">Read on &rarr;</a>
+  </footer>
+
+
+  </article>
+
+
+  <article>
+    
+  <header>
+    
       <h1 class="entry-title"><a href="/2005/12/im-all-banged-up/">I&#8217;m All Banged Up!</a></h1>
     
     
@@ -492,61 +549,6 @@
 
   </article>
 
-
-  <article>
-    
-  <header>
-    
-      <h1 class="entry-title"><a href="/2005/10/tooltips-on-disabled-buttons/">Tooltips on Disabled Buttons</a></h1>
-    
-    
-      <p class="meta">
-
-
-
-
-<time datetime="2005-10-21 00:00:00 -0500" pubdate  updated >Oct 21<span>st</span>, 2005</time>
-
-
-</p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>I just realized It&rsquo;s been a while since my last <em>technical</em> post, so I thought I&rsquo;d share my latest frustration. <em>(Don&rsquo;t you just <strong>love</strong> those?)</em></p>
-
-
-<p>Today&rsquo;s frustration comes from the behavior of ToolTips in windows.&nbsp; By default, if a control has it&rsquo;s enabled property set to false (that&rsquo;s <em>disabled</em> for you boolean challenged out there) then it will not receive the required mouse events for tool tips to function properly.</p>
-
-
-<p>So for my &ldquo;Save&rdquo; button on a form, if it&rsquo;s disabled, I&rsquo;d sure like to tell the user WHY it&rsquo;s disabled.&nbsp; To me this seems like one of the more common uses of the tooltip.</p>
-
-
-<p>An image will definitely help:</p>
-
-
-<p><img height="287" alt="DisabledButtonTooltip" src="http://ben.lyntonweb.com/blog/uploads/disabledButtonTooltip.jpg" width="408" border="1" /></p>
-
-
-<p>To accomplish this I had to put something invisible&nbsp;behind the button, but it still didn&rsquo;t work properly, so you can see I shrunk the button just to get it to work.</p>
-
-
-<p>I could display a status bar or something along those lines, but I don&rsquo;t want to <strong>complain</strong> to the user until they actually try to click &ldquo;Save Changes.&rdquo;</p>
-
-
-<p>I read in MFC you can use PreTranslateMessage to allow WM_MOUSEMOVE to be passed to a disabled button, but I don&rsquo;t really have the time or the energy to do this in .NET. (unless someone else wants to give me some pointers&hellip;)</p>
-
-
-<p>Sadly, a google search led me to only 1 possible quick-fix (putting a label or something behind the button and set the tooltip to that) &hellip;.&nbsp; but it didn&rsquo;t work. <img src="http://ben.lyntonweb.com/blog/uploads/smile9.gif" /></p>
-
-</div>
-  <footer>
-    <a rel="full-article" href="/2005/10/tooltips-on-disabled-buttons/">Read on &rarr;</a>
-  </footer>
-
-
-  </article>
-
 <nav role="pagination">
   <div>
     
@@ -581,6 +583,10 @@
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2011/12/formatting-json-from-terminal/">Formatting JSON From Terminal</a>
+      </li>
+    
+      <li class="post">
         <a href="/2011/10/houston-tech-fest-2011-recap/">Houston Tech Fest 2011 Recap</a>
       </li>
     
@@ -594,10 +600,6 @@
     
       <li class="post">
         <a href="/2011/10/making-a-uibutton-flip-over/">Making a UIButton Flip Over</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2011/09/creating-a-glow-effect-for-uilabel-and-uibutton/">Creating a Glow Effect for UILabel and UIButton</a>
       </li>
     
   </ul>

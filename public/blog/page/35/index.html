@@ -109,6 +109,61 @@
     
   <header>
     
+      <h1 class="entry-title"><a href="/2005/10/tooltips-on-disabled-buttons/">Tooltips on Disabled Buttons</a></h1>
+    
+    
+      <p class="meta">
+
+
+
+
+<time datetime="2005-10-21 00:00:00 -0500" pubdate  updated >Oct 21<span>st</span>, 2005</time>
+
+
+</p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I just realized It&rsquo;s been a while since my last <em>technical</em> post, so I thought I&rsquo;d share my latest frustration. <em>(Don&rsquo;t you just <strong>love</strong> those?)</em></p>
+
+
+<p>Today&rsquo;s frustration comes from the behavior of ToolTips in windows.&nbsp; By default, if a control has it&rsquo;s enabled property set to false (that&rsquo;s <em>disabled</em> for you boolean challenged out there) then it will not receive the required mouse events for tool tips to function properly.</p>
+
+
+<p>So for my &ldquo;Save&rdquo; button on a form, if it&rsquo;s disabled, I&rsquo;d sure like to tell the user WHY it&rsquo;s disabled.&nbsp; To me this seems like one of the more common uses of the tooltip.</p>
+
+
+<p>An image will definitely help:</p>
+
+
+<p><img height="287" alt="DisabledButtonTooltip" src="http://ben.lyntonweb.com/blog/uploads/disabledButtonTooltip.jpg" width="408" border="1" /></p>
+
+
+<p>To accomplish this I had to put something invisible&nbsp;behind the button, but it still didn&rsquo;t work properly, so you can see I shrunk the button just to get it to work.</p>
+
+
+<p>I could display a status bar or something along those lines, but I don&rsquo;t want to <strong>complain</strong> to the user until they actually try to click &ldquo;Save Changes.&rdquo;</p>
+
+
+<p>I read in MFC you can use PreTranslateMessage to allow WM_MOUSEMOVE to be passed to a disabled button, but I don&rsquo;t really have the time or the energy to do this in .NET. (unless someone else wants to give me some pointers&hellip;)</p>
+
+
+<p>Sadly, a google search led me to only 1 possible quick-fix (putting a label or something behind the button and set the tooltip to that) &hellip;.&nbsp; but it didn&rsquo;t work. <img src="http://ben.lyntonweb.com/blog/uploads/smile9.gif" /></p>
+
+</div>
+  <footer>
+    <a rel="full-article" href="/2005/10/tooltips-on-disabled-buttons/">Read on &rarr;</a>
+  </footer>
+
+
+  </article>
+
+
+  <article>
+    
+  <header>
+    
       <h1 class="entry-title"><a href="/2005/10/youre-my-boy-blue/">You&#8217;re My Boy Blue!</a></h1>
     
     
@@ -448,46 +503,6 @@
 
   </article>
 
-
-  <article>
-    
-  <header>
-    
-      <h1 class="entry-title"><a href="/2005/09/back-to-work/">Back to Work</a></h1>
-    
-    
-      <p class="meta">
-
-
-
-
-<time datetime="2005-09-13 00:00:00 -0500" pubdate  updated >Sep 13<span>th</span>, 2005</time>
-
-
-</p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Trying to get back into the swing of things is hard.&nbsp; I don&rsquo;t feel nearly as motivated or focused as I did a month ago.</p>
-
-
-<p>I know in time this will pass, but it&rsquo;s tough &ldquo;in the moment.&rdquo;</p>
-
-
-<p>On a brighter side, I got my omnifi installed in my car.&nbsp; I&rsquo;ll probably post some pictures of the installation here soon.</p>
-
-
-<p><strong>Now playing:</strong> <a href="http://phobos.apple.com/WebObjects/MZSearch.woa/wa/advancedSearchResults?artistTerm=Beck">Beck</a> - <a href="http://phobos.apple.com/WebObjects/MZSearch.woa/wa/advancedSearchResults?songTerm=Loser&amp;artistTerm=Beck">Loser</a></p>
-
-</div>
-  <footer>
-    <a rel="full-article" href="/2005/09/back-to-work/">Read on &rarr;</a>
-  </footer>
-
-
-  </article>
-
 <nav role="pagination">
   <div>
     
@@ -522,6 +537,10 @@
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2011/12/formatting-json-from-terminal/">Formatting JSON From Terminal</a>
+      </li>
+    
+      <li class="post">
         <a href="/2011/10/houston-tech-fest-2011-recap/">Houston Tech Fest 2011 Recap</a>
       </li>
     
@@ -535,10 +554,6 @@
     
       <li class="post">
         <a href="/2011/10/making-a-uibutton-flip-over/">Making a UIButton Flip Over</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2011/09/creating-a-glow-effect-for-uilabel-and-uibutton/">Creating a Glow Effect for UILabel and UIButton</a>
       </li>
     
   </ul>

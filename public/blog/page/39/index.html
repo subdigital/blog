@@ -109,6 +109,39 @@
     
   <header>
     
+      <h1 class="entry-title"><a href="/2005/04/nhibernate-and-asp-net/">NHibernate and ASP.NET</a></h1>
+    
+    
+      <p class="meta">
+
+
+
+
+<time datetime="2005-04-27 00:00:00 -0500" pubdate  updated >Apr 27<span>th</span>, 2005</time>
+
+
+</p>
+    
+  </header>
+
+
+  <div class="entry-content"><div style="clear:both;"></div>
+
+
+<p>If you haven&#8217;t seen Nhibernate yet, you should really check it out. There are a lot of free ORM tools out there, but this one seems to be the most liked, as far as I&#8217;ve read. I am implementing it in a new project at work and so far I am liking it. A lot.<br /><br />What I like best is that my Base business object can implement all of the details in Saving, Updating, and deleting objects&#8230; all I have to do is make sure and create the xml mapping file and all is taken care of for me.<br /><br />I do have some design concerns though, as I don&#8217;t want my front-end coupled to NHibernate at all. The UI developer shouldn&#8217;t even have to know the workings of the object persistance, he/she should just call <i>BusinessObject.Save()</i> and let the Data Layer handle it.<br /><br />So, following some advice on <a href="http://www.theserverside.net/">TSS</a> and <a href="http://www.codeproject.com/">Code Project</a> I decided to abstract the <i>nitty-gritty</i> into a static class.<br /><br /><b>Ooh</b>, did I just say static? That must be wrong&#8230; Static classes are not very reliable in a web application, as you don&#8217;t control it&#8217;s lifetime at all. So I have some basic code that generates the necessary configuration, loads my persistant classes into NHibernate, and builds the session factory, and this is all static. As far as the application goes, we won&#8217;t be able to tell it isn&#8217;t working because the static members will just be recreated once they are lost. I&#8217;m concerned about the performance hit that we will suffer because of this.<br /><br />I also want to avoid tying it to the Application bag, because that introduces a coupling between the UI and the Class library.<br /><br />I&#8217;m sort of stumped at this point, and I haven&#8217;t read anything yet that gives me a better alternative. Can someone recommend a solution?</i><div style="clear:both; padding-bottom: 0.25em;"></div></p>
+</div>
+  <footer>
+    <a rel="full-article" href="/2005/04/nhibernate-and-asp-net/">Read on &rarr;</a>
+  </footer>
+
+
+  </article>
+
+
+  <article>
+    
+  <header>
+    
       <h1 class="entry-title"><a href="/2005/03/ie-firefox-and-javascript/">IE / Firefox and Javascript</a></h1>
     
     
@@ -407,39 +440,6 @@
 
   </article>
 
-
-  <article>
-    
-  <header>
-    
-      <h1 class="entry-title"><a href="/2005/01/its-that-time-again-system-wipe/">It&#8217;s That Time Again - System Wipe</a></h1>
-    
-    
-      <p class="meta">
-
-
-
-
-<time datetime="2005-01-09 00:00:00 -0600" pubdate  updated >Jan 9<span>th</span>, 2005</time>
-
-
-</p>
-    
-  </header>
-
-
-  <div class="entry-content"><div style="clear:both;"></div>
-
-
-<p><span style="font-family: arial;font-family:arial;font-size:85%;">Like many computer power (read: nit-picky) users, I find the need to reformat my machine just about twice a year. This time around I have been lazy and it has been 9 months since my last reformat. This is mainly because I have been utterly dependent upon it as a server.<br /><br />I have been developing applications in PHP that were being shown to different clients, and it seemed each time I was about to finish a project, another one came right along.<br /><br />I also started a couple ASP.NET projects and was becoming very dependent upon my computer (well, a little more than usual).<br /><br />To top it all off my computer serves media content to my xbox, whicch I also didn&#8217;t want to interrupt.<br /><br />I finally realized that I was NEVER going to get a break from being dependent upon my computer, so tonight I will reformat. After this install I plan to &#8220;ghost&#8221; my hard drives and make a set of restore cd&#8217;s. I have heard this is a great tool for many people, but my computer is rarely in a position where I want a &#8220;snapshot&#8221; to always return to. This will be my opportunity to do that.<br /><br />To make my restore state the most useful in the long run, I have written down all the software I want to have on it. Good god! No wonder my system is so damn slow! I hand-wrote an entire page of software titles that I will be installing.<br /><br />I might as well list it out and explain why I like each piece of software&#8230; maybe someone will find it useful. Or maybe you can post a comment making fun of me. In any case, this is my blog NOT YOURS!<br /><br />&#8230;..sorry, got a little carried away.Where were we?Ahh, yes.. the software list, complete with comments.<br /><br />My OS is WinXP Pro, for reasons that are probably obvious. Pretty much the only things I do are play games, develop in .NET and mess with DirectX&#8230; enough said.<br /><br /><span style="font-weight: bold;">Security<br /><hr /></span><span style="font-size:100%;">(these days it is a must to install these programs first! Think how dangerous it could be to visit 1 site without anti-virus / anti-spy with a stock version of IE&#8230;. /shudder)<br /></span></span> <ul style="font-family: arial;font-family:arial;" > <li><span style="font-size:85%;">McAfee Enterprise 7 - far better than Norton imho&#8230;</span></li> <li><span style="font-size:85%;">SpyBot - It&#8217;s free and catches more than Ad-aware</span></li> <li><span style="font-size:85%;">Ad-aware - well, Spybot isn&#8217;t perfect&#8230;.any suggestions on replacing these 2 with one all mighty Anti-Spy solution?</span></li> </ul> <span style="font-weight: bold; font-family: arial;font-family:arial;" >System</span><br /><hr style="font-family: arial;font-family:arial;" ><span style="font-family: arial;font-family:arial;font-size:78%;"><br /></span> <ul style="font-family: arial;font-family:arial;" > <li><span style="font-size:85%;">DirectX 9.0c SDK - For my ventures in game programming with the awe-inspiring Managed DirectX</span></li> <li><span style="font-size:85%;">.NET 1.1 - For my managed development</span></li> <li><span style="font-size:85%;">PHP - cuz a little side money from <a href="http://www.rentacoder.com/">Rent-a-coder</a> never hurts.<br /> </span></li> <li><span style="font-size:85%;">IIS - for asp.net and php</span></li> </ul><span style="font-weight: bold; font-family: arial;font-family:arial;" >Databases</span><br /><hr style="font-family: arial;font-family:arial;" ><br /><span style="font-family: arial;font-family:arial;" >I use 2 because I have to develop for different target database servers. </span><br /><ul style="font-family: arial;"> <li>SQL Server 2000 (for asp.net stuff)</li> <li>MySQL (for php)</li> </ul><span style="font-weight: bold;">Development<br /><hr /><br /></span> <ul> <li>Microsoft Visual Studio .NET 2003</li> <li>Dreamweaver MX 2004</li> <li>EditPlus (though dreamweaver has better builtin ftp support)<br /></li> <li>SQLYog (free!) (wonderful tool for MySQL<br /></li> <li>Enterprise Manager / Query Analyzer</li> <li>Subversion (best source control I&#8217;ve seen)<br /></li> </ul><br /><span style="font-family: arial;font-family:arial;" > <span style="font-weight: bold;">Visual</span></span><br /><hr style="font-family: arial;"><br /><ul style="font-family: arial;"> <li><strike>StyleXP (lots of clean visual styles out there)</strike> (i just recently learned that stylexp only hacks the microsoft dll to provide unsigned styles.The same thing can be accomplished with a manual hack.WindowsBlinds has their own dll for skinning, so I&#8217;m testing that out.I also got a copy of RoyalXP (the 2005 MCE style &#8211; nice!)</li><li>Customize.org (for wallpapers)</li> </ul><span style="font-weight: bold;">Media<br /><hr /><br /></span> <ul> <li>Windows Media Player 10 (though it&#8217;s pissing me off to no end)</li> <li>Winamp 5</li> </ul> <span style="font-weight: bold;">Burning<br /><hr /><br /></span> <ul> <li>Nero</li> <li>Alcohol 120%</li> <li>Daemon-Tools (for mounting images)</li> <li>CloneDVD</li> </ul> I&#8217;d like comments.I&#8217;m always on the lookout for more good software to bloat my machine!<span style="font-family: arial;font-family:arial;font-size:78%;"><br /></span><div style="clear:both; padding-bottom: 0.25em;"></div></p>
-</div>
-  <footer>
-    <a rel="full-article" href="/2005/01/its-that-time-again-system-wipe/">Read on &rarr;</a>
-  </footer>
-
-
-  </article>
-
 <nav role="pagination">
   <div>
     
@@ -474,6 +474,10 @@
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2011/12/formatting-json-from-terminal/">Formatting JSON From Terminal</a>
+      </li>
+    
+      <li class="post">
         <a href="/2011/10/houston-tech-fest-2011-recap/">Houston Tech Fest 2011 Recap</a>
       </li>
     
@@ -487,10 +491,6 @@
     
       <li class="post">
         <a href="/2011/10/making-a-uibutton-flip-over/">Making a UIButton Flip Over</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2011/09/creating-a-glow-effect-for-uilabel-and-uibutton/">Creating a Glow Effect for UILabel and UIButton</a>
       </li>
     
   </ul>

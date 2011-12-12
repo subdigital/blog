@@ -109,6 +109,39 @@
     
   <header>
     
+      <h1 class="entry-title"><a href="/2005/06/visual-studio-devcon-2005-houston/">Visual Studio DevCon 2005 - Houston</a></h1>
+    
+    
+      <p class="meta">
+
+
+
+
+<time datetime="2005-06-09 00:00:00 -0500" pubdate  updated >Jun 9<span>th</span>, 2005</time>
+
+
+</p>
+    
+  </header>
+
+
+  <div class="entry-content"><div style="clear:both;"></div>
+
+
+<p>I&#8217;ll be there!Look for me in the Team Systems track&#8230;<div style="clear:both; padding-bottom: 0.25em;"></div></p>
+</div>
+  <footer>
+    <a rel="full-article" href="/2005/06/visual-studio-devcon-2005-houston/">Read on &rarr;</a>
+  </footer>
+
+
+  </article>
+
+
+  <article>
+    
+  <header>
+    
       <h1 class="entry-title"><a href="/2005/06/reformats-are-fun-cool-utilities/">Reformats Are Fun &#8211; Cool Utilities</a></h1>
     
     
@@ -420,39 +453,6 @@
 
   </article>
 
-
-  <article>
-    
-  <header>
-    
-      <h1 class="entry-title"><a href="/2005/04/nhibernate-and-asp-net/">NHibernate and ASP.NET</a></h1>
-    
-    
-      <p class="meta">
-
-
-
-
-<time datetime="2005-04-27 00:00:00 -0500" pubdate  updated >Apr 27<span>th</span>, 2005</time>
-
-
-</p>
-    
-  </header>
-
-
-  <div class="entry-content"><div style="clear:both;"></div>
-
-
-<p>If you haven&#8217;t seen Nhibernate yet, you should really check it out. There are a lot of free ORM tools out there, but this one seems to be the most liked, as far as I&#8217;ve read. I am implementing it in a new project at work and so far I am liking it. A lot.<br /><br />What I like best is that my Base business object can implement all of the details in Saving, Updating, and deleting objects&#8230; all I have to do is make sure and create the xml mapping file and all is taken care of for me.<br /><br />I do have some design concerns though, as I don&#8217;t want my front-end coupled to NHibernate at all. The UI developer shouldn&#8217;t even have to know the workings of the object persistance, he/she should just call <i>BusinessObject.Save()</i> and let the Data Layer handle it.<br /><br />So, following some advice on <a href="http://www.theserverside.net/">TSS</a> and <a href="http://www.codeproject.com/">Code Project</a> I decided to abstract the <i>nitty-gritty</i> into a static class.<br /><br /><b>Ooh</b>, did I just say static? That must be wrong&#8230; Static classes are not very reliable in a web application, as you don&#8217;t control it&#8217;s lifetime at all. So I have some basic code that generates the necessary configuration, loads my persistant classes into NHibernate, and builds the session factory, and this is all static. As far as the application goes, we won&#8217;t be able to tell it isn&#8217;t working because the static members will just be recreated once they are lost. I&#8217;m concerned about the performance hit that we will suffer because of this.<br /><br />I also want to avoid tying it to the Application bag, because that introduces a coupling between the UI and the Class library.<br /><br />I&#8217;m sort of stumped at this point, and I haven&#8217;t read anything yet that gives me a better alternative. Can someone recommend a solution?</i><div style="clear:both; padding-bottom: 0.25em;"></div></p>
-</div>
-  <footer>
-    <a rel="full-article" href="/2005/04/nhibernate-and-asp-net/">Read on &rarr;</a>
-  </footer>
-
-
-  </article>
-
 <nav role="pagination">
   <div>
     
@@ -487,6 +487,10 @@
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2011/12/formatting-json-from-terminal/">Formatting JSON From Terminal</a>
+      </li>
+    
+      <li class="post">
         <a href="/2011/10/houston-tech-fest-2011-recap/">Houston Tech Fest 2011 Recap</a>
       </li>
     
@@ -500,10 +504,6 @@
     
       <li class="post">
         <a href="/2011/10/making-a-uibutton-flip-over/">Making a UIButton Flip Over</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2011/09/creating-a-glow-effect-for-uilabel-and-uibutton/">Creating a Glow Effect for UILabel and UIButton</a>
       </li>
     
   </ul>
