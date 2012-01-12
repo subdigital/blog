@@ -11,9 +11,14 @@ footer: true
 
 ### Upcoming Presentations
 
-* October 15th - [Houston Tech Fest](http://houstontechfest.com)
+* DevTeach Vancouver (May)
 
 ### Past Presentations
+
+* Houston Tech Fest (October 15th, 2011)
+  Introducing a new Rails Feature from Beginning to End
+  Rails Intrigue
+  Stop Using Git Like Subversion
 
 * Houston Code Camp 2011 (August 20th, 2011)
   Stop Using Git Like Subversion
@@ -34,7 +39,7 @@ footer: true
 
 * iPhone/iPad Dev Con – San Diego, CA (September 27-29 2010)
   * iPhone SQLite Techniques
-  * iPhone for the .NET Developer  
+  * iPhone for the .NET Developer
 
 * Houston Tech Fest – Houston, TX (October 9, 2010)
   * A Scalable Rails App Deployed in 60 Seconds with Heroku
