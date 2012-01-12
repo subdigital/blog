@@ -4,13 +4,165 @@
   <title>Fickle Bits</title>
   <link href="http://benscheirman.com/atom.xml" rel="self"/>
   <link href="http://benscheirman.com/"/>
-  <updated>2011-12-12T16:08:21-06:00</updated>
+  <updated>2012-01-11T17:07:59-06:00</updated>
   <id>http://benscheirman.com/</id>
   <author>
     <name>Ben Scheirman</name>
     
   </author>
 
+  
+  <entry>
+    <title>Careful With Block-Based Notification Handlers</title>
+    <link href="http://benscheirman.com/2012/01/careful-with-block-based-notification-handlers/"/>
+    <updated>2012-01-11T16:27:00-06:00</updated>
+    <id>http://benscheirman.com/2012/01/careful-with-block-based-notification-handlers</id>
+    <content type="html">&lt;p&gt;In general, I prefer using block-based APIs over those that accept selectors.&lt;/p&gt;
+
+&lt;p&gt;The block based APIs are generally easier to read &amp;amp; follow, and don't clutter up your class with methods that are
+out of context with the code that might potentially invoke them.&lt;/p&gt;
+
+&lt;h2&gt;An Example&lt;/h2&gt;
+
+&lt;p&gt;One good example is view animations.  Here we're fading out a view and removing it from the hierarchy once
+the view has been completely faded out.  It's concise, easy to read, and you don't need to go anywhere else in the
+class to get a complete picture of how this works.&lt;/p&gt;
+
+&lt;p&gt;Also, since you can have multiple animations going on, having a block-based completion handler means
+you don't have to distinguish between what the animations were in some generic completion method.&lt;/p&gt;
+
+&lt;p&gt;``` objc&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;[UIView animateWithDuration:0.5 animations:^{
+  someView.alpha = 0;
+} completion:^ (BOOL finished) {
+  [someView removeFromSuperView];
+}];
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;```&lt;/p&gt;
+
+&lt;p&gt;Contrast this with the non-block version:&lt;/p&gt;
+
+&lt;p&gt;``` objc&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;- (void)fadeOutView {
+  [UIView beginAnimations];
+  [UIView setAnimationDuration:0.5];
+  [UIView setAnimationDelegate:self];
+  [UIView setAnimationDidStopSelector:@selector(animationDidStop:finished:context:)];
+
+  someView.alpha = 0;
+
+  [UIView commitAnimations];
+}
+
+- (void)animationDidStop:(NSString *)animationID finished:(NSNumber *)finished context:(void *)context {
+  [someView removeFromSuperView];
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;```&lt;/p&gt;
+
+&lt;h2&gt;Block-Based Notification Handlers&lt;/h2&gt;
+
+&lt;p&gt;&lt;code&gt;NSNotificationCenter&lt;/code&gt; also got some block love when iOS SDK 4.0 came around.  The old form looked like this:&lt;/p&gt;
+
+&lt;p&gt;``` objc&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;- (void)setupNotifications {
+  [[NSNotificationCenter defaultCenter] addObserver:self
+                                           selector:@selector(onWhizBang:)
+                                               name:MyWhizBangnotification
+                                             object:nil];
+}
+
+- (void)onWhizBang:(NSNotification *)notification {
+  // reload the table to show the new whiz bangs
+  [self.tableView reloadData];
+}
+
+- (void)dealloc {
+  [[NSNotificationCenter defaultCenter] removeObserver:self];
+  [super dealloc];
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;```&lt;/p&gt;
+
+&lt;p&gt;This isn't a lot of code (and it is easy to remember, unlike the previous UIView animation block code), however
+the action and the notification handler are separated from each other.&lt;/p&gt;
+
+&lt;p&gt;The block-based API looks like this:&lt;/p&gt;
+
+&lt;p&gt;``` objc&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;- (void)setupNotifications {
+  [[NSNotificationCenter defaultCenter] 
+      addObserverForNotificationName:MyWhizBangNotification
+                              object:nil
+                               queue:[NSOperationQueue mainQueue]
+                               block:^(NSNotification *notification) {
+                                 //reload the table to show the new whiz bangs
+                                 [self.tableView reloadData];
+                               }];
+}
+
+- (void)dealloc {
+  [[NSNotificationCenter defaultCenter] removeObserver:self];
+  [super dealloc];
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;```&lt;/p&gt;
+
+&lt;p&gt;Aside from some funky indentation, this is preferable in some cases, especially when the action to
+be completed is as simple as reloading the table.&lt;/p&gt;
+
+&lt;p&gt;But there's a bug.  Can you spot it?&lt;/p&gt;
+
+&lt;h2&gt;Blocks Are Closures&lt;/h2&gt;
+
+&lt;p&gt;There's a subtle bug here that you might not notice at first.  I didn't realize this until it was littered all
+over my code base.&lt;/p&gt;
+
+&lt;p&gt;Blocks are &lt;a href=&quot;http://simple.wikipedia.org/wiki/Closure_(computer_science)&quot;&gt;closures&lt;/a&gt;, and they will capture any values declared outside the scope of the block (and retained) so that
+they can be used when the block executes.  This includes variables declared in the enclosing method or any ivars
+that you reference from inside the block.&lt;/p&gt;
+
+&lt;p&gt;Here, we used &lt;code&gt;self.tableView&lt;/code&gt;.  &lt;code&gt;self&lt;/code&gt; gets retained by the block, which is also retained by self.  We have a &lt;em&gt;retain-cycle&lt;/em&gt;
+which is generally a bad thing.  It's especially bad here, because we don't clear out the block until &lt;code&gt;dealloc&lt;/code&gt;,
+but &lt;em&gt;dealloc won't ever be called because the block is retaining the instance&lt;/em&gt;!&lt;/p&gt;
+
+&lt;h2&gt;Weak Pointers Save the Day&lt;/h2&gt;
+
+&lt;p&gt;If you've read up on blocks, you've probably seen the &lt;code&gt;__block&lt;/code&gt; keyword.  This specifier tells blocks not to retain the pointer.
+So all we need is a new pointer, like so:&lt;/p&gt;
+
+&lt;p&gt;``` objc&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;__block MyViewController *weakSelf = self;
+
+// use weakSelf in the blocks, instead of self
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;```&lt;/p&gt;
+
+&lt;p&gt;This sort of code drives me nuts.  It won't be apparent to the next developer why it's there, and it's
+pretty ugly.&lt;/p&gt;
+
+&lt;h2&gt;Retain Cycles are Elsewhere, Too&lt;/h2&gt;
+
+&lt;p&gt;You might also run into this if you have a parent-child view controller relationship, or perhaps a
+an parent-&gt;object-&gt;delegate chain, where the parent &lt;em&gt;is&lt;/em&gt; the delegate.  This is why you typically mark
+your delegate property signatures with &lt;code&gt;assign&lt;/code&gt; instead of &lt;code&gt;retain&lt;/code&gt; semantics.&lt;/p&gt;
+
+&lt;p&gt;Not all retain-cycles are terrible though.  If you have a way of breaking the cycle, then you just need
+to weigh how long these objects will remain active for to decide if you need to fix it.&lt;/p&gt;
+
+&lt;p&gt;Hopefully this will save you a few headaches down the line.&lt;/p&gt;
+</content>
+  </entry>
   
   <entry>
     <title>Formatting JSON From Terminal</title>
@@ -1441,119 +1593,6 @@ Here's to hoping the Xcode 4 continues to be improved. In the meantime, hope thi
 
 
 &lt;p&gt;Registration will open soon, but for now.... &lt;b&gt;save the date&lt;/b&gt;!&lt;/p&gt;
-
-</content>
-  </entry>
-  
-  <entry>
-    <title>Dry up Your Rspec Files with subject & let Blocks</title>
-    <link href="http://benscheirman.com/2011/05/dry-up-your-rspec-files-with-subject-let-blocks/"/>
-    <updated>2011-05-14T00:00:00-05:00</updated>
-    <id>http://benscheirman.com/2011/05/dry-up-your-rspec-files-with-subject-let-blocks</id>
-    <content type="html">&lt;p&gt;Rspec is pretty awesome, however due to its flexibility, often times I find that people write specs in ways that either a) aren't structured very well, or b) use the wrong terminology to group up common contexts &amp;amp; behaviors.&lt;/p&gt;
-
-
-
-
-&lt;p&gt;&lt;strong&gt;Update:  Be sure to read David Chelimsky's suggestions in the comments.&lt;/strong&gt;&lt;/p&gt;
-
-
-
-
-&lt;p&gt;A friend of mine who is fairly new to Rspec, and asked me to provide some feedback on some tests that he wrote.&lt;br /&gt;&lt;/p&gt;
-
-
-&lt;p&gt;Here is the before:&lt;/p&gt;
-
-
-
-
-&lt;script src=&quot;https://gist.github.com/972835.js?file=original_card_spec.rb&quot;&gt;&lt;/script&gt;
-
-
-
-
-&lt;p&gt;The only real problems here are:&lt;/p&gt;
-
-
-&lt;ul&gt;
-  &lt;li&gt;Lots of duplicated setup code. If the initialization aspect of the Card design ever called for something other than a string, we'd have a lot of test code to fix.&lt;/li&gt;
-
-  &lt;li&gt;Lots of &quot;extra&quot; code to test a simple value. If it smells like duplication to type &quot;it 'has a value of 13'&quot; and then type the same thing, only in ruby code, then you're right.&lt;/li&gt;
-&lt;/ul&gt;
-
-
-&lt;p&gt;The rspec constructs I recommend to deal with this are `subject,` `let, and` `its` blocks.&lt;/p&gt;
-
-
-&lt;ul&gt;
-  &lt;li&gt;&lt;b&gt;&lt;span style=&quot;font-weight: normal;&quot;&gt;&lt;b&gt;Subject&lt;/b&gt; blocks allow you to control the initialization of the subject under test. If you don't have any custom initialization required, then you're given a default `subject` method already. All it does is call `new` on the class you're testing.&lt;/span&gt;&lt;/b&gt;&lt;/li&gt;
-
-  &lt;li&gt;&lt;span style=&quot;font-weight: normal;&quot;&gt;&lt;b&gt;Let&lt;/b&gt; blocks allow you to provide some input to the subject block that change in various contexts. This way you can simply provide an alternative `let` block for a given value and not have to duplicate the setup code for the subject over again. Let blocks also work inside of `before :each` blocks if you need them.&lt;/span&gt;&lt;br /&gt;&lt;/li&gt;
-
-  &lt;li&gt;&lt;span style=&quot;font-weight: normal;&quot;&gt;&lt;b&gt;Its&lt;/b&gt; blocks allow you to test methods on the subject that return a simple value. The benefit of using this over the more wordy version above is that it can actually format the test output for you.&lt;/span&gt;&lt;br /&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-
-&lt;p&gt;Here is the same example above, using the above techniques to clean things up a bit.&lt;/p&gt;
-
-
-
-
-&lt;script src=&quot;https://gist.github.com/972835.js?file=better_card_spec.rb&quot;&gt;&lt;/script&gt;
-
-
-
-
-&lt;p&gt;And here is the output of the above spec:&lt;/p&gt;
-
-
-
-
-&lt;div&gt;&lt;figure role=code&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;table cellpadding=&quot;0&quot; cellspacing=&quot;0&quot;&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre class=&quot;line-numbers&quot;&gt;&lt;span class='line'&gt;1&lt;/span&gt;
-&lt;span class='line'&gt;2&lt;/span&gt;
-&lt;span class='line'&gt;3&lt;/span&gt;
-&lt;span class='line'&gt;4&lt;/span&gt;
-&lt;span class='line'&gt;5&lt;/span&gt;
-&lt;span class='line'&gt;6&lt;/span&gt;
-&lt;span class='line'&gt;7&lt;/span&gt;
-&lt;span class='line'&gt;8&lt;/span&gt;
-&lt;span class='line'&gt;9&lt;/span&gt;
-&lt;span class='line'&gt;10&lt;/span&gt;
-&lt;span class='line'&gt;11&lt;/span&gt;
-&lt;span class='line'&gt;12&lt;/span&gt;
-&lt;span class='line'&gt;13&lt;/span&gt;
-&lt;span class='line'&gt;14&lt;/span&gt;
-&lt;span class='line'&gt;15&lt;/span&gt;
-&lt;span class='line'&gt;16&lt;/span&gt;
-&lt;span class='line'&gt;17&lt;/span&gt;
-&lt;/pre&gt;&lt;/td&gt;&lt;td class='code' width='100%'&gt;&lt;pre&gt;&lt;code class=''&gt;&lt;div class='line'&gt;Card
-&lt;/div&gt;&lt;div class='line'&gt;  #value
-&lt;/div&gt;&lt;div class='line'&gt;    Two of Hearts
-&lt;/div&gt;&lt;div class='line'&gt;      value
-&lt;/div&gt;&lt;div class='line'&gt;        should == 2
-&lt;/div&gt;&lt;div class='line'&gt;    Face Cards
-&lt;/div&gt;&lt;div class='line'&gt;      King of Clubs
-&lt;/div&gt;&lt;div class='line'&gt;        value
-&lt;/div&gt;&lt;div class='line'&gt;          should == 13
-&lt;/div&gt;&lt;div class='line'&gt;      Queen of Clubs
-&lt;/div&gt;&lt;div class='line'&gt;        value
-&lt;/div&gt;&lt;div class='line'&gt;          should == 12
-&lt;/div&gt;&lt;div class='line'&gt;      Jack of Hearts
-&lt;/div&gt;&lt;div class='line'&gt;        value
-&lt;/div&gt;&lt;div class='line'&gt;          should == 11
-&lt;/div&gt;&lt;div class='line'&gt;    Bad Value
-&lt;/div&gt;&lt;div class='line'&gt;      should raise StandardError&lt;/div&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;&lt;/figure&gt;&lt;/div&gt;
-
-
-
-
-&lt;p&gt;I think that's a big improvement.&lt;/p&gt;
-
-
-
-
-&lt;p&gt;&lt;em&gt;Note:  The code in this post is delivered via Github Gists, which unfortunately don't render in Google Reader.  Click through to see the code.&lt;/em&gt;&lt;/p&gt;
 
 </content>
   </entry>

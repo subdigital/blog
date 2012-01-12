@@ -109,6 +109,39 @@
     
   <header>
     
+      <h1 class="entry-title"><a href="/2008/07/net-dojo-free-hands-on-training-for-asp-net-mvc/">.NET Dojo - Free Hands on Training for ASP.NET MVC</a></h1>
+    
+    
+      <p class="meta">
+
+
+
+
+<time datetime="2008-07-23 00:00:00 -0500" pubdate  updated >Jul 23<span>rd</span>, 2008</time>
+
+
+</p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><a href="http://flux88.com/uploads/.NETDojoFreeHandsOnTrainingforASP.NETMVC_101DD/dojo.png"><img style="border-right: 0px; border-top: 0px; border-left: 0px; border-bottom: 0px" height="247" alt="dojo" src="http://flux88.com/uploads/.NETDojoFreeHandsOnTrainingforASP.NETMVC_101DD/dojo_thumb.png" width="571" border="0"></a>&nbsp;</p>
+
+
+<p> <p>I&#8217;m a little late on this notice (luckily <a href="http://blog.microsoft-j.net/2008/07/22/NETDojoASPNETMVC.aspx" target="_blank">J Sawyer already posted about it</a>) but I&#8217;m going to be hosting a .NET Dojo class at the Microsoft office in Houston.</p> <p>The class will be a free half day session where we will dig into ASP.NET MVC.&nbsp; I&#8217;ll cover the basic principles of the MVC pattern, why you might want to use it over WebForms, how to leverage Ajax and how to apply test driven design practices with the framework.</p> <h3><strong>You&#8217;ll need:</strong></h3> <ul> <li>a laptop</li> <li>Visual Studio 2008 (trial is okay)</li> <li><a href="http://www.codeplex.com/aspnet" target="_blank">ASP.NET MVC Preview 4</a></li> <li><a href="http://mvccontrib.org" target="_blank">MVCContrib</a></li> <li>A CD ROM Drive to load any lab materials</li> <li>an open mind&#8230;</li></ul> <h3><strong>When?</strong></h3> <p>August 28, 2008<br>1pm-5pm</p> <h3><strong>Where?</strong></h3> <p>Microsoft Office<br><a href="http://maps.google.com/maps?hl=en&amp;um=1&amp;ie=UTF-8&amp;q=2000+W+Sam+Houston+Pky+S+Houston,+TX+77042&amp;fb=1&amp;geocode=5943154917722953552,29.744069,-95.558439&amp;oi=manybox&amp;ct=14&amp;cd=1&amp;resnum=1" target="_blank">2000 W Sam Houston Pkwy</a></p> <h3><strong>How do I register?</strong></h3> <p><a title="http://msevents.microsoft.com/CUI/EventDetail.aspx?EventID=1032383675&amp;Culture=en-US" href="http://msevents.microsoft.com/CUI/EventDetail.aspx?EventID=1032383675&amp;Culture=en-US">http://msevents.microsoft.com/CUI/EventDetail.aspx?EventID=1032383675&amp;Culture=en-US</a></p> <p>Space is limited, so first come first served!</p></p>
+</div>
+  <footer>
+    <a rel="full-article" href="/2008/07/net-dojo-free-hands-on-training-for-asp-net-mvc/">Read on &rarr;</a>
+  </footer>
+
+
+  </article>
+
+
+  <article>
+    
+  <header>
+    
       <h1 class="entry-title"><a href="/2008/07/upgrading-code-camp-server-to-preview-4-part-2/">Upgrading Code Camp Server to Preview 4 - Part 2</a></h1>
     
     
@@ -772,70 +805,6 @@ on 1 of the database schema, so it could safely skip the script.&nbsp; This is d
 
   </article>
 
-
-  <article>
-    
-  <header>
-    
-      <h1 class="entry-title"><a href="/2008/05/using-asp-net-mvc-on-iis-6-without-the-mvc-extension/">Using ASP.NET MVC on IIS 6 Without the .MVC Extension</a></h1>
-    
-    
-      <p class="meta">
-
-
-
-
-<time datetime="2008-05-27 00:00:00 -0500" pubdate  updated >May 27<span>th</span>, 2008</time>
-
-
-</p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>One awesome features of ASP.NET MVC is the clean URLs.&nbsp; If you aren&#8217;t familiar with them, here is a sample:</p>
-
-
-<p> <blockquote> <p>/products/list</p> <p>(versus a typical /ProductList.aspx)</p></blockquote> <p>The default route for ASP.NET MVC looks like this:</p> <blockquote> <p>/{controller}/{action}</p></blockquote> <p>Using this route you can map most of the URLs that your application will need.&nbsp; There is a problem, however, when running ASP.NET MVC on IIS6 (and 5).&nbsp; The URL above doesn&#8217;t have an extension, so IIS will assume that it is a virtual directory on the server.&nbsp; We have a couple of options we can do to get around this:</p> <ul> <li>We could create wild card mappings and pass every request through ASP.NET, however this is not recommended for performance reasons<li>We can add an extension that maps to ASP.NET (.mvc)</li></ul> <p>In the latter option your routes must change to something like this:</p> <blockquote> <p>/{controller}.mvc/{action}</p></blockquote> <p>So URLs generated with this route will look like:</p> <blockquote> <p>/products.mvc/list</p></blockquote> <p>&#8230;which basically reverts our clean urls into, well&#8230; less clean ones.</p> <p>So if you want to deploy to Windows Server 2003 &amp; IIS 6, you&#8217;re out of luck.&nbsp; Well, mostly&#8230;</p> <h2>URL Rewriting to the Rescue</h2> <p>We can leverage an ISAPI filter to rewrite URLs which will allow us to have the nice URLs while still on IIS 6.&nbsp; There are 2 major products that do this for IIS:</p> <ul> <li><a href="http://www.isapirewrite.com/" target="_blank">ISAPI Rewrite</a> ($99)<li><a href="http://cheeso.members.winisp.net/IIRF.aspx" target="_blank">Ionic&#8217;s ISAPI Rewrite Filter</a> (Free)</li></ul> <p>ISAPI Rewrite is the more mature of the two, however it&#8217;s not free.&nbsp; They do provide a free version, but it doesn&#8217;t support regular expressions, so it&#8217;s pretty useless.</p> <p>Jeff Atwood has <a href="http://www.codinghorror.com/blog/archives/000797.html" target="_blank">a nice write-up of these two utilities</a>.&nbsp; In it he notes that the syntax for Ionic&#8217;s ISAPI Rewrite is a little stranger and doesn&#8217;t support the regex that we&#8217;re all used to (since it uses a C regex library, not a .NET one).</p> <p>I decided to choose Ionic&#8217;s because it was free, however there was a lack of information on how to structure URLs, and it required a lot of trial and error to get it working.&nbsp; Luckily they have an automatic logging facility that tells you how the rules are matching up.</p> <p>For ASP.NET MVC, I needed to cover these cases:</p> <ul> <li><strong>A request for / should be redirected to /home</strong><br><em>This isn&#8217;t really required, as .NET can do this for me, however I wanted to ensure that all entry points are at the same URL to avoid Page Rank issues.&nbsp; (See the same Atwood post for information on how important this is)</em><li><strong>A request for /something should be rewritten to /something.mvc<br></strong><em>That is, the user will request it without an extension, but the filter will rewrite it without the user&#8217;s address bar ever changing.</em><li><strong>A request for /something/index should be rewritten to /something.mvc/index<br></strong><em>Just making sure that URLs with actions get the extension only on the first part</em><li><strong>The content directory that contains our javascript, CSS, and images should be excluded from the above rule<br></strong><em>Otherwise we&#8217;d have /content.mvc/styles.css which would be interpreted as a controller, rather than a direct file request.</em></li></ul> <p>I found <a href="http://biasecurities.com/blog/2008/how-to-enable-pretty-urls-with-asp-net-mvc-and-iis6/" target="_blank">a good resource that outlined how to do this with ISAPI Rewrite</a>, however the rules were quite different with Ionic&#8217;s.</p> <p>Here are my rules for Ionic&#8217;s ISAPI Rewrite that works for ASP.NET MVC:</p></p>
-
-<div><figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
-</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>&lt;strong># empty URL gets mapped to home controller &lt;br>RewriteRule&nbsp; ^/$&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; /home [R] # map controller parts of urls to .mvc, ignoring the content directory&lt;br>RewriteRule&nbsp; ^(?!/Content)(/[A-Za-z0-9_-]+)(/.*)?$&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; $1.mvc$2&nbsp; [I]&lt;/strong></div></code></pre></td></tr></table></div></figure></div>
-
-
-<p>It turns out that I only need 2 rules to satisfy the above requirements.&nbsp; The first rule forces the browser to redirect, which will aid in making sure that I <a href="http://www.hanselman.com/blog/UsingISAPIRewriteToCanonicalizeASPNETURLsAndRemoveDefaultaspx.aspx" target="_blank">only have 1 entry point to my website</a>.</p>
-
-
-<p>The 2nd rule takes the first part of the ULR and adds .mvc to it, appending the remaining verbatim (if any).&nbsp; It also excludes anything beginning with &#8220;content,&#8221; so I&#8217;m free to put images, javascript, css, and other literal file resources there.</p>
-
-
-<p>The last requirement is to define my routes with <strong>both</strong> .mvc and regular formats.&nbsp; The trick is to define them in the right order.</p>
-
-
-<p>routes.MapRoute(&#8220;basic&#8221;, &#8220;{controller}/{action}&#8221;, new { &#8230; } );</p>
-
-
-<p>routes.MapRoute(&#8220;basic_mvc&#8221;, &#8220;{controller}.mvc/{action}&#8221;, new {&#8230;});</p>
-
-
-<p>Doing this ensures that our .MVC routes will actually function, but when we ask the framework for a URL (such as with Url.Action() or Html.ActionLink) we are handed the extension-less route (since it is defined first).</p>
-
-
-<h2>Route Testing is IMPORTANT</h2>
-
-
-<p>I&#8217;ve said it before and I&#8217;ll say it again.&nbsp; <strong>Route testing is important.&nbsp; </strong>A single tiny change can break an entire application.&nbsp; Applying automated tests is critical for any MVC application.&nbsp; Since deployment of an ASP.NET MVC application needs to be flexible, your application should function with either type of route (extensions or not) so that you have flexibility of deployment.</p>
-
-
-<p>Hard coding a route in 1 single location will prevent you from doing this.&nbsp; Did I mention route testing is important?</p>
-
-</div>
-  <footer>
-    <a rel="full-article" href="/2008/05/using-asp-net-mvc-on-iis-6-without-the-mvc-extension/">Read on &rarr;</a>
-  </footer>
-
-
-  </article>
-
 <nav role="pagination">
   <div>
     
@@ -870,6 +839,10 @@ on 1 of the database schema, so it could safely skip the script.&nbsp; This is d
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2012/01/careful-with-block-based-notification-handlers/">Careful With Block-Based Notification Handlers</a>
+      </li>
+    
+      <li class="post">
         <a href="/2011/12/formatting-json-from-terminal/">Formatting JSON From Terminal</a>
       </li>
     
@@ -883,10 +856,6 @@ on 1 of the database schema, so it could safely skip the script.&nbsp; This is d
     
       <li class="post">
         <a href="/2011/10/sharing-vim-configuration-between-machines/">Sharing Vim Configuration Between Machines</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2011/10/making-a-uibutton-flip-over/">Making a UIButton Flip Over</a>
       </li>
     
   </ul>
@@ -929,7 +898,7 @@ on 1 of the database schema, so it could safely skip the script.&nbsp; This is d
 <noscript><p><img alt="Clicky" width="1" height="1" src="//in.getclicky.com/66470389ns.gif" /></p></noscript>
 
 <p>
-  Copyright &copy; 2011 - Ben Scheirman -
+  Copyright &copy; 2012 - Ben Scheirman -
   <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
 </p>
 

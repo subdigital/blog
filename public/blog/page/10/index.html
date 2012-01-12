@@ -109,6 +109,372 @@
     
   <header>
     
+      <h1 class="entry-title"><a href="/2009/04/jquery-auto-complete-text-box-with-asp-net-mvc/">jQuery Auto-Complete Text Box With ASP.NET MVC</a></h1>
+    
+    
+      <p class="meta">
+
+
+
+
+<time datetime="2009-04-21 00:00:00 -0500" pubdate  updated >Apr 21<span>st</span>, 2009</time>
+
+
+</p>
+    
+  </header>
+
+
+  <div class="entry-content"><blockquote> <p><img alt="clip_image004" align="left" src="http://flux88.com/files/media/image/WindowsLiveWriter/ExcerptfromASP.NETMVCinActionChapter6_ED7F/clip_image004_e87da01d-98f6-479d-b891-3b4df10d5fa6.jpg"><em>This is an excerpt from Chapter 13 in my upcoming book, </em><a href="http://manning.com/palermo" target="_blank"><em>ASP.NET MVC in Action</em></a><em>.</em></p></blockquote>
+
+
+<p> <p style="clear: both">_________________________________________________ <p style="clear: both">These days it is not uncommon to have text boxes automatically suggest items based on what we type. The results are further filtered as we type to give us the option to simply select an available item with the mouse or keyboard. One of the first examples of this in the wild was Google Suggest.  <p><img src="/images/clip_image002_1f1897ba-a575-4c10-8a33-bc2cdf2cb3bb.gif" alt="clip_image002"  height="415" />  <p><em><strong>Figure 13.1 Google Suggest filters options as you type </strong></em> <p>A rudimentary implementation of this would simply monitor key-presses and fire off ajax requests for each one. Of course this means that fast typist would trigger many requests, most of which would be immediately discarded for the next request coming in 5 milliseconds. A good implementation will take into account a typing delay and also provide keyboard/mouse support for selecting the items.  <p>Luckily jQuery has an extensive list of plugins available. One such plugin is Dylan Verheul’s autocomplete.  <blockquote> <p><strong>Dylan Verheul’s autocomplete</strong>  <p>You can download the autocomplete plugin at <a href="http://www.dyve.net/jquery/?autocomplete">http://www.dyve.net/jquery/</a> along with a few others including googlemaps and listify. </p></blockquote> <p>The basic idea is you have a simple text box on your page. The jQuery plugin adds the necessary behavior to handle key press events and fire the appropriate Ajax requests off to a URL that will handle the request. The URL needs point to a controller action, and by convention the response is formatted in a special way so the plugin could handle the response.  <p>Assume for our purposes that we wanted to filter US Cities in the text box. The first step is to add a controller, action, and view for displaying the UI for this example. Ensure that jquery (in this case jquery-1.2.6.js) and jquery.autcomplete.js are referenced at the top of the view (or master page).</p>
+
+<div><figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+<span class='line'>2</span>
+</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>&lt;script type=&lt;span class="str">"text/javascript"&lt;/span> src=&lt;span class="str">"../../scripts/jquery-1.2.6.js"&lt;/span>&gt;&lt;/script&gt;
+</div><div class='line'>&lt;script type=&lt;span class="str">"text/javascript"&lt;/span> src=&lt;span class="str">"../../scripts/jquery.autocomplete.js"&lt;/span>&gt;&lt;/script&gt;</div></code></pre></td></tr></table></div></figure></div>
+
+
+
+
+<p>Next, add the text box. In this example we will call it city. 
+<div><figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>&lt;%= Html.TextBox(&lt;span class="str">"city"&lt;/span>) %&gt;</div></code></pre></td></tr></table></div></figure></div>
+
+<style type="text/css">.csharpcode, .csharpcode pre
+{
+font-size: small;
+color: black;
+font-family: consolas, &#8220;Courier New&#8221;, courier, monospace;
+background-color: #ffffff;
+/*white-space: pre;*/
+}
+.csharpcode pre { margin: 0em; }
+.csharpcode .rem { color: #008000; }
+.csharpcode .kwrd { color: #0000ff; }
+.csharpcode .str { color: #006080; }
+.csharpcode .op { color: #0000c0; }
+.csharpcode .preproc { color: #cc6633; }
+.csharpcode .asp { background-color: #ffff00; }
+.csharpcode .html { color: #800000; }
+.csharpcode .attr { color: #ff0000; }
+.csharpcode .alt
+{
+background-color: #f4f4f4;
+width: 100%;
+margin: 0em;
+}
+.csharpcode .lnum { color: #606060; }
+</style>
+<p>Package this up with a simple controller (Listing 13.1).
+<p><strong>Listing 13.1 – a controller &amp; action for displaying our test page</strong> 
+<div><figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+<span class='line'>2</span>
+<span class='line'>3</span>
+<span class='line'>4</span>
+<span class='line'>5</span>
+<span class='line'>6</span>
+<span class='line'>7</span>
+</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>&lt;span class="kwrd">public&lt;/span> &lt;span class="kwrd">class&lt;/span> HomeController : Controller
+</div><div class='line'>{
+</div><div class='line'>&lt;span class="kwrd">public&lt;/span> ActionResult Index()
+</div><div class='line'>{
+</div><div class='line'>&lt;span class="kwrd">return&lt;/span> View();
+</div><div class='line'>}
+</div><div class='line'>}</div></code></pre></td></tr></table></div></figure></div>
+
+<style type="text/css">.csharpcode, .csharpcode pre
+{
+font-size: small;
+color: black;
+font-family: consolas, &#8220;Courier New&#8221;, courier, monospace;
+background-color: #ffffff;
+/*white-space: pre;*/
+}
+.csharpcode pre { margin: 0em; }
+.csharpcode .rem { color: #008000; }
+.csharpcode .kwrd { color: #0000ff; }
+.csharpcode .str { color: #006080; }
+.csharpcode .op { color: #0000c0; }
+.csharpcode .preproc { color: #cc6633; }
+.csharpcode .asp { background-color: #ffff00; }
+.csharpcode .html { color: #800000; }
+.csharpcode .attr { color: #ff0000; }
+.csharpcode .alt
+{
+background-color: #f4f4f4;
+width: 100%;
+margin: 0em;
+}
+.csharpcode .lnum { color: #606060; }
+</style>
+<p><img src="/images/clip_image004_0cfb60e7-12e0-4a33-932e-c034304bfcc7.jpg" alt="clip_image004"  height="244" />
+<p><strong><em>Figure 13.2 – Our simple view with a text box.</em></strong>
+<p>Now we add a little Javascript to add the autocomplete behavior. 
+<div><figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+<span class='line'>2</span>
+<span class='line'>3</span>
+<span class='line'>4</span>
+<span class='line'>5</span>
+</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>&lt;script type=&lt;span class="str">"text/javascript"&lt;/span>&gt;
+</div><div class='line'>$(document).ready(&lt;span class="kwrd">function&lt;/span>() {
+</div><div class='line'>$(&lt;span class="str">"input#city"&lt;/span>).autocomplete(&lt;span class="str">'&lt;%= Url.Action("Find", "City") %&gt;'&lt;/span>);
+</div><div class='line'>});
+</div><div class='line'>&lt;/script&gt;</div></code></pre></td></tr></table></div></figure></div>
+
+<style type="text/css">.csharpcode, .csharpcode pre
+{
+font-size: small;
+color: black;
+font-family: consolas, &#8220;Courier New&#8221;, courier, monospace;
+background-color: #ffffff;
+/*white-space: pre;*/
+}
+.csharpcode pre { margin: 0em; }
+.csharpcode .rem { color: #008000; }
+.csharpcode .kwrd { color: #0000ff; }
+.csharpcode .str { color: #006080; }
+.csharpcode .op { color: #0000c0; }
+.csharpcode .preproc { color: #cc6633; }
+.csharpcode .asp { background-color: #ffff00; }
+.csharpcode .html { color: #800000; }
+.csharpcode .attr { color: #ff0000; }
+.csharpcode .alt
+{
+background-color: #f4f4f4;
+width: 100%;
+margin: 0em;
+}
+.csharpcode .lnum { color: #606060; }
+</style>
+<p>
+<p>Place this in the &lt;head&gt; of the page. You can see that the URL for the autocomplete behavior is specified as Url.Action(&#8220;Find&#8221;, &#8220;City&#8221;). This will point to a Find() action on the CityController. We&#8217;ll need to write this controller &amp; action next.
+<blockquote>
+<p><strong>Local Data Mode</strong>
+<p>The autocomplete plugin can also filter local data structures. This is useful when you have a limited set of data and you want to minimize requests sent to the server. The autcomplete plugin in local mode is also much faster, since there is no Ajax request happening behind the scenes. The only downside is that you must render the entire array onto the view. </p></blockquote>
+<p><strong>Listing 13.3 – An action to find cities from an autocomplete ajax request</strong> 
+<div><figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+<span class='line'>2</span>
+<span class='line'>3</span>
+<span class='line'>4</span>
+<span class='line'>5</span>
+<span class='line'>6</span>
+<span class='line'>7</span>
+<span class='line'>8</span>
+<span class='line'>9</span>
+<span class='line'>10</span>
+<span class='line'>11</span>
+<span class='line'>12</span>
+<span class='line'>13</span>
+<span class='line'>14</span>
+<span class='line'>15</span>
+<span class='line'>16</span>
+<span class='line'>17</span>
+<span class='line'>18</span>
+<span class='line'>19</span>
+<span class='line'>20</span>
+<span class='line'>21</span>
+<span class='line'>22</span>
+<span class='line'>23</span>
+</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>&lt;span class="kwrd">public&lt;/span> &lt;span class="kwrd">class&lt;/span> CityController : Controller
+</div><div class='line'>{
+</div><div class='line'>&lt;span class="kwrd">private&lt;/span> &lt;span class="kwrd">readonly&lt;/span> ICityRepository _repository;
+</div><div class='line'>&lt;span class="kwrd">public&lt;/span> CityController()
+</div><div class='line'>{
+</div><div class='line'>&lt;span class="rem">//load up a CSV file with the city data&lt;/span>
+</div><div class='line'>&lt;span class="kwrd">string&lt;/span> csvPath = Server.MapPath(&lt;span class="str">"~/App_Data/cities.csv"&lt;/span>);
+</div><div class='line'>&lt;span class="rem">//the repository reads the csv file&lt;/span>
+</div><div class='line'>_repository = &lt;span class="kwrd">new&lt;/span> CityRepository(csvPath); #2
+</div><div class='line'>}
+</div><div class='line'>&lt;span class="rem">//this constructor allows our tests to pass in a fake/mock instance&lt;/span>
+</div><div class='line'>&lt;span class="kwrd">public&lt;/span> CityController(ICityRepository repository) #3
+</div><div class='line'>{
+</div><div class='line'>_repository = repository;
+</div><div class='line'>}
+</div><div class='line'>&lt;span class="rem">//the autocomplete request sends a parameter 'q' that contains the filter&lt;/span>
+</div><div class='line'>&lt;span class="kwrd">public&lt;/span> ActionResult Find(&lt;span class="kwrd">string&lt;/span> q) #4
+</div><div class='line'>{
+</div><div class='line'>&lt;span class="kwrd">string&lt;/span>[] cities = _repository.FindCities(q);
+</div><div class='line'>&lt;span class="rem">//return raw text, one result on each line&lt;/span>
+</div><div class='line'>&lt;span class="kwrd">return&lt;/span> Content(&lt;span class="kwrd">string&lt;/span>.Join(&lt;span class="str">"\n"&lt;/span>, cities));
+</div><div class='line'>}
+</div><div class='line'>}</div></code></pre></td></tr></table></div></figure></div>
+
+<p>The details of the CityRepository can be found in the code samples provided with the book. For now, we will focus on the new Find(string q) action. Since this is a standard action, you can actually just navigate to it in your browser and test it out. Figure 13.3 shows a quick test.
+<p><img src="/images/clip_image006_1a0c89de-76d8-4270-8354-81e3d31bde72.jpg" alt="clip_image006"  height="330" />
+<p><strong><em>Listing 13.3 – A simple HTTP GET for the action with a filter of &#8220;hou&#8221; yields the expected results.</em></strong>
+<p>Now that we are sure that the action is returning the correct results, we can test the textbox. The Javascript we added earlier hooks up to the keypress events on the textbox and should issue queries to the server. Figure 13.4 shows this in action.
+<p><img src="/images/clip_image008_d9311a77-e166-4950-84eb-e689316fa5df.jpg" alt="clip_image008"  height="489" />
+<p><strong><em>Figure 13.4 – The results are display in a &lt;ul&gt; tag. We can apply CSS to make it look nicer. </em></strong>
+<p>The drop down selections are unformatted by default, which makes them a little ugly. A little CSS magic will make it look much nicer. Listing 13.4 shows some sample CSS for this.
+<p><strong>Listing 13.4 – CSS used to style the autocomplete results </strong>
+<div><figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+<span class='line'>2</span>
+<span class='line'>3</span>
+<span class='line'>4</span>
+<span class='line'>5</span>
+<span class='line'>6</span>
+<span class='line'>7</span>
+<span class='line'>8</span>
+<span class='line'>9</span>
+<span class='line'>10</span>
+<span class='line'>11</span>
+<span class='line'>12</span>
+<span class='line'>13</span>
+<span class='line'>14</span>
+<span class='line'>15</span>
+<span class='line'>16</span>
+<span class='line'>17</span>
+<span class='line'>18</span>
+</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>&lt;span class="kwrd">&lt;&lt;/span>&lt;span class="html">style&lt;/span> &lt;span class="attr">type&lt;/span>&lt;span class="kwrd">="text/css"&lt;/span>&lt;span class="kwrd">&gt;&lt;/span>
+</div><div class='line'>div.ac_results ul {
+</div><div class='line'>margin:0;
+</div><div class='line'>padding:0;
+</div><div class='line'>list-style-type:none;
+</div><div class='line'>border: solid 1px #ccc;
+</div><div class='line'>}
+</div><div class='line'>div.ac_results ul li {
+</div><div class='line'>font-family: Arial, Verdana, Sans-Serif;
+</div><div class='line'>font-size: 12px;
+</div><div class='line'>margin: 1px;
+</div><div class='line'>padding: 3px;
+</div><div class='line'>cursor: pointer;
+</div><div class='line'>}
+</div><div class='line'>div.ac_results ul li.ac_over {
+</div><div class='line'>background-color: #acf;
+</div><div class='line'>}
+</div><div class='line'>&lt;span class="kwrd">&lt;/&lt;/span>&lt;span class="html">style&lt;/span>&lt;span class="kwrd">&gt;&lt;/span></div></code></pre></td></tr></table></div></figure></div>
+
+<style type="text/css">.csharpcode, .csharpcode pre
+{
+font-size: small;
+color: black;
+font-family: consolas, &#8220;Courier New&#8221;, courier, monospace;
+background-color: #ffffff;
+/*white-space: pre;*/
+}
+.csharpcode pre { margin: 0em; }
+.csharpcode .rem { color: #008000; }
+.csharpcode .kwrd { color: #0000ff; }
+.csharpcode .str { color: #006080; }
+.csharpcode .op { color: #0000c0; }
+.csharpcode .preproc { color: #cc6633; }
+.csharpcode .asp { background-color: #ffff00; }
+.csharpcode .html { color: #800000; }
+.csharpcode .attr { color: #ff0000; }
+.csharpcode .alt
+{
+background-color: #f4f4f4;
+width: 100%;
+margin: 0em;
+}
+.csharpcode .lnum { color: #606060; }
+</style>
+<p><img src="/images/clip_image010_cdcec9f1-d7ec-460f-8c72-94b3bb9ec65b.jpg" alt="clip_image010"  height="489" />
+<p><strong><em>Figure 13.5 – The styled dropdown results look much nicer. The selected item is highlighted, and can be chosen with the keyboard or the mouse. </em></strong>
+<p>The auto-complete plug-in has many options for you to configure to your needs. For the simple case that we&#8217;ve shown here, it&#8217;s as simple as this: 
+<div><figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>$(your_textbox).autocomplete(&lt;span class="str">'your/url/here'&lt;/span>);</div></code></pre></td></tr></table></div></figure></div>
+
+<style type="text/css">.csharpcode, .csharpcode pre
+{
+font-size: small;
+color: black;
+font-family: consolas, &#8220;Courier New&#8221;, courier, monospace;
+background-color: #ffffff;
+/*white-space: pre;*/
+}
+.csharpcode pre { margin: 0em; }
+.csharpcode .rem { color: #008000; }
+.csharpcode .kwrd { color: #0000ff; }
+.csharpcode .str { color: #006080; }
+.csharpcode .op { color: #0000c0; }
+.csharpcode .preproc { color: #cc6633; }
+.csharpcode .asp { background-color: #ffff00; }
+.csharpcode .html { color: #800000; }
+.csharpcode .attr { color: #ff0000; }
+.csharpcode .alt
+{
+background-color: #f4f4f4;
+width: 100%;
+margin: 0em;
+}
+.csharpcode .lnum { color: #606060; }
+</style>
+<p>Other options for the plugin are listed below: </p>
+<table border="1" cellspacing="0" cellpadding="4" width="400">
+<tbody>
+<tr>
+<td valign="top" width="200">inputClass </td>
+<td valign="top" width="200">This class will be added to the input box. </td></tr>
+<tr>
+<td valign="top" width="200">resultsClass </td>
+<td valign="top" width="200">default value: &#8220;ac_results&#8221; </td></tr>
+<tr>
+<td valign="top" width="200">loadingClass </td>
+<td valign="top" width="200">The class to apply to the input box while results are being fetched from the server. Default is “ac_loading.” </td></tr>
+<tr>
+<td valign="top" width="200">lineSeparator </td>
+<td valign="top" width="200">Default is \n </td></tr>
+<tr>
+<td valign="top" width="200">minChars </td>
+<td valign="top" width="200">The minimum # of characters before sending a request to the server. Default is 1. </td></tr>
+<tr>
+<td valign="top" width="200">delay </td>
+<td valign="top" width="200">The delay after typing when the request will be sent. Default is 400ms. </td></tr></tbody></table>
+<p>&nbsp; <p>There are many more options, but these are some common ones. To set these options, you include them in a dictionary as the second argument to the autocomplete method like this: 
+<div><figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+<span class='line'>2</span>
+<span class='line'>3</span>
+<span class='line'>4</span>
+</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>$(&lt;span class="str">"input#city"&lt;/span>).autocomplete(&lt;span class="str">'&lt;%= Url.Action("Find", "City") %&gt;'&lt;/span>, {
+</div><div class='line'>minChars : 3,
+</div><div class='line'>delay : 300
+</div><div class='line'>});</div></code></pre></td></tr></table></div></figure></div>
+
+<style type="text/css">.csharpcode, .csharpcode pre
+{
+font-size: small;
+color: black;
+font-family: consolas, &#8220;Courier New&#8221;, courier, monospace;
+background-color: #ffffff;
+/*white-space: pre;*/
+}
+.csharpcode pre { margin: 0em; }
+.csharpcode .rem { color: #008000; }
+.csharpcode .kwrd { color: #0000ff; }
+.csharpcode .str { color: #006080; }
+.csharpcode .op { color: #0000c0; }
+.csharpcode .preproc { color: #cc6633; }
+.csharpcode .asp { background-color: #ffff00; }
+.csharpcode .html { color: #800000; }
+.csharpcode .attr { color: #ff0000; }
+.csharpcode .alt
+{
+background-color: #f4f4f4;
+width: 100%;
+margin: 0em;
+}
+.csharpcode .lnum { color: #606060; }
+</style>
+<p>This type of functionality is immensely useful for selecting from large lists. It keeps your initial page size down by not loading all of these items at once and is very user-friendly.
+<p>________________________________________
+<p><img alt="clip_image004" align="left" src="http://flux88.com/files/media/image/WindowsLiveWriter/ExcerptfromASP.NETMVCinActionChapter6_ED7F/clip_image004_e87da01d-98f6-479d-b891-3b4df10d5fa6.jpg"><em>This is an excerpt from Chapter 13 in my upcoming book, </em><a href="http://manning.com/palermo" target="_blank"><em>ASP.NET MVC in Action</em></a><em>.</em></p>
+
+</div>
+  <footer>
+    <a rel="full-article" href="/2009/04/jquery-auto-complete-text-box-with-asp-net-mvc/">Read on &rarr;</a>
+  </footer>
+
+
+  </article>
+
+
+  <article>
+    
+  <header>
+    
       <h1 class="entry-title"><a href="/2009/04/exporting-visual-studio-solutions-with-solutionfactory/">Exporting Visual Studio Solutions With SolutionFactory</a></h1>
     
     
@@ -865,75 +1231,6 @@ margin: 0em;
 
   </article>
 
-
-  <article>
-    
-  <header>
-    
-      <h1 class="entry-title"><a href="/2009/02/announcing-houston-alt-net-open-spaces-conference/">Announcing Houston ALT.NET Open Spaces Conference</a></h1>
-    
-    
-      <p class="meta">
-
-
-
-
-<time datetime="2009-02-01 00:00:00 -0600" pubdate  updated >Feb 1<span>st</span>, 2009</time>
-
-
-</p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><br />
-<img src="/images/zen-garden.jpg"  style="float:left; margin-right:10px; margin-bottom:10px;"  /> I&#8217;m proud to announce that I&#8217;m organizing a Houston ALT.NET Open Spaces conference April 3rd - 5th, 2009. The open space will be facilitated by <a href="http://www.stevenlist.com/">Doc List</a>.</p>
-
-
-<p>You can take a look at the <a href="http://houston.altnetconf.com/home">conference website</a>&nbsp;&nbsp;to see more details, and I&#8217;ll open registration soon. I&#8217;m not entirely sure about the cap on attendance yet, but I&#8217;m probably going to limit it to 70-80 to keep costs down.</p>
-
-
-<p>The event will be held at the Microsoft offices in west Houston, and will be in the style of past ALT.NET conferences:</p>
-
-
-<ul>
-<li>Friday night gathering to suggest topics &amp; come up with a preliminary schedule</li>
-<li>Saturday breakfast, opening statements, breakout sessions, lunch</li>
-<li>Sunday morning breakfast, break out sessions, closing of the space</li>
-</ul>
-
-
-<p>When I start finalizing the schedule, you&#8217;ll see it on the website.</p>
-
-
-<p><strong>What can you do?</strong><br /></p>
-
-
-<p>Boy, I&#8217;m glad you asked! We need sponsors. If you or your company can sponsor (even a small amount) it would make things go a lot smoother. I&#8217;m trying my best to make this conference free for attendees, but I may have to charge a small fee for attendance.</p>
-
-
-<p>I&#8217;ll also need people with video cameras to come help document the event. We&#8217;ll need a few folks to do this, so that we can capture each session. I&#8217;ll also need someone to bring a <em>ginormous</em> hard drive to collect all of the videos.</p>
-
-
-<p><strong>What&#8217;s next?</strong></p>
-
-
-<p>I have to finalize the budget, get the registration setup for the site, gather sponsors, and do general planning. If you&#8217;re interested in helping out in the planning, our next ALT.NET Geek Dinner (week of Feb 9th) will be the perfect time. (or join the mailing list).</p>
-
-
-<p>I&#8217;m really excited to be putting this on. Past ALT.NET conferences have really challenged me to better my craft, and it&#8217;s time to give back &amp; spread the goodness to my local community. Leave a comment if you&#8217;re planning on attending!</p>
-
-
-<br />
-
-</div>
-  <footer>
-    <a rel="full-article" href="/2009/02/announcing-houston-alt-net-open-spaces-conference/">Read on &rarr;</a>
-  </footer>
-
-
-  </article>
-
 <nav role="pagination">
   <div>
     
@@ -968,6 +1265,10 @@ margin: 0em;
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2012/01/careful-with-block-based-notification-handlers/">Careful With Block-Based Notification Handlers</a>
+      </li>
+    
+      <li class="post">
         <a href="/2011/12/formatting-json-from-terminal/">Formatting JSON From Terminal</a>
       </li>
     
@@ -981,10 +1282,6 @@ margin: 0em;
     
       <li class="post">
         <a href="/2011/10/sharing-vim-configuration-between-machines/">Sharing Vim Configuration Between Machines</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2011/10/making-a-uibutton-flip-over/">Making a UIButton Flip Over</a>
       </li>
     
   </ul>
@@ -1027,7 +1324,7 @@ margin: 0em;
 <noscript><p><img alt="Clicky" width="1" height="1" src="//in.getclicky.com/66470389ns.gif" /></p></noscript>
 
 <p>
-  Copyright &copy; 2011 - Ben Scheirman -
+  Copyright &copy; 2012 - Ben Scheirman -
   <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
 </p>
 

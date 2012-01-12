@@ -109,6 +109,111 @@
     
   <header>
     
+      <h1 class="entry-title"><a href="/2010/11/setting-up-a-new-linode-box-creating-user-accounts/">Setting Up a New Linode Box - Creating User Accounts</a></h1>
+    
+    
+      <p class="meta">
+
+
+
+
+<time datetime="2010-11-30 00:00:00 -0600" pubdate  updated >Nov 30<span>th</span>, 2010</time>
+
+
+</p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I&#8217;m setting up a new <a href="http://linode.com">Linode</a> box for a client. (Speaking of Linode, it&#8217;s freaking awesome and you should sign up. If you do, use this <a href="http://www.linode.com/?r=5054fa2264e88490f408a80da62eea5d5d99ee6a">link to give me some bonus credit</a>).</p>
+
+
+<p>For the Linux distro I chose Ubuntu 10.4 (32-bit). This is just the one I know the best.</p>
+
+
+<p>One of the first things I like to do is set up a personal user account so that I don&#8217;t use the root. This is so less-than-intuitive I have to look it up every time.</p>
+
+
+<p>Here are my notes so that I don&#8217;t forget.</p>
+
+
+<blockquote>
+<p><span style="font-family: Arial; font-size: medium;">As root, run the useradd command:</span></p>
+<div style="font-family: Arial; font-size: medium;">
+<br />
+</div>
+<div style="font-family: Arial; font-size: medium;">
+<font face="'Andale Mono'"><b>sudo useradd -d /home/testuser -m -s /bin/bash testuser</b></font>
+</div>
+<div style="font-family: Arial; font-size: medium;">
+<br />
+</div>
+<div style="font-family: Arial; font-size: medium;">
+Reset their password:
+</div>
+<div style="font-family: Arial; font-size: medium;">
+<br />
+</div>
+<div style="font-family: Arial; font-size: medium;">
+<font face="'Andale Mono'"><b>sudo passwd testuser</b></font>
+</div>
+<div style="font-family: Arial; font-size: medium;">
+<br />
+</div>
+<div style="font-family: Arial; font-size: medium;">
+Then add them to the sudoers file:
+</div>
+<div style="font-family: Arial; font-size: medium;">
+<br />
+</div>
+<div style="font-family: Arial; font-size: medium;">
+<font face="'Andale Mono'"><b>visudo</b></font>
+</div>
+<div style="font-family: Arial; font-size: medium;">
+<br />
+</div>
+<div style="font-family: Arial; font-size: medium;">
+Create a user alias for the company accounts:
+</div>
+<div style="font-family: Arial; font-size: medium;">
+<br />
+</div>
+<div style="font-family: Arial; font-size: medium;">
+<font face="'Andale Mono'"><b>User_Alias CHAIONE = user1, user2</b></font>
+</div>
+<div style="font-family: Arial; font-size: medium;">
+<br />
+</div>
+<div style="font-family: Arial; font-size: medium;">
+Then add this line lower down:
+</div>
+<div style="font-family: Arial; font-size: medium;">
+<br />
+</div>
+<div style="font-family: Arial; font-size: medium;">
+<font face="'Andale Mono'"><b>CHAIONE ALL=ALL</b></font>
+</div>
+<div style="font-family: Arial; font-size: medium;">
+<br />
+</div>
+<div style="font-family: Arial; font-size: medium;">
+For future users, just add them to the CHAIONE alias
+</div>
+</blockquote>
+
+</div>
+  <footer>
+    <a rel="full-article" href="/2010/11/setting-up-a-new-linode-box-creating-user-accounts/">Read on &rarr;</a>
+  </footer>
+
+
+  </article>
+
+
+  <article>
+    
+  <header>
+    
       <h1 class="entry-title"><a href="/2010/11/incorporating-3rd-party-libraries-in-iphone-apps/">Incorporating 3rd Party Libraries in iPhone Apps</a></h1>
     
     
@@ -1036,67 +1141,6 @@ happened. It <a target="_blank" href="http://github.com/jnicklas/carrierwave/iss
 
   </article>
 
-
-  <article>
-    
-  <header>
-    
-      <h1 class="entry-title"><a href="/2010/06/sorry-safari-5/">Sorry Safari 5</a></h1>
-    
-    
-      <p class="meta">
-
-
-
-
-<time datetime="2010-06-16 00:00:00 -0500" pubdate  updated >Jun 16<span>th</span>, 2010</time>
-
-
-</p>
-    
-  </header>
-
-
-  <div class="entry-content"><div style="text-align:center"><img alt="Rusty Safari" src="https://flux88.s3.amazonaws.com/images/Safari_Icon_rusty.png" /></div>
-
-
-<p>I love browser innovation.  I like seeing new features and I&#8217;m always eager to switch to the faster, better, more comfortable browser.  After hearing good things on Twitter, I was actually ready to put all my eggs in the Safari basket.  That is, until I tried using it for a week.</p>
-
-
-<p>First, the good things.</p>
-
-
-<ul>
-<li>Fast. &nbsp;Comparable to Chrome speed.</li>
-<li>Nice address bar search (though not as good as Chrome)</li>
-<li><a href="http://flux88.com/blog/give-your-eyes-a-break-with-safari-5-reader/">Reader Mode +++</a></li>
-<li>Plugins (though admittedly it made Safari a little wonky)</li>
-</ul>
-
-
-<p>These things are very welcome additions.  However it just wasn&#8217;t enough.  I&#8217;ve permanently removed Safari from my Dock and set Firefox back as my default browser, and here&#8217;s why:</p>
-
-
-<ul>
-<li>No Shift-CMD-T to open a previously closed tab</li>
-<li>CMD-K doesn&#8217;t take you to the search box</li>
-<li>View Source doesn&#8217;t highlight the HTML. Seriously.</li>
-<li>XML &amp; JSON don&#8217;t even render.  You have to view source to see the content.</li>
-<li>CMD-Left &amp; Right doesn&#8217;t switch between tabs</li>
-<li>Tabs don&#8217;t open next to the opening page.  Instead they all stack on the end.</li>
-</ul>
-
-
-<p>After I started making a list of things that annoy me, I came to realize that my old friend Firefox is the least bothersome browser I use.  Sorry, Safari 5.  I gave you a week, but you just didn&#8217;t cut it.</p>
-
-</div>
-  <footer>
-    <a rel="full-article" href="/2010/06/sorry-safari-5/">Read on &rarr;</a>
-  </footer>
-
-
-  </article>
-
 <nav role="pagination">
   <div>
     
@@ -1131,6 +1175,10 @@ happened. It <a target="_blank" href="http://github.com/jnicklas/carrierwave/iss
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2012/01/careful-with-block-based-notification-handlers/">Careful With Block-Based Notification Handlers</a>
+      </li>
+    
+      <li class="post">
         <a href="/2011/12/formatting-json-from-terminal/">Formatting JSON From Terminal</a>
       </li>
     
@@ -1144,10 +1192,6 @@ happened. It <a target="_blank" href="http://github.com/jnicklas/carrierwave/iss
     
       <li class="post">
         <a href="/2011/10/sharing-vim-configuration-between-machines/">Sharing Vim Configuration Between Machines</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2011/10/making-a-uibutton-flip-over/">Making a UIButton Flip Over</a>
       </li>
     
   </ul>
@@ -1190,7 +1234,7 @@ happened. It <a target="_blank" href="http://github.com/jnicklas/carrierwave/iss
 <noscript><p><img alt="Clicky" width="1" height="1" src="//in.getclicky.com/66470389ns.gif" /></p></noscript>
 
 <p>
-  Copyright &copy; 2011 - Ben Scheirman -
+  Copyright &copy; 2012 - Ben Scheirman -
   <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
 </p>
 

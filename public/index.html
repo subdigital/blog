@@ -109,6 +109,212 @@
     
   <header>
     
+      <h1 class="entry-title"><a href="/2012/01/careful-with-block-based-notification-handlers/">Careful With Block-Based Notification Handlers</a></h1>
+    
+    
+      <p class="meta">
+
+
+
+
+<time datetime="2012-01-11 16:27:00 -0600" pubdate  updated >Jan 11<span>th</span>, 2012</time>
+
+
+</p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>In general, I prefer using block-based APIs over those that accept selectors.</p>
+
+<p>The block based APIs are generally easier to read &amp; follow, and don&#8217;t clutter up your class with methods that are
+out of context with the code that might potentially invoke them.</p>
+
+<h2>An Example</h2>
+
+<p>One good example is view animations.  Here we&#8217;re fading out a view and removing it from the hierarchy once
+the view has been completely faded out.  It&#8217;s concise, easy to read, and you don&#8217;t need to go anywhere else in the
+class to get a complete picture of how this works.</p>
+
+<p>Also, since you can have multiple animations going on, having a block-based completion handler means
+you don&#8217;t have to distinguish between what the animations were in some generic completion method.</p>
+
+<figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+<span class='line'>2</span>
+<span class='line'>3</span>
+<span class='line'>4</span>
+<span class='line'>5</span>
+</pre></td><td class='code' width='100%'><pre><code class='objc'><div class='line'><span class="p">[</span><span class="n">UIView</span> <span class="nl">animateWithDuration:</span><span class="mf">0.5</span> <span class="nl">animations:</span><span class="o">^</span><span class="p">{</span>
+</div><div class='line'>  <span class="n">someView</span><span class="p">.</span><span class="n">alpha</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</div><div class='line'><span class="p">}</span> <span class="nl">completion:</span><span class="o">^</span> <span class="p">(</span><span class="kt">BOOL</span> <span class="n">finished</span><span class="p">)</span> <span class="p">{</span>
+</div><div class='line'>  <span class="p">[</span><span class="n">someView</span> <span class="n">removeFromSuperView</span><span class="p">];</span>
+</div><div class='line'><span class="p">}];</span>
+</div></code></pre></td></tr></table></div></figure>
+
+<p>Contrast this with the non-block version:</p>
+
+<figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+<span class='line'>2</span>
+<span class='line'>3</span>
+<span class='line'>4</span>
+<span class='line'>5</span>
+<span class='line'>6</span>
+<span class='line'>7</span>
+<span class='line'>8</span>
+<span class='line'>9</span>
+<span class='line'>10</span>
+<span class='line'>11</span>
+<span class='line'>12</span>
+<span class='line'>13</span>
+<span class='line'>14</span>
+</pre></td><td class='code' width='100%'><pre><code class='objc'><div class='line'><span class="o">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">fadeOutView</span> <span class="p">{</span>
+</div><div class='line'>  <span class="p">[</span><span class="n">UIView</span> <span class="n">beginAnimations</span><span class="p">];</span>
+</div><div class='line'>  <span class="p">[</span><span class="n">UIView</span> <span class="nl">setAnimationDuration:</span><span class="mf">0.5</span><span class="p">];</span>
+</div><div class='line'>  <span class="p">[</span><span class="n">UIView</span> <span class="nl">setAnimationDelegate:</span><span class="n">self</span><span class="p">];</span>
+</div><div class='line'>  <span class="p">[</span><span class="n">UIView</span> <span class="nl">setAnimationDidStopSelector:</span><span class="k">@selector</span><span class="p">(</span><span class="nl">animationDidStop:finished:context:</span><span class="p">)];</span>
+</div><div class='line'>
+</div><div class='line'>  <span class="n">someView</span><span class="p">.</span><span class="n">alpha</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</div><div class='line'>
+</div><div class='line'>  <span class="p">[</span><span class="n">UIView</span> <span class="n">commitAnimations</span><span class="p">];</span>
+</div><div class='line'><span class="p">}</span>
+</div><div class='line'>
+</div><div class='line'><span class="o">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nl">animationDidStop:</span><span class="p">(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="n">animationID</span> <span class="nl">finished:</span><span class="p">(</span><span class="n">NSNumber</span> <span class="o">*</span><span class="p">)</span><span class="n">finished</span> <span class="nl">context:</span><span class="p">(</span><span class="kt">void</span> <span class="o">*</span><span class="p">)</span><span class="n">context</span> <span class="p">{</span>
+</div><div class='line'>  <span class="p">[</span><span class="n">someView</span> <span class="n">removeFromSuperView</span><span class="p">];</span>
+</div><div class='line'><span class="p">}</span>
+</div></code></pre></td></tr></table></div></figure>
+
+<h2>Block-Based Notification Handlers</h2>
+
+<p><code>NSNotificationCenter</code> also got some block love when iOS SDK 4.0 came around.  The old form looked like this:</p>
+
+<figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+<span class='line'>2</span>
+<span class='line'>3</span>
+<span class='line'>4</span>
+<span class='line'>5</span>
+<span class='line'>6</span>
+<span class='line'>7</span>
+<span class='line'>8</span>
+<span class='line'>9</span>
+<span class='line'>10</span>
+<span class='line'>11</span>
+<span class='line'>12</span>
+<span class='line'>13</span>
+<span class='line'>14</span>
+<span class='line'>15</span>
+<span class='line'>16</span>
+</pre></td><td class='code' width='100%'><pre><code class='objc'><div class='line'><span class="o">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">setupNotifications</span> <span class="p">{</span>
+</div><div class='line'>  <span class="p">[[</span><span class="n">NSNotificationCenter</span> <span class="n">defaultCenter</span><span class="p">]</span> <span class="nl">addObserver:</span><span class="n">self</span>
+</div><div class='line'>                                           <span class="nl">selector:</span><span class="k">@selector</span><span class="p">(</span><span class="nl">onWhizBang:</span><span class="p">)</span>
+</div><div class='line'>                                               <span class="nl">name:</span><span class="n">MyWhizBangnotification</span>
+</div><div class='line'>                                             <span class="nl">object:</span><span class="nb">nil</span><span class="p">];</span>
+</div><div class='line'><span class="p">}</span>
+</div><div class='line'>
+</div><div class='line'><span class="o">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nl">onWhizBang:</span><span class="p">(</span><span class="n">NSNotification</span> <span class="o">*</span><span class="p">)</span><span class="n">notification</span> <span class="p">{</span>
+</div><div class='line'>  <span class="c1">// reload the table to show the new whiz bangs</span>
+</div><div class='line'>  <span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">tableView</span> <span class="n">reloadData</span><span class="p">];</span>
+</div><div class='line'><span class="p">}</span>
+</div><div class='line'>
+</div><div class='line'><span class="o">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">dealloc</span> <span class="p">{</span>
+</div><div class='line'>  <span class="p">[[</span><span class="n">NSNotificationCenter</span> <span class="n">defaultCenter</span><span class="p">]</span> <span class="nl">removeObserver:</span><span class="n">self</span><span class="p">];</span>
+</div><div class='line'>  <span class="p">[</span><span class="n">super</span> <span class="n">dealloc</span><span class="p">];</span>
+</div><div class='line'><span class="p">}</span>
+</div></code></pre></td></tr></table></div></figure>
+
+<p>This isn&#8217;t a lot of code (and it is easy to remember, unlike the previous UIView animation block code), however
+the action and the notification handler are separated from each other.</p>
+
+<p>The block-based API looks like this:</p>
+
+<figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+<span class='line'>2</span>
+<span class='line'>3</span>
+<span class='line'>4</span>
+<span class='line'>5</span>
+<span class='line'>6</span>
+<span class='line'>7</span>
+<span class='line'>8</span>
+<span class='line'>9</span>
+<span class='line'>10</span>
+<span class='line'>11</span>
+<span class='line'>12</span>
+<span class='line'>13</span>
+<span class='line'>14</span>
+<span class='line'>15</span>
+</pre></td><td class='code' width='100%'><pre><code class='objc'><div class='line'><span class="o">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">setupNotifications</span> <span class="p">{</span>
+</div><div class='line'>  <span class="p">[[</span><span class="n">NSNotificationCenter</span> <span class="n">defaultCenter</span><span class="p">]</span>
+</div><div class='line'>      <span class="nl">addObserverForNotificationName:</span><span class="n">MyWhizBangNotification</span>
+</div><div class='line'>                              <span class="nl">object:</span><span class="nb">nil</span>
+</div><div class='line'>                               <span class="nl">queue:</span><span class="p">[</span><span class="n">NSOperationQueue</span> <span class="n">mainQueue</span><span class="p">]</span>
+</div><div class='line'>                               <span class="nl">block:</span><span class="o">^</span><span class="p">(</span><span class="n">NSNotification</span> <span class="o">*</span><span class="n">notification</span><span class="p">)</span> <span class="p">{</span>
+</div><div class='line'>                                 <span class="c1">//reload the table to show the new whiz bangs</span>
+</div><div class='line'>                                 <span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">tableView</span> <span class="n">reloadData</span><span class="p">];</span>
+</div><div class='line'>                               <span class="p">}];</span>
+</div><div class='line'><span class="p">}</span>
+</div><div class='line'>
+</div><div class='line'><span class="o">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">dealloc</span> <span class="p">{</span>
+</div><div class='line'>  <span class="p">[[</span><span class="n">NSNotificationCenter</span> <span class="n">defaultCenter</span><span class="p">]</span> <span class="nl">removeObserver:</span><span class="n">self</span><span class="p">];</span>
+</div><div class='line'>  <span class="p">[</span><span class="n">super</span> <span class="n">dealloc</span><span class="p">];</span>
+</div><div class='line'><span class="p">}</span>
+</div></code></pre></td></tr></table></div></figure>
+
+<p>Aside from some funky indentation, this is preferable in some cases, especially when the action to
+be completed is as simple as reloading the table.</p>
+
+<p>But there&#8217;s a bug.  Can you spot it?</p>
+
+<h2>Blocks Are Closures</h2>
+
+<p>There&#8217;s a subtle bug here that you might not notice at first.  I didn&#8217;t realize this until it was littered all
+over my code base.</p>
+
+<p>Blocks are <a href="http://simple.wikipedia.org/wiki/Closure_(computer_science)">closures</a>, and they will capture any values declared outside the scope of the block (and retained) so that
+they can be used when the block executes.  This includes variables declared in the enclosing method or any ivars
+that you reference from inside the block.</p>
+
+<p>Here, we used <code>self.tableView</code>.  <code>self</code> gets retained by the block, which is also retained by self.  We have a <em>retain-cycle</em>
+which is generally a bad thing.  It&#8217;s especially bad here, because we don&#8217;t clear out the block until <code>dealloc</code>,
+but <em>dealloc won&#8217;t ever be called because the block is retaining the instance</em>!</p>
+
+<h2>Weak Pointers Save the Day</h2>
+
+<p>If you&#8217;ve read up on blocks, you&#8217;ve probably seen the <code>__block</code> keyword.  This specifier tells blocks not to retain the pointer.
+So all we need is a new pointer, like so:</p>
+
+<figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+<span class='line'>2</span>
+<span class='line'>3</span>
+</pre></td><td class='code' width='100%'><pre><code class='objc'><div class='line'><span class="n">__block</span> <span class="n">MyViewController</span> <span class="o">*</span><span class="n">weakSelf</span> <span class="o">=</span> <span class="n">self</span><span class="p">;</span>
+</div><div class='line'>
+</div><div class='line'><span class="c1">// use weakSelf in the blocks, instead of self</span>
+</div></code></pre></td></tr></table></div></figure>
+
+<p>This sort of code drives me nuts.  It won&#8217;t be apparent to the next developer why it&#8217;s there, and it&#8217;s
+pretty ugly.</p>
+
+<h2>Retain Cycles are Elsewhere, Too</h2>
+
+<p>You might also run into this if you have a parent-child view controller relationship, or perhaps a
+an parent->object->delegate chain, where the parent <em>is</em> the delegate.  This is why you typically mark
+your delegate property signatures with <code>assign</code> instead of <code>retain</code> semantics.</p>
+
+<p>Not all retain-cycles are terrible though.  If you have a way of breaking the cycle, then you just need
+to weigh how long these objects will remain active for to decide if you need to fix it.</p>
+
+<p>Hopefully this will save you a few headaches down the line.</p>
+</div>
+  <footer>
+    <a rel="full-article" href="/2012/01/careful-with-block-based-notification-handlers/">Read on &rarr;</a>
+  </footer>
+
+
+  </article>
+
+
+  <article>
+    
+  <header>
+    
       <h1 class="entry-title"><a href="/2011/12/formatting-json-from-terminal/">Formatting JSON From Terminal</a></h1>
     
     
@@ -1017,218 +1223,6 @@ figuring this out.</p>
 
   </article>
 
-
-  <article>
-    
-  <header>
-    
-      <h1 class="entry-title"><a href="/2011/08/is-rails-exempt-from-software-principles/">Is Rails Exempt?</a></h1>
-    
-    
-      <p class="meta">
-
-
-
-
-<time datetime="2011-08-26 07:58:00 -0500" pubdate  updated >Aug 26<span>th</span>, 2011</time>
-
-
-</p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>If you&#8217;ve been following the Ruby community recently, you&#8217;d notice that
-there&#8217;s are people calling our Rails (and Rails developers) for treating
-Rails as if it is somehow <em>exempt</em> from long-standing software
-principles.</p>
-
-<p><a href="http://osherove.com/">Roy Osherove</a>, a fairly well-known .NET developer and author of The <a href="http://artofunittesting.com/">Art of Unit Testing</a>, ventured into Ruby-land
-recently and commented on twitter about how Rails&#8217;s
-definition of unit &amp; integration is quite different from his.</p>
-
-<p><img class='tweet ' src='/images/rails-unit-integration-tweet.png' width='' height='' alt='' title=''></p>
-
-<p>I have to agree with Roy. Those in the TDD camp in .NET understood the
-difference and were (from my experience) fairly cognizent of isolating
-concerns and not mixing the 2 concepts. Some even go as far as to
-isolate integration tests into their own assembly, providing a physical
-separation further guaranteeing that a unit test project won&#8217;t touch
-web services or the database.</p>
-
-<p>It&#8217;s easy to assume from the outside that the Rails is just testing
-nirvana and that <em>everyone</em> does it and it&#8217;s so easy.  Unfortunately it&#8217;s
-just not the truth.  Rails (and Ruby) make testing really easy but that
-means it&#8217;s even easier to do the wrong thing as well.</p>
-
-<h2>Legacy Rails Apps</h2>
-
-<p>Now that Rails is (gasp) over 7 years old you&#8217;re starting to see some
-real legacy Rails applications out in the wild.</p>
-
-<p><a href="http://twitter.com/avdi">Avdi Grimm</a> has a <a href="http://avdi.org/devblog/2011/08/22/your-code-is-my-hell/">good post</a> on the topic of how many of the Rails apps he comes to work on are in poor shape, technically.</p>
-
-<blockquote><p>Here are a few examples, just to give you an idea of what I’m talking about:</p>
-
-<p>“Design Patterns are a Java thing. In Ruby you just write code.”</p>
-
-<p>“The warnings Ruby produces are dumb; just disable them.”</p>
-
-<p>“Sure they aren’t technically Unit Tests, but isolating objects turned out to be kind of hard and besides nobody else is doing it.”</p>
-
-<p>“Stuff like the Law of Demeter isn’t really as important in Ruby code”</p>
-
-<p>“That’s only a problem in large projects” (implying that this project will never become large).</p></blockquote>
-
-<p>I&#8217;ve certainly been guilty of some of this. Rails makes it easy to do
-things that can turn out to be problematic. As with anything, you have
-to be disciplined to notice the warning signs and act accordingly.</p>
-
-<p>When testing is painful, you&#8217;re likely making mistakes. Some common
-pain-points that I&#8217;ve experienced are:</p>
-
-<ul>
-<li>No tests - the app is hard to test because the design is poor. Classes
-are too tightly coupled and don&#8217;t have clear delineation of
-responsibilities.</li>
-<li>Tests break for unrelated reasons - the tests are covering too much
-behavior, so when a single behavior changes, many tests break.</li>
-<li>Tests break when implementation changes - the tests are probably
-utilizing too much mocking &amp; stubbing. The tests are coupled heavily
-to a particular implementation.</li>
-<li>Unclear what the problem is when a test breaks - Tests are probably
-too coarse-grained and may contain too many assertions per test.</li>
-</ul>
-
-
-<p>These are just a sampling of what I&#8217;ve personally observed.</p>
-
-<p>So why do many Rails developers ignore these concepts?</p>
-
-<h2>Pragmatism at work</h2>
-
-<p>Many rails tutorials (and the default Rails template) treats model tests
-as <em>unit</em> tests. Since Rails models are by default based on Active
-Record, they have data access baked into their core.  Doing proper unit
-testing means you&#8217;re testing a logical unit.  If your test involves a
-model operation that requires a database round-trip, that&#8217;s technically
-an <em>integration</em> test.  But does it really matter?</p>
-
-<p>Most Rails developers will tell you no. Consider this spec:</p>
-
-<figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
-<span class='line'>2</span>
-<span class='line'>3</span>
-<span class='line'>4</span>
-<span class='line'>5</span>
-</pre></td><td class='code' width='100%'><pre><code class='ruby'><div class='line'><span class="n">describe</span> <span class="no">Post</span> <span class="k">do</span>
-</div><div class='line'>  <span class="n">it</span> <span class="s2">&quot;should be initially unpublished&quot;</span> <span class="k">do</span>
-</div><div class='line'>    <span class="no">Post</span><span class="o">.</span><span class="n">new</span><span class="o">.</span><span class="n">published</span><span class="o">.</span><span class="n">should</span> <span class="o">==</span> <span class="kp">false</span>
-</div><div class='line'>  <span class="k">end</span>
-</div><div class='line'><span class="k">end</span>
-</div></code></pre></td></tr></table></div></figure>
-
-<p>This is a unit test. It tests a single piece of functionality and will
-fail for just one reason.</p>
-
-<p>Now, here&#8217;s another example:</p>
-
-<figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
-<span class='line'>2</span>
-<span class='line'>3</span>
-</pre></td><td class='code' width='100%'><pre><code class='ruby'><div class='line'><span class="n">it</span> <span class="s2">&quot;should fetch published articles&quot;</span> <span class="k">do</span>
-</div><div class='line'>  <span class="c1"># ?</span>
-</div><div class='line'><span class="k">end</span>
-</div></code></pre></td></tr></table></div></figure>
-
-<figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
-<span class='line'>2</span>
-<span class='line'>3</span>
-<span class='line'>4</span>
-<span class='line'>5</span>
-<span class='line'>6</span>
-</pre></td><td class='code' width='100%'><pre><code class='ruby'><div class='line'><span class="c1"># post.rb</span>
-</div><div class='line'><span class="k">class</span> <span class="nc">Post</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span>
-</div><div class='line'>  <span class="k">def</span> <span class="nc">self</span><span class="o">.</span><span class="nf">published</span>
-</div><div class='line'>    <span class="n">where</span><span class="p">(</span><span class="s2">&quot;published_at &lt;= ?&quot;</span><span class="p">,</span> <span class="no">Time</span><span class="o">.</span><span class="n">now</span><span class="p">)</span>
-</div><div class='line'>  <span class="k">end</span>
-</div><div class='line'><span class="k">end</span>
-</div></code></pre></td></tr></table></div></figure>
-
-<p>How should you implement this spec?</p>
-
-<p>If you were trying to avoid hitting the database you might intercept the
-<code>where</code> call and assert the parameters passed to it. But surely this
-isn&#8217;t the only way you could implement this method giving the same
-behavior.  You might use <code>scopes</code> or another <code>where</code> call might actually
-be added later that doesn&#8217;t affect the outcome of this method in any way
-that this test is concerned about.</p>
-
-<figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
-<span class='line'>2</span>
-<span class='line'>3</span>
-<span class='line'>4</span>
-<span class='line'>5</span>
-<span class='line'>6</span>
-<span class='line'>7</span>
-</pre></td><td class='code' width='100%'><pre><code class='ruby'><div class='line'><span class="n">it</span> <span class="s2">&quot;should fetch published articles&quot;</span> <span class="k">do</span>
-</div><div class='line'>  <span class="mi">3</span><span class="o">.</span><span class="n">times</span> <span class="p">{</span> <span class="no">Factory</span><span class="o">.</span><span class="n">create</span> <span class="ss">:article</span> <span class="p">}</span>
-</div><div class='line'>  <span class="n">future_post</span> <span class="o">=</span> <span class="no">Factory</span><span class="o">.</span><span class="n">create</span> <span class="ss">:article</span><span class="p">,</span> <span class="ss">:published_at</span> <span class="o">=&gt;</span> <span class="mi">2</span><span class="o">.</span><span class="n">days</span><span class="o">.</span><span class="n">from_now</span>
-</div><div class='line'>  <span class="n">posts</span> <span class="o">=</span> <span class="no">Post</span><span class="o">.</span><span class="n">published</span>
-</div><div class='line'>  <span class="n">posts</span><span class="o">.</span><span class="n">size</span><span class="o">.</span><span class="n">should</span> <span class="o">==</span> <span class="mi">3</span>
-</div><div class='line'>  <span class="n">post</span><span class="o">.</span><span class="n">should_not</span> <span class="kp">include</span> <span class="n">future_post</span>
-</div><div class='line'><span class="k">end</span>
-</div></code></pre></td></tr></table></div></figure>
-
-<p>This test hits the database (numerous times, in fact) but it&#8217;s testing
-<em>exactly</em> the behavior we need.  We aren&#8217;t testing implementation, we&#8217;re
-testing that the behavior works as intended.  If we somehow muck with
-the query, breaking it, this test will fail.  If we change the
-implementation to use some other query means (scopes or whatever) this
-test will still pass.</p>
-
-<p>Is it so bad that the test hits the database?</p>
-
-<p>There are drawbacks of course:</p>
-
-<ul>
-<li>The test requires a database, thus you have to migrate</li>
-<li>The <code>database_cleaner</code> gem will have to be present to clean out the
-database before each run</li>
-<li>These database statements make the test suite a LOT slower, so large
-test suites will eventually suffer.</li>
-<li>The tests could fail if the database isn&#8217;t present (or migrated), or
-if the query is incorrect.  But this isn&#8217;t likely to happen since
-we&#8217;re using a tested framework (ActiveRecord).</li>
-</ul>
-
-
-<p>Ultimately this isn&#8217;t really a unit test at all.  It&#8217;s an integration
-test.  So is <code>spec/models/post_spec.rb</code> the wrong place for this stuff?</p>
-
-<p>The question eventually comes down to this: <em>What is more valuable?  A
-fast, isolated test suite?  Or a test suite that breaks for the right
-reasons?</em></p>
-
-<h2>Don&#8217;t throw out good practices just because it&#8217;s Ruby</h2>
-
-<p>I think it&#8217;s important to be cognizant of software paradigms and use
-them where they make sense. It&#8217;s also important to recognize when
-practices are being ignored because &#8220;celebrities&#8221; aren&#8217;t touting them.</p>
-
-<p>It is still valuable, however, to keep a fresh eye on old assumptions. Don&#8217;t
-always take things as gospel just because that&#8217;s the way they have
-always been. One
-of the things I love about the Ruby community is how willing people are
-to rock the boat &amp; try something new.</p>
-</div>
-  <footer>
-    <a rel="full-article" href="/2011/08/is-rails-exempt-from-software-principles/">Read on &rarr;</a>
-  </footer>
-
-
-  </article>
-
 <nav role="pagination">
   <div>
     
@@ -1261,6 +1255,10 @@ to rock the boat &amp; try something new.</p>
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2012/01/careful-with-block-based-notification-handlers/">Careful With Block-Based Notification Handlers</a>
+      </li>
+    
+      <li class="post">
         <a href="/2011/12/formatting-json-from-terminal/">Formatting JSON From Terminal</a>
       </li>
     
@@ -1274,10 +1272,6 @@ to rock the boat &amp; try something new.</p>
     
       <li class="post">
         <a href="/2011/10/sharing-vim-configuration-between-machines/">Sharing Vim Configuration Between Machines</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2011/10/making-a-uibutton-flip-over/">Making a UIButton Flip Over</a>
       </li>
     
   </ul>
@@ -1320,7 +1314,7 @@ to rock the boat &amp; try something new.</p>
 <noscript><p><img alt="Clicky" width="1" height="1" src="//in.getclicky.com/66470389ns.gif" /></p></noscript>
 
 <p>
-  Copyright &copy; 2011 - Ben Scheirman -
+  Copyright &copy; 2012 - Ben Scheirman -
   <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
 </p>
 

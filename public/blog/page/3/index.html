@@ -109,6 +109,140 @@
     
   <header>
     
+      <h1 class="entry-title"><a href="/2011/05/dry-up-your-rspec-files-with-subject-let-blocks/">Dry Up Your Rspec Files With Subject & Let Blocks</a></h1>
+    
+    
+      <p class="meta">
+
+
+
+
+<time datetime="2011-05-14 00:00:00 -0500" pubdate  updated >May 14<span>th</span>, 2011</time>
+
+
+</p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Rspec is pretty awesome, however due to its flexibility, often times I find that people write specs in ways that either a) aren&#8217;t structured very well, or b) use the wrong terminology to group up common contexts &amp; behaviors.</p>
+
+
+
+
+<p><strong>Update:  Be sure to read David Chelimsky&#8217;s suggestions in the comments.</strong></p>
+
+
+
+
+<p>A friend of mine who is fairly new to Rspec, and asked me to provide some feedback on some tests that he wrote.<br /></p>
+
+
+<p>Here is the before:</p>
+
+
+
+
+<script src="https://gist.github.com/972835.js?file=original_card_spec.rb"></script>
+
+
+
+
+<p>The only real problems here are:</p>
+
+
+<ul>
+  <li>Lots of duplicated setup code. If the initialization aspect of the Card design ever called for something other than a string, we&#8217;d have a lot of test code to fix.</li>
+
+  <li>Lots of &#8220;extra&#8221; code to test a simple value. If it smells like duplication to type &#8220;it &#8216;has a value of 13&#8217;&#8221; and then type the same thing, only in ruby code, then you&#8217;re right.</li>
+</ul>
+
+
+<p>The rspec constructs I recommend to deal with this are `subject,` `let, and` `its` blocks.</p>
+
+
+<ul>
+  <li><b><span style="font-weight: normal;"><b>Subject</b> blocks allow you to control the initialization of the subject under test. If you don&#8217;t have any custom initialization required, then you&#8217;re given a default `subject` method already. All it does is call `new` on the class you&#8217;re testing.</span></b></li>
+
+  <li><span style="font-weight: normal;"><b>Let</b> blocks allow you to provide some input to the subject block that change in various contexts. This way you can simply provide an alternative `let` block for a given value and not have to duplicate the setup code for the subject over again. Let blocks also work inside of `before :each` blocks if you need them.</span><br /></li>
+
+  <li><span style="font-weight: normal;"><b>Its</b> blocks allow you to test methods on the subject that return a simple value. The benefit of using this over the more wordy version above is that it can actually format the test output for you.</span><br /></li>
+</ul>
+
+
+<p>Here is the same example above, using the above techniques to clean things up a bit.</p>
+
+
+
+
+<script src="https://gist.github.com/972835.js?file=better_card_spec.rb"></script>
+
+
+
+
+<p>And here is the output of the above spec:</p>
+
+
+
+
+<div><figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+<span class='line'>2</span>
+<span class='line'>3</span>
+<span class='line'>4</span>
+<span class='line'>5</span>
+<span class='line'>6</span>
+<span class='line'>7</span>
+<span class='line'>8</span>
+<span class='line'>9</span>
+<span class='line'>10</span>
+<span class='line'>11</span>
+<span class='line'>12</span>
+<span class='line'>13</span>
+<span class='line'>14</span>
+<span class='line'>15</span>
+<span class='line'>16</span>
+<span class='line'>17</span>
+</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>Card
+</div><div class='line'>  #value
+</div><div class='line'>    Two of Hearts
+</div><div class='line'>      value
+</div><div class='line'>        should == 2
+</div><div class='line'>    Face Cards
+</div><div class='line'>      King of Clubs
+</div><div class='line'>        value
+</div><div class='line'>          should == 13
+</div><div class='line'>      Queen of Clubs
+</div><div class='line'>        value
+</div><div class='line'>          should == 12
+</div><div class='line'>      Jack of Hearts
+</div><div class='line'>        value
+</div><div class='line'>          should == 11
+</div><div class='line'>    Bad Value
+</div><div class='line'>      should raise StandardError</div></code></pre></td></tr></table></div></figure></div>
+
+
+
+
+<p>I think that&#8217;s a big improvement.</p>
+
+
+
+
+<p><em>Note:  The code in this post is delivered via Github Gists, which unfortunately don&#8217;t render in Google Reader.  Click through to see the code.</em></p>
+
+</div>
+  <footer>
+    <a rel="full-article" href="/2011/05/dry-up-your-rspec-files-with-subject-let-blocks/">Read on &rarr;</a>
+  </footer>
+
+
+  </article>
+
+
+  <article>
+    
+  <header>
+    
       <h1 class="entry-title"><a href="/2011/05/2011-ultimate-tools-list-for-mac/">2011 Ultimate Tools List for Mac</a></h1>
     
     
@@ -1393,111 +1527,6 @@ Launch <code>irb</code>:<br /></p>
 
   </article>
 
-
-  <article>
-    
-  <header>
-    
-      <h1 class="entry-title"><a href="/2010/11/setting-up-a-new-linode-box-creating-user-accounts/">Setting Up a New Linode Box - Creating User Accounts</a></h1>
-    
-    
-      <p class="meta">
-
-
-
-
-<time datetime="2010-11-30 00:00:00 -0600" pubdate  updated >Nov 30<span>th</span>, 2010</time>
-
-
-</p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>I&#8217;m setting up a new <a href="http://linode.com">Linode</a> box for a client. (Speaking of Linode, it&#8217;s freaking awesome and you should sign up. If you do, use this <a href="http://www.linode.com/?r=5054fa2264e88490f408a80da62eea5d5d99ee6a">link to give me some bonus credit</a>).</p>
-
-
-<p>For the Linux distro I chose Ubuntu 10.4 (32-bit). This is just the one I know the best.</p>
-
-
-<p>One of the first things I like to do is set up a personal user account so that I don&#8217;t use the root. This is so less-than-intuitive I have to look it up every time.</p>
-
-
-<p>Here are my notes so that I don&#8217;t forget.</p>
-
-
-<blockquote>
-<p><span style="font-family: Arial; font-size: medium;">As root, run the useradd command:</span></p>
-<div style="font-family: Arial; font-size: medium;">
-<br />
-</div>
-<div style="font-family: Arial; font-size: medium;">
-<font face="'Andale Mono'"><b>sudo useradd -d /home/testuser -m -s /bin/bash testuser</b></font>
-</div>
-<div style="font-family: Arial; font-size: medium;">
-<br />
-</div>
-<div style="font-family: Arial; font-size: medium;">
-Reset their password:
-</div>
-<div style="font-family: Arial; font-size: medium;">
-<br />
-</div>
-<div style="font-family: Arial; font-size: medium;">
-<font face="'Andale Mono'"><b>sudo passwd testuser</b></font>
-</div>
-<div style="font-family: Arial; font-size: medium;">
-<br />
-</div>
-<div style="font-family: Arial; font-size: medium;">
-Then add them to the sudoers file:
-</div>
-<div style="font-family: Arial; font-size: medium;">
-<br />
-</div>
-<div style="font-family: Arial; font-size: medium;">
-<font face="'Andale Mono'"><b>visudo</b></font>
-</div>
-<div style="font-family: Arial; font-size: medium;">
-<br />
-</div>
-<div style="font-family: Arial; font-size: medium;">
-Create a user alias for the company accounts:
-</div>
-<div style="font-family: Arial; font-size: medium;">
-<br />
-</div>
-<div style="font-family: Arial; font-size: medium;">
-<font face="'Andale Mono'"><b>User_Alias CHAIONE = user1, user2</b></font>
-</div>
-<div style="font-family: Arial; font-size: medium;">
-<br />
-</div>
-<div style="font-family: Arial; font-size: medium;">
-Then add this line lower down:
-</div>
-<div style="font-family: Arial; font-size: medium;">
-<br />
-</div>
-<div style="font-family: Arial; font-size: medium;">
-<font face="'Andale Mono'"><b>CHAIONE ALL=ALL</b></font>
-</div>
-<div style="font-family: Arial; font-size: medium;">
-<br />
-</div>
-<div style="font-family: Arial; font-size: medium;">
-For future users, just add them to the CHAIONE alias
-</div>
-</blockquote>
-
-</div>
-  <footer>
-    <a rel="full-article" href="/2010/11/setting-up-a-new-linode-box-creating-user-accounts/">Read on &rarr;</a>
-  </footer>
-
-
-  </article>
-
 <nav role="pagination">
   <div>
     
@@ -1532,6 +1561,10 @@ For future users, just add them to the CHAIONE alias
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2012/01/careful-with-block-based-notification-handlers/">Careful With Block-Based Notification Handlers</a>
+      </li>
+    
+      <li class="post">
         <a href="/2011/12/formatting-json-from-terminal/">Formatting JSON From Terminal</a>
       </li>
     
@@ -1545,10 +1578,6 @@ For future users, just add them to the CHAIONE alias
     
       <li class="post">
         <a href="/2011/10/sharing-vim-configuration-between-machines/">Sharing Vim Configuration Between Machines</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2011/10/making-a-uibutton-flip-over/">Making a UIButton Flip Over</a>
       </li>
     
   </ul>
@@ -1591,7 +1620,7 @@ For future users, just add them to the CHAIONE alias
 <noscript><p><img alt="Clicky" width="1" height="1" src="//in.getclicky.com/66470389ns.gif" /></p></noscript>
 
 <p>
-  Copyright &copy; 2011 - Ben Scheirman -
+  Copyright &copy; 2012 - Ben Scheirman -
   <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
 </p>
 

@@ -109,6 +109,218 @@
     
   <header>
     
+      <h1 class="entry-title"><a href="/2011/08/is-rails-exempt-from-software-principles/">Is Rails Exempt?</a></h1>
+    
+    
+      <p class="meta">
+
+
+
+
+<time datetime="2011-08-26 07:58:00 -0500" pubdate  updated >Aug 26<span>th</span>, 2011</time>
+
+
+</p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>If you&#8217;ve been following the Ruby community recently, you&#8217;d notice that
+there&#8217;s are people calling our Rails (and Rails developers) for treating
+Rails as if it is somehow <em>exempt</em> from long-standing software
+principles.</p>
+
+<p><a href="http://osherove.com/">Roy Osherove</a>, a fairly well-known .NET developer and author of The <a href="http://artofunittesting.com/">Art of Unit Testing</a>, ventured into Ruby-land
+recently and commented on twitter about how Rails&#8217;s
+definition of unit &amp; integration is quite different from his.</p>
+
+<p><img class='tweet ' src='/images/rails-unit-integration-tweet.png' width='' height='' alt='' title=''></p>
+
+<p>I have to agree with Roy. Those in the TDD camp in .NET understood the
+difference and were (from my experience) fairly cognizent of isolating
+concerns and not mixing the 2 concepts. Some even go as far as to
+isolate integration tests into their own assembly, providing a physical
+separation further guaranteeing that a unit test project won&#8217;t touch
+web services or the database.</p>
+
+<p>It&#8217;s easy to assume from the outside that the Rails is just testing
+nirvana and that <em>everyone</em> does it and it&#8217;s so easy.  Unfortunately it&#8217;s
+just not the truth.  Rails (and Ruby) make testing really easy but that
+means it&#8217;s even easier to do the wrong thing as well.</p>
+
+<h2>Legacy Rails Apps</h2>
+
+<p>Now that Rails is (gasp) over 7 years old you&#8217;re starting to see some
+real legacy Rails applications out in the wild.</p>
+
+<p><a href="http://twitter.com/avdi">Avdi Grimm</a> has a <a href="http://avdi.org/devblog/2011/08/22/your-code-is-my-hell/">good post</a> on the topic of how many of the Rails apps he comes to work on are in poor shape, technically.</p>
+
+<blockquote><p>Here are a few examples, just to give you an idea of what I’m talking about:</p>
+
+<p>“Design Patterns are a Java thing. In Ruby you just write code.”</p>
+
+<p>“The warnings Ruby produces are dumb; just disable them.”</p>
+
+<p>“Sure they aren’t technically Unit Tests, but isolating objects turned out to be kind of hard and besides nobody else is doing it.”</p>
+
+<p>“Stuff like the Law of Demeter isn’t really as important in Ruby code”</p>
+
+<p>“That’s only a problem in large projects” (implying that this project will never become large).</p></blockquote>
+
+<p>I&#8217;ve certainly been guilty of some of this. Rails makes it easy to do
+things that can turn out to be problematic. As with anything, you have
+to be disciplined to notice the warning signs and act accordingly.</p>
+
+<p>When testing is painful, you&#8217;re likely making mistakes. Some common
+pain-points that I&#8217;ve experienced are:</p>
+
+<ul>
+<li>No tests - the app is hard to test because the design is poor. Classes
+are too tightly coupled and don&#8217;t have clear delineation of
+responsibilities.</li>
+<li>Tests break for unrelated reasons - the tests are covering too much
+behavior, so when a single behavior changes, many tests break.</li>
+<li>Tests break when implementation changes - the tests are probably
+utilizing too much mocking &amp; stubbing. The tests are coupled heavily
+to a particular implementation.</li>
+<li>Unclear what the problem is when a test breaks - Tests are probably
+too coarse-grained and may contain too many assertions per test.</li>
+</ul>
+
+
+<p>These are just a sampling of what I&#8217;ve personally observed.</p>
+
+<p>So why do many Rails developers ignore these concepts?</p>
+
+<h2>Pragmatism at work</h2>
+
+<p>Many rails tutorials (and the default Rails template) treats model tests
+as <em>unit</em> tests. Since Rails models are by default based on Active
+Record, they have data access baked into their core.  Doing proper unit
+testing means you&#8217;re testing a logical unit.  If your test involves a
+model operation that requires a database round-trip, that&#8217;s technically
+an <em>integration</em> test.  But does it really matter?</p>
+
+<p>Most Rails developers will tell you no. Consider this spec:</p>
+
+<figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+<span class='line'>2</span>
+<span class='line'>3</span>
+<span class='line'>4</span>
+<span class='line'>5</span>
+</pre></td><td class='code' width='100%'><pre><code class='ruby'><div class='line'><span class="n">describe</span> <span class="no">Post</span> <span class="k">do</span>
+</div><div class='line'>  <span class="n">it</span> <span class="s2">&quot;should be initially unpublished&quot;</span> <span class="k">do</span>
+</div><div class='line'>    <span class="no">Post</span><span class="o">.</span><span class="n">new</span><span class="o">.</span><span class="n">published</span><span class="o">.</span><span class="n">should</span> <span class="o">==</span> <span class="kp">false</span>
+</div><div class='line'>  <span class="k">end</span>
+</div><div class='line'><span class="k">end</span>
+</div></code></pre></td></tr></table></div></figure>
+
+<p>This is a unit test. It tests a single piece of functionality and will
+fail for just one reason.</p>
+
+<p>Now, here&#8217;s another example:</p>
+
+<figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+<span class='line'>2</span>
+<span class='line'>3</span>
+</pre></td><td class='code' width='100%'><pre><code class='ruby'><div class='line'><span class="n">it</span> <span class="s2">&quot;should fetch published articles&quot;</span> <span class="k">do</span>
+</div><div class='line'>  <span class="c1"># ?</span>
+</div><div class='line'><span class="k">end</span>
+</div></code></pre></td></tr></table></div></figure>
+
+<figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+<span class='line'>2</span>
+<span class='line'>3</span>
+<span class='line'>4</span>
+<span class='line'>5</span>
+<span class='line'>6</span>
+</pre></td><td class='code' width='100%'><pre><code class='ruby'><div class='line'><span class="c1"># post.rb</span>
+</div><div class='line'><span class="k">class</span> <span class="nc">Post</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span>
+</div><div class='line'>  <span class="k">def</span> <span class="nc">self</span><span class="o">.</span><span class="nf">published</span>
+</div><div class='line'>    <span class="n">where</span><span class="p">(</span><span class="s2">&quot;published_at &lt;= ?&quot;</span><span class="p">,</span> <span class="no">Time</span><span class="o">.</span><span class="n">now</span><span class="p">)</span>
+</div><div class='line'>  <span class="k">end</span>
+</div><div class='line'><span class="k">end</span>
+</div></code></pre></td></tr></table></div></figure>
+
+<p>How should you implement this spec?</p>
+
+<p>If you were trying to avoid hitting the database you might intercept the
+<code>where</code> call and assert the parameters passed to it. But surely this
+isn&#8217;t the only way you could implement this method giving the same
+behavior.  You might use <code>scopes</code> or another <code>where</code> call might actually
+be added later that doesn&#8217;t affect the outcome of this method in any way
+that this test is concerned about.</p>
+
+<figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+<span class='line'>2</span>
+<span class='line'>3</span>
+<span class='line'>4</span>
+<span class='line'>5</span>
+<span class='line'>6</span>
+<span class='line'>7</span>
+</pre></td><td class='code' width='100%'><pre><code class='ruby'><div class='line'><span class="n">it</span> <span class="s2">&quot;should fetch published articles&quot;</span> <span class="k">do</span>
+</div><div class='line'>  <span class="mi">3</span><span class="o">.</span><span class="n">times</span> <span class="p">{</span> <span class="no">Factory</span><span class="o">.</span><span class="n">create</span> <span class="ss">:article</span> <span class="p">}</span>
+</div><div class='line'>  <span class="n">future_post</span> <span class="o">=</span> <span class="no">Factory</span><span class="o">.</span><span class="n">create</span> <span class="ss">:article</span><span class="p">,</span> <span class="ss">:published_at</span> <span class="o">=&gt;</span> <span class="mi">2</span><span class="o">.</span><span class="n">days</span><span class="o">.</span><span class="n">from_now</span>
+</div><div class='line'>  <span class="n">posts</span> <span class="o">=</span> <span class="no">Post</span><span class="o">.</span><span class="n">published</span>
+</div><div class='line'>  <span class="n">posts</span><span class="o">.</span><span class="n">size</span><span class="o">.</span><span class="n">should</span> <span class="o">==</span> <span class="mi">3</span>
+</div><div class='line'>  <span class="n">post</span><span class="o">.</span><span class="n">should_not</span> <span class="kp">include</span> <span class="n">future_post</span>
+</div><div class='line'><span class="k">end</span>
+</div></code></pre></td></tr></table></div></figure>
+
+<p>This test hits the database (numerous times, in fact) but it&#8217;s testing
+<em>exactly</em> the behavior we need.  We aren&#8217;t testing implementation, we&#8217;re
+testing that the behavior works as intended.  If we somehow muck with
+the query, breaking it, this test will fail.  If we change the
+implementation to use some other query means (scopes or whatever) this
+test will still pass.</p>
+
+<p>Is it so bad that the test hits the database?</p>
+
+<p>There are drawbacks of course:</p>
+
+<ul>
+<li>The test requires a database, thus you have to migrate</li>
+<li>The <code>database_cleaner</code> gem will have to be present to clean out the
+database before each run</li>
+<li>These database statements make the test suite a LOT slower, so large
+test suites will eventually suffer.</li>
+<li>The tests could fail if the database isn&#8217;t present (or migrated), or
+if the query is incorrect.  But this isn&#8217;t likely to happen since
+we&#8217;re using a tested framework (ActiveRecord).</li>
+</ul>
+
+
+<p>Ultimately this isn&#8217;t really a unit test at all.  It&#8217;s an integration
+test.  So is <code>spec/models/post_spec.rb</code> the wrong place for this stuff?</p>
+
+<p>The question eventually comes down to this: <em>What is more valuable?  A
+fast, isolated test suite?  Or a test suite that breaks for the right
+reasons?</em></p>
+
+<h2>Don&#8217;t throw out good practices just because it&#8217;s Ruby</h2>
+
+<p>I think it&#8217;s important to be cognizant of software paradigms and use
+them where they make sense. It&#8217;s also important to recognize when
+practices are being ignored because &#8220;celebrities&#8221; aren&#8217;t touting them.</p>
+
+<p>It is still valuable, however, to keep a fresh eye on old assumptions. Don&#8217;t
+always take things as gospel just because that&#8217;s the way they have
+always been. One
+of the things I love about the Ruby community is how willing people are
+to rock the boat &amp; try something new.</p>
+</div>
+  <footer>
+    <a rel="full-article" href="/2011/08/is-rails-exempt-from-software-principles/">Read on &rarr;</a>
+  </footer>
+
+
+  </article>
+
+
+  <article>
+    
+  <header>
+    
       <h1 class="entry-title"><a href="/2011/08/when-viewwillappear-isnt-called/">When viewWillAppear: Isn&#8217;t Called</a></h1>
     
     
@@ -890,140 +1102,6 @@ Here&#8217;s to hoping the Xcode 4 continues to be improved. In the meantime, ho
 
   </article>
 
-
-  <article>
-    
-  <header>
-    
-      <h1 class="entry-title"><a href="/2011/05/dry-up-your-rspec-files-with-subject-let-blocks/">Dry Up Your Rspec Files With Subject & Let Blocks</a></h1>
-    
-    
-      <p class="meta">
-
-
-
-
-<time datetime="2011-05-14 00:00:00 -0500" pubdate  updated >May 14<span>th</span>, 2011</time>
-
-
-</p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Rspec is pretty awesome, however due to its flexibility, often times I find that people write specs in ways that either a) aren&#8217;t structured very well, or b) use the wrong terminology to group up common contexts &amp; behaviors.</p>
-
-
-
-
-<p><strong>Update:  Be sure to read David Chelimsky&#8217;s suggestions in the comments.</strong></p>
-
-
-
-
-<p>A friend of mine who is fairly new to Rspec, and asked me to provide some feedback on some tests that he wrote.<br /></p>
-
-
-<p>Here is the before:</p>
-
-
-
-
-<script src="https://gist.github.com/972835.js?file=original_card_spec.rb"></script>
-
-
-
-
-<p>The only real problems here are:</p>
-
-
-<ul>
-  <li>Lots of duplicated setup code. If the initialization aspect of the Card design ever called for something other than a string, we&#8217;d have a lot of test code to fix.</li>
-
-  <li>Lots of &#8220;extra&#8221; code to test a simple value. If it smells like duplication to type &#8220;it &#8216;has a value of 13&#8217;&#8221; and then type the same thing, only in ruby code, then you&#8217;re right.</li>
-</ul>
-
-
-<p>The rspec constructs I recommend to deal with this are `subject,` `let, and` `its` blocks.</p>
-
-
-<ul>
-  <li><b><span style="font-weight: normal;"><b>Subject</b> blocks allow you to control the initialization of the subject under test. If you don&#8217;t have any custom initialization required, then you&#8217;re given a default `subject` method already. All it does is call `new` on the class you&#8217;re testing.</span></b></li>
-
-  <li><span style="font-weight: normal;"><b>Let</b> blocks allow you to provide some input to the subject block that change in various contexts. This way you can simply provide an alternative `let` block for a given value and not have to duplicate the setup code for the subject over again. Let blocks also work inside of `before :each` blocks if you need them.</span><br /></li>
-
-  <li><span style="font-weight: normal;"><b>Its</b> blocks allow you to test methods on the subject that return a simple value. The benefit of using this over the more wordy version above is that it can actually format the test output for you.</span><br /></li>
-</ul>
-
-
-<p>Here is the same example above, using the above techniques to clean things up a bit.</p>
-
-
-
-
-<script src="https://gist.github.com/972835.js?file=better_card_spec.rb"></script>
-
-
-
-
-<p>And here is the output of the above spec:</p>
-
-
-
-
-<div><figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
-<span class='line'>2</span>
-<span class='line'>3</span>
-<span class='line'>4</span>
-<span class='line'>5</span>
-<span class='line'>6</span>
-<span class='line'>7</span>
-<span class='line'>8</span>
-<span class='line'>9</span>
-<span class='line'>10</span>
-<span class='line'>11</span>
-<span class='line'>12</span>
-<span class='line'>13</span>
-<span class='line'>14</span>
-<span class='line'>15</span>
-<span class='line'>16</span>
-<span class='line'>17</span>
-</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>Card
-</div><div class='line'>  #value
-</div><div class='line'>    Two of Hearts
-</div><div class='line'>      value
-</div><div class='line'>        should == 2
-</div><div class='line'>    Face Cards
-</div><div class='line'>      King of Clubs
-</div><div class='line'>        value
-</div><div class='line'>          should == 13
-</div><div class='line'>      Queen of Clubs
-</div><div class='line'>        value
-</div><div class='line'>          should == 12
-</div><div class='line'>      Jack of Hearts
-</div><div class='line'>        value
-</div><div class='line'>          should == 11
-</div><div class='line'>    Bad Value
-</div><div class='line'>      should raise StandardError</div></code></pre></td></tr></table></div></figure></div>
-
-
-
-
-<p>I think that&#8217;s a big improvement.</p>
-
-
-
-
-<p><em>Note:  The code in this post is delivered via Github Gists, which unfortunately don&#8217;t render in Google Reader.  Click through to see the code.</em></p>
-
-</div>
-  <footer>
-    <a rel="full-article" href="/2011/05/dry-up-your-rspec-files-with-subject-let-blocks/">Read on &rarr;</a>
-  </footer>
-
-
-  </article>
-
 <nav role="pagination">
   <div>
     
@@ -1058,6 +1136,10 @@ Here&#8217;s to hoping the Xcode 4 continues to be improved. In the meantime, ho
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2012/01/careful-with-block-based-notification-handlers/">Careful With Block-Based Notification Handlers</a>
+      </li>
+    
+      <li class="post">
         <a href="/2011/12/formatting-json-from-terminal/">Formatting JSON From Terminal</a>
       </li>
     
@@ -1071,10 +1153,6 @@ Here&#8217;s to hoping the Xcode 4 continues to be improved. In the meantime, ho
     
       <li class="post">
         <a href="/2011/10/sharing-vim-configuration-between-machines/">Sharing Vim Configuration Between Machines</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2011/10/making-a-uibutton-flip-over/">Making a UIButton Flip Over</a>
       </li>
     
   </ul>
@@ -1117,7 +1195,7 @@ Here&#8217;s to hoping the Xcode 4 continues to be improved. In the meantime, ho
 <noscript><p><img alt="Clicky" width="1" height="1" src="//in.getclicky.com/66470389ns.gif" /></p></noscript>
 
 <p>
-  Copyright &copy; 2011 - Ben Scheirman -
+  Copyright &copy; 2012 - Ben Scheirman -
   <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
 </p>
 

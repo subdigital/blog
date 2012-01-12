@@ -109,6 +109,70 @@
     
   <header>
     
+      <h1 class="entry-title"><a href="/2008/05/using-asp-net-mvc-on-iis-6-without-the-mvc-extension/">Using ASP.NET MVC on IIS 6 Without the .MVC Extension</a></h1>
+    
+    
+      <p class="meta">
+
+
+
+
+<time datetime="2008-05-27 00:00:00 -0500" pubdate  updated >May 27<span>th</span>, 2008</time>
+
+
+</p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>One awesome features of ASP.NET MVC is the clean URLs.&nbsp; If you aren&#8217;t familiar with them, here is a sample:</p>
+
+
+<p> <blockquote> <p>/products/list</p> <p>(versus a typical /ProductList.aspx)</p></blockquote> <p>The default route for ASP.NET MVC looks like this:</p> <blockquote> <p>/{controller}/{action}</p></blockquote> <p>Using this route you can map most of the URLs that your application will need.&nbsp; There is a problem, however, when running ASP.NET MVC on IIS6 (and 5).&nbsp; The URL above doesn&#8217;t have an extension, so IIS will assume that it is a virtual directory on the server.&nbsp; We have a couple of options we can do to get around this:</p> <ul> <li>We could create wild card mappings and pass every request through ASP.NET, however this is not recommended for performance reasons<li>We can add an extension that maps to ASP.NET (.mvc)</li></ul> <p>In the latter option your routes must change to something like this:</p> <blockquote> <p>/{controller}.mvc/{action}</p></blockquote> <p>So URLs generated with this route will look like:</p> <blockquote> <p>/products.mvc/list</p></blockquote> <p>&#8230;which basically reverts our clean urls into, well&#8230; less clean ones.</p> <p>So if you want to deploy to Windows Server 2003 &amp; IIS 6, you&#8217;re out of luck.&nbsp; Well, mostly&#8230;</p> <h2>URL Rewriting to the Rescue</h2> <p>We can leverage an ISAPI filter to rewrite URLs which will allow us to have the nice URLs while still on IIS 6.&nbsp; There are 2 major products that do this for IIS:</p> <ul> <li><a href="http://www.isapirewrite.com/" target="_blank">ISAPI Rewrite</a> ($99)<li><a href="http://cheeso.members.winisp.net/IIRF.aspx" target="_blank">Ionic&#8217;s ISAPI Rewrite Filter</a> (Free)</li></ul> <p>ISAPI Rewrite is the more mature of the two, however it&#8217;s not free.&nbsp; They do provide a free version, but it doesn&#8217;t support regular expressions, so it&#8217;s pretty useless.</p> <p>Jeff Atwood has <a href="http://www.codinghorror.com/blog/archives/000797.html" target="_blank">a nice write-up of these two utilities</a>.&nbsp; In it he notes that the syntax for Ionic&#8217;s ISAPI Rewrite is a little stranger and doesn&#8217;t support the regex that we&#8217;re all used to (since it uses a C regex library, not a .NET one).</p> <p>I decided to choose Ionic&#8217;s because it was free, however there was a lack of information on how to structure URLs, and it required a lot of trial and error to get it working.&nbsp; Luckily they have an automatic logging facility that tells you how the rules are matching up.</p> <p>For ASP.NET MVC, I needed to cover these cases:</p> <ul> <li><strong>A request for / should be redirected to /home</strong><br><em>This isn&#8217;t really required, as .NET can do this for me, however I wanted to ensure that all entry points are at the same URL to avoid Page Rank issues.&nbsp; (See the same Atwood post for information on how important this is)</em><li><strong>A request for /something should be rewritten to /something.mvc<br></strong><em>That is, the user will request it without an extension, but the filter will rewrite it without the user&#8217;s address bar ever changing.</em><li><strong>A request for /something/index should be rewritten to /something.mvc/index<br></strong><em>Just making sure that URLs with actions get the extension only on the first part</em><li><strong>The content directory that contains our javascript, CSS, and images should be excluded from the above rule<br></strong><em>Otherwise we&#8217;d have /content.mvc/styles.css which would be interpreted as a controller, rather than a direct file request.</em></li></ul> <p>I found <a href="http://biasecurities.com/blog/2008/how-to-enable-pretty-urls-with-asp-net-mvc-and-iis6/" target="_blank">a good resource that outlined how to do this with ISAPI Rewrite</a>, however the rules were quite different with Ionic&#8217;s.</p> <p>Here are my rules for Ionic&#8217;s ISAPI Rewrite that works for ASP.NET MVC:</p></p>
+
+<div><figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>&lt;strong># empty URL gets mapped to home controller &lt;br>RewriteRule&nbsp; ^/$&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; /home [R] # map controller parts of urls to .mvc, ignoring the content directory&lt;br>RewriteRule&nbsp; ^(?!/Content)(/[A-Za-z0-9_-]+)(/.*)?$&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; $1.mvc$2&nbsp; [I]&lt;/strong></div></code></pre></td></tr></table></div></figure></div>
+
+
+<p>It turns out that I only need 2 rules to satisfy the above requirements.&nbsp; The first rule forces the browser to redirect, which will aid in making sure that I <a href="http://www.hanselman.com/blog/UsingISAPIRewriteToCanonicalizeASPNETURLsAndRemoveDefaultaspx.aspx" target="_blank">only have 1 entry point to my website</a>.</p>
+
+
+<p>The 2nd rule takes the first part of the ULR and adds .mvc to it, appending the remaining verbatim (if any).&nbsp; It also excludes anything beginning with &#8220;content,&#8221; so I&#8217;m free to put images, javascript, css, and other literal file resources there.</p>
+
+
+<p>The last requirement is to define my routes with <strong>both</strong> .mvc and regular formats.&nbsp; The trick is to define them in the right order.</p>
+
+
+<p>routes.MapRoute(&#8220;basic&#8221;, &#8220;{controller}/{action}&#8221;, new { &#8230; } );</p>
+
+
+<p>routes.MapRoute(&#8220;basic_mvc&#8221;, &#8220;{controller}.mvc/{action}&#8221;, new {&#8230;});</p>
+
+
+<p>Doing this ensures that our .MVC routes will actually function, but when we ask the framework for a URL (such as with Url.Action() or Html.ActionLink) we are handed the extension-less route (since it is defined first).</p>
+
+
+<h2>Route Testing is IMPORTANT</h2>
+
+
+<p>I&#8217;ve said it before and I&#8217;ll say it again.&nbsp; <strong>Route testing is important.&nbsp; </strong>A single tiny change can break an entire application.&nbsp; Applying automated tests is critical for any MVC application.&nbsp; Since deployment of an ASP.NET MVC application needs to be flexible, your application should function with either type of route (extensions or not) so that you have flexibility of deployment.</p>
+
+
+<p>Hard coding a route in 1 single location will prevent you from doing this.&nbsp; Did I mention route testing is important?</p>
+
+</div>
+  <footer>
+    <a rel="full-article" href="/2008/05/using-asp-net-mvc-on-iis-6-without-the-mvc-extension/">Read on &rarr;</a>
+  </footer>
+
+
+  </article>
+
+
+  <article>
+    
+  <header>
+    
       <h1 class="entry-title"><a href="/2008/05/houston-alt-net-geek-dinner-next-tuesday/">Houston ALT.NET Geek Dinner - Next Tuesday</a></h1>
     
     
@@ -868,91 +932,6 @@ ough here.</li></ul></ul></ul>
 
   </article>
 
-
-  <article>
-    
-  <header>
-    
-      <h1 class="entry-title"><a href="/2008/04/alt-net-day-2/">ALT.NET - Day 2</a></h1>
-    
-    
-      <p class="meta">
-
-
-
-
-<time datetime="2008-04-20 00:00:00 -0500" pubdate  updated >Apr 20<span>th</span>, 2008</time>
-
-
-</p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>And so Day 2 comes to a close.&nbsp; One of the biggest problems with this conference is that at any given time I will want to attend 2&ndash;3 simultaneous sessions.&nbsp; Fortunately, the open spaces format allows anyone at anytime to float (I think the term is&nbsp;&ldquo;be a butterfly&rdquo; or &ldquo;be a bumble bee&rdquo;).&nbsp; I did this in a few sessions to maximize the amount of sessions I could attend.</p>
-
-
-<p>We started out at Ruby&rsquo;s Diner for breakfast.&nbsp; I arrived at the event to see people looking at the schedule wall.&nbsp; It&rsquo;s really amazing to watch a conference self-organize like this.</p>
-
-
-<p><img src="/images/schedule_2Dwall.jpg" alt="Schedule-wall"  border="0"  /></p>
-
-
-<p>Our facilitator, &ldquo;Doc&rdquo; List, did an excellent job of setting the ground rules and clearing up a few scheduling hiccups and quickly we broke out into sessions.</p>
-
-
-<p><img src="/images/opening_2Daltdotnet.jpg" alt="Opening-altdotnet"  border="0"  /></p>
-
-
-<p><strong>What&rsquo;s with all the white guys?</strong></p>
-
-
-<p>The first one I went to was: &ldquo;What&rsquo;s with all the white guys? (Diversity)&rdquo; convened by <a href="http://www.hanselman.com/blog" target="_blank">Scott Hanselman</a>.&nbsp; We talked more about women in computing and why there is such a low ratio of men:women.&nbsp; Some argued that it was genetics, some argued that it was cultural or parental.&nbsp; We also talked about how Computer Science curriculums have highly technical weed-out courses at very freshmen levels.&nbsp; I think this breeds a group of smart people, but also tends to attract people with limited social maturity.&nbsp; This can either make it not fit for most women (if I am going to make some generalizations) or possibly make it a difficult environment for women.&nbsp; I think it&rsquo;s also good to note that in software, there is very much a &ldquo;people&rdquo; aspect that&nbsp;a very large percentage of CS majors would not qualify for.&nbsp; (MIS may be the answer to this, but at UH, some joked that MIS was for &ldquo;CS Dropouts&rdquo;).</p>
-
-
-<p><img src="/images/diversity.jpg" alt="Diversity"  border="0"  /></p>
-
-
-<p>Scott talked about he has spoken at high schools to break down the technology behind MP3&rsquo;s, for example.&nbsp; Most of the audience wouldn&rsquo;t care, but there would be that&nbsp;2 or&nbsp;3 people that would take interest and that can make a difference.&nbsp; The 2 women that were in the room were encouraged to try that out.</p>
-
-
-<p>I was happy to note that our female attendance this year rose 400% (to 4 women).&nbsp; Hopefully this number will change in future events.&nbsp; I think it&rsquo;s important for our community to be accepting and diverse.</p>
-
-
-<p>After the session ended, we gathered in the main room again to chat for 10 minutes or so before the next session began.&nbsp; There were some really cool conversations going on around just about every corner.</p>
-
-
-<p><img src="/images/conversations1.jpg" alt="Conversations1"  border="0"  /></p>
-
-
-<p><img src="/images/hallway_2Dconversations.jpg" alt="Hallway-conversations"  border="0"  /></p>
-
-
-<p><strong>To Mock or Not to Mock</strong></p>
-
-
-<p>The next session I attended was about mocking.&nbsp; It was a pretty good fish-bowl session and a lot of good conversation was had.&nbsp; Towards the end it spun downhill due to some harsh arguments and I think this was the most &ldquo;unprofessional&rdquo; of all the sessions.&nbsp; Overall though, I got some good information about how some people manage pain with mocks and whether or not Auto Mocking Container is a design smell.</p>
-
-
-<p><img src="/images/to_2Dmock_2Dor_2Dnot_2Dto_2Dmock1.jpg" alt="To-mock-or-not-to-mock1"  border="0"  /></p>
-
-
-<p><img src="/images/to_2Dmock_2Dor_2Dnot_2Dto_2Dmock2.jpg" alt="To-mock-or-not-to-mock2"  border="0"  /></p>
-
-
-<p>I will finish up the rest of the day in a later post, because I have to get ready to go to brunch!</p>
-
-
-<div class="bjtags">Tags:<a rel="tag" href="http://technorati.com/tag/altdotnet">altdotnet</a></div>
-
-</div>
-  <footer>
-    <a rel="full-article" href="/2008/04/alt-net-day-2/">Read on &rarr;</a>
-  </footer>
-
-
-  </article>
-
 <nav role="pagination">
   <div>
     
@@ -987,6 +966,10 @@ ough here.</li></ul></ul></ul>
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2012/01/careful-with-block-based-notification-handlers/">Careful With Block-Based Notification Handlers</a>
+      </li>
+    
+      <li class="post">
         <a href="/2011/12/formatting-json-from-terminal/">Formatting JSON From Terminal</a>
       </li>
     
@@ -1000,10 +983,6 @@ ough here.</li></ul></ul></ul>
     
       <li class="post">
         <a href="/2011/10/sharing-vim-configuration-between-machines/">Sharing Vim Configuration Between Machines</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2011/10/making-a-uibutton-flip-over/">Making a UIButton Flip Over</a>
       </li>
     
   </ul>
@@ -1046,7 +1025,7 @@ ough here.</li></ul></ul></ul>
 <noscript><p><img alt="Clicky" width="1" height="1" src="//in.getclicky.com/66470389ns.gif" /></p></noscript>
 
 <p>
-  Copyright &copy; 2011 - Ben Scheirman -
+  Copyright &copy; 2012 - Ben Scheirman -
   <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
 </p>
 
