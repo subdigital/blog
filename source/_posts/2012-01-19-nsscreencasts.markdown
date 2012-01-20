@@ -8,13 +8,13 @@ categories: iOS
 
 ## Bite-Sized Learning
 
-Video training is becoming a very common way to learn these days.  With [http://tekpub.com](Tekpub), [http://peepcode.com/](Peepcode), [http://pluralsight.com](Pluralsight), 
-[http://codeschool.com](Code School), and many others, there are usually great productions to teach you any development topic that you'd want to learn about.
+Video training is becoming a very common way to learn these days.  With [Tekpub](http://tekpub.com), [http://peepcode.com/](Peepcode), [Pluralsight](http://pluralsight.com), 
+[Code School](http://codeschool.com), and many others, there are usually great productions to teach you any development topic that you'd want to learn about.
 
 All of these services are great, however I'm becoming a fan of the smaller, more focused screencasts.  [http://railscasts.com](Railscasts), for instance, has
-been _instrumental_ to my Rails learning development.  [http://destroyallsoftware.com/](Destroy all Software) teaches me new things every week.
+been _instrumental_ to my Rails learning development.  [Destroy all Software](http://destroyallsoftware.com/) teaches me new things every week.
 
-Smaller videos like this are easier to digest, and are more focused on a single topic.  Like the [http://en.wikipedia.org/wiki/Boiling_frog](boiled frog)
+Smaller videos like this are easier to digest, and are more focused on a single topic.  Like the [boiled frog](http://en.wikipedia.org/wiki/Boiling_frog)
 you eventually realize how far you've come on a topic, simply by watching regular videos.
 
 iOS Development is an ever-changing landscape, with so many topic areas to cover, that a single training class or screencast series just
@@ -23,7 +23,7 @@ have smaller, focused tutorials that teach you one thing, and do it quickly and 
 
 ## Introducing NSScreencast
 
-[http://nsscreencast.com](NSScreencast) will be launching soon and will feature regular bite-sized videos
+[NSScreencast](http://nsscreencast.com) will be launching soon and will feature regular bite-sized videos
 focused on a single topic related to Objective-C and building iOS applications.
 
 NSScreencast _will_ include free videos. Down the road, a nominal paid subsribtion will unlock access to more content.
