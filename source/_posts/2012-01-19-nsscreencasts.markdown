@@ -8,10 +8,10 @@ categories: iOS
 
 ## Bite-Sized Learning
 
-Video training is becoming a very common way to learn these days.  With [Tekpub](http://tekpub.com), [http://peepcode.com/](Peepcode), [Pluralsight](http://pluralsight.com), 
+Video training is becoming a very common way to learn these days.  With [Tekpub](http://tekpub.com), [Peepcode](http://peepcode.com/), [Pluralsight](http://pluralsight.com), 
 [Code School](http://codeschool.com), and many others, there are usually great productions to teach you any development topic that you'd want to learn about.
 
-All of these services are great, however I'm becoming a fan of the smaller, more focused screencasts.  [http://railscasts.com](Railscasts), for instance, has
+All of these services are great, however I'm becoming a fan of the smaller, more focused screencasts.  [Railscasts](http://railscasts.com), for instance, has
 been _instrumental_ to my Rails learning development.  [Destroy all Software](http://destroyallsoftware.com/) teaches me new things every week.
 
 Smaller videos like this are easier to digest, and are more focused on a single topic.  Like the [boiled frog](http://en.wikipedia.org/wiki/Boiling_frog)

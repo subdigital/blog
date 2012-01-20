@@ -4,7 +4,7 @@
   <title>Fickle Bits</title>
   <link href="http://benscheirman.com/atom.xml" rel="self"/>
   <link href="http://benscheirman.com/"/>
-  <updated>2012-01-20T09:42:53-06:00</updated>
+  <updated>2012-01-20T10:14:32-06:00</updated>
   <id>http://benscheirman.com/</id>
   <author>
     <name>Ben Scheirman</name>
@@ -19,13 +19,13 @@
     <id>http://benscheirman.com/2012/01/nsscreencasts</id>
     <content type="html">&lt;h2&gt;Bite-Sized Learning&lt;/h2&gt;
 
-&lt;p&gt;Video training is becoming a very common way to learn these days.  With &lt;a href=&quot;Tekpub&quot;&gt;http://tekpub.com&lt;/a&gt;, &lt;a href=&quot;Peepcode&quot;&gt;http://peepcode.com/&lt;/a&gt;, &lt;a href=&quot;Pluralsight&quot;&gt;http://pluralsight.com&lt;/a&gt;,
-&lt;a href=&quot;Code%20School&quot;&gt;http://codeschool.com&lt;/a&gt;, and many others, there are usually great productions to teach you any development topic that you'd want to learn about.&lt;/p&gt;
+&lt;p&gt;Video training is becoming a very common way to learn these days.  With &lt;a href=&quot;http://tekpub.com&quot;&gt;Tekpub&lt;/a&gt;, &lt;a href=&quot;http://peepcode.com/&quot;&gt;Peepcode&lt;/a&gt;, &lt;a href=&quot;http://pluralsight.com&quot;&gt;Pluralsight&lt;/a&gt;,
+&lt;a href=&quot;http://codeschool.com&quot;&gt;Code School&lt;/a&gt;, and many others, there are usually great productions to teach you any development topic that you'd want to learn about.&lt;/p&gt;
 
-&lt;p&gt;All of these services are great, however I'm becoming a fan of the smaller, more focused screencasts.  &lt;a href=&quot;Railscasts&quot;&gt;http://railscasts.com&lt;/a&gt;, for instance, has
-been &lt;em&gt;instrumental&lt;/em&gt; to my Rails learning development.  &lt;a href=&quot;Destroy%20all%20Software&quot;&gt;http://destroyallsoftware.com/&lt;/a&gt; teaches me new things every week.&lt;/p&gt;
+&lt;p&gt;All of these services are great, however I'm becoming a fan of the smaller, more focused screencasts.  &lt;a href=&quot;http://railscasts.com&quot;&gt;Railscasts&lt;/a&gt;, for instance, has
+been &lt;em&gt;instrumental&lt;/em&gt; to my Rails learning development.  &lt;a href=&quot;http://destroyallsoftware.com/&quot;&gt;Destroy all Software&lt;/a&gt; teaches me new things every week.&lt;/p&gt;
 
-&lt;p&gt;Smaller videos like this are easier to digest, and are more focused on a single topic.  Like the &lt;a href=&quot;boiled%20frog&quot;&gt;http://en.wikipedia.org/wiki/Boiling_frog&lt;/a&gt;
+&lt;p&gt;Smaller videos like this are easier to digest, and are more focused on a single topic.  Like the &lt;a href=&quot;http://en.wikipedia.org/wiki/Boiling_frog&quot;&gt;boiled frog&lt;/a&gt;
 you eventually realize how far you've come on a topic, simply by watching regular videos.&lt;/p&gt;
 
 &lt;p&gt;iOS Development is an ever-changing landscape, with so many topic areas to cover, that a single training class or screencast series just
@@ -34,7 +34,7 @@ have smaller, focused tutorials that teach you one thing, and do it quickly and 
 
 &lt;h2&gt;Introducing NSScreencast&lt;/h2&gt;
 
-&lt;p&gt;&lt;a href=&quot;NSScreencast&quot;&gt;http://nsscreencast.com&lt;/a&gt; will be launching soon and will feature regular bite-sized videos
+&lt;p&gt;&lt;a href=&quot;http://nsscreencast.com&quot;&gt;NSScreencast&lt;/a&gt; will be launching soon and will feature regular bite-sized videos
 focused on a single topic related to Objective-C and building iOS applications.&lt;/p&gt;
 
 &lt;p&gt;NSScreencast &lt;em&gt;will&lt;/em&gt; include free videos. Down the road, a nominal paid subsribtion will unlock access to more content.&lt;/p&gt;
