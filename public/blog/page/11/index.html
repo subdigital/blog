@@ -110,6 +110,39 @@
     
   <header>
     
+      <h1 class="entry-title"><a href="/2009/02/access-denied-on-microsoft-visual-studio-web-authoring-component/">Access Denied on Microsoft Visual Studio Web Authoring Component</a></h1>
+    
+    
+      <p class="meta">
+
+
+
+
+<time datetime="2009-02-02 00:00:00 -0600" pubdate  updated >Feb 2<span>nd</span>, 2009</time>
+
+
+</p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I&#8217;m finally able to install .NET 3.5 and run Visual Studio 2008 at my client.&nbsp; Yeah, yeah,&nbsp; &#8221;<em>Welcome to 2008</em>&#8221; I can hear you say.&nbsp; &#8220;You&#8217;re just in time for VS 2010!&#8221;&nbsp; I know&#8230; but big ships turn slowly :)</p>
+
+
+<p> <p>Anyway, when installing Visual Studio 2008 I was promptly greeted with a slew of errors.&nbsp; Checking the log yielded this not very helpful statement:</p> <blockquote> <p><em>[02/02/09,13:53:22] Microsoft Visual Studio Web Authoring Component: [2] Error code 5 for this component means &#8220;Access is denied.</em></p></blockquote> <p>The knowledge base article it linked to was less than helpful as well.&nbsp; A colleague asked me to crack open McAfee&#8217;s logs and sure enough&#8230; we found this in there:</p> <blockquote> <p><em>2/2/2009&nbsp;&nbsp;&nbsp; 1:41:20 PM&nbsp;&nbsp;&nbsp; Blocked by Access Protection ru&nbsp;&nbsp;&nbsp; ZZZ\user&nbsp;&nbsp;&nbsp;&nbsp; d:\wcu\webdesignercore\WebDesignerCore.EXE&nbsp;&nbsp;&nbsp; C:\7912618bc3a93fed0bab\autorun.inf&nbsp;&nbsp;&nbsp; User-defined Rules:Autorun_inf&nbsp;&nbsp;&nbsp; Action blocked : Create<br>2/2/2009&nbsp;&nbsp;&nbsp; 1:53:22 PM&nbsp;&nbsp;&nbsp; Blocked by Access Protection rule&nbsp;&nbsp;&nbsp;&nbsp; ZZZ\user d:\wcu\webdesignercore\WebDesignerCore.EXE&nbsp;&nbsp;&nbsp; C:\e300576fb9ee95c7e7e9c2cb\autorun.inf&nbsp;&nbsp;&nbsp; User-defined Rules:Autorun_inf&nbsp;&nbsp;&nbsp; Action blocked : Create<br>2/2/2009&nbsp;&nbsp;&nbsp; 2:02:08 PM&nbsp;&nbsp;&nbsp; Blocked by Access Protection rule&nbsp;&nbsp;&nbsp;&nbsp; ZZZ\user d:\wcu\webdesignercore\WebDesignerCore.EXE&nbsp;&nbsp;&nbsp; C:\9e98c3f777aff7da331d68c05065b5\autorun.inf&nbsp;&nbsp;&nbsp; User-defined Rules:Autorun_inf&nbsp;&nbsp;&nbsp; Action blocked : Create</em></p></blockquote> <p>That is three separate installation attempts that failed.&nbsp; Luckily my account had the ability to disable the sometimes-annoying-file-blocking-thingy in McAfee Enterprise.</p> <p><img src="/images/mcaffee-file-access-dialog_3.png" alt="mcaffee-file-access-dialog"  border="0" /> </p> <p>If you&#8217;re getting this error, try disabling that guy to install Visual Studio.&nbsp; Don&#8217;t forget to turn it back on though, or the corp network security guys with shotguns might visit your desk wondering why a worm installed on your machine was sending out emails to everyone in the company with a vulgar photo&#8230;</p> <p>Hope this saves someone the 30 minutes it cost me today!</p></p>
+</div>
+  <footer>
+    <a rel="full-article" href="/2009/02/access-denied-on-microsoft-visual-studio-web-authoring-component/">Read on &rarr;</a>
+  </footer>
+
+
+  </article>
+
+
+  <article>
+    
+  <header>
+    
       <h1 class="entry-title"><a href="/2009/02/announcing-houston-alt-net-open-spaces-conference/">Announcing Houston ALT.NET Open Spaces Conference</a></h1>
     
     
@@ -1048,37 +1081,6 @@ You can get this at an Apple store, ebay, craigslist, or the usual places. I fou
 
   </article>
 
-
-  <article>
-    
-  <header>
-    
-      <h1 class="entry-title"><a href="/2008/11/photos/">Photos</a></h1>
-    
-    
-      <p class="meta">
-
-
-
-
-<time datetime="2008-11-11 00:00:00 -0600" pubdate  updated >Nov 11<span>th</span>, 2008</time>
-
-
-</p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><em>This album displays photos from my <a target="_blank" href="http://flickr.com/photos/bensilvia">Flickr</a> account.</em></p>
-
-</div>
-  <footer>
-    <a rel="full-article" href="/2008/11/photos/">Read on &rarr;</a>
-  </footer>
-
-
-  </article>
-
 <nav role="pagination">
   <div>
     
@@ -1113,6 +1115,10 @@ You can get this at an Apple store, ebay, craigslist, or the usual places. I fou
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2012/01/nsscreencasts/">NSScreencasts, Coming Soon</a>
+      </li>
+    
+      <li class="post">
         <a href="/2012/01/careful-with-block-based-notification-handlers/">Careful With Block-Based Notification Handlers</a>
       </li>
     
@@ -1126,10 +1132,6 @@ You can get this at an Apple store, ebay, craigslist, or the usual places. I fou
     
       <li class="post">
         <a href="/2011/10/appsites-is-now-appkickstand/">Appsites Is Now AppKickstand</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2011/10/sharing-vim-configuration-between-machines/">Sharing Vim Configuration Between Machines</a>
       </li>
     
   </ul>

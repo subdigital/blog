@@ -110,6 +110,69 @@
     
   <header>
     
+      <h1 class="entry-title"><a href="/2008/07/controller-is-not-the-new-code-behind/">Controller Is NOT the New Code-Behind</a></h1>
+    
+    
+      <p class="meta">
+
+
+
+
+<time datetime="2008-07-26 00:00:00 -0500" pubdate  updated >Jul 26<span>th</span>, 2008</time>
+
+
+</p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>One of the things that I often say when touting the benefits of ASP.NET MVC is clean separation of concerns.&#160; I talk about how the code-behind of WebForms is just <em>begging</em> you to put code there.&#160; Samples online frequently open direct database connections and execute ad-hoc queries against the database from a button-click event.</p>
+
+
+<p>Of course the same is possible with ASP.NET MVC.&#160; Just taking a peak at the new Preview 4 installer, you’ll see a brand-spanking new AccountController, pre-built for managing logins/membership on your site.</p>
+
+
+<p>Open AccountController.cs and you’ll find this method:</p>
+
+
+<div><figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>[Authorize]&lt;span class="kwrd">public&lt;/span> ActionResult ChangePassword(&lt;span class="kwrd">string&lt;/span> currentPassword, &lt;span class="kwrd">string&lt;/span> newPassword, &lt;span class="kwrd">string&lt;/span> confirmPassword){ViewData[&lt;span class="str">&quot;Title&quot;&lt;/span>] = &lt;span class="str">&quot;Change Password&quot;&lt;/span>;ViewData[&lt;span class="str">&quot;PasswordLength&quot;&lt;/span>] = Provider.MinRequiredPasswordLength;&lt;span class="rem">// Non-POST requests should just display the ChangePassword form &lt;/span>&lt;span class="kwrd">if&lt;/span> (Request.HttpMethod != &lt;span class="str">&quot;POST&quot;&lt;/span>){&lt;span class="kwrd">return&lt;/span> View();}&lt;span class="rem">// Basic parameter validation&lt;/span>List&lt;&lt;span class="kwrd">string&lt;/span>&gt; errors = &lt;span class="kwrd">new&lt;/span> List&lt;&lt;span class="kwrd">string&lt;/span>&gt;();&lt;span class="kwrd">if&lt;/span> (String.IsNullOrEmpty(currentPassword)){errors.Add(&lt;span class="str">&quot;You must specify a current password.&quot;&lt;/span>);}&lt;span class="kwrd">if&lt;/span> (newPassword == &lt;span class="kwrd">null&lt;/span> || newPassword.Length &lt; Provider.MinRequiredPasswordLength){errors.Add(String.Format(CultureInfo.InvariantCulture, &lt;span class="str">&quot;You must specify a new password of {0} or more characters.&quot;&lt;/span>, Provider.MinRequiredPasswordLength));}&lt;span class="kwrd">if&lt;/span> (!String.Equals(newPassword, confirmPassword, StringComparison.Ordinal)){errors.Add(&lt;span class="str">&quot;The new password and confirmation password do not match.&quot;&lt;/span>);}&lt;span class="kwrd">if&lt;/span> (errors.Count == 0){&lt;span class="rem">// Attempt to change password&lt;/span>MembershipUser currentUser = Provider.GetUser(User.Identity.Name, &lt;span class="kwrd">true&lt;/span> &lt;span class="rem">/* userIsOnline */&lt;/span>);&lt;span class="kwrd">bool&lt;/span> changeSuccessful = &lt;span class="kwrd">false&lt;/span>;&lt;span class="kwrd">try&lt;/span>{changeSuccessful = currentUser.ChangePassword(currentPassword, newPassword);}&lt;span class="kwrd">catch&lt;/span>{&lt;span class="rem">// An exception is thrown if the new password does not meet the provider's requirements&lt;/span>}&lt;span class="kwrd">if&lt;/span> (changeSuccessful){&lt;span class="kwrd">return&lt;/span> RedirectToAction(&lt;span class="str">&quot;ChangePasswordSuccess&quot;&lt;/span>);}&lt;span class="kwrd">else&lt;/span>{errors.Add(&lt;span class="str">&quot;The current password is incorrect or the new password is invalid.&quot;&lt;/span>);}}&lt;span class="rem">// If we got this far, something failed, redisplay form&lt;/span>ViewData[&lt;span class="str">&quot;errors&quot;&lt;/span>] = errors;&lt;span class="kwrd">return&lt;/span> View();}</div></code></pre></td></tr></table></div></figure></div>
+
+
+<p>That’s nearly 70 lines in a single method.&#160; Even with the comments it’s difficult to see what it’s doing at a glance.</p>
+
+
+<p>This serves as a lesson to those of us that sell TDD as a design practice.&#160; Sure this method is testable, but it seems as though the author did not take a few minutes to refactor code.&#160; Normally I wouldn’t pick on someone for writing this, but when this is installed as a project template, it serves as an example for others to write code just like this.</p>
+
+
+<p>Let’s see how we might clean this code up to make it more readable.</p>
+
+
+<p>Here’s a good first attempt.&#160; This took all of about 5 minutes to accomplish.</p>
+
+
+<div><figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>[Authorize]&lt;span class="kwrd">public&lt;/span> ActionResult ChangePassword(&lt;span class="kwrd">string&lt;/span> currentPassword, &lt;span class="kwrd">string&lt;/span> newPassword, &lt;span class="kwrd">string&lt;/span> confirmPassword){ViewData[&lt;span class="str">&quot;Title&quot;&lt;/span>] = &lt;span class="str">&quot;Change Password&quot;&lt;/span>;ViewData[&lt;span class="str">&quot;PasswordLength&quot;&lt;/span>] = Provider.MinRequiredPasswordLength;&lt;span class="rem">// Non-POST requests should just display the ChangePassword form &lt;/span>&lt;span class="kwrd">if&lt;/span> (Request.HttpMethod != &lt;span class="str">&quot;POST&quot;&lt;/span>){&lt;span class="kwrd">return&lt;/span> View();}var errors = &lt;span class="kwrd">new&lt;/span> List&lt;&lt;span class="kwrd">string&lt;/span>&gt;();ValidatePassword(currentPassword, newPassword, confirmPassword, errors);&lt;span class="kwrd">if&lt;/span> (errors.Count == 0){&lt;span class="kwrd">const&lt;/span> &lt;span class="kwrd">bool&lt;/span> isOnline = &lt;span class="kwrd">true&lt;/span>;var currentUser = Provider.GetUser(User.Identity.Name, isOnline);&lt;span class="kwrd">if&lt;/span>( PerformPasswordChange(currentUser, currentPassword, newPassword)){&lt;span class="kwrd">return&lt;/span> RedirectToAction(&lt;span class="str">&quot;ChangePasswordSuccess&quot;&lt;/span>);}errors.Add(&lt;span class="str">&quot;The current password is incorrect or the new password is invalid.&quot;&lt;/span>); }&lt;span class="rem">// If we got this far, something failed, redisplay form&lt;/span>ViewData[&lt;span class="str">&quot;errors&quot;&lt;/span>] = errors;&lt;span class="kwrd">return&lt;/span> View();}&lt;span class="kwrd">private&lt;/span> &lt;span class="kwrd">bool&lt;/span> PerformPasswordChange(MembershipUser user, &lt;span class="kwrd">string&lt;/span> currentPassword, &lt;span class="kwrd">string&lt;/span> newPassword){&lt;span class="kwrd">try&lt;/span>{user.ChangePassword(currentPassword, newPassword);&lt;span class="kwrd">return&lt;/span> &lt;span class="kwrd">true&lt;/span>;}&lt;span class="kwrd">catch&lt;/span>{&lt;span class="kwrd">return&lt;/span> &lt;span class="kwrd">false&lt;/span>;}}&lt;span class="kwrd">private&lt;/span> &lt;span class="kwrd">void&lt;/span> ValidatePassword(&lt;span class="kwrd">string&lt;/span> currentPassword, &lt;span class="kwrd">string&lt;/span> newPassword, &lt;span class="kwrd">string&lt;/span> confirmPassword, ICollection&lt;&lt;span class="kwrd">string&lt;/span>&gt; errors){&lt;span class="kwrd">if&lt;/span> (String.IsNullOrEmpty(currentPassword)){errors.Add(&lt;span class="str">&quot;You must specify a current password.&quot;&lt;/span>);}&lt;span class="kwrd">if&lt;/span> (newPassword == &lt;span class="kwrd">null&lt;/span> || newPassword.Length &lt; Provider.MinRequiredPasswordLength){errors.Add(String.Format(CultureInfo.InvariantCulture,&lt;span class="str">&quot;You must specify a new password of {0} or more characters.&quot;&lt;/span>,Provider.MinRequiredPasswordLength));}&lt;span class="kwrd">if&lt;/span> (!String.Equals(newPassword, confirmPassword, StringComparison.Ordinal)){errors.Add(&lt;span class="str">&quot;The new password and confirmation password do not match.&quot;&lt;/span>);}}</div></code></pre></td></tr></table></div></figure></div>
+
+
+<p>This code (while still completely in the controller class) is broken apart into distinct methods.&#160; This reduces the line count on the action method to 26, which is much easier to swallow.&#160; I’m sure you see even more opportunities for improvement here.&#160; Some of this code probably belongs in another, completely separate class (one that is even more easily tested that this).</p>
+
+
+<p>My point is, always remember to include time for refactoring.&#160; Especially when the result of your work will stand for thousands to learn from.</p>
+
+</div>
+  <footer>
+    <a rel="full-article" href="/2008/07/controller-is-not-the-new-code-behind/">Read on &rarr;</a>
+  </footer>
+
+
+  </article>
+
+
+  <article>
+    
+  <header>
+    
       <h1 class="entry-title"><a href="/2008/07/net-dojo-free-hands-on-training-for-asp-net-mvc/">.NET Dojo - Free Hands on Training for ASP.NET MVC</a></h1>
     
     
@@ -773,39 +836,6 @@ on 1 of the database schema, so it could safely skip the script.&nbsp; This is d
 
   </article>
 
-
-  <article>
-    
-  <header>
-    
-      <h1 class="entry-title"><a href="/2008/05/alt-net-geek-dinner-recap/">ALT.NET Geek Dinner Recap</a></h1>
-    
-    
-      <p class="meta">
-
-
-
-
-<time datetime="2008-05-28 00:00:00 -0500" pubdate  updated >May 28<span>th</span>, 2008</time>
-
-
-</p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>The pizza was good and the conversation was even better.&nbsp; We had 9 people show up and we talked a lot about tech, Microsoft, Test Driven Development, and beer!</p>
-
-
-<p> <p>I brought up the subject of possibly organizing an ALT.NET Open Spaces conference here in Houston, and folks seemed interested.&nbsp; I&#8217;m a little frightened by the amount of work this will be, but in the end I think it will be worth it.&nbsp; We also decided on getting a google group setup, so if you&#8217;re in the Houston area (or just want to listen in) then join us at <a href="http://groups.google.com/group/houstonaltdotnet" target="_blank">http://groups.google.com/group/houstonaltdotnet</a>.&nbsp; We&#8217;ll use this for future planning.</p> <p>Unfortunately I forgot to take a picture of the group, whoops!&nbsp; I guess that just means we&#8217;ll have to meet again :)</p></p>
-</div>
-  <footer>
-    <a rel="full-article" href="/2008/05/alt-net-geek-dinner-recap/">Read on &rarr;</a>
-  </footer>
-
-
-  </article>
-
 <nav role="pagination">
   <div>
     
@@ -840,6 +870,10 @@ on 1 of the database schema, so it could safely skip the script.&nbsp; This is d
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2012/01/nsscreencasts/">NSScreencasts, Coming Soon</a>
+      </li>
+    
+      <li class="post">
         <a href="/2012/01/careful-with-block-based-notification-handlers/">Careful With Block-Based Notification Handlers</a>
       </li>
     
@@ -853,10 +887,6 @@ on 1 of the database schema, so it could safely skip the script.&nbsp; This is d
     
       <li class="post">
         <a href="/2011/10/appsites-is-now-appkickstand/">Appsites Is Now AppKickstand</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2011/10/sharing-vim-configuration-between-machines/">Sharing Vim Configuration Between Machines</a>
       </li>
     
   </ul>

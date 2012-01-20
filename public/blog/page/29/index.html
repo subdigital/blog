@@ -110,6 +110,61 @@
     
   <header>
     
+      <h1 class="entry-title"><a href="/2007/01/mcms-installation-woes/">MCMS Installation Woes</a></h1>
+    
+    
+      <p class="meta">
+
+
+
+
+<time datetime="2007-01-31 00:00:00 -0600" pubdate  updated >Jan 31<span>st</span>, 2007</time>
+
+
+</p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><font face="Arial" size="2"><span style="FONT-SIZE: 10pt; FONT-FAMILY: Arial">Installing MCMS 2002 SP1a on my laptop proved quite difficult this week.&nbsp; This is one product that Microsoft really did not focus on the install experience.</span></font></p>
+
+
+<p><font face="Arial" size="2"><span style="FONT-SIZE: 10pt; FONT-FAMILY: Arial"></span></font></p>
+
+
+<p><font face="Arial" size="2"><span style="FONT-SIZE: 10pt; FONT-FAMILY: Arial">I first tried to install it without Visual Studio 2003.&nbsp; It complained, so I got Visual Studio Installed.&nbsp; It also asked for the IE Web Controls, so I downloaded those, extracted it, and ran the build.bat file.&nbsp; I copied the sample app as directed and everything was working there.</span></font></p>
+
+
+<p><font face="Arial" size="2"><span style="FONT-SIZE: 10pt; FONT-FAMILY: Arial"></span></font></p>
+
+
+<p><font face="Arial" size="2"><span style="FONT-SIZE: 10pt; FONT-FAMILY: Arial">I didn&rsquo;t have SQL Server installed locally, so I didn&rsquo;t have SQL-DMO, but the installer didn&rsquo;t tell me how to get it.&nbsp; It kept complaining that I didn&rsquo;t have Visual Studio 2002, Visual Studio 2003, IE Web Controls, and SQL-DMO, when I clearly had 2 of those 4.</span></font></p>
+
+
+<p><font face="Arial" size="2"><span style="FONT-SIZE: 10pt; FONT-FAMILY: Arial"></span></font></p>
+
+
+<p><font face="Arial" size="2"><span style="FONT-SIZE: 10pt; FONT-FAMILY: Arial">I installed the SQL Client tools and that solved the SQL-DMO requirement.&nbsp; Then I found an MSI installer for IE Web Controls, and that did the trick there (apparently it doesn&rsquo;t REALLY check to see if you have it, it just checks the Add/Remove Programs section).&nbsp; Visual Studio 2002 isn&rsquo;t really required, the wording is just off on the installer.</span></font></p>
+
+
+<p><font face="Arial" size="2"><span style="FONT-SIZE: 10pt; FONT-FAMILY: Arial"></span></font></p>
+
+
+<p><font face="Arial" size="2"><span style="FONT-SIZE: 10pt; FONT-FAMILY: Arial">That was a waste of a day.&nbsp; I could have gotten much more accomplished if this installation had been easier.</span></font></p>
+
+</div>
+  <footer>
+    <a rel="full-article" href="/2007/01/mcms-installation-woes/">Read on &rarr;</a>
+  </footer>
+
+
+  </article>
+
+
+  <article>
+    
+  <header>
+    
       <h1 class="entry-title"><a href="/2007/01/nhibernate-in-action/">NHibernate in Action</a></h1>
     
     
@@ -580,49 +635,6 @@
 
   </article>
 
-
-  <article>
-    
-  <header>
-    
-      <h1 class="entry-title"><a href="/2006/12/christmas-with-family/">Christmas With Family</a></h1>
-    
-    
-      <p class="meta">
-
-
-
-
-<time datetime="2006-12-26 00:00:00 -0600" pubdate  updated >Dec 26<span>th</span>, 2006</time>
-
-
-</p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Silvia&rsquo;s family is in town, and it is a lot of fun to have so many kids in the house.&nbsp; They (9 people) drove down from upstate New York.&nbsp; It took them about 23 hours driving time and they were very tired when they arrived.</p>
-
-
-<p>On Christmas Eve, we all spent about 4 hours wrapping gifts and talking over coffee.&nbsp; It was fun, but we were all exhausted.</p>
-
-
-<p>We had presents for all of the children, and it was quite a sight!&nbsp; We probably had 80 presents under the tree.&nbsp; The morning arrived and the kids went crazy!&nbsp; There was wrapping paper everywhere, but I think everyone enjoyed their gifts.</p>
-
-
-<p>I received a Zune from Silvia, which I will write about next.</p>
-
-
-<p>Silvia&rsquo;s family will stay for our wedding, which happens this Saturday.</p>
-
-</div>
-  <footer>
-    <a rel="full-article" href="/2006/12/christmas-with-family/">Read on &rarr;</a>
-  </footer>
-
-
-  </article>
-
 <nav role="pagination">
   <div>
     
@@ -657,6 +669,10 @@
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2012/01/nsscreencasts/">NSScreencasts, Coming Soon</a>
+      </li>
+    
+      <li class="post">
         <a href="/2012/01/careful-with-block-based-notification-handlers/">Careful With Block-Based Notification Handlers</a>
       </li>
     
@@ -670,10 +686,6 @@
     
       <li class="post">
         <a href="/2011/10/appsites-is-now-appkickstand/">Appsites Is Now AppKickstand</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2011/10/sharing-vim-configuration-between-machines/">Sharing Vim Configuration Between Machines</a>
       </li>
     
   </ul>

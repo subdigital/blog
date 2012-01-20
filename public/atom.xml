@@ -4,13 +4,45 @@
   <title>Fickle Bits</title>
   <link href="http://benscheirman.com/atom.xml" rel="self"/>
   <link href="http://benscheirman.com/"/>
-  <updated>2012-01-11T23:10:53-06:00</updated>
+  <updated>2012-01-20T09:42:53-06:00</updated>
   <id>http://benscheirman.com/</id>
   <author>
     <name>Ben Scheirman</name>
     
   </author>
 
+  
+  <entry>
+    <title>NSScreencasts, Coming Soon</title>
+    <link href="http://benscheirman.com/2012/01/nsscreencasts/"/>
+    <updated>2012-01-19T22:47:00-06:00</updated>
+    <id>http://benscheirman.com/2012/01/nsscreencasts</id>
+    <content type="html">&lt;h2&gt;Bite-Sized Learning&lt;/h2&gt;
+
+&lt;p&gt;Video training is becoming a very common way to learn these days.  With &lt;a href=&quot;Tekpub&quot;&gt;http://tekpub.com&lt;/a&gt;, &lt;a href=&quot;Peepcode&quot;&gt;http://peepcode.com/&lt;/a&gt;, &lt;a href=&quot;Pluralsight&quot;&gt;http://pluralsight.com&lt;/a&gt;,
+&lt;a href=&quot;Code%20School&quot;&gt;http://codeschool.com&lt;/a&gt;, and many others, there are usually great productions to teach you any development topic that you'd want to learn about.&lt;/p&gt;
+
+&lt;p&gt;All of these services are great, however I'm becoming a fan of the smaller, more focused screencasts.  &lt;a href=&quot;Railscasts&quot;&gt;http://railscasts.com&lt;/a&gt;, for instance, has
+been &lt;em&gt;instrumental&lt;/em&gt; to my Rails learning development.  &lt;a href=&quot;Destroy%20all%20Software&quot;&gt;http://destroyallsoftware.com/&lt;/a&gt; teaches me new things every week.&lt;/p&gt;
+
+&lt;p&gt;Smaller videos like this are easier to digest, and are more focused on a single topic.  Like the &lt;a href=&quot;boiled%20frog&quot;&gt;http://en.wikipedia.org/wiki/Boiling_frog&lt;/a&gt;
+you eventually realize how far you've come on a topic, simply by watching regular videos.&lt;/p&gt;
+
+&lt;p&gt;iOS Development is an ever-changing landscape, with so many topic areas to cover, that a single training class or screencast series just
+can't teach you all of it.  Instead of trying to cover everything in depth (increasing the length of videos). I find it valuable to
+have smaller, focused tutorials that teach you one thing, and do it quickly and effectively.&lt;/p&gt;
+
+&lt;h2&gt;Introducing NSScreencast&lt;/h2&gt;
+
+&lt;p&gt;&lt;a href=&quot;NSScreencast&quot;&gt;http://nsscreencast.com&lt;/a&gt; will be launching soon and will feature regular bite-sized videos
+focused on a single topic related to Objective-C and building iOS applications.&lt;/p&gt;
+
+&lt;p&gt;NSScreencast &lt;em&gt;will&lt;/em&gt; include free videos. Down the road, a nominal paid subsribtion will unlock access to more content.&lt;/p&gt;
+
+&lt;p&gt;I still have lots to do before I release the first video, but if you like the idea, please sign up on
+the site to be notified when it launches. Thanks!&lt;/p&gt;
+</content>
+  </entry>
   
   <entry>
     <title>Careful With Block-Based Notification Handlers</title>
@@ -1563,36 +1595,6 @@ Here's to hoping the Xcode 4 continues to be improved. In the meantime, hope thi
 
 
 &lt;iframe width=&quot;560&quot; height=&quot;349&quot; src=&quot;http://www.youtube.com/embed/GIksgdjQ82g&quot; frameborder=&quot;0&quot; allowfullscreen&gt;&lt;/iframe&gt;
-
-</content>
-  </entry>
-  
-  <entry>
-    <title>Houston Code Camp - Call for Speakers</title>
-    <link href="http://benscheirman.com/2011/05/houston-code-camp-call-for-speakers/"/>
-    <updated>2011-05-25T00:00:00-05:00</updated>
-    <id>http://benscheirman.com/2011/05/houston-code-camp-call-for-speakers</id>
-    <content type="html">&lt;p&gt;I'm excited to announce the first annual &lt;a href=&quot;http://houstoncodecamp.com&quot; target=&quot;_blank&quot;&gt;Houston Code Camp 2011&lt;/a&gt;, happening on August 20th! The code camp is a one day conference on Saturday, held by developers - for developers. Here you'll find sessions on a multitude of platforms and of varying skill levels. Best of all? &lt;strong&gt;It's FREE&lt;/strong&gt;.&lt;/p&gt;
-
-
-&lt;p&gt;&lt;br /&gt;
-&lt;a href=&quot;http://houstoncodecamp.com&quot; target=&quot;_blank&quot;&gt;
-&lt;img src=&quot;http://benscheirman.com/images/logo_.jpg&quot;  alt=&quot;logo.jpg&quot;  /&gt;&lt;/a&gt;&lt;/p&gt;
-
-
-&lt;h4&gt;Call for speakers&lt;/h4&gt;
-
-
-&lt;p&gt;We're currently looking for speakers, so if you are interested in speaking please feel free to submit a session. We're interested in both veteran &amp;amp; novice speakers alike, as a code camp is the perfect opportunity to start speaking if it's something you've been wanting to do.&lt;/p&gt;
-
-
-&lt;h4&gt;Community Voting of Sessions&lt;/h4&gt;
-
-
-&lt;p&gt;We want this conference to be valuable to the community, so we're letting you vote for the sessions you'd like to see most. As registration draws near I'll announce more details on how this work.&lt;/p&gt;
-
-
-&lt;p&gt;Registration will open soon, but for now.... &lt;b&gt;save the date&lt;/b&gt;!&lt;/p&gt;
 
 </content>
   </entry>

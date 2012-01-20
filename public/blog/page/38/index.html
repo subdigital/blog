@@ -110,6 +110,39 @@
     
   <header>
     
+      <h1 class="entry-title"><a href="/2005/06/hdnug/">HDNUG</a></h1>
+    
+    
+      <p class="meta">
+
+
+
+
+<time datetime="2005-06-17 00:00:00 -0500" pubdate  updated >Jun 17<span>th</span>, 2005</time>
+
+
+</p>
+    
+  </header>
+
+
+  <div class="entry-content"><div style="clear:both;"></div>
+
+
+<p>I attended my first Houston Dot Net User Group meeting last night.It was a lot larger than I originally thought.Judging by their <a href="http://www.hdnug.org">crappy website</a> I would have never thought that they have been around for 3 years.I estimated about 120 people attended the meeting, which they said was their largest turn-out ever.<br /><br />Anyway, I enjoyed the presentation on Enterprise Library, but more enjoyed talking to my old buddy Moe Al-Kazzaz!I haven&#8217;t seen him since he graduated from UH last year.<br /><br />I also heard that Venkat is going to be speaking at HDNUG in August.Save me a seat for that talk!<div style="clear:both; padding-bottom: 0.25em;"></div></p>
+</div>
+  <footer>
+    <a rel="full-article" href="/2005/06/hdnug/">Read on &rarr;</a>
+  </footer>
+
+
+  </article>
+
+
+  <article>
+    
+  <header>
+    
       <h1 class="entry-title"><a href="/2005/06/devcon-2005-afterthoughts/">DevCon 2005 Afterthoughts</a></h1>
     
     
@@ -409,51 +442,6 @@
 
   </article>
 
-
-  <article>
-    
-  <header>
-    
-      <h1 class="entry-title"><a href="/2005/04/nhibernate-and-asp-net-part-2/">NHibernate and ASP.NET - Part 2</a></h1>
-    
-    
-      <p class="meta">
-
-
-
-
-<time datetime="2005-04-28 00:00:00 -0500" pubdate  updated >Apr 28<span>th</span>, 2005</time>
-
-
-</p>
-    
-  </header>
-
-
-  <div class="entry-content"><div style="clear:both;"></div>
-
-
-<p>After some toying around, I have my first object Saving/Updating/Deleting and using a GetAll method to bind to a Datagrid. All of this with about 5 or 6 lines of UI code!Yummy!<br /><br />I still have some design concerns to wrinkle out, though.Here&#8217;s how I have mine set up:<br /><br /><div id="code"></p>
-
-<div><figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
-</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>public class NHManager&lt;br />{&lt;br /> public NHManager()&lt;br /> {&lt;br /> &lt;span class="comments">//load config&lt;/span>&lt;br />&lt;br /> &lt;span class="comments">//create session factory&lt;/span>&lt;br /> }&lt;br />}</div></code></pre></td></tr></table></div></figure></div>
-
-
-<p></div><br /><br /><div id="code"></p>
-
-<div><figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
-</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>public abstract class BusinessBase&lt;br />{&lt;br />private static NHManager _mgr = null;&lt;br />[ThreadStatic()]&lt;br />protected static NHManager Manager&lt;br />{&lt;br />get &lt;br />{ &lt;br />if( _mgr == null) &lt;br />_mgr = new NHManager();&lt;br />return _mgr;&lt;br />}&lt;br />}&lt;br />&lt;br />private ISession _session = null;&lt;br />protected ISession CurrentSession&lt;br />{&lt;br />get&lt;br />{&lt;br />if( _session == null )&lt;br />{&lt;br />&lt;span class="comments">//see if context contains it&lt;/span>&lt;br />if( HttpContext.Current[NHSESSION] == null ) &lt;br />&lt;span class="comments">//key is a constant&lt;/span>&lt;br />{&lt;br />&lt;span class="comments">&lt;br />//this is the first access for this request, &lt;br />//load the object&lt;br />&lt;/span>&lt;br />_session = Manager.OpenSession();&lt;br />HttpContext.Current[NHSESSION] = _session;&lt;br />}&lt;br />else&lt;br />{&lt;br />&lt;span class="comments">//it exists in this request&lt;/span>&lt;br />_session = HttpContext.Current[NHSESSION] &lt;br />as ISession;&lt;br />}&lt;br />}&lt;br />&lt;span class="comments">//make sure it's connected&lt;/span>&lt;br />if(! _session.IsConnected)&lt;br />_session.ReConnect();&lt;br />return _session;&lt;br />}&lt;br />}&lt;br />}</div></code></pre></td></tr></table></div></figure></div>
-
-
-<p></div><br /><br />Is there anything glaringly wrong about the above sample?I am expecting a little flaming due to the [ThreadStatic()] in my ASP.NET Application, but is it really that bad since my manager object is WORM (Write Once Read Many) ???<br /><br />I welcome suggestions and comments (now that they will actually work :P )<div style="clear:both; padding-bottom: 0.25em;"></div></p>
-</div>
-  <footer>
-    <a rel="full-article" href="/2005/04/nhibernate-and-asp-net-part-2/">Read on &rarr;</a>
-  </footer>
-
-
-  </article>
-
 <nav role="pagination">
   <div>
     
@@ -488,6 +476,10 @@
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2012/01/nsscreencasts/">NSScreencasts, Coming Soon</a>
+      </li>
+    
+      <li class="post">
         <a href="/2012/01/careful-with-block-based-notification-handlers/">Careful With Block-Based Notification Handlers</a>
       </li>
     
@@ -501,10 +493,6 @@
     
       <li class="post">
         <a href="/2011/10/appsites-is-now-appkickstand/">Appsites Is Now AppKickstand</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2011/10/sharing-vim-configuration-between-machines/">Sharing Vim Configuration Between Machines</a>
       </li>
     
   </ul>

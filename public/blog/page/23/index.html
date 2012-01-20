@@ -110,6 +110,116 @@
     
   <header>
     
+      <h1 class="entry-title"><a href="/2007/08/elegant-asp-net-caching/">Elegant ASP.NET Caching</a></h1>
+    
+    
+      <p class="meta">
+
+
+
+
+<time datetime="2007-08-16 00:00:00 -0500" pubdate  updated >Aug 16<span>th</span>, 2007</time>
+
+
+</p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>So you have a central method that returns some common data, say for example US States.</p>
+
+
+<div style="FONT-SIZE: 10pt; BACKGROUND: white; COLOR: black; FONT-FAMILY: Courier New"><p style="MARGIN: 0px"><span style="COLOR: blue">public</span> <span style="COLOR: #2b91af">IList</span>&lt;<span style="COLOR: #2b91af">State</span>&gt; GetUsStates()</p><p style="MARGIN: 0px">{</p><p style="MARGIN: 0px">&nbsp;&nbsp;&nbsp; <span style="COLOR: #2b91af">List</span>&lt;<span style="COLOR: #2b91af">State</span>&gt; states = <span style="COLOR: blue">new</span> <span style="COLOR: #2b91af">List</span>&lt;<span style="COLOR: #2b91af">State</span>&gt;();</p><p style="MARGIN: 0px">&nbsp;&nbsp;&nbsp; <span style="COLOR: blue">using</span>(<span style="COLOR: #2b91af">IDataReader</span> dr = <span style="COLOR: #2b91af">DataAccess</span>.ExecuteReader(<span style="COLOR: #a31515">&#8220;SELECT * FROM US_STATES&#8221;</span>))</p><p style="MARGIN: 0px">&nbsp;&nbsp;&nbsp; {</p><p style="MARGIN: 0px">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="COLOR: #2b91af">State</span> theState = <span style="COLOR: #2b91af">State</span>.Fetch(dr);</p><p style="MARGIN: 0px">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; states.Add(theState);</p><p style="MARGIN: 0px">&nbsp;&nbsp;&nbsp; }</p><p style="MARGIN: 0px">&nbsp;</p><p style="MARGIN: 0px">&nbsp;&nbsp;&nbsp; <span style="COLOR: blue">return</span> states;</p><p style="MARGIN: 0px">}</p></div>
+
+
+<!--EndFragment-->
+
+
+<p>Pretty simple stuff, loop over a datareader, building &ldquo;State&rdquo; objects based on a row in the database.</p>
+
+
+<p>Well since this data hardly ever changes and is the same for every user, it is a prime target for caching.&nbsp; <em>(Psst, if you didn&rsquo;t know, caching can be one of the most effective performance tuning techniques you can perform &mdash; if done correctly).</em></p>
+
+
+<p>Now that we want to enable caching, we can create a little helper class that makes it a bit easier to work with&hellip;</p>
+
+
+<p><em>This is a watered down version of the cache API, but it solves 90% of the cases.</em></p>
+
+
+<div style="FONT-SIZE: 10pt; BACKGROUND: white; COLOR: black; FONT-FAMILY: Courier New"><p style="MARGIN: 0px"><span style="COLOR: blue">public</span> <span style="COLOR: blue">class</span> <span style="COLOR: #2b91af">CacheHelper</span></p><p style="MARGIN: 0px">{</p><p style="MARGIN: 0px">&nbsp;&nbsp;&nbsp; <span style="COLOR: blue">public</span> <span style="COLOR: blue">static</span> <span style="COLOR: blue">bool</span> ItemExists(<span style="COLOR: blue">string</span> key)</p><p style="MARGIN: 0px">&nbsp;&nbsp;&nbsp; {</p><p style="MARGIN: 0px">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="COLOR: blue">return</span> <span style="COLOR: #2b91af">HttpContext</span>.Current.Cache[key] != <span style="COLOR: blue">null</span>;</p><p style="MARGIN: 0px">&nbsp;&nbsp;&nbsp; }</p><p style="MARGIN: 0px">&nbsp;</p><p style="MARGIN: 0px">&nbsp;&nbsp;&nbsp; <span style="COLOR: blue">public</span> <span style="COLOR: blue">static</span> <span style="COLOR: blue">void</span> Insert(<span style="COLOR: blue">string</span> key, <span style="COLOR: blue">object</span> obj)</p><p style="MARGIN: 0px">&nbsp;&nbsp;&nbsp; {</p><p style="MARGIN: 0px">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="COLOR: #2b91af">TimeSpan</span> oneHour = <span style="COLOR: blue">new</span> <span style="COLOR: #2b91af">TimeSpan</span>(1,0,0);</p><p style="MARGIN: 0px">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; Insert(key, obj, oneHour);</p><p style="MARGIN: 0px">&nbsp;&nbsp;&nbsp; }</p><p style="MARGIN: 0px">&nbsp;</p><p style="MARGIN: 0px">&nbsp;&nbsp;&nbsp; <span style="COLOR: blue">public</span> <span style="COLOR: blue">static</span> <span style="COLOR: blue">void</span> Insert(<span style="COLOR: blue">string</span> key, <span style="COLOR: blue">object</span> obj, <span style="COLOR: #2b91af">TimeSpan</span> span)</p><p style="MARGIN: 0px">&nbsp;&nbsp;&nbsp; {</p><p style="MARGIN: 0px">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="COLOR: #2b91af">HttpContext</span>.Current.Cache.Add(</p><p style="MARGIN: 0px">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; key, </p><p style="MARGIN: 0px">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; obj, </p><p style="MARGIN: 0px">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="COLOR: blue">null</span>, <span style="COLOR: green">//no dependencies</span></p><p style="MARGIN: 0px">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="COLOR: #2b91af">DateTime</span>.Now.Add(span), </p><p style="MARGIN: 0px">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="COLOR: #2b91af">Cache</span>.NoSlidingExpiration, </p><p style="MARGIN: 0px">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="COLOR: #2b91af">CacheItemPriority</span>.Normal, </p><p style="MARGIN: 0px">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="COLOR: blue">null</span> <span style="COLOR: green">//no remove callback</span></p><p style="MARGIN: 0px">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; );</p><p style="MARGIN: 0px">&nbsp;&nbsp;&nbsp; }</p><p style="MARGIN: 0px">&nbsp;</p><p style="MARGIN: 0px">&nbsp;&nbsp;&nbsp; <span style="COLOR: blue">public</span> <span style="COLOR: blue">static</span> T Retrieve&lt;T&gt;(<span style="COLOR: blue">string</span> key)</p><p style="MARGIN: 0px">&nbsp;&nbsp;&nbsp; {</p><p style="MARGIN: 0px">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="COLOR: blue">return</span> (T)<span style="COLOR: #2b91af">HttpContext</span>.Current.Cache[key];</p><p style="MARGIN: 0px">&nbsp;&nbsp;&nbsp; }</p><p style="MARGIN: 0px">}</p></div>
+
+
+<!--EndFragment-->
+
+
+<p>Now that we have the utility methods in place, we can alter our US States function to enable caching:</p>
+
+
+<div style="FONT-SIZE: 10pt; BACKGROUND: white; COLOR: black; FONT-FAMILY: Courier New"><p style="MARGIN: 0px"><span style="COLOR: blue">public</span> <span style="COLOR: #2b91af">IList</span>&lt;<span style="COLOR: #2b91af">State</span>&gt; GetUsStates()</p><p style="MARGIN: 0px">{</p><p style="MARGIN: 0px">&nbsp;&nbsp;&nbsp; <span style="COLOR: blue">string</span> statesKey = <span style="COLOR: #a31515">&#8220;US_STATES&#8221;</span>;</p><p style="MARGIN: 0px">&nbsp;&nbsp;&nbsp; <span style="COLOR: blue">if</span> (!<span style="COLOR: #2b91af">CacheHelper</span>.ItemExists(statesKey))</p><p style="MARGIN: 0px">&nbsp;&nbsp;&nbsp; {</p><p style="MARGIN: 0px">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="COLOR: green">//add it</span></p><p style="MARGIN: 0px">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="COLOR: #2b91af">List</span>&lt;<span style="COLOR: #2b91af">State</span>&gt; states = <span style="COLOR: blue">new</span> <span style="COLOR: #2b91af">List</span>&lt;<span style="COLOR: #2b91af">State</span>&gt;();</p><p style="MARGIN: 0px">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="COLOR: blue">using</span> (<span style="COLOR: #2b91af">IDataReader</span> dr = <span style="COLOR: #2b91af">DataAccess</span>.ExecuteReader(<span style="COLOR: #a31515">&#8220;SELECT * FROM US_STATES&#8221;</span>))</p><p style="MARGIN: 0px">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; {</p><p style="MARGIN: 0px">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="COLOR: #2b91af">State</span> theState = <span style="COLOR: #2b91af">State</span>.Fetch(dr);</p><p style="MARGIN: 0px">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; states.Add(theState);</p><p style="MARGIN: 0px">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; }</p><p style="MARGIN: 0px">&nbsp;</p><p style="MARGIN: 0px">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="COLOR: #2b91af">CacheHelper</span>.Insert(statesKey, states);</p><p style="MARGIN: 0px">&nbsp;&nbsp;&nbsp; }</p><p style="MARGIN: 0px">&nbsp;</p><p style="MARGIN: 0px">&nbsp;&nbsp;&nbsp; <span style="COLOR: green">//now it definitely exists in cache</span></p><p style="MARGIN: 0px">&nbsp;&nbsp;&nbsp; <span style="COLOR: blue">return</span> <span style="COLOR: #2b91af">CacheHelper</span>.Retrieve&lt;<span style="COLOR: #2b91af">IList</span>&lt;<span style="COLOR: #2b91af">State</span>&gt;&gt;(statesKey);</p><p style="MARGIN: 0px">}</p></div
+>
+
+
+<!--EndFragment-->
+
+
+<p>This code quickly gets repetetive and ugly, but it gets the job done.&nbsp; How can we do better?</p>
+
+
+<p>We need to be able to provide the <em>means</em> of getting the data, but without actually executing it every time.&nbsp; This sounds like a good use for a delegate!</p>
+
+
+<p>In our CacheHelper class we define the delegate:</p>
+
+
+<div style="FONT-SIZE: 10pt; BACKGROUND: white; COLOR: black; FONT-FAMILY: Courier New"><p style="MARGIN: 0px">&nbsp;<span style="COLOR: blue">public</span> <span style="COLOR: blue">delegate</span> <span style="COLOR: blue">object</span> <span style="COLOR: #2b91af">RetrieveDelegate</span>();</p></div>
+
+
+<!--EndFragment-->
+
+
+<p>It&rsquo;s just a method signature that returns an object.</p>
+
+
+<p>Then we define another method that will first check the cache, and execute the delegate if the data is not there:</p>
+
+
+<div style="FONT-SIZE: 10pt; BACKGROUND: white; COLOR: black; FONT-FAMILY: Courier New"><p style="MARGIN: 0px"><span style="COLOR: blue">public</span> <span style="COLOR: blue">static</span> T GetAndCache(<span style="COLOR: blue">string</span> key, <span style="COLOR: #2b91af">RetrieveDelegate</span> retrieveObject, <span style="COLOR: #2b91af">TimeSpan</span> span)</p><p style="MARGIN: 0px">{</p><p style="MARGIN: 0px">&nbsp;&nbsp;&nbsp; <span style="COLOR: blue">if</span> (!ItemExists(key))</p><p style="MARGIN: 0px">&nbsp;&nbsp;&nbsp; {</p><p style="MARGIN: 0px">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="COLOR: blue">object</span> value = retrieveObject(); <span style="COLOR: green">//this makes the call to the database</span></p><p style="MARGIN: 0px">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; Insert(key, value, span);</p><p style="MARGIN: 0px">&nbsp;&nbsp;&nbsp; }</p><p style="MARGIN: 0px">&nbsp;</p><p style="MARGIN: 0px">&nbsp;&nbsp;&nbsp; <span style="COLOR: blue">return</span> Retrieve&lt;T&gt;(key);</p><p style="MARGIN: 0px">}</p></div>
+
+
+<!--EndFragment-->
+
+
+<p>Now we have a method that can be smart about caching, but it is completely agnostic of what data to cache.&nbsp; Now we can refactor our GetStates() method to this:</p>
+
+
+<div style="FONT-SIZE: 10pt; BACKGROUND: white; COLOR: black; FONT-FAMILY: Courier New"><p style="MARGIN: 0px"><span style="COLOR: blue">public</span> <span style="COLOR: #2b91af">IList</span>&lt;<span style="COLOR: #2b91af">State</span>&gt; GetUsStates()</p><p style="MARGIN: 0px">{</p><p style="MARGIN: 0px">&nbsp;&nbsp;&nbsp; <span style="COLOR: blue">return</span> <span style="COLOR: #2b91af">CacheHelper</span>.GetAndCache&lt;<span style="COLOR: #2b91af">IList</span>&lt;<span style="COLOR: #2b91af">State</span>&gt;&gt;(</p><p style="MARGIN: 0px">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="COLOR: #a31515">&#8220;US_STATES&#8221;</span>,</p><p style="MARGIN: 0px">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="COLOR: blue">delegate</span> {</p><p style="MARGIN: 0px">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="COLOR: #2b91af">List</span>&lt;<span style="COLOR: #2b91af">State</span>&gt; states = <span style="COLOR: blue">new</span> <span style="COLOR: #2b91af">List</span>&lt;<span style="COLOR: #2b91af">State</span>&gt;();</p><p style="MARGIN: 0px">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="COLOR: blue">using</span> (<span style="COLOR: #2b91af">IDataReader</span> dr = <span style="COLOR: #2b91af">DataAccess</span>.ExecuteReader(<span style="COLOR: #a31515">&#8220;SELECT * FROM US_STATES&#8221;</span>))</p><p style="MARGIN: 0px">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; {</p><p style="MARGIN: 0px">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="COLOR: #2b91af">State</span> theState = <span style="COLOR: #2b91af">State</span>.Fetch(dr);</p><p style="MARGIN: 0px">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; states.Add(theState);</p><p style="MARGIN: 0px">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; }</p><p style="MARGIN: 0px">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="COLOR: blue">return</span> states;</p><p style="MARGIN: 0px">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; },</p><p style="MARGIN: 0px">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="COLOR: #2b91af">TimeSpan</span>.FromDays(1));</p><p style="MARGIN: 0px">}</p></div>
+
+
+<!--EndFragment-->
+
+
+<p>We only have to interact with the CacheHelper once, thus we only use the cache key once as well.&nbsp; There are no if statements here either.&nbsp; Just a single function call that excepts an anonymous method.</p>
+
+
+<p>This is pretty clean and it makes caching in your application easier.&nbsp; What do you think?&nbsp; Do you have any ideas for improvement?&nbsp; Let&rsquo;s hear in the comments!</p>
+
+
+<div class="bjtags">Tags:<a rel="tag" href="http://technorati.com/tag/ASP.NET">ASP.NET</a>, <a rel="tag" href="http://technorati.com/tag/Cache">Cache</a></div>
+
+</div>
+  <footer>
+    <a rel="full-article" href="/2007/08/elegant-asp-net-caching/">Read on &rarr;</a>
+  </footer>
+
+
+  </article>
+
+
+  <article>
+    
+  <header>
+    
       <h1 class="entry-title"><a href="/2007/08/see-you-at-houston-tech-fest/">See You at Houston Tech Fest</a></h1>
     
     
@@ -558,46 +668,6 @@ N: 0px">}</p></div>
 
   </article>
 
-
-  <article>
-    
-  <header>
-    
-      <h1 class="entry-title"><a href="/2007/08/how-does-youtube-handle-it/">How Does YouTube Handle It?</a></h1>
-    
-    
-      <p class="meta">
-
-
-
-
-<time datetime="2007-08-02 00:00:00 -0500" pubdate  updated >Aug 2<span>nd</span>, 2007</time>
-
-
-</p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>I ran across an excellent read about how YouTube&#8217;s architecture handles so much bandwidth and traffic.</p>
-
-
-<p>The core of it is:</p>
-
-
-<ul><li>SuSe Linux</li><li>Apache + lighttpd (for videos only)</li><li>Python + C extensions for expensive operations</li><li>Lots of caching</li></ul>
-
-
-<p>Many more points to read, but a great reference indeed.&nbsp; Check it out here:&nbsp; <a href="http://highscalability.com/youtube-architecture" target="_blank">http://highscalability.com/youtube-architecture</a>.</p>
-
-</div>
-  <footer>
-    <a rel="full-article" href="/2007/08/how-does-youtube-handle-it/">Read on &rarr;</a>
-  </footer>
-
-
-  </article>
-
 <nav role="pagination">
   <div>
     
@@ -632,6 +702,10 @@ N: 0px">}</p></div>
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2012/01/nsscreencasts/">NSScreencasts, Coming Soon</a>
+      </li>
+    
+      <li class="post">
         <a href="/2012/01/careful-with-block-based-notification-handlers/">Careful With Block-Based Notification Handlers</a>
       </li>
     
@@ -645,10 +719,6 @@ N: 0px">}</p></div>
     
       <li class="post">
         <a href="/2011/10/appsites-is-now-appkickstand/">Appsites Is Now AppKickstand</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2011/10/sharing-vim-configuration-between-machines/">Sharing Vim Configuration Between Machines</a>
       </li>
     
   </ul>

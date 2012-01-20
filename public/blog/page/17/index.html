@@ -110,6 +110,49 @@
     
   <header>
     
+      <h1 class="entry-title"><a href="/2008/02/case-insensitive-string-comparison-is-teh-suck/">Case Insensitive String Comparison Is Teh Suck</a></h1>
+    
+    
+      <p class="meta">
+
+
+
+
+<time datetime="2008-02-29 00:00:00 -0600" pubdate  updated >Feb 29<span>th</span>, 2008</time>
+
+
+</p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Why is it so verbose to compare two strings in C# and see if they are equal, while ignoring case?<br><br>What I mean is this:&nbsp; <b><i>(&#8220;Apples&#8221; == &#8220;apples&#8221;)&nbsp; =&gt; false</i></b><br><br>Take the following examples, each of which does what I want it to, however <b>there is so much noise code here</b> that it really takes away from the readability of the code:<br><br></p>
+
+<div><figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>&lt;span style="color: Black; background-color: transparent; font-family: Courier New; font-size: 11px;">Assert.That(matches[0].Email.Equals(email, StringComparison.InvariantCultureIgnoreCase));&lt;br>Assert.That(matches[0].Email.ToLower().Equals(email.ToLower()));&lt;br>Assert.That(&lt;span style="color: Blue; background-color: transparent; font-family: Courier New; font-size: 11px;">string&lt;/span>.Compare(matches[0].Email, email) == 0);&lt;br>Assert.That(Regex.Match(matches[0].Email, email, RegexOptions.IgnoreCase).Success);&lt;/span></div></code></pre></td></tr></table></div></figure></div>
+
+
+<br>Each one of these works, but I really wish this was a language feature.&nbsp; Wouldn&#8217;t it be nice to have a new operator syntax?<br>
+
+
+<div><figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>&lt;span style="color: Black; background-color: transparent; font-family: Courier New; font-size: 11px;">Assert.That(matches[0].Email ==? email);&lt;br>//or&lt;br>Assert.That(matches[0].Email ==~ email);&lt;/span></div></code></pre></td></tr></table></div></figure></div>
+
+
+<p><b>It turns out that we&#8217;re not alone.</b>&nbsp; Ruby and Python have the same problem, however their regular expressions option is much more elegant looking (due to the languages having regex as a core feature).&nbsp; This seems like such a common need that I&#8217;m surprised that this type of thing isn&#8217;t built into the core of most languages.<br><br>Granted, there are concerns about how each one of these would behave, for example, how do you compare strings from two different cultures?&nbsp; In my case I&#8217;m always dealing with English characters, but I fully understand the need to support internationalization.<br><br>What do you think?&nbsp; Would you welcome a new operator to save your self some typing and improve readability?<br><p></p></p>
+</div>
+  <footer>
+    <a rel="full-article" href="/2008/02/case-insensitive-string-comparison-is-teh-suck/">Read on &rarr;</a>
+  </footer>
+
+
+  </article>
+
+
+  <article>
+    
+  <header>
+    
       <h1 class="entry-title"><a href="/2008/02/windows-not-recognizing-free-space/">Windows Not Recognizing Free Space</a></h1>
     
     
@@ -530,86 +573,6 @@
 
   </article>
 
-
-  <article>
-    
-  <header>
-    
-      <h1 class="entry-title"><a href="/2008/01/testing-tempdata-in-asp-net-mvc/">Testing TempData in ASP.NET MVC</a></h1>
-    
-    
-      <p class="meta">
-
-
-
-
-<time datetime="2008-01-30 00:00:00 -0600" pubdate  updated >Jan 30<span>th</span>, 2008</time>
-
-
-</p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Eventually when testing your controllers you will come across an action that sets TempData.</p>
-
-
-<p>If you didn’t know, TempData is a session-backed temporary storage dictionary that is available for one single request.&nbsp; It’s great to pass messages between controllers.</p>
-
-
-<p>Our Controller classes that we derive from have this as a member property.&nbsp; However, when testing the controller, this always came up as null.</p>
-
-
-<p>Reflector is our friend here, so I fired it up and loaded the Controller class.&nbsp; Then I located the TempData member, and looked at the setter.&nbsp; It’s marked as internal, so somebody inside this assembly is responsible for creating it.&nbsp; By using the Reflector Analyze feature, I was able to find exactly where the setter is called.&nbsp; It’s in the Execute() method.&nbsp; (this is the general “pipeline” method that all `IController` implementations must override)</p>
-
-
-<p>Think about that for a second.&nbsp; At runtime, the TempData dictionary is set because all requests flow through `Execute()`.&nbsp; But in my test, I am specifically calling my action method.&nbsp; There is no `Execute()` in my test.</p>
-
-
-<p>To top it off, I can’t set this guy to a new TempDataDictionary because the setter is marked as internal.</p>
-
-
-<p><a href="http://haacked.com/" target="_blank">Phil Haack</a> tells me they’re working on this issue so we’ll likely see an improvement soon.&nbsp; In the meantime you can get around the issue by using reflection to set the value.&nbsp; But first, can we create one?</p>
-
-
-<p>TempData is stored in session, so it needs a reference to IHttpContext.&nbsp; Thankfully, we can mock this, however we have to make sure and mock the right parts.</p>
-
-
-<p>First, create a mock for IHttpContext, create the return values for mocked IHttpRequest &amp; IHttpResponse.&nbsp; Finally setup return values for IHttpSession as well.&nbsp; I’ve done all of this in a helper method of my test (though it could be an extention method on the MockRepository ala Phil, but whatever you like).</p>
-
-
-<p>&#8220;</p>
-
-
-<div><figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
-</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>private IHttpContext GetHttpContext(string requestUrl){  IHttpRequest request = _mocks.DynamicMock&lt;IHttpRequest&gt;();    SetupResult.For(request.Url).Return(new Uri(requestUrl));   IHttpResponse response = _mocks.DynamicMock&lt;IHttpResponse&gt;(); IHttpSessionState session = _mocks.DynamicMock&lt;IHttpSessionState&gt;();IHttpContext httpContext = _mocks.DynamicMock&lt;IHttpContext&gt;();  SetupResult.For(httpContext.Session).Return(session);   SetupResult.For(httpContext.Request).Return(request);   SetupResult.For(httpContext.Response).Return(response);_mocks.Replay(request);_mocks.Replay(response);_mocks.Replay(httpContext);&lt;br>&lt;br>_tempData = new TempDataDictionary(httpContext);&lt;br>SetupResult.For(session[null]).IgnoreArguments().Return(_tempData);           &lt;br>_mocks.Replay(session);&lt;br>&lt;br> &nbsp;return httpContext;}</div></code></pre></td></tr></table></div></figure></div>
-
-
-<p></p>
-
-
-<p>This code is a little verbose, but this is something you write once and use in all of your tests. You should notice that the `_tempData` property is a local field on my test class. I can then take this `_tempData` variable and inject it (via reflection) onto the controller under test. Here&#8217;s how:</p>
-
-
-<p>&#8220;</p>
-
-<div><figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
-</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>typeof(FooController).GetProperty("TempData").SetValue(controller, _tempData, null);</div></code></pre></td></tr></table></div></figure></div>
-
-
-<p>And now we can easily test that messages are set in TempData before redirecting or rendering a view.</p>
-
-
-<p><b>*update*:&nbsp; Will Shaver notified me of a typo in the code.&nbsp; It has been fixed.&nbsp; Thanks Will!*</b><br></p>
-
-</div>
-  <footer>
-    <a rel="full-article" href="/2008/01/testing-tempdata-in-asp-net-mvc/">Read on &rarr;</a>
-  </footer>
-
-
-  </article>
-
 <nav role="pagination">
   <div>
     
@@ -644,6 +607,10 @@
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2012/01/nsscreencasts/">NSScreencasts, Coming Soon</a>
+      </li>
+    
+      <li class="post">
         <a href="/2012/01/careful-with-block-based-notification-handlers/">Careful With Block-Based Notification Handlers</a>
       </li>
     
@@ -657,10 +624,6 @@
     
       <li class="post">
         <a href="/2011/10/appsites-is-now-appkickstand/">Appsites Is Now AppKickstand</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2011/10/sharing-vim-configuration-between-machines/">Sharing Vim Configuration Between Machines</a>
       </li>
     
   </ul>

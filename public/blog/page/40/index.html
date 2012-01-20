@@ -110,6 +110,39 @@
     
   <header>
     
+      <h1 class="entry-title"><a href="/2005/02/asp-net-enterprise-environment/">ASP.NET Enterprise Environment</a></h1>
+    
+    
+      <p class="meta">
+
+
+
+
+<time datetime="2005-02-12 00:00:00 -0600" pubdate  updated >Feb 12<span>th</span>, 2005</time>
+
+
+</p>
+    
+  </header>
+
+
+  <div class="entry-content"><div style="clear:both;"></div>
+
+
+<p>I have been reading a lot about agile practices lately, sopping up as much information I can get my hands on.I&#8217;m hooked.I knew immediately that these practices would benefit me at work.The problem is that these are geared towards general development.Web development is slightly different, and it poses some problems with source control, unit testing, and other things&#8230;<br /><br />For source control I setup Subversion on our test server, then installed Apache to serve up the repository over http.It uses WebDAV and Apache permissions to identify the user.As many people know, the subversion admin directory (.svn) doesn&#8217;t play well with Visual Studio .NET Web projects.I think it has something to do with FrontPage server extensions, but whatever.Anyway, there is a modified version of <a href="http://tortoisesvn.tigris.org">TortoiseSVN</a> availalable that can convert this to a more friendly (<em>svn) directory.Beware of using this though&#8230; other tools will not work if you use this method.For Visual Studio integration I am using AnkhSVN (which you can configure to use </em>svn directories).This works very well, however it&#8217;s still not idea.Here&#8217;s why:<br />I frequently run into commit conflicts on my .dlls, .suo, and .pdb files.This really doesn&#8217;t matter since the .dll&#8217;s will be recompiled, but it gets quite annoying.I&#8217;m really looking on a better way to manage my directory structure to easily omit these files from the source control. (I&#8217;m thinking that NAnt may help me setup a different structure, but I haven&#8217;t messed around with it yet)<br /><br />For unit tests, it&#8217;s quite difficult to implement in a web environment (at least it appears to be).One thing I quickly realized is that most of our logic was residing directly in the page.Obviously, this is not desirable so I started work on a robust class library (which is coming along quite nicely now).But how do I write unit tests for code that inserts data into a database?Should I insert, then check to see if the data was inserted?I can easily see this doubling my work. Almost ALL of my code is database interaction.<br /><br />I have also started configuring CruiseControl.NET to do some continuous integration on my repository.This is waiting on a few other factors, but is the next step in improving my development environment at work.<br /><br />I know I&#8217;m on the right track, but I am not finding enough good resources specific to ASP.NET development with architecture, directory structures.I&#8217;d love any advice on how to improve in these areas, maybe some book recommendations&#8230;.Thanks!<div style="clear:both; padding-bottom: 0.25em;"></div></p>
+</div>
+  <footer>
+    <a rel="full-article" href="/2005/02/asp-net-enterprise-environment/">Read on &rarr;</a>
+  </footer>
+
+
+  </article>
+
+
+  <article>
+    
+  <header>
+    
       <h1 class="entry-title"><a href="/2005/01/pass-phrases-are-the-new-thing/">Pass-Phrases Are the New Thing</a></h1>
     
     
@@ -236,6 +269,10 @@
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2012/01/nsscreencasts/">NSScreencasts, Coming Soon</a>
+      </li>
+    
+      <li class="post">
         <a href="/2012/01/careful-with-block-based-notification-handlers/">Careful With Block-Based Notification Handlers</a>
       </li>
     
@@ -249,10 +286,6 @@
     
       <li class="post">
         <a href="/2011/10/appsites-is-now-appkickstand/">Appsites Is Now AppKickstand</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2011/10/sharing-vim-configuration-between-machines/">Sharing Vim Configuration Between Machines</a>
       </li>
     
   </ul>

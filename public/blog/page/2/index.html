@@ -110,6 +110,59 @@
     
   <header>
     
+      <h1 class="entry-title"><a href="/2011/08/vim---could-not-invoke-jslint/">Vim - Could Not Invoke JSLint</a></h1>
+    
+    
+      <p class="meta">
+
+
+
+
+<time datetime="2011-08-26 08:59:00 -0500" pubdate  updated >Aug 26<span>th</span>, 2011</time>
+
+
+</p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>If you&#8217;re running MacVim with Janus and have upgraded to Lion, you may
+have noticed a little error when you open JavaScript files:</p>
+
+<blockquote><p>Error detected while processing function 87_JSLint:
+Line 33:
+could not invoke JSLint!</p></blockquote>
+
+<p>It seems many are having <a href="https://github.com/hallettj/jslint.vim/issues/13">this issue</a>.  There are 2 things to check:</p>
+
+<ol>
+<li>Make sure you have Node in your path.  Confirm this by typing <code>which
+node</code> and make sure it resolves a binary somewhere on your system.</li>
+<li>Open up your <code>~/.vimrc.local</code> and add this command:</li>
+</ol>
+
+
+<figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+<span class='line'>2</span>
+</pre></td><td class='code' width='100%'><pre><code class='vim'><div class='line'><span class="c">&quot; Use Node.js for JavaScript interpretation</span>
+</div><div class='line'><span class="k">let</span> $JS_CMD<span class="p">=</span><span class="s1">&#39;node&#39;</span>
+</div></code></pre></td></tr></table></div></figure>
+
+<p>Kudos to <a href="http://github.com/eventualbuddha">eventualbuddha</a> for
+figuring this out.</p>
+</div>
+  <footer>
+    <a rel="full-article" href="/2011/08/vim---could-not-invoke-jslint/">Read on &rarr;</a>
+  </footer>
+
+
+  </article>
+
+
+  <article>
+    
+  <header>
+    
       <h1 class="entry-title"><a href="/2011/08/is-rails-exempt-from-software-principles/">Is Rails Exempt?</a></h1>
     
     
@@ -1052,57 +1105,6 @@ Here&#8217;s to hoping the Xcode 4 continues to be improved. In the meantime, ho
 
   </article>
 
-
-  <article>
-    
-  <header>
-    
-      <h1 class="entry-title"><a href="/2011/05/houston-code-camp-call-for-speakers/">Houston Code Camp - Call for Speakers</a></h1>
-    
-    
-      <p class="meta">
-
-
-
-
-<time datetime="2011-05-25 00:00:00 -0500" pubdate  updated >May 25<span>th</span>, 2011</time>
-
-
-</p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>I&#8217;m excited to announce the first annual <a href="http://houstoncodecamp.com" target="_blank">Houston Code Camp 2011</a>, happening on August 20th! The code camp is a one day conference on Saturday, held by developers - for developers. Here you&#8217;ll find sessions on a multitude of platforms and of varying skill levels. Best of all? <strong>It&#8217;s FREE</strong>.</p>
-
-
-<p><br />
-<a href="http://houstoncodecamp.com" target="_blank">
-<img src="/images/logo_.jpg"  alt="logo.jpg"  /></a></p>
-
-
-<h4>Call for speakers</h4>
-
-
-<p>We&#8217;re currently looking for speakers, so if you are interested in speaking please feel free to submit a session. We&#8217;re interested in both veteran &amp; novice speakers alike, as a code camp is the perfect opportunity to start speaking if it&#8217;s something you&#8217;ve been wanting to do.</p>
-
-
-<h4>Community Voting of Sessions</h4>
-
-
-<p>We want this conference to be valuable to the community, so we&#8217;re letting you vote for the sessions you&#8217;d like to see most. As registration draws near I&#8217;ll announce more details on how this work.</p>
-
-
-<p>Registration will open soon, but for now&#8230;. <b>save the date</b>!</p>
-
-</div>
-  <footer>
-    <a rel="full-article" href="/2011/05/houston-code-camp-call-for-speakers/">Read on &rarr;</a>
-  </footer>
-
-
-  </article>
-
 <nav role="pagination">
   <div>
     
@@ -1137,6 +1139,10 @@ Here&#8217;s to hoping the Xcode 4 continues to be improved. In the meantime, ho
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2012/01/nsscreencasts/">NSScreencasts, Coming Soon</a>
+      </li>
+    
+      <li class="post">
         <a href="/2012/01/careful-with-block-based-notification-handlers/">Careful With Block-Based Notification Handlers</a>
       </li>
     
@@ -1150,10 +1156,6 @@ Here&#8217;s to hoping the Xcode 4 continues to be improved. In the meantime, ho
     
       <li class="post">
         <a href="/2011/10/appsites-is-now-appkickstand/">Appsites Is Now AppKickstand</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2011/10/sharing-vim-configuration-between-machines/">Sharing Vim Configuration Between Machines</a>
       </li>
     
   </ul>

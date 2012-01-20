@@ -110,6 +110,86 @@
     
   <header>
     
+      <h1 class="entry-title"><a href="/2008/01/testing-tempdata-in-asp-net-mvc/">Testing TempData in ASP.NET MVC</a></h1>
+    
+    
+      <p class="meta">
+
+
+
+
+<time datetime="2008-01-30 00:00:00 -0600" pubdate  updated >Jan 30<span>th</span>, 2008</time>
+
+
+</p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Eventually when testing your controllers you will come across an action that sets TempData.</p>
+
+
+<p>If you didn’t know, TempData is a session-backed temporary storage dictionary that is available for one single request.&nbsp; It’s great to pass messages between controllers.</p>
+
+
+<p>Our Controller classes that we derive from have this as a member property.&nbsp; However, when testing the controller, this always came up as null.</p>
+
+
+<p>Reflector is our friend here, so I fired it up and loaded the Controller class.&nbsp; Then I located the TempData member, and looked at the setter.&nbsp; It’s marked as internal, so somebody inside this assembly is responsible for creating it.&nbsp; By using the Reflector Analyze feature, I was able to find exactly where the setter is called.&nbsp; It’s in the Execute() method.&nbsp; (this is the general “pipeline” method that all `IController` implementations must override)</p>
+
+
+<p>Think about that for a second.&nbsp; At runtime, the TempData dictionary is set because all requests flow through `Execute()`.&nbsp; But in my test, I am specifically calling my action method.&nbsp; There is no `Execute()` in my test.</p>
+
+
+<p>To top it off, I can’t set this guy to a new TempDataDictionary because the setter is marked as internal.</p>
+
+
+<p><a href="http://haacked.com/" target="_blank">Phil Haack</a> tells me they’re working on this issue so we’ll likely see an improvement soon.&nbsp; In the meantime you can get around the issue by using reflection to set the value.&nbsp; But first, can we create one?</p>
+
+
+<p>TempData is stored in session, so it needs a reference to IHttpContext.&nbsp; Thankfully, we can mock this, however we have to make sure and mock the right parts.</p>
+
+
+<p>First, create a mock for IHttpContext, create the return values for mocked IHttpRequest &amp; IHttpResponse.&nbsp; Finally setup return values for IHttpSession as well.&nbsp; I’ve done all of this in a helper method of my test (though it could be an extention method on the MockRepository ala Phil, but whatever you like).</p>
+
+
+<p>&#8220;</p>
+
+
+<div><figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>private IHttpContext GetHttpContext(string requestUrl){  IHttpRequest request = _mocks.DynamicMock&lt;IHttpRequest&gt;();    SetupResult.For(request.Url).Return(new Uri(requestUrl));   IHttpResponse response = _mocks.DynamicMock&lt;IHttpResponse&gt;(); IHttpSessionState session = _mocks.DynamicMock&lt;IHttpSessionState&gt;();IHttpContext httpContext = _mocks.DynamicMock&lt;IHttpContext&gt;();  SetupResult.For(httpContext.Session).Return(session);   SetupResult.For(httpContext.Request).Return(request);   SetupResult.For(httpContext.Response).Return(response);_mocks.Replay(request);_mocks.Replay(response);_mocks.Replay(httpContext);&lt;br>&lt;br>_tempData = new TempDataDictionary(httpContext);&lt;br>SetupResult.For(session[null]).IgnoreArguments().Return(_tempData);           &lt;br>_mocks.Replay(session);&lt;br>&lt;br> &nbsp;return httpContext;}</div></code></pre></td></tr></table></div></figure></div>
+
+
+<p></p>
+
+
+<p>This code is a little verbose, but this is something you write once and use in all of your tests. You should notice that the `_tempData` property is a local field on my test class. I can then take this `_tempData` variable and inject it (via reflection) onto the controller under test. Here&#8217;s how:</p>
+
+
+<p>&#8220;</p>
+
+<div><figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>typeof(FooController).GetProperty("TempData").SetValue(controller, _tempData, null);</div></code></pre></td></tr></table></div></figure></div>
+
+
+<p>And now we can easily test that messages are set in TempData before redirecting or rendering a view.</p>
+
+
+<p><b>*update*:&nbsp; Will Shaver notified me of a typo in the code.&nbsp; It has been fixed.&nbsp; Thanks Will!*</b><br></p>
+
+</div>
+  <footer>
+    <a rel="full-article" href="/2008/01/testing-tempdata-in-asp-net-mvc/">Read on &rarr;</a>
+  </footer>
+
+
+  </article>
+
+
+  <article>
+    
+  <header>
+    
       <h1 class="entry-title"><a href="/2008/01/interviewing-developers/">Interviewing Developers</a></h1>
     
     
@@ -641,82 +721,6 @@
 
   </article>
 
-
-  <article>
-    
-  <header>
-    
-      <h1 class="entry-title"><a href="/2007/12/what-i-do/">What I Do</a></h1>
-    
-    
-      <p class="meta">
-
-
-
-
-<time datetime="2007-12-20 00:00:00 -0600" pubdate  updated >Dec 20<span>th</span>, 2007</time>
-
-
-</p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Looks like a new blog meme is starting…&nbsp; I was tagged by my good friend <a href="http://www.sheysrebellion.net/blog/2007/11/20/what-do-you-do/" target="_blank">Shey</a> who’s wanting to know what we all do. (sorry it took me so long to respond!)</p>
-
-
-<p>So…&nbsp; what would you say… you DO here?</p>
-
-
-<p><img src="/images/office_2Dspace_2Dwhat_2Ddo_2Dyou_2Ddo.png" alt="Office-space-what-do-you-do"  border="0" /></p>
-
-
-<p>Well, I’m a consultant, so my role sometimes changes.&nbsp; Currently I’m a lead developer for an energy company, involved in a Lotus Notes to .NET Migration.</p>
-
-
-<p>There are roughly 80 applications, some targeted for SharePoint 2007, some custom ASP.NET, and some Windows Forms.</p>
-
-
-<p>We decided to use <a href="http://subsonicproject.com/" target="_blank">SubSonic</a> for data access.&nbsp; Most of my readers know that I’m a DDD bigot and prefer persistence ignorant business entities and yada-yada-yada.&nbsp; But sometimes you just have a simple domain model and there’s no reason to go into the effort of introducing <a href="http://nhibernate.sf.net/" target="_blank">NHibernate</a> on a team that’s unfamiliar with ORM’s in general.&nbsp; (NHibernate just has too steep of a learning curve).&nbsp; SubSonic shines with simple domain models, and it allows us to be very productive very quickly.</p>
-
-
-<p>In retrospect I think I would have favored using <a href="http://castleproject.org/" target="_blank">Castle ActiveRecord</a>.&nbsp; We wouldn’t benefit from code-gen unless we made some custom templates for CodeSmith, but the main point would be that we can decouple the database from the application code.&nbsp; It turned out that some database naming standards were in place that favored very common abbreviations for just about any type of database column.&nbsp; This resulted in polluting our object model with poor names and I implemented a cheap work-around using partial classes and vanity properties.&nbsp; But the stink is still present <img src="http://www.flux88.com/uploads/smile1.gif">.</p>
-
-
-<p>We’re also using Team System, which is a less than desirable experience in my opinion.&nbsp; TFS SCC is okay, but it’s no <a href="http://subversion.tigris.org/" target="_blank">Subversion</a>.&nbsp; We do our database development with DB Pro and I’ve found that to be&nbsp;both a blessing and a hinderance.&nbsp; I’m starting to realize that with all of this tooling that MSFT is selling, a better experience can be had with a bit of patience, process maturity, and some open source software.</p>
-
-
-<p><em>Where’s all the good info on DB Pro anyway?&nbsp; All I’ve found are press release/feature list blogs and links to marketing material.</em></p>
-
-
-<p>For testing we’re using MSTest, and if I had it my way I’d rip it all out and replace it with NUnit.&nbsp; MSTest is more annoying than its worth, and we’re not using any of the build quality features anyway, so we wouldn’t be missing out on anything.&nbsp; I use <a href="http://testdriven.net/" target="_blank">TestDriven.NET</a> so I never even see the VS Test Runner.</p>
-
-
-<p>For the build process we use <a href="http://nant.sf.net/" target="_blank">NAnt</a>, but we haven’t setup continuous integration.&nbsp; Why?&nbsp; Frankly because I haven’t had the time.&nbsp;&nbsp;(I can hear the argument that I don’t have time NOT to already). &nbsp;I have targets setup to build up the database&nbsp;(both incremental and from scratch), generate code with SubSonicCommander, compile all of the source and run the tests.&nbsp; Continuous Integration is the next logical step, and I hope I can implement it soon.</p>
-
-
-<p>In summary, here are the tools, frameworks and libraries that I’m using:</p>
-
-
-<ul><li>SubSonic</li><li>NAnt</li><li>WCF</li><li>VSTS 2005 + DB Pro</li><li>TFS Source Control</li><li>Prototype / Scriptaculous (for most ajax and dhtml stuff)</li><li>ASP.NET Ajax / Control Toolkit (for UpdatePanel and the Calendar)</li><li>MSTest (yuck)</li><li>Enterprise Library Logging</li><li>RhinoMocks</li><li>TestDriven.NET</li><li>Console2!</li></ul>
-
-
-<p>To get this thing spreading like wild-fire, I’m going to tag…</p>
-
-
-<p><a href="http://www.lostechies.com/blogs/jason_meridth/" target="_blank">Jason Meredith</a><br><a href="http://www.lostechies.com/blogs/evan_hoff/" target="_blank">Evan Hoff</a><br><a href="http://weblogs.asp.net/bsimser/" target="_blank">Bil Simser</a><br><a href="http://graysmatter.codivation.com/" target="_blank">Justice Gray</a>&nbsp;(<em>keep it professional Justice!&nbsp; No weekend details!</em>)<br><a href="http://www.pseale.com/blog/" target="_blank">Peter Seale</a></p>
-
-
-<p>…get to it guys!&nbsp; What do YOU do?</p>
-
-</div>
-  <footer>
-    <a rel="full-article" href="/2007/12/what-i-do/">Read on &rarr;</a>
-  </footer>
-
-
-  </article>
-
 <nav role="pagination">
   <div>
     
@@ -751,6 +755,10 @@
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2012/01/nsscreencasts/">NSScreencasts, Coming Soon</a>
+      </li>
+    
+      <li class="post">
         <a href="/2012/01/careful-with-block-based-notification-handlers/">Careful With Block-Based Notification Handlers</a>
       </li>
     
@@ -764,10 +772,6 @@
     
       <li class="post">
         <a href="/2011/10/appsites-is-now-appkickstand/">Appsites Is Now AppKickstand</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2011/10/sharing-vim-configuration-between-machines/">Sharing Vim Configuration Between Machines</a>
       </li>
     
   </ul>
