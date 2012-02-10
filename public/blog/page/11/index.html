@@ -110,6 +110,39 @@
     
   <header>
     
+      <h1 class="entry-title"><a href="/2009/02/february-alt-net-geek-dinner/">February ALT.NET Geek Dinner</a></h1>
+    
+    
+      <p class="meta">
+
+
+
+
+<time datetime="2009-02-03 00:00:00 -0600" pubdate  updated >Feb 3<span>rd</span>, 2009</time>
+
+
+</p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><img src="/images/pizza_3.png" alt="pizza"  border="0" /> <a href="http://claudiolassala.spaces.live.com/blog/cns!E2A4B22308B39CD2!1194.entry" target="_blank">Claudio</a> already announced the next ALT.NET Geek Dinner.&nbsp; It will be held at Star Pizza again.&nbsp; Last time at Freebird&#8217;s there was plenty of good burritos, but there was also loud background music, which made conversations hard to hear.</p>
+
+
+<p> <p>Star Pizza has a quiet-ish upstairs that is much better suited to our group.&nbsp; The topic this month will be &#8220;Organizing the Conference&#8221; (<a href="http://houston.altnetconf.com">http://houston.altnetconf.com</a>).&nbsp; Bring ideas &amp; an appetite!&nbsp; See you there.</p> <h3>Where?</h3> <p>Star Pizza<br>2111 Norfolk</p> <p><iframe marginwidth="0" marginheight="0" src="http://maps.google.com/maps?f=q&amp;source=s_q&amp;hl=en&amp;geocode=&amp;q=2111+Norfolk,+houston&amp;sll=37.0625,-95.677068&amp;sspn=47.301626,65.126953&amp;ie=UTF8&amp;z=14&amp;ll=29.744184,-95.40699&amp;output=embed&amp;s=AARTsJprrN-PcPjW7argBcbbRa34B9mezg" frameborder="0" width="425" scrolling="no" height="350"></iframe><br><small><a style="color: #0000ff; text-align: left" href="http://maps.google.com/maps?f=q&amp;source=embed&amp;hl=en&amp;geocode=&amp;q=2111+Norfolk,+houston&amp;sll=37.0625,-95.677068&amp;sspn=47.301626,65.126953&amp;ie=UTF8&amp;z=14&amp;ll=29.744184,-95.40699">View Larger Map</a></small> </p> <h3>When?</h3> <p>Monday, February 9th, 6pm-8pm</p> <p><a href="http://www.google.com/calendar/event?action=TEMPLATE&amp;tmeid=cXA2YjNnNDFzZmRvZmF0cTAyMTdzcTVrNTQgc3ViZGlnaXRhbEBt&amp;tmsrc=c3ViZGlnaXRhbEBnbWFpbC5jb20" target="_blank"><img src="/images/gc_button1_en_.gif"  border="0" /></a></p></p>
+</div>
+  <footer>
+    <a rel="full-article" href="/2009/02/february-alt-net-geek-dinner/">Read on &rarr;</a>
+  </footer>
+
+
+  </article>
+
+
+  <article>
+    
+  <header>
+    
       <h1 class="entry-title"><a href="/2009/02/access-denied-on-microsoft-visual-studio-web-authoring-component/">Access Denied on Microsoft Visual Studio Web Authoring Component</a></h1>
     
     
@@ -768,319 +801,6 @@ You can get this at an Apple store, ebay, craigslist, or the usual places. I fou
 
   </article>
 
-
-  <article>
-    
-  <header>
-    
-      <h1 class="entry-title"><a href="/2008/11/subsonic-and-projections/">SubSonic and Projections</a></h1>
-    
-    
-      <p class="meta">
-
-
-
-
-<time datetime="2008-11-11 00:00:00 -0600" pubdate  updated >Nov 11<span>th</span>, 2008</time>
-
-
-</p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>I&#8217;ve said in the past that we use SubSonic on my current project.&#160; It does what it says it does (mostly) and generates some usable code off of an existing database.&#160; I do have my qualms about it, mostly because of my bias to look at things from the object/domain world rather than the database world.&#160; But I am a committer, so my energy complaining would be better off contributing goodness to the project.</p>
-
-
-<p>  <p>With the most recent release of the new query API in SubSonic, we were given a lot of flexibility.&#160; This was much needed in our project because getting single results and collections off of a single entity is rarely sufficient for complex applications.&#160; Often times the data needed to display on a page comes from multiple tables.</p>  <p>In the past, I was forced to do this sort of ugly nastiness:</p></p>
-
-<div><figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
-<span class='line'>2</span>
-<span class='line'>3</span>
-<span class='line'>4</span>
-<span class='line'>5</span>
-<span class='line'>6</span>
-</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>&lt;span class="rem">//get schedules (1 query)&lt;/span>
-</div><div class='line'>Schedule[] schedules = _repository.GetSchedulesInRange(start, end);
-</div><div class='line'>&lt;span class="rem">//get employee info (2 queries)&lt;/span>
-</div><div class='line'>Employee[] employees = _repository.GetEmployeesInSchedules(schedules);
-</div><div class='line'>ScheduleDisplayMapper mapper = &lt;span class="kwrd">new&lt;/span> ScheduleDisplayMapper();
-</div><div class='line'>&lt;span class="kwrd">return&lt;/span> mapper.Map(schedules, employees);</div></code></pre></td></tr></table></div></figure></div>
-
-
-
-
-<p>This function returned an array of `ScheduleDTO` objects that were used to bind to a view.&#160; The lack of joins at the database level was really killing our productivity and in some cases, performance.&#160; It often took more code to write the query than you&#8217;d expect, because you would have to perform it in steps.</p>
-
-
-<blockquote>
-<p>Note: I&#8217;m really pragmatic about performance, so 2 queries when 1 is possible doesn&#8217;t usually matter in the long run.&#160; Of course if this *is* a perf bottleneck, then of course, optimize.&#160; I much prefer to balance programmer performance over unnoticeable application performance.</p>
-</blockquote>
-
-
-<p>With the new query API, I can now do this:</p>
-
-
-
-
-<div><figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
-<span class='line'>2</span>
-<span class='line'>3</span>
-<span class='line'>4</span>
-<span class='line'>5</span>
-<span class='line'>6</span>
-<span class='line'>7</span>
-<span class='line'>8</span>
-<span class='line'>9</span>
-<span class='line'>10</span>
-<span class='line'>11</span>
-</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>SqlQuery query = &lt;span class="kwrd">new&lt;/span> Select()
-</div><div class='line'>.From&lt;OnCallSchedule&gt;()
-</div><div class='line'>.InnerJoin(Area.AreaIdColumn, OnCallSchedule.AreaIdColumn)
-</div><div class='line'>.InnerJoin(EmployeeProfile.EmployeeProfileIdColumn, OnCallSchedule.EmployeeProfileIdColumn)
-</div><div class='line'>.Where(OnCallSchedule.StartDtColumn).IsLessThanOrEqualTo(date)
-</div><div class='line'>.And(OnCallSchedule.EndDtColumn).IsGreaterThanOrEqualTo(date)
-</div><div class='line'>.OpenExpression()
-</div><div class='line'>.And(Area.AreaIdColumn).IsNull()
-</div><div class='line'>.Or(Area.AreaIdColumn).IsEqualTo(areaId)
-</div><div class='line'>.CloseExpression()
-</div><div class='line'>.OrderAsc(OnCallSchedule.PriorityColumn.ColumnName);</div></code></pre></td></tr></table></div></figure></div>
-
-
-
-
-<p>I get complete refactoring support, intellisense, and type-safety.&#160; But now we have a different problem:&#160; we&#8217;re not returning a single entity anymore.&#160; We&#8217;re returning a combination of columns from different tables.</p>
-
-
-<p>To build my DTO objects, I then had to resort to functions like this:</p>
-
-
-
-
-<div><figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
-<span class='line'>2</span>
-<span class='line'>3</span>
-<span class='line'>4</span>
-<span class='line'>5</span>
-<span class='line'>6</span>
-<span class='line'>7</span>
-<span class='line'>8</span>
-<span class='line'>9</span>
-<span class='line'>10</span>
-<span class='line'>11</span>
-<span class='line'>12</span>
-<span class='line'>13</span>
-<span class='line'>14</span>
-<span class='line'>15</span>
-</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>&lt;span class="kwrd">public&lt;/span> &lt;span class="kwrd">static&lt;/span> ScheduleDTO FetchFromRow(IDataReader dr)
-</div><div class='line'>{
-</div><div class='line'>&lt;span class="kwrd">int&lt;/span> i = 0;
-</div><div class='line'>ScheduleDTO schedule = &lt;span class="kwrd">new&lt;/span> ScheduleDTO();
-</div><div class='line'>schedule.OnCallScheduleId = dr.GetGuid(i++);
-</div><div class='line'>schedule.Start = dr.GetDateTime(i++);
-</div><div class='line'>schedule.End = dr.GetDateTime(i++);
-</div><div class='line'>schedule.Comments = dr[i++] &lt;span class="kwrd">as&lt;/span> &lt;span class="kwrd">string&lt;/span>;
-</div><div class='line'>schedule.Priority = dr.GetInt32(i++);
-</div><div class='line'>schedule.EmployeeProfileId = dr.GetGuid(i++);
-</div><div class='line'>&lt;span class="kwrd">string&lt;/span> firstName = dr.GetString(i++);
-</div><div class='line'>&lt;span class="kwrd">string&lt;/span> lastName = dr.GetString(i++);
-</div><div class='line'>schedule.EmployeeName = firstName + &lt;span class="str">&quot; &quot;&lt;/span> + lastName;
-</div><div class='line'>&lt;span class="kwrd">return&lt;/span> schedule;
-</div><div class='line'>}</div></code></pre></td></tr></table></div></figure></div>
-
-
-
-
-<p><strong>Excuse me while I go vomit</strong>.&#160; This code gives me nightmares from the days when I wrote my own data access layer by hand.&#160; We as programmers should never be writing code that is simply of the form <em>copy this value to that value.&#160; Cast X to Y</em>.&#160; It&#8217;s specifically the reason why data binding exists for forms.</p>
-
-
-<p>After writing two of these methods I decided we need to come up with a better way.&#160; I wanted to declaratively say, this <em>DTO maps to these columns</em>.&#160; We don&#8217;t have .NET 3.5, so magic-y lambda syntax is out.</p>
-
-
-<p>I decided to lean on attributes.&#160; Yes, this does add some &quot;database-y&quot; things on my DTOs, but I figured the baggage was worth it.&#160; I created a custom attribute to map properties on my DTOs to columns on a result set.</p>
-
-
-<p></p>
-
-
-
-
-<div><figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
-<span class='line'>2</span>
-<span class='line'>3</span>
-<span class='line'>4</span>
-<span class='line'>5</span>
-<span class='line'>6</span>
-<span class='line'>7</span>
-<span class='line'>8</span>
-<span class='line'>9</span>
-<span class='line'>10</span>
-<span class='line'>11</span>
-<span class='line'>12</span>
-<span class='line'>13</span>
-</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>[AttributeUsage(AttributeTargets.Property)]
-</div><div class='line'>&lt;span class="kwrd">public&lt;/span> &lt;span class="kwrd">class&lt;/span> MapToColumnAttribute : Attribute
-</div><div class='line'>{
-</div><div class='line'>&lt;span class="kwrd">private&lt;/span> &lt;span class="kwrd">readonly&lt;/span> &lt;span class="kwrd">string&lt;/span> _columnName;
-</div><div class='line'>&lt;span class="kwrd">public&lt;/span> MapToColumnAttribute(&lt;span class="kwrd">string&lt;/span> columnName)
-</div><div class='line'>{
-</div><div class='line'>_columnName = columnName;
-</div><div class='line'>}
-</div><div class='line'>&lt;span class="kwrd">public&lt;/span> &lt;span class="kwrd">string&lt;/span> ColumnName
-</div><div class='line'>{
-</div><div class='line'>get { &lt;span class="kwrd">return&lt;/span> _columnName; }
-</div><div class='line'>}
-</div><div class='line'>}</div></code></pre></td></tr></table></div></figure></div>
-
-
-
-
-<p></p>
-
-
-<p>Now to decorate my DTO&#8230;.</p>
-
-
-<p></p>
-
-
-
-
-<div><figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
-<span class='line'>2</span>
-<span class='line'>3</span>
-<span class='line'>4</span>
-<span class='line'>5</span>
-<span class='line'>6</span>
-<span class='line'>7</span>
-<span class='line'>8</span>
-<span class='line'>9</span>
-<span class='line'>10</span>
-<span class='line'>11</span>
-<span class='line'>12</span>
-<span class='line'>13</span>
-<span class='line'>14</span>
-<span class='line'>15</span>
-</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>&lt;span class="kwrd">public&lt;/span> &lt;span class="kwrd">class&lt;/span> ScheduleDTO
-</div><div class='line'>{
-</div><div class='line'>[MapToColumn(OnCallSchedule.Columns.Priority)]
-</div><div class='line'>&lt;span class="kwrd">public&lt;/span> &lt;span class="kwrd">int&lt;/span> Priority
-</div><div class='line'>{
-</div><div class='line'>get { &lt;span class="kwrd">return&lt;/span> _priority; }
-</div><div class='line'>set { _priority = &lt;span class="kwrd">value&lt;/span>; }
-</div><div class='line'>}
-</div><div class='line'>[MapToColumn(EmployeeProfile.Columns.EmployeeProfileId)]
-</div><div class='line'>&lt;span class="kwrd">public&lt;/span> Guid ProfileId
-</div><div class='line'>{
-</div><div class='line'>get { &lt;span class="kwrd">return&lt;/span> _profileId; }
-</div><div class='line'>set { _profileId = &lt;span class="kwrd">value&lt;/span>; }
-</div><div class='line'>}
-</div><div class='line'>&lt;span class="rem">/* snip */&lt;/span></div></code></pre></td></tr></table></div></figure></div>
-
-
-
-
-<p></p>
-
-
-<p>SubSonic has a struct called <em>Columns</em> that contains all of the column names. I had to edit the default template to make these constants rather than statics, so that they would be usable in the attribute constructors.</p>
-
-
-<p>Now that all of the mapping information has been provided declaratively, I can now leverage a generic mapper class to do the copying form DataReader over to DTO.</p>
-
-
-<p></p>
-
-
-
-
-<div><figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
-<span class='line'>2</span>
-<span class='line'>3</span>
-<span class='line'>4</span>
-<span class='line'>5</span>
-<span class='line'>6</span>
-<span class='line'>7</span>
-<span class='line'>8</span>
-<span class='line'>9</span>
-<span class='line'>10</span>
-<span class='line'>11</span>
-<span class='line'>12</span>
-<span class='line'>13</span>
-<span class='line'>14</span>
-</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>&lt;span class="kwrd">public&lt;/span> T Map&lt;T&gt;(IDataReader dr) &lt;span class="kwrd">where&lt;/span> T : &lt;span class="kwrd">new&lt;/span>()
-</div><div class='line'>{
-</div><div class='line'>Type type = &lt;span class="kwrd">typeof&lt;/span>(T);
-</div><div class='line'>T target = &lt;span class="kwrd">new&lt;/span> T();
-</div><div class='line'>&lt;span class="kwrd">foreach&lt;/span>(PropertyInfo property &lt;span class="kwrd">in&lt;/span> type.GetProperties())
-</div><div class='line'>{
-</div><div class='line'>&lt;span class="kwrd">foreach&lt;/span>(MapToColumnAttribute attr &lt;span class="kwrd">in&lt;/span> ReflectionUtil.GetAttributes&lt;MapToColumnAttribute&gt;(property))
-</div><div class='line'>{
-</div><div class='line'>&lt;span class="kwrd">object&lt;/span> &lt;span class="kwrd">value&lt;/span> = dr[attr.ColumnName];
-</div><div class='line'>property.SetValue(target, &lt;span class="kwrd">value&lt;/span>, &lt;span class="kwrd">null&lt;/span>);
-</div><div class='line'>}
-</div><div class='line'>}
-</div><div class='line'>&lt;span class="kwrd">return&lt;/span> target;
-</div><div class='line'>}</div></code></pre></td></tr></table></div></figure></div>
-
-
-
-
-<p></p>
-
-
-<p>This function takes a DataReader that currently on a record, loops over the properties of the DTO looking for our attribute.&#160; It then sets the value using reflection.&#160; The beauty of this is, I don&#8217;t have to worry about casting anything.&#160; As long as the types of the columns match up with the type of the property, then we&#8217;re golden.</p>
-
-
-<p>The act of mapping projections of entities onto flat data transfer objects is now incredibly simple:</p>
-
-
-<p></p>
-
-
-
-
-<div><figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
-<span class='line'>2</span>
-<span class='line'>3</span>
-<span class='line'>4</span>
-<span class='line'>5</span>
-<span class='line'>6</span>
-</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>ProjectionMapper mapper = &lt;span class="kwrd">new&lt;/span> ProjectionMapper();
-</div><div class='line'>&lt;span class="kwrd">using&lt;/span>(IDataReader dr = query.ExecuteReader())
-</div><div class='line'>{
-</div><div class='line'>&lt;span class="kwrd">while&lt;/span>(dr.Read())
-</div><div class='line'>results.Add(mapper.Map&lt;ScheduleDTO&gt;(dr));
-</div><div class='line'>}</div></code></pre></td></tr></table></div></figure></div>
-
-
-
-
-<p></p>
-
-
-<p></p>
-
-
-<p>You can take this one step further to encapsulate the looping over the data reader as well.</p>
-
-
-<p>It was a nice feeling to be able to remove 17 lines of query code and 1 40 line mapping class and replace it with a tighter query and a few attributes.</p>
-
-
-<p>Deleting code is fun.</p>
-
-
-<div class="wlWriterSmartContent" id="scid:0767317B-992E-4b12-91E0-4F059A8CECA8:226b7435-322b-43b9-b942-f3fbbede0838" style="padding-right: 0px; display: inline; padding-left: 0px; padding-bottom: 0px; margin: 0px; padding-top: 0px">Technorati Tags: <a href="http://technorati.com/tags/SubSonic" rel="tag">SubSonic</a></div>
-
-</div>
-  <footer>
-    <a rel="full-article" href="/2008/11/subsonic-and-projections/">Read on &rarr;</a>
-  </footer>
-
-
-  </article>
-
 <nav role="pagination">
   <div>
     
@@ -1115,6 +835,10 @@ You can get this at an Apple store, ebay, craigslist, or the usual places. I fou
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2012/02/hello/">Hello, NSScreencast</a>
+      </li>
+    
+      <li class="post">
         <a href="/2012/01/nsscreencasts/">NSScreencasts, Coming Soon</a>
       </li>
     
@@ -1128,10 +852,6 @@ You can get this at an Apple store, ebay, craigslist, or the usual places. I fou
     
       <li class="post">
         <a href="/2011/10/houston-tech-fest-2011-recap/">Houston Tech Fest 2011 Recap</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2011/10/appsites-is-now-appkickstand/">Appsites Is Now AppKickstand</a>
       </li>
     
   </ul>

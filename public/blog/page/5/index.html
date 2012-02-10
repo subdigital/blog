@@ -110,6 +110,114 @@
     
   <header>
     
+      <h1 class="entry-title"><a href="/2010/06/dealing-with-dates-time-zones-in-objective-c/">Dealing With Dates & Time Zones in Objective-C</a></h1>
+    
+    
+      <p class="meta">
+
+
+
+
+<time datetime="2010-06-21 00:00:00 -0500" pubdate  updated >Jun 21<span>st</span>, 2010</time>
+
+
+</p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Date formatting is always one of those areas (especially in a newer language) where you continually need to look it up to do it the right way.<p>
+<p>In an application that I&#8217;m building I have a need to deal with dates coming from an XML feed, so I need to parse them as a string.  I also need to be able to display dates in a different format that I&#8217;m given (or translate them between various time zones) so clearly I can&#8217;t just treat the value as a string.<p>
+<p>For a complete reference check out the official documentation on <a href="http://developer.apple.com/mac/library/documentation/cocoa/conceptual/dataformatting/articles/dfDateFormatting10_4.html" target="_blank">NSDateFormatter</a>.</p>
+<h2>String &rarr; Date</h2>
+<p>To convert from an NSString to NSDate, you have to create an `NSDateFormatter` and set the date format to a pattern matching your expected date.  The format I was expected was like this:</p>
+<blockquote>
+`Sun, 20 Jun 2010 20:28:00 GMT`
+</blockquote>
+<p>In order to set up our format strings, we can reference the official <a href="http://unicode.org/reports/tr35/tr35-6.html#Date_Format_Patterns" target="_blank">Unicode standard date formatting tokens</a>.  For my needs, this turned out to be `EEE, dd MMM yyyy HH:mm:ss zzzz`.  Plugging this into `NSDateFormatter` is pretty easy:</p>
+<blockquote>
+`Sun, 20 Jun 2010 20:28:00 GMT`
+</blockquote>
+
+<div><figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+<span class='line'>2</span>
+<span class='line'>3</span>
+<span class='line'>4</span>
+<span class='line'>5</span>
+</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>-(NSDate *)dateFromString:(NSString *)dateString {
+</div><div class='line'>NSDateFormatter *formatter = [[[NSDateFormatter alloc] init] autorelease];
+</div><div class='line'>[formatter setDateFormat:@"EEE, dd MMM yyyy HH:mm:ss zzz"];
+</div><div class='line'>return [formatter dateFromString:dateString];
+</div><div class='line'>}</div></code></pre></td></tr></table></div></figure></div>
+
+<p>Sometimes we aren&#8217;t lucky enough to have time zone information passed as part of the string.  In that case, you may need to explicitly tell the formatter about your time zone:</p>
+
+<div><figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>[formatter setTimeZone:[NSTimeZone timeZoneWithName:@"GMT"]];</div></code></pre></td></tr></table></div></figure></div>
+
+<h2>Date &rarr; String</h2>
+<p>To convert from an NSDate to an NSString, it is quite similar to the method above, except your date format string is the format that you <em>want</em> your string to look like.  In my case, I want a short date to be displayed in the corner of a `UITableViewCell`, so my formatting code looks like this:</p>
+
+<div><figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+<span class='line'>2</span>
+<span class='line'>3</span>
+<span class='line'>4</span>
+</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+</div><div class='line'>[formatter setDateFormat:@"dd-MMM"];
+</div><div class='line'>cell.dateLabel.text = [formatter stringFromDate:item.pubDate];
+</div><div class='line'>[formatter release];</div></code></pre></td></tr></table></div></figure></div>
+
+<p>I chose to use a short word form for the month, because this app might be used by international folks and you might not be able to distinguish a date like `06/10`.  You could of course examine the locale of the user and set the date format accordingly, but I think this is an easier way out :).</p>
+<h2>Date Format Symbols</h2>
+<p>The table from the unicode date formatting page should be enough for you to build your own desired date format string&#8230;<p>
+<table cellspacing="0" cellpadding="5" border="1" style="border-collapse: collapse;">
+<thead>
+<tr style="background-color: #8bf">
+<th width="50%">Pattern</th>
+<th width="50%">Result (in a particular locale)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td width="50%">yyyy.MM.dd G &#8216;at&#8217; HH:mm:ss zzz</td>
+<td width="50%">1996.07.10 AD at 15:08:56 PDT</td>
+</tr>
+<tr>
+<td width="50%">EEE, MMM d, &#8221;yy</td>
+<td width="50%">Wed, July 10, &#8216;96</td>
+</tr>
+<tr>
+<td width="50%">h:mm a</td>
+<td width="50%">12:08 PM</td>
+</tr>
+<tr>
+<td width="50%">hh &#8216;o&#8221;clock&#8217; a, zzzz</td>
+<td width="50%">12 o&#8217;clock PM, Pacific Daylight Time</td>
+</tr>
+<tr>
+<td width="50%">K:mm a, z</td>
+<td width="50%">0:00 PM, PST</td>
+</tr>
+<tr>
+<td width="50%">yyyyy.MMMM.dd GGG hh:mm aaa</td>
+<td width="50%">01996.July.10 AD 12:08 PM</td>
+</tr>
+</tbody></table>
+<p>Hope this is useful to someone out there.</p>
+
+</div>
+  <footer>
+    <a rel="full-article" href="/2010/06/dealing-with-dates-time-zones-in-objective-c/">Read on &rarr;</a>
+  </footer>
+
+
+  </article>
+
+
+  <article>
+    
+  <header>
+    
       <h1 class="entry-title"><a href="/2010/06/giggletouch/">GiggleTouch</a></h1>
     
     
@@ -880,190 +988,6 @@
 
   </article>
 
-
-  <article>
-    
-  <header>
-    
-      <h1 class="entry-title"><a href="/2010/04/handy-categories-on-nsstring/">Handy Categories on NSString</a></h1>
-    
-    
-      <p class="meta">
-
-
-
-
-<time datetime="2010-04-20 00:00:00 -0500" pubdate  updated >Apr 20<span>th</span>, 2010</time>
-
-
-</p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>In Objective-C there is a great feature called <em>Categories</em>. To .NET folk, this closely resembles extension methods, and it is a great way to achieve utility code re-use and in general heighten the level of the code that you&#8217;re working with. It&#8217;s also a great way to turn a very hairy method and section it off into very simple, coherent tasks.</p>
-
-<p>In some cases this means adding methods that don&#8217;t necessarily belong on the class in question, but they make perfect sense in the context of your application.</p>
-
-<p>In other cases, you can use Categories to add methods that ought to be there in the first place.</p>
-
-<p>Here are a few handy categories on NSString that I carry around from project to project:</p>
-
-<div><figure role=code><figcaption><span>NSString+Common.h  </span></figcaption>
- <div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
-<span class='line'>2</span>
-<span class='line'>3</span>
-<span class='line'>4</span>
-<span class='line'>5</span>
-<span class='line'>6</span>
-<span class='line'>7</span>
-<span class='line'>8</span>
-<span class='line'>9</span>
-</pre></td><td class='code' width='100%'><pre><code class='objc'><div class='line'><span class="k">@interface</span> <span class="nc">NSString</span> <span class="nl">(Common)</span>
-</div><div class='line'>
-</div><div class='line'><span class="o">-</span><span class="p">(</span><span class="kt">BOOL</span><span class="p">)</span><span class="n">isBlank</span><span class="p">;</span>
-</div><div class='line'><span class="o">-</span><span class="p">(</span><span class="kt">BOOL</span><span class="p">)</span><span class="nl">contains:</span><span class="p">(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="n">string</span><span class="p">;</span>
-</div><div class='line'><span class="o">-</span><span class="p">(</span><span class="n">NSArray</span> <span class="o">*</span><span class="p">)</span><span class="nl">splitOnChar:</span><span class="p">(</span><span class="kt">char</span><span class="p">)</span><span class="n">ch</span><span class="p">;</span>
-</div><div class='line'><span class="o">-</span><span class="p">(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="nl">substringFrom:</span><span class="p">(</span><span class="n">NSInteger</span><span class="p">)</span><span class="n">from</span> <span class="nl">to:</span><span class="p">(</span><span class="n">NSInteger</span><span class="p">)</span><span class="n">to</span><span class="p">;</span>
-</div><div class='line'><span class="o">-</span><span class="p">(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="n">stringByStrippingWhitespace</span><span class="p">;</span>
-</div><div class='line'>
-</div><div class='line'><span class="k">@end</span>
-</div></code></pre></td></tr></table></div></figure></div>
-
-
-
-
-<div><figure role=code><figcaption><span>NSString+Common.m  </span></figcaption>
- <div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
-<span class='line'>2</span>
-<span class='line'>3</span>
-<span class='line'>4</span>
-<span class='line'>5</span>
-<span class='line'>6</span>
-<span class='line'>7</span>
-<span class='line'>8</span>
-<span class='line'>9</span>
-<span class='line'>10</span>
-<span class='line'>11</span>
-<span class='line'>12</span>
-<span class='line'>13</span>
-<span class='line'>14</span>
-<span class='line'>15</span>
-<span class='line'>16</span>
-<span class='line'>17</span>
-<span class='line'>18</span>
-<span class='line'>19</span>
-<span class='line'>20</span>
-<span class='line'>21</span>
-<span class='line'>22</span>
-<span class='line'>23</span>
-<span class='line'>24</span>
-<span class='line'>25</span>
-<span class='line'>26</span>
-<span class='line'>27</span>
-<span class='line'>28</span>
-<span class='line'>29</span>
-<span class='line'>30</span>
-<span class='line'>31</span>
-<span class='line'>32</span>
-<span class='line'>33</span>
-<span class='line'>34</span>
-<span class='line'>35</span>
-<span class='line'>36</span>
-<span class='line'>37</span>
-<span class='line'>38</span>
-<span class='line'>39</span>
-<span class='line'>40</span>
-<span class='line'>41</span>
-<span class='line'>42</span>
-<span class='line'>43</span>
-<span class='line'>44</span>
-<span class='line'>45</span>
-<span class='line'>46</span>
-<span class='line'>47</span>
-<span class='line'>48</span>
-<span class='line'>49</span>
-<span class='line'>50</span>
-<span class='line'>51</span>
-<span class='line'>52</span>
-</pre></td><td class='code' width='100%'><pre><code class='objc'><div class='line'><span class="cp">#import &quot;NSString+Common.h&quot;;</span>
-</div><div class='line'><span class="k">@implementation</span> <span class="nc">NSString</span> <span class="nl">(Common)</span>
-</div><div class='line'><span class="o">-</span><span class="p">(</span><span class="kt">BOOL</span><span class="p">)</span><span class="n">isBlank</span> <span class="p">{</span>
-</div><div class='line'>  <span class="k">if</span><span class="p">([[</span><span class="n">self</span> <span class="n">stringByStrippingWhitespace</span><span class="p">]</span> <span class="nl">isEqualToString:</span><span class="s">@&quot;&quot;</span><span class="p">])</span>
-</div><div class='line'>    <span class="k">return</span> <span class="n">YES</span><span class="p">;</span>
-</div><div class='line'>  <span class="k">return</span> <span class="n">NO</span><span class="p">;</span>
-</div><div class='line'><span class="p">}</span>
-</div><div class='line'>
-</div><div class='line'><span class="o">-</span><span class="p">(</span><span class="kt">BOOL</span><span class="p">)</span><span class="nl">contains:</span><span class="p">(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="n">string</span> <span class="p">{</span>
-</div><div class='line'>        <span class="n">NSRange</span> <span class="n">range</span> <span class="o">=</span> <span class="p">[</span><span class="n">self</span> <span class="nl">rangeOfString:</span><span class="n">string</span><span class="p">];</span>
-</div><div class='line'>       <span class="k">return</span> <span class="p">(</span><span class="n">range</span><span class="p">.</span><span class="n">location</span> <span class="o">!=</span> <span class="n">NSNotFound</span><span class="p">);</span>
-</div><div class='line'><span class="p">}</span>
-</div><div class='line'>
-</div><div class='line'><span class="o">-</span><span class="p">(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="n">stringByStrippingWhitespace</span> <span class="p">{</span>
-</div><div class='line'>      <span class="k">return</span> <span class="p">[</span><span class="n">self</span> <span class="nl">stringByTrimmingCharactersInSet:</span><span class="p">[</span><span class="n">NSCharacterSet</span> <span class="n">whitespaceAndNewlineCharacterSet</span><span class="p">]];</span>
-</div><div class='line'><span class="p">}</span>
-</div><div class='line'>
-</div><div class='line'><span class="o">-</span><span class="p">(</span><span class="n">NSArray</span> <span class="o">*</span><span class="p">)</span><span class="nl">splitOnChar:</span><span class="p">(</span><span class="kt">char</span><span class="p">)</span><span class="n">ch</span> <span class="p">{</span>
-</div><div class='line'>    <span class="n">NSMutableArray</span> <span class="o">*</span><span class="n">results</span> <span class="o">=</span> <span class="p">[[</span><span class="n">NSMutableArray</span> <span class="n">alloc</span><span class="p">]</span> <span class="n">init</span><span class="p">];</span>
-</div><div class='line'>   <span class="kt">int</span> <span class="n">start</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-</div><div class='line'>     <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="n">i</span><span class="o">&lt;</span><span class="p">[</span><span class="n">self</span> <span class="n">length</span><span class="p">];</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-</div><div class='line'>
-</div><div class='line'>           <span class="kt">BOOL</span> <span class="n">isAtSplitChar</span> <span class="o">=</span> <span class="p">[</span><span class="n">self</span> <span class="nl">characterAtIndex:</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="n">ch</span><span class="p">;</span>
-</div><div class='line'>              <span class="kt">BOOL</span> <span class="n">isAtEnd</span> <span class="o">=</span> <span class="n">i</span> <span class="o">==</span> <span class="p">[</span><span class="n">self</span> <span class="n">length</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span>
-</div><div class='line'>
-</div><div class='line'>           <span class="k">if</span><span class="p">(</span><span class="n">isAtSplitChar</span> <span class="o">||</span> <span class="n">isAtEnd</span><span class="p">)</span> <span class="p">{</span>
-</div><div class='line'>                     <span class="c1">//take the substring &amp;amp; add it to the array</span>
-</div><div class='line'>                 <span class="n">NSRange</span> <span class="n">range</span><span class="p">;</span>
-</div><div class='line'>                     <span class="n">range</span><span class="p">.</span><span class="n">location</span> <span class="o">=</span> <span class="n">start</span><span class="p">;</span>
-</div><div class='line'>                    <span class="n">range</span><span class="p">.</span><span class="n">length</span> <span class="o">=</span> <span class="n">i</span> <span class="o">-</span> <span class="n">start</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
-</div><div class='line'>
-</div><div class='line'>                   <span class="k">if</span><span class="p">(</span><span class="n">isAtSplitChar</span><span class="p">)</span>
-</div><div class='line'>                          <span class="n">range</span><span class="p">.</span><span class="n">length</span> <span class="o">-=</span> <span class="mi">1</span><span class="p">;</span>
-</div><div class='line'>
-</div><div class='line'>                   <span class="p">[</span><span class="n">results</span> <span class="nl">addObject:</span><span class="p">[</span><span class="n">self</span> <span class="nl">substringWithRange:</span><span class="n">range</span><span class="p">]];</span>
-</div><div class='line'>                       <span class="n">start</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
-</div><div class='line'>             <span class="p">}</span>
-</div><div class='line'>
-</div><div class='line'>           <span class="c1">//handle the case where the last character was the split char.  we need an empty trailing element in the array.</span>
-</div><div class='line'>            <span class="k">if</span><span class="p">(</span><span class="n">isAtEnd</span> <span class="o">&amp;&amp;</span> <span class="n">isAtSplitChar</span><span class="p">)</span>
-</div><div class='line'>                       <span class="p">[</span><span class="n">results</span> <span class="nl">addObject:</span><span class="s">@&quot;&quot;</span><span class="p">];</span>
-</div><div class='line'>   <span class="p">}</span>
-</div><div class='line'>
-</div><div class='line'>   <span class="k">return</span> <span class="p">[</span><span class="n">results</span> <span class="n">autorelease</span><span class="p">];</span>
-</div><div class='line'><span class="p">}</span>
-</div><div class='line'>
-</div><div class='line'><span class="o">-</span><span class="p">(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="nl">substringFrom:</span><span class="p">(</span><span class="n">NSInteger</span><span class="p">)</span><span class="n">from</span> <span class="nl">to:</span><span class="p">(</span><span class="n">NSInteger</span><span class="p">)</span><span class="n">to</span> <span class="p">{</span>
-</div><div class='line'>  <span class="n">NSString</span> <span class="o">*</span><span class="n">rightPart</span> <span class="o">=</span> <span class="p">[</span><span class="n">self</span> <span class="nl">substringFromIndex:</span><span class="n">from</span><span class="p">];</span>
-</div><div class='line'>  <span class="k">return</span> <span class="p">[</span><span class="n">rightPart</span> <span class="nl">substringToIndex:</span><span class="n">to</span><span class="o">-</span><span class="n">from</span><span class="p">];</span>
-</div><div class='line'><span class="p">}</span>
-</div><div class='line'>
-</div><div class='line'><span class="k">@end</span>
-</div></code></pre></td></tr></table></div></figure></div>
-
-
-<p>To use these new functions, you simply reference the header file and access them as if they were built-in methods on NSString:</p>
-
-<div><figure role=code> <div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
-</pre></td><td class='code' width='100%'><pre><code class='objc'><div class='line'><span class="p">[</span><span class="s">@&quot;foo.xml&quot;</span> <span class="nl">splitOnChar:</span><span class="sc">&#39;.&#39;</span><span class="p">];</span> <span class="c1">// returns NSArray with 2 elements: [&quot;foo&quot;, &quot;xml&quot;]</span>
-</div></code></pre></td></tr></table></div></figure></div>
-
-
-
-
-<div><figure role=code> <div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
-</pre></td><td class='code' width='100%'><pre><code class='objc'><div class='line'><span class="p">[</span><span class="s">@&quot;&quot;</span> <span class="n">isBlank</span><span class="p">];</span> <span class="c1">// returns YES</span>
-</div></code></pre></td></tr></table></div></figure></div>
-
-
-<p>I&#8217;m used to having access to higher level methods like these in C# and Ruby, however in Objective-C they seem to be oddly missing. Thankfully Categories can fill this gap for now.</p>
-</div>
-  <footer>
-    <a rel="full-article" href="/2010/04/handy-categories-on-nsstring/">Read on &rarr;</a>
-  </footer>
-
-
-  </article>
-
 <nav role="pagination">
   <div>
     
@@ -1098,6 +1022,10 @@
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2012/02/hello/">Hello, NSScreencast</a>
+      </li>
+    
+      <li class="post">
         <a href="/2012/01/nsscreencasts/">NSScreencasts, Coming Soon</a>
       </li>
     
@@ -1111,10 +1039,6 @@
     
       <li class="post">
         <a href="/2011/10/houston-tech-fest-2011-recap/">Houston Tech Fest 2011 Recap</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2011/10/appsites-is-now-appkickstand/">Appsites Is Now AppKickstand</a>
       </li>
     
   </ul>

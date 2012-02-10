@@ -110,6 +110,111 @@
     
   <header>
     
+      <h1 class="entry-title"><a href="/2008/10/the-curly-brace-tax/">The Curly Brace Tax</a></h1>
+    
+    
+      <p class="meta">
+
+
+
+
+<time datetime="2008-10-05 00:00:00 -0500" pubdate  updated >Oct 5<span>th</span>, 2008</time>
+
+
+</p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><em>(I shamelessly stole this title from a chat with <a href="http://mhinze.com/" target="_blank">Matt Hinze</a>)</em></p>
+
+<p>99% of the examples you see out there for ASP.NET MVC are using WebFormsViewEngine.  That&#8217;s fine, it&#8217;s familiar, it benefits from intellisense, compilation, and refactoring support.  But all of that comes at a price, and that price is (at times) <strong>incredibly wordy</strong>.</p>
+
+<p>Picture this example, taken from the Site.master (master page) in the Preview 5 new project template.</p>
+
+<p>At the top of the page, they want to render some text if the user is logged in, and different text if the user isn&#8217;t logged in.  Here are the screens:</p>
+
+<p><strong>When you&#8217;re not logged in:</strong></p>
+
+<p><img src="/images/mvcmasterpagelogin_thumb.jpg" alt="mvc-masterpage-login"  border="0"  /></p>
+
+<p><strong>And when you&#8217;re logged in&#8230;</strong></p>
+
+<p><img src="/images/mvcmasterpagelogout_thumb.jpg" alt="mvc-masterpage-logout"  border="0"  /></p>
+
+<p>This is implemented using ASPX code that looks like this:</p>
+
+<div><figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+<span class='line'>2</span>
+<span class='line'>3</span>
+<span class='line'>4</span>
+<span class='line'>5</span>
+<span class='line'>6</span>
+<span class='line'>7</span>
+</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>&lt;div id="logindisplay">
+</div><div class='line'>  &lt;% if (Request.IsAuthenticated) { %>
+</div><div class='line'>    Welcome &lt;b>&lt;%= Html.Encode(Page.User.Identity.Name) %>&lt;/b>![ &lt;%=Html.ActionLink("Logout", "Logout", "Account") %> ]
+</div><div class='line'>&lt;% } else { %> 
+</div><div class='line'>    [ &lt;%=Html.ActionLink("Login", "Login", "Account") %> ]
+</div><div class='line'>&lt;% } %>
+</div><div class='line'>&lt;/div></div></code></pre></td></tr></table></div></figure></div>
+
+
+<p>Now let&#8217;s take the same example and convert it to <a href="http://velocity.apache.org/engine/releases/velocity-1.5/user-guide.html" target="_blank">NVelocity</a>, another view engine with a looser syntax:</p>
+
+<div><figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+<span class='line'>2</span>
+<span class='line'>3</span>
+<span class='line'>4</span>
+<span class='line'>5</span>
+<span class='line'>6</span>
+</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>&lt;div id="logindisplay">   
+</div><div class='line'>  #if ($isAuthenticated)
+</div><div class='line'>    Welcome &lt;b>$html.encode($user.name)&lt;/b>!      [ $html.actionlink("Logout", "logout", "account") ]
+</div><div class='line'>  #else
+</div><div class='line'>    [ $html.actionlink("Login", "login", "account") ]   #end
+</div><div class='line'>&lt;/div></div></code></pre></td></tr></table></div></figure></div>
+
+
+<p>We&#8217;d have to stuff the <code>$isAuthenticated</code> and <code>$user</code> values into <code>ViewData</code>, but that&#8217;s a piece of cake.<br/>
+This is a great example of how concise we can get if we don&#8217;t rely on all that strong typing.</p>
+
+<p><em>The beauty of this is, the key that you use for ViewData becomes the object you interact with on the view</em>.</p>
+
+<p>In NVelocity:</p>
+
+<ul>
+<li>case doesn&#8217;t matter</li>
+<li>no need to open up <code>&lt;% %&gt;</code> tags, you can embed it directly in your template</li>
+<li>type doesn&#8217;t matter.  It&#8217;s evaluated at runtime.</li>
+</ul>
+
+
+<p>There are some downsides, however:</p>
+
+<ul>
+<li><p>You don&#8217;t get compile time checking for your views.  If I wrote <code>$htlm.actionlink(..)</code>  I&#8217;d get an
+error at runtime.</p></li>
+<li><p>Performance.  Compiled views are much faster than interpreted ones.  It&#8217;s likely that this doesn&#8217;t matter for most sites out there.</p></li>
+<li><p>No intellisense.  (The arguments to ActionLink above are not obvious, so you just have to memorize it)</p></li>
+<li><strong>No Refactoring support</strong>.  This is a big one.  If you rename your actions, you&#8217;ll have to do a string comparison search to get the various links you might having lying around in your view.</li>
+</ul>
+
+
+<p>That last one is really the only one that I miss when doing something in NVelocity.  In any case, try it out, see what you think!</p>
+</div>
+  <footer>
+    <a rel="full-article" href="/2008/10/the-curly-brace-tax/">Read on &rarr;</a>
+  </footer>
+
+
+  </article>
+
+
+  <article>
+    
+  <header>
+    
       <h1 class="entry-title"><a href="/2008/10/recent-developments/">Recent Developments&#8230;</a></h1>
     
     
@@ -568,79 +673,6 @@
 
   </article>
 
-
-  <article>
-    
-  <header>
-    
-      <h1 class="entry-title"><a href="/2008/07/google-reader-quick-tips/">Google Reader Quick Tips</a></h1>
-    
-    
-      <p class="meta">
-
-
-
-
-<time datetime="2008-07-27 00:00:00 -0500" pubdate  updated >Jul 27<span>th</span>, 2008</time>
-
-
-</p>
-    
-  </header>
-
-
-  <div class="entry-content"><h3>#1 – Read Upwards</h3>
-
-
-<p>I like to read my feeds grouped by feed, oldest first.&#160; Scroll down to the last post in the list and press “K” to read upwards from there.&#160; “J” does the opposite &amp; reads downwards.&#160; This is especially useful for busy feeds like <a href="http://slashdot.org" target="_blank">Slashdot</a> or <a href="http://lifehacker.com" target="_blank">Lifehacker</a>, where there are easily 50 posts to read in a day.</p>
-
-
-<h3>#2 – Next/Previous Feed</h3>
-
-
-<p>When using the method above, it’s useful to use Shift+N or Shift+P to navigate to next previous subscription.&#160; This keeps your fingers on the keyboard instead of reaching for the mouse.</p>
-
-
-<h3>#3 – More Screen Real-Estate</h3>
-
-
-<p>If you need more space for reading, press “U” to hide the left column.&#160; Pressing “U” will get it back again.</p>
-
-
-<h3>#4 – Open In-line</h3>
-
-
-<p>If you want to comment on a post (or just click through to see what the site looks like), you can open the post’s original site within the google reader pane.&#160; Just CTRL-Click the title of the post.</p>
-
-
-<h3>#5 – Ninja Mode</h3>
-
-
-<p>Up, Up, Down, Down, Left, Right, Left, Right, B, A.</p>
-
-
-<p><em>No, I’m not kidding on this one.</em></p>
-
-
-<h3>#6 – On-screen help</h3>
-
-
-<p>Press Shift+? to see a nice layout of all the keyboard shortcuts available to you.</p>
-
-
-<p>&#160;</p>
-
-
-<p>What’s your favorite Google Reader tip?</p>
-
-</div>
-  <footer>
-    <a rel="full-article" href="/2008/07/google-reader-quick-tips/">Read on &rarr;</a>
-  </footer>
-
-
-  </article>
-
 <nav role="pagination">
   <div>
     
@@ -675,6 +707,10 @@
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2012/02/hello/">Hello, NSScreencast</a>
+      </li>
+    
+      <li class="post">
         <a href="/2012/01/nsscreencasts/">NSScreencasts, Coming Soon</a>
       </li>
     
@@ -688,10 +724,6 @@
     
       <li class="post">
         <a href="/2011/10/houston-tech-fest-2011-recap/">Houston Tech Fest 2011 Recap</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2011/10/appsites-is-now-appkickstand/">Appsites Is Now AppKickstand</a>
       </li>
     
   </ul>

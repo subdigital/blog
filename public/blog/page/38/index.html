@@ -110,6 +110,39 @@
     
   <header>
     
+      <h1 class="entry-title"><a href="/2005/06/securing-client-side-contentflash-files/">Securing Client-side content:Flash Files</a></h1>
+    
+    
+      <p class="meta">
+
+
+
+
+<time datetime="2005-06-20 00:00:00 -0500" pubdate  updated >Jun 20<span>th</span>, 2005</time>
+
+
+</p>
+    
+  </header>
+
+
+  <div class="entry-content"><div style="clear: both;"></div>
+
+
+<p>I came across this little pickle aboutsecurity and flash files. Basically since Flash is a wide openstandard, anyone can easily grab your swf file and decompile it.Obfuscation works a little bit here, but a determined little bastardcould eventually modify your source.<br><br>Of course someone could also just run your flash movie from their own server.<br><br>I came up with this little security table for some suggested guidelines in protecting our flash component.<br><br><table class="tablefix" border="1"><tbody><tr><td style="background-color: rgb(51, 68, 51); color: White;" colspan="2" align="center"><b>Flash Security</b></td></tr><tr><td><b>Threat</b></td><td><b>Suggested response</b></td></tr><tr></tr><tr><td>File could be stolen and hosted on another server</td><td>Comeup with an dynamic encrypted key system&#8211; the malicous users would haveto know the scheme to get the file to unlock &#8211; this is not 100%</td></tr><tr><td>File could be hotlinked from another server</td><td>flashfile will only allow paths from the same domain as the swf resides&#8230;this will ensure that no one will be able to hijack our swf and loadtheir own XML file</td></tr><tr><td>File could be decompiled</td><td>Obfuscate the code</td></tr></tbody></table><br><br>Whatworries me is that none of these are 100% safeguards. They will deterthe average evil-doer, but anyone smart &amp; determined enough couldget steal our file and modify it.<br><br>Does anyone have any suggestions on improving what I have above?<div style="clear: both; padding-bottom: 0.25em;"></div></p>
+</div>
+  <footer>
+    <a rel="full-article" href="/2005/06/securing-client-side-contentflash-files/">Read on &rarr;</a>
+  </footer>
+
+
+  </article>
+
+
+  <article>
+    
+  <header>
+    
       <h1 class="entry-title"><a href="/2005/06/hdnug/">HDNUG</a></h1>
     
     
@@ -409,39 +442,6 @@
 
   </article>
 
-
-  <article>
-    
-  <header>
-    
-      <h1 class="entry-title"><a href="/2005/05/hear-my-email-on-net-rocks/">Hear My Email on .NET Rocks!</a></h1>
-    
-    
-      <p class="meta">
-
-
-
-
-<time datetime="2005-05-02 00:00:00 -0500" pubdate  updated >May 2<span>nd</span>, 2005</time>
-
-
-</p>
-    
-  </header>
-
-
-  <div class="entry-content"><div style="clear:both;"></div>
-
-
-<p>Carl Franklin from <a href="http://www.dotnetrocks.com">.NET Rocks!</a> chose my email to read on the next show.Tune in and listen&#8230;<br /><br />For my prize I got to pick from their section of &#8220;useless crap&#8221;, and I chose the big-ass coffee mug&#8230; because I can always use more coffee!(I guess I am not dorky enough to wear a skin tight baseball shirt or truckers hat that says &#8220;.NET Rocks!&#8221; on it&#8230; )<br /><br />If you aren&#8217;t a regular listener, you should really try it out, most of the time you&#8217;ll learn a thing or two new, and it&#8217;s sometimes pretty funny.My favorite shows were with Scott Hanselman &amp; Rory Blyth and Bill Vaughn &amp; Rocky Lohtka.Here&#8217;s a hilarious quote from the show:<br /><br /><blockquote><b>&#8220;I&#8217;m done with objects.&#8221;</b><p align="right"><i>- Rocky Lohtka on .NET Rocks at Dev Connections 2005</i></p></blockquote><div style="clear:both; padding-bottom: 0.25em;"></div></p>
-</div>
-  <footer>
-    <a rel="full-article" href="/2005/05/hear-my-email-on-net-rocks/">Read on &rarr;</a>
-  </footer>
-
-
-  </article>
-
 <nav role="pagination">
   <div>
     
@@ -476,6 +476,10 @@
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2012/02/hello/">Hello, NSScreencast</a>
+      </li>
+    
+      <li class="post">
         <a href="/2012/01/nsscreencasts/">NSScreencasts, Coming Soon</a>
       </li>
     
@@ -489,10 +493,6 @@
     
       <li class="post">
         <a href="/2011/10/houston-tech-fest-2011-recap/">Houston Tech Fest 2011 Recap</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2011/10/appsites-is-now-appkickstand/">Appsites Is Now AppKickstand</a>
       </li>
     
   </ul>

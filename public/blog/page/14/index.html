@@ -110,6 +110,79 @@
     
   <header>
     
+      <h1 class="entry-title"><a href="/2008/07/google-reader-quick-tips/">Google Reader Quick Tips</a></h1>
+    
+    
+      <p class="meta">
+
+
+
+
+<time datetime="2008-07-27 00:00:00 -0500" pubdate  updated >Jul 27<span>th</span>, 2008</time>
+
+
+</p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>#1 – Read Upwards</h3>
+
+
+<p>I like to read my feeds grouped by feed, oldest first.&#160; Scroll down to the last post in the list and press “K” to read upwards from there.&#160; “J” does the opposite &amp; reads downwards.&#160; This is especially useful for busy feeds like <a href="http://slashdot.org" target="_blank">Slashdot</a> or <a href="http://lifehacker.com" target="_blank">Lifehacker</a>, where there are easily 50 posts to read in a day.</p>
+
+
+<h3>#2 – Next/Previous Feed</h3>
+
+
+<p>When using the method above, it’s useful to use Shift+N or Shift+P to navigate to next previous subscription.&#160; This keeps your fingers on the keyboard instead of reaching for the mouse.</p>
+
+
+<h3>#3 – More Screen Real-Estate</h3>
+
+
+<p>If you need more space for reading, press “U” to hide the left column.&#160; Pressing “U” will get it back again.</p>
+
+
+<h3>#4 – Open In-line</h3>
+
+
+<p>If you want to comment on a post (or just click through to see what the site looks like), you can open the post’s original site within the google reader pane.&#160; Just CTRL-Click the title of the post.</p>
+
+
+<h3>#5 – Ninja Mode</h3>
+
+
+<p>Up, Up, Down, Down, Left, Right, Left, Right, B, A.</p>
+
+
+<p><em>No, I’m not kidding on this one.</em></p>
+
+
+<h3>#6 – On-screen help</h3>
+
+
+<p>Press Shift+? to see a nice layout of all the keyboard shortcuts available to you.</p>
+
+
+<p>&#160;</p>
+
+
+<p>What’s your favorite Google Reader tip?</p>
+
+</div>
+  <footer>
+    <a rel="full-article" href="/2008/07/google-reader-quick-tips/">Read on &rarr;</a>
+  </footer>
+
+
+  </article>
+
+
+  <article>
+    
+  <header>
+    
       <h1 class="entry-title"><a href="/2008/07/controller-is-not-the-new-code-behind/">Controller Is NOT the New Code-Behind</a></h1>
     
     
@@ -651,191 +724,6 @@ target="_blank">David Ebbo</a> for his assistance in helping me figure this out.
 
   </article>
 
-
-  <article>
-    
-  <header>
-    
-      <h1 class="entry-title"><a href="/2008/06/net-database-migration-tool-roundup/">.NET Database Migration Tool Roundup</a></h1>
-    
-    
-      <p class="meta">
-
-
-
-
-<time datetime="2008-06-05 00:00:00 -0500" pubdate  updated >Jun 5<span>th</span>, 2008</time>
-
-
-</p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>A very long time ago <a href="http://www.flux88.com/DatabaseMigrationsForNET.aspx" target="_blank">I posted</a> about my excitement that the .NET community was starting to see some love in terms of database migrations.</p>
-
-
-<p>Fast forward more than a year and we have the following options for doing database migrations in .NET.</p>
-
-
-<ul><li><a href="http://wiki.rubyonrails.org/rails/pages/HowtoConnectToMicrosoftSQLServer" target="_blank">Rails Migrations running on SQL Server</a></li><li><a href="http://www.rikware.com/RikMigrations.html" target="_blank">RikMigrations</a></li><li><a href="http://code.google.com/p/tarantino/" target="_blank">Tarantino</a></li><li><a href="http://code.google.com/p/migratordotnet/" target="_blank">Migrator.NET</a></li><li><a href="http://blog.eleutian.com/2008/04/25/AFirstLookAtMachineMigrations.aspx" target="_blank">Machine Migrations</a><a href="http://blog.eleutian.com/2008/04/25/AFirstLookAtMachineMigrations.aspx" target="_blank"></a></li><li><a href="http://blog.wekeroad.com/2007/10/03/subsonic-migrate-me/" target="_blank">Subsonic Migrations</a></li><li><a href="http://dbdeploy.com/2007/09/25/dbdeploynet-v10-officially-released/" target="_blank">dbDeploy.NET</a></li></ul>
-
-
-<p><em>If I’ve left off one, I apologize.</em></p>
-
-
-<p>That’s a crazy amount of options, and of course it beg’s the question: <strong><em>Which one should I use?</em></strong></p>
-
-
-<p>There are pros and cons of each, and for my specific needs I wound up choosing Migrator.NET.&nbsp; I thought I’d post my thoughts on each tool here.</p>
-
-
-<p><strong>Rails Migrations</strong></p>
-
-
-<p>When I first raised the question of the lack of good migration tools for .NET a few people pointed out that there’s nothing stopping me from running the standard Rails migrations on SQL Server.&nbsp; This is done through installing a gem.&nbsp; However at 90% of my clients (or more) the use of Ruby is way too Alpha Geek to actually gain buy-in from the business.&nbsp; This is a shame, but a current reality.&nbsp; In addition, Rails migrations get really powerful when you leverage ActiveRecord classes within your migrations.&nbsp; Since we aren’t using Rails at all, this isn’t possible.&nbsp; Additionally, earlier versions of Rails migrations <em>did not support foreign keys</em>.&nbsp; That’s a serious killer for a lot of folks.&nbsp; I’m not sure if it has changed.</p>
-
-
-<p>Rails Migrations look like this:</p>
-
-
-<div><figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
-</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>class AddSystemSettings &lt; ActiveRecord::Migrationdef self.upcreate_table :system_settings do |t|t.string:namet.string:labelt.text:valuet.string:typet.integer:positionendSystemSetting.create :name =&gt; "notice", :label =&gt; "Use notice?", :value =&gt; 1enddef self.downdrop_table :system_settingsendend&lt;br></div></code></pre></td></tr></table></div></figure></div>
-
-
-<p><br><em>taken from: <a href="http://api.rubyonrails.org/classes/ActiveRecord/Migration.html">http://api.rubyonrails.org/classes/ActiveRecord/Migration.html</a></em> </p>
-
-
-<p>Running migrations is as easy as the command: </p>
-
-
-<div><figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
-</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>rake db:migrate&nbsp;</div></code></pre></td></tr></table></div></figure></div>
-
-
-<p><strong>RikMigrations</strong></p>
-
-
-<p>RikMigrations was the first one I tried.&nbsp; They have an excellent fluent API, and allows you to build tables and columns by chaining together commands.&nbsp; Unfortunately, they didn’t seem to have SQL 2005 Schema support and that is something that I require.&nbsp; I could probably send them a patch, but I decided to continue my search.</p>
-
-
-<div><figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
-</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>&lt;span style="color: blue;">using &lt;/span>RikMigrations;[assembly: &lt;span style="color: rgb(43, 145, 175);">Migration&lt;/span>(&lt;span style="color: blue;">typeof&lt;/span>(BlogMigration1), 1)][assembly: &lt;span style="color: rgb(43, 145, 175);">Migration&lt;/span>(&lt;span style="color: blue;">typeof&lt;/span>(BlogMigration2), 2)]&lt;span style="color: blue;">namespace &lt;/span>Blog.Migrations{&lt;span style="color: blue;">public class &lt;/span>&lt;span style="color: rgb(43, 145, 175);">BlogMigration1 &lt;/span>: &lt;span style="color: rgb(43, 145, 175);">IMigration&lt;/span>{&lt;span style="color: blue;">&lt;/span>&lt;span style="color: blue;">public void &lt;/span>Up(&lt;span style="color: rgb(43, 145, 175);">DbProvider &lt;/span>db){&lt;span style="color: rgb(43, 145, 175);">Table &lt;/span>t = db.AddTable(&lt;span style="color: rgb(163, 21, 21);">"Blog"&lt;/span>);t.AddColumn(&lt;span style="color: rgb(163, 21, 21);">"ID"&lt;/span>, &lt;span style="color: blue;">typeof&lt;/span>(&lt;span style="color: blue;">int&lt;/span>)).PrimaryKey().AutoGenerate();t.AddColumn(&lt;span style="color: rgb(163, 21, 21);">"Name"&lt;/span>, &lt;span style="color: blue;">typeof&lt;/span>(&lt;span style="color: blue;">string&lt;/span>), 64);t.Save();}&lt;span style="color: blue;">&lt;br>&lt;/span>&lt;span style="color: blue;">public void &lt;/span>Down(&lt;span style="color: rgb(43, 145, 175);">DbProvider &lt;/span>db){ db.DropTable(&lt;span style="color: rgb(163, 21, 21);">"Blog"&lt;/span>);}&lt;br>}&lt;span style="color: blue;">&lt;/span></div></code></pre></td></tr></table></div></figure></div>
-
-
-
-
-<div><figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
-</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>&lt;span style="color: blue;">public class &lt;/span>&lt;span style="color: rgb(43, 145, 175);">BlogMigration2 &lt;/span>: &lt;span style="color: rgb(43, 145, 175);">IMigration&lt;/span>{&lt;span style="color: blue;">&lt;/span>&lt;span style="color: blue;"> public void &lt;/span>Up(&lt;span style="color: rgb(43, 145, 175);">DbProvider &lt;/span>db) {&lt;span style="color: rgb(43, 145, 175);"> Table &lt;/span>t = db.AlterTable(&lt;span style="color: rgb(163, 21, 21);">"Blog"&lt;/span>); t.AddColumn(&lt;span style="color: rgb(163, 21, 21);">"Description"&lt;/span>, &lt;span style="color: blue;">typeof&lt;/span>(&lt;span style="color: blue;">string&lt;/span>), &lt;span style="color: blue;">int&lt;/span>.MaxValue); t.Save(); }&lt;span style="color: blue;"> &lt;br> public void &lt;/span>Down(&lt;span style="color: rgb(43, 145, 175);">DbProvider &lt;/span>db) {&lt;span style="color: rgb(43, 145, 175);"> Table &lt;/span>t = db.AlterTable(&lt;span style="color: rgb(163, 21, 21);">"Blog"&lt;/span>); t.DropColumn(&lt;span style="color: rgb(163, 21, 21);">"Description"&lt;/span>); t.Save(); }&lt;font color="#0000ff"> &lt;/font>}}</div></code></pre></td></tr></table></div></figure></div>
-
-
-<p>Running this migration is done like so:</p>
-
-
-<p><img src="/images/rikmigrations_2Dcmd_2Dline_small.jpg" alt="Rikmigrations-cmd-line"  border="0" /></p>
-
-
-<p>Question:&nbsp; How did it know which migrations to run?&nbsp; Answer:&nbsp; They created a table to keep track of it for you…</p>
-
-
-<p><img src="/images/rik_2Dmigrations_2Dmodule_2Dversions_small.jpg" alt="Rik-migrations-module-versions"  border="0" /></p>
-
-
-<p>The cool thing about RikMigrations is you can have versions of different modules, which could really help if you have unrelated areas of the application that each need their own version.&nbsp; My current project could use something like this to separate unrelated application schemas, while maintaing only a single migration process.</p>
-
-
-<p><br><strong>Tarantino</strong></p>
-
-
-<p>Tarantino also seemed compelling, and it’s the tool we’re using with <a href="http://codecampserver.org/" target="_blank">CodeCampServer</a>, however I think that using a fluent API in C# is a little more compelling (however you’re at the whim of the API’s feature-set, unless they let you execute raw sql <strong>also</strong>, which many do).&nbsp; Tarantino works by storing scripts that are named like&nbsp;<strong>0001_add_customers_table.sql</strong> and it runs them in the right sequence.&nbsp; This works well if you would like to continue to leverage your GUI tools such as SQL Server Management Studio.&nbsp; Then you leverage a tool such as <a href="http://www.red-gate.com/" target="_blank">RedGate SQL Compare</a>&nbsp;to generate the change scripts.&nbsp; These scripts are generally large and not very readable, however this method is quite common and effective.</p>
-
-
-<p>Here an example of what this looks like:</p>
-
-
-<p><img src="/images/tarantino_2Dscripts_small.jpg" alt="Tarantino-scripts"  border="0" /></p>
-
-
-<p>And these files are run using a NAnt task…</p>
-
-
-<p><img src="/images/tarantino_2Dnant_2Dtask_small.jpg" alt="Tarantino-nant-task"  border="0" /></p>
-
-
-<p>Running this task gives output similar to this:</p>
-
-
-<p><img src="/images/tarantino_2Dcmd_2Dline_small.jpg" alt="Tarantino-cmd-line"  border="0" /></p>
-
-
-<p>You can see that it – like RikMigrations – knew that it had already exceuted Versi
-on 1 of the database schema, so it could safely skip the script.&nbsp; This is done in a similar manner to the other tools by using a table to record the current version of the database.</p>
-
-
-<p><strong>SubSonic Migrations</strong></p>
-
-
-<p>SubSonic migrations seemed like the perfect choice for my project, since we use Subsonic already.&nbsp; However I’m running a bastardized version and it’s preventing me from updating to the latest trunk.&nbsp; Having two different versions of Subsonic as dependencies feels dirty and confusing to other developers.</p>
-
-
-<p>With Subsonic Migrations you don’t have a project that contains your migrations, you just have a folder with classes.&nbsp; The filename carries the weight here, not the class name or attribute.&nbsp; This appeals to me and feels a bit liberating, with my rails-envy and all.&nbsp; However it does feel a bit unnatural to handle migrations outside of a project in our solution.</p>
-
-
-<p>The API in Subsonic migrations is my least favorite so far, but not by much.&nbsp; All of these tools have similar API’s, it just took me longer to grok this one.</p>
-
-
-<p>For an intro on how to use this tool, check out <a href="http://blog.wekeroad.com/2007/10/03/subsonic-migrate-me/" target="_blank">Rob Conery’s post</a> on the subject.</p>
-
-
-<p><strong>Migrator.NET</strong></p>
-
-
-<p>This project has had an… interesting lifecycle.&nbsp; Originally I believe it was part of the <a href="http://castleproject.org/" target="_blank">Castle Project</a>, maintained by <a href="http://macournoyer.wordpress.com/2007/09/18/the-migrations-for-net-project-is-not-dead-yet/" target="_blank">Macournoyer</a>, then it drifted over to <a href="http://monkeyb.wordpress.com/2007/09/18/maintaining-migratornet/" target="_blank">Nick Hemsley</a>.&nbsp; The project is now up at <a href="http://code.google.com/p/migratordotnet/" target="_blank">google code</a>.&nbsp; Migrator.NET was easy to get into and the API was very simple and easy to grok.</p>
-
-
-<p>The API for Migrator.NET isn’t as fluent as RikMigrations, but it did have builtin schema support for SQL Server 2005, which I needed.&nbsp; The Attribute on the class also seemed a lot cleaner than the assembly attribute in RikMigrations.</p>
-
-
-<p><img src="/images/migratordotnet_2Dsyntax.png" alt="Migratordotnet-syntax"  border="0" /></p>
-
-
-<p>Running the migrations was easy as well with the Migrator.Console.exe command line utility.&nbsp; The output is nothing new, so I’ll spare you the screenshot.</p>
-
-
-<p><strong>Machine Migrations</strong></p>
-
-
-<p>This one looks pretty good, however not as mature as some of the other tools (I think it’s the newest on the scene).&nbsp; Machine Migration relies on an MSBuild task to migrate your database.&nbsp;<strike> It is .NET 3.5 only and thus, not available for my project</strike> <font color="#ff0000">It is 2.0, my mistake!</font>.&nbsp; <a href="http://hammett.castleproject.org/?p=290" target="_blank">Hammet has a short review here</a>, and <a href="http://hammett.castleproject.org/?p=292" target="_blank">subsequently patched it to provide a few additional features</a>.</p>
-
-
-<p>I may start using Machine Migrations on a side-project I’m working on so that I can get a better idea of the differences it has with other frameworks.</p>
-
-
-<p><strong>Where’s DB Pro / Data Dude / Visual Studio 2005 Team Edition for Database Professionals ?</strong></p>
-
-
-<p>Ahh, the tool that loves to piss me off continually is somehow missing from this list?&nbsp; That’s because this tool just doesn’t facilitate a good evolutionary style of database development.&nbsp; I have honestly tried to work effectively with it&nbsp;and it consistently adds friction to our process.&nbsp; I’ve talked to a bunch of other users and they all pretty much say the same thing:&nbsp; <strong>it doesn’t work like that</strong>.&nbsp; And that’s really sad, because 2008 is no different.&nbsp; Sure it’s better, and as far as MSFT V2 products go I think this will be the poster child for v1 suckage, but 2008 still doesn’t have migrations.&nbsp; Today I saw on <a href="http://blogs.msdn.com/gertd/archive/2008/06/03/vsts-2008-database-edition-gdr-june-ctp.aspx" target="_blank">Gert Draper’s blog some info on the latest out of band release</a>, which includes some awesome changes, however there is no peep of anything resembling evolutionary development with the database.</p>
-
-
-<p>This omission tells me that the DB Pro team is only listening to one community (the large enterprise customer) and completely ignoring what’s going on in the agile camp.&nbsp; Maybe Phil Haack &amp; Scott Gu could take over once MVC ships and provide some real change in that organization.</p>
-
-
-<p>Anyway, rant over.</p>
-
-
-<p>Migrations are an effective tool for frictionless automation &amp; evolutionary database development <em>especially with multiple developers.&nbsp; </em>With all of these tools out there, it’s hard to choose which one will fit your process.&nbsp; I think the best advice is to just pick a tool and spike it, see what works and what’s painful.</p>
-
-
-<div class="bjtags">Tags:<a rel="tag" href="http://technorati.com/tag/database+migrations">database+migrations</a></div>
-
-</div>
-  <footer>
-    <a rel="full-article" href="/2008/06/net-database-migration-tool-roundup/">Read on &rarr;</a>
-  </footer>
-
-
-  </article>
-
 <nav role="pagination">
   <div>
     
@@ -870,6 +758,10 @@ on 1 of the database schema, so it could safely skip the script.&nbsp; This is d
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2012/02/hello/">Hello, NSScreencast</a>
+      </li>
+    
+      <li class="post">
         <a href="/2012/01/nsscreencasts/">NSScreencasts, Coming Soon</a>
       </li>
     
@@ -883,10 +775,6 @@ on 1 of the database schema, so it could safely skip the script.&nbsp; This is d
     
       <li class="post">
         <a href="/2011/10/houston-tech-fest-2011-recap/">Houston Tech Fest 2011 Recap</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2011/10/appsites-is-now-appkickstand/">Appsites Is Now AppKickstand</a>
       </li>
     
   </ul>

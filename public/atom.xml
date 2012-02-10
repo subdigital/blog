@@ -4,13 +4,47 @@
   <title>Fickle Bits</title>
   <link href="http://benscheirman.com/atom.xml" rel="self"/>
   <link href="http://benscheirman.com/"/>
-  <updated>2012-01-30T11:38:54-06:00</updated>
+  <updated>2012-02-10T09:23:49-06:00</updated>
   <id>http://benscheirman.com/</id>
   <author>
     <name>Ben Scheirman</name>
     
   </author>
 
+  
+  <entry>
+    <title>Hello, NSScreencast</title>
+    <link href="http://benscheirman.com/2012/02/hello/"/>
+    <updated>2012-02-10T06:27:00-06:00</updated>
+    <id>http://benscheirman.com/2012/02/hello</id>
+    <content type="html">&lt;p&gt;&lt;a href=&quot;http://nsscreencast.com&quot;&gt;NSScreencast&lt;/a&gt; is now live. The first 2 videos have been posted:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;http://nsscreencast.com/episodes/1-objective-c-basics&quot;&gt;Objective-C Basics&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://nsscreencast.com/episodes/2-diagnosing-memory-problems&quot;&gt;Diagnosing Memory Problems&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+
+&lt;p&gt;Now that the site has launched, I can share more details with you about it.&lt;/p&gt;
+
+&lt;h3&gt;A new video each week&lt;/h3&gt;
+
+&lt;p&gt;Each week, a new video will be posted covering a single, focused topic related to iOS development.&lt;/p&gt;
+
+&lt;h3&gt;Don't waste the listener's time&lt;/h3&gt;
+
+&lt;p&gt;Each video will be short and to the point. It boils down to this: a 20 minute video is an easy thing to watch.  A 60-minute video is a serious time commitment.&lt;/p&gt;
+
+&lt;h3&gt;Some Free, Some Paid&lt;/h3&gt;
+
+&lt;p&gt;Eventually, NSScreencast will be a subscription service.  I'll announce details once they are nailed down, but for now, enjoy the videos!
+If you'd like to be notified when an episode is released, you can &lt;a href=&quot;http://feeds.feedburner.com/NSScreencast&quot;&gt;subscribe to the RSS feed&lt;/a&gt;,
+or follow &lt;a href=&quot;http://twitter.com/nsscreencast&quot;&gt;@nsscreencast&lt;/a&gt; on twitter.  (&lt;em&gt;Subscribing in iTunes is coming soon&lt;/em&gt;)&lt;/p&gt;
+
+&lt;p&gt;If you have any video topic suggestions, feel free to share them at the &lt;a href=&quot;http://nsscreencast.uservoice.com&quot;&gt;User Voice Forum&lt;/a&gt;.
+Seriously, I'd love to hear your feedback!&lt;/p&gt;
+</content>
+  </entry>
   
   <entry>
     <title>NSScreencasts, Coming Soon</title>
@@ -1570,31 +1604,6 @@ Here's to hoping the Xcode 4 continues to be improved. In the meantime, hope thi
 
 
 &lt;p&gt;Huge thanks to &lt;a href=&quot;http://stackoverflow.com/questions/5265292/xcode-4-create-ipa-file-instead-of-xcarchive&quot;&gt;this stackoverflow question&lt;/a&gt; for pointing me in the right direction.&lt;/p&gt;
-
-</content>
-  </entry>
-  
-  <entry>
-    <title>Rails Intrigue Video at NHDNUG</title>
-    <link href="http://benscheirman.com/2011/05/rails-intrigue-video-at-nhdnug/"/>
-    <updated>2011-05-31T00:00:00-05:00</updated>
-    <id>http://benscheirman.com/2011/05/rails-intrigue-video-at-nhdnug</id>
-    <content type="html">&lt;p&gt;I gave a presentation at the North Houston .NET User Group a couple weeks ago entitled &quot;Rails Intrigue&quot;.  My friend, &lt;a href=&quot;http://claudiolassala.wordpress.com/&quot;&gt;Claudio Lassala&lt;/a&gt; recorded it and posted the video on YouTube.&lt;/p&gt;
-
-
-
-
-&lt;p&gt;In the presentation, I tried to give a little glimpse of what it feels like to build an application with Rails.  I also tried to convey a little of why I think &lt;strong&gt;Rails is just Fun&lt;/strong&gt;.&lt;/p&gt;
-
-
-
-
-&lt;p&gt;I think it went pretty well, for being mostly off the cuff.  Give it a watch, and let me know what you think.&lt;/p&gt;
-
-
-
-
-&lt;iframe width=&quot;560&quot; height=&quot;349&quot; src=&quot;http://www.youtube.com/embed/GIksgdjQ82g&quot; frameborder=&quot;0&quot; allowfullscreen&gt;&lt;/iframe&gt;
 
 </content>
   </entry>

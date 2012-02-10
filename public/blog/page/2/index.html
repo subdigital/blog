@@ -110,6 +110,103 @@
     
   <header>
     
+      <h1 class="entry-title"><a href="/2011/09/firebug-style-debugging-for-ios/">Firebug-Style Visual Debugging for iOS</a></h1>
+    
+    
+      <p class="meta">
+
+
+
+
+<time datetime="2011-09-16 10:56:00 -0500" pubdate  updated >Sep 16<span>th</span>, 2011</time>
+
+
+</p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Using a crazy helpful library called <a href="https://github.com/domesticcatsoftware/DCIntrospect">DC Introspect</a> you&#8217;re able to easily take an app running in the Simulator:</p>
+
+<p><img class='image ' src='/images/simulator-before-introspection.png' width='' height='' alt='' title=''></p>
+
+<p>And get visual frame debugging information like this:</p>
+
+<p><img class='image ' src='/images/simulator-after-introspection.png' width='' height='' alt='' title=''></p>
+
+<p>You can also click &amp; drag your mouse to get pixel information,
+surrounding frames, print out detailed frame information in the console,
+and even move frames around all while the app is running.</p>
+
+<p>Using it is incredibly simple:</p>
+
+<ul>
+<li>Make sure you have <code>DEBUG</code> defined in your Preprocessor Macros:</li>
+</ul>
+
+
+<p><img class='image ' src='/images/debug-preprocessor-macro.png' width='' height='' alt='' title=''></p>
+
+<ul>
+<li><p>Download the code from https://github.com/domesticcatsoftware/DCIntrospect and drag the DCIntrospect/DCIntrospect folder into your project</p></li>
+<li><p>In your Application Delegate class, make the following changes:</p></li>
+</ul>
+
+
+<figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+</pre></td><td class='code' width='100%'><pre><code class='objc'><div class='line'><span class="cp">#import &quot;DCIntrospect.h&quot;</span>
+</div></code></pre></td></tr></table></div></figure>
+
+<figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+<span class='line'>2</span>
+<span class='line'>3</span>
+<span class='line'>4</span>
+<span class='line'>5</span>
+<span class='line'>6</span>
+<span class='line'>7</span>
+</pre></td><td class='code' width='100%'><pre><code class='objc'><div class='line'><span class="c1">// in applicationDidFinishLaunching:</span>
+</div><div class='line'>
+</div><div class='line'><span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">window</span> <span class="n">makeKeyAndVisible</span><span class="p">];</span>
+</div><div class='line'>
+</div><div class='line'><span class="cp">#ifdef TARGET_IPHONE_SIMULATOR</span>
+</div><div class='line'>    <span class="p">[[</span><span class="n">DCIntrospect</span> <span class="n">sharedIntrospector</span><span class="p">]</span> <span class="n">start</span><span class="p">];</span>
+</div><div class='line'><span class="cp">#endif</span>
+</div></code></pre></td></tr></table></div></figure>
+
+<p>Once that is done, the library will be loaded and you can use it.  When
+the simulator launches, just press Spacebar to activate the tool.</p>
+
+<p>Here are some keyboard shortcuts:</p>
+
+<ul>
+<li><code>o</code> - Outline all views</li>
+<li><code>?</code> - Prints out a help view</li>
+<li><code>f</code> - Flash on <code>drawRect:</code> calls</li>
+<li><code>c</code> - Toggle showing coordinates</li>
+<li><code>4 6 8 2</code> - Nudge the selected view left, right, up, down</li>
+<li><code>0</code> - Recenter view where it was originally</li>
+<li><code>9 7 3 1</code> - Modify Width &amp; Height of selected view</li>
+</ul>
+
+
+<p>You can also click &amp; drag with the mouse to get detailed information
+about frames &amp; mouse position.</p>
+
+<p>I am amazed at how awesome this library is. I&#8217;ll be using it in my
+default toolbox from now on.</p>
+</div>
+  <footer>
+    <a rel="full-article" href="/2011/09/firebug-style-debugging-for-ios/">Read on &rarr;</a>
+  </footer>
+
+
+  </article>
+
+
+  <article>
+    
+  <header>
+    
       <h1 class="entry-title"><a href="/2011/08/vim---could-not-invoke-jslint/">Vim - Could Not Invoke JSLint</a></h1>
     
     
@@ -1059,52 +1156,6 @@ Here&#8217;s to hoping the Xcode 4 continues to be improved. In the meantime, ho
 
   </article>
 
-
-  <article>
-    
-  <header>
-    
-      <h1 class="entry-title"><a href="/2011/05/rails-intrigue-video-at-nhdnug/">Rails Intrigue Video at NHDNUG</a></h1>
-    
-    
-      <p class="meta">
-
-
-
-
-<time datetime="2011-05-31 00:00:00 -0500" pubdate  updated >May 31<span>st</span>, 2011</time>
-
-
-</p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>I gave a presentation at the North Houston .NET User Group a couple weeks ago entitled &#8220;Rails Intrigue&#8221;.  My friend, <a href="http://claudiolassala.wordpress.com/">Claudio Lassala</a> recorded it and posted the video on YouTube.</p>
-
-
-
-
-<p>In the presentation, I tried to give a little glimpse of what it feels like to build an application with Rails.  I also tried to convey a little of why I think <strong>Rails is just Fun</strong>.</p>
-
-
-
-
-<p>I think it went pretty well, for being mostly off the cuff.  Give it a watch, and let me know what you think.</p>
-
-
-
-
-<iframe width="560" height="349" src="http://www.youtube.com/embed/GIksgdjQ82g" frameborder="0" allowfullscreen></iframe>
-
-</div>
-  <footer>
-    <a rel="full-article" href="/2011/05/rails-intrigue-video-at-nhdnug/">Read on &rarr;</a>
-  </footer>
-
-
-  </article>
-
 <nav role="pagination">
   <div>
     
@@ -1139,6 +1190,10 @@ Here&#8217;s to hoping the Xcode 4 continues to be improved. In the meantime, ho
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2012/02/hello/">Hello, NSScreencast</a>
+      </li>
+    
+      <li class="post">
         <a href="/2012/01/nsscreencasts/">NSScreencasts, Coming Soon</a>
       </li>
     
@@ -1152,10 +1207,6 @@ Here&#8217;s to hoping the Xcode 4 continues to be improved. In the meantime, ho
     
       <li class="post">
         <a href="/2011/10/houston-tech-fest-2011-recap/">Houston Tech Fest 2011 Recap</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2011/10/appsites-is-now-appkickstand/">Appsites Is Now AppKickstand</a>
       </li>
     
   </ul>

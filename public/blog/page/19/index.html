@@ -110,6 +110,55 @@
     
   <header>
     
+      <h1 class="entry-title"><a href="/2007/12/asp-net-mvc-tour-of-texas/">ASP.NET MVC Tour of Texas</a></h1>
+    
+    
+      <p class="meta">
+
+
+
+
+<time datetime="2007-12-31 00:00:00 -0600" pubdate  updated >Dec 31<span>st</span>, 2007</time>
+
+
+</p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><font style="BACKGROUND-COLOR: #f4f4f4">Want to see what the hype is all about with the new ASP.NET MVC Framework?</font></p>
+
+
+<p>I&rsquo;ll be touring Texas speaking about it.&nbsp; If you live in Texas, come check out my talk &ldquo;ASP.NET MVC &ndash; Save the Developer, Save the World.&rdquo;</p>
+
+
+<p>Here&rsquo;s the confirmed schedule:</p>
+
+
+<ul><li>January 8<sup>th</sup> &ndash; Alamo Coders (San Antonio)</li><li>January 10th &ndash; HDNUG (Houston)</li><li>January 14<sup>th</sup> &ndash; ADNUG (Austin)</li><li>January 15<sup>th</sup> &ndash; FWDNUG (Fort Worth)</li></ul>
+
+
+<p>We&rsquo;ll take a look at the new framework, the design goals, and dig into some code.</p>
+
+
+<p>Hope to see you there!</p>
+
+
+<p>&nbsp;</p>
+
+</div>
+  <footer>
+    <a rel="full-article" href="/2007/12/asp-net-mvc-tour-of-texas/">Read on &rarr;</a>
+  </footer>
+
+
+  </article>
+
+
+  <article>
+    
+  <header>
+    
       <h1 class="entry-title"><a href="/2007/12/what-i-do/">What I Do</a></h1>
     
     
@@ -591,94 +640,6 @@
 
   </article>
 
-
-  <article>
-    
-  <header>
-    
-      <h1 class="entry-title"><a href="/2007/11/prototype-scriptaculous-protips-1/">Prototype & Scriptaculous - Protips #1</a></h1>
-    
-    
-      <p class="meta">
-
-
-
-
-<time datetime="2007-11-06 00:00:00 -0600" pubdate  updated >Nov 6<span>th</span>, 2007</time>
-
-
-</p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>I often talk to people who haven&#8217;t worked with one of the cool javascript frameworks out there.&nbsp;&nbsp;I am partial to <a href="http://prototypejs.org" target="_blank">prototype</a> and <a href="http://script.aculo.us" target="_blank">scripaculous</a>, but I also really like <a href="http://mochikit.org" target="_blank">MochiKit</a>.</p>
-
-
-<p>If you aren&#8217;t taking advantage of&nbsp;one of these, then perhaps this post&nbsp;is for you&#8230;&nbsp;I give you the ultra quickstart to diving into prototype and scriptaculous!</p>
-
-
-<h2>Things you shouldn&#8217;t ever program javascript without</h2>
-
-
-<p> <p>The best thing ever invented since rubber tires: a replacement for document.getElementById(&#8216;control_id&#8217;);</p><p>You know you&#8217;re not supposed to use <code>document.all</code> or <code>document.ctrl_id</code>, right?&nbsp; Well at least now you do. document.getElementById() is the cross-browser safe way of getting an element off of the page. The prototype equivalent is <code>$('control_id')</code>. This will automatically extend the element returned with some helpful utility methods (like extension methods in C# 3.0). &#8211; more on this later.</p><p>Along the same lines is a useful method for selecting elements using CSS selectors. If you&#8217;re a CSS junkie (like me!) you&#8217;ll appreciate this. <code>&amp;nbsp;</code>&nbsp;</p></p>
-
-<div><figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
-</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>$$("div span.info");</div></code></pre></td></tr></table></div></figure></div>
-
-
-<p> This will return all of the DOM elements that would be matched by that CSS Selector. (for those who don&#8217;t know, this would get all span tags with a class of &#8220;info&#8221; that are directly nested underneath a div.<p>Want to show or hide an element?&nbsp;Use <code>&lt;strong&gt;Element.hide(ctrl)&lt;/strong&gt;</code>, <code>&lt;strong&gt;Element.show(ctrl)&lt;/strong&gt;</code>, or <code>&lt;strong&gt;Element.toggle(ctrl)&lt;/strong&gt;</code>. You can attach these methods onto the element itself by saying <code>&lt;strong&gt;Element.extend(ctrl)&lt;/strong&gt;</code>. If you retrieved it via the $() method, then your object already has these methods.</p><p>Let&#8217;s say you want to grab all of the span tags from a parent div tag.&nbsp; Typically you&#8217;d do this:</p>&#8220;</p>
-
-<div><figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
-</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>var spans = parentDiv.getElementsByTagName("span");</div></code></pre></td></tr></table></div></figure></div>
-
-
-<p> <p>but what is spans?&nbsp; If you thought it was an array, you&#8217;d be wrong.&nbsp; It&#8217;s a NodeList, which is not nearly as powerful as a javascript array.&nbsp; (With javascript arrays you can push(), pop(), shift(), and other cool things that you can&#8217;t do with a NodeList.&nbsp; Anyway, back to the spans collection, we can elevate this to an array by using the <code>$A( spans )</code> method.&nbsp; Now we can use all of the nice array goodness for that list.</p><h2>Effects for that extra polish</h2> <p>How about fading an element?</p>&#8220;</p>
-
-<div><figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
-</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>new Effect.fade(elem);</div></code></pre></td></tr></table></div></figure></div>
-
-
-<p> This also takes options so you can control how fast it fades, for example. Check the excellent docs for all the gory details.<p>Want to make a slide out box?</p>&#8220;</p>
-
-<div><figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
-</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>new Effect.toggle(elem, "slide");</div></code></pre></td></tr></table></div></figure></div>
-
-
-<p><code>This will toggle the element using slide up and slide down. ("fade" and "appear" also work here for toggling).</code><h2>How about some ajax?</h2><p>Forget UpdatePanels. Most of the time we just need to fire off a request and get a list of values back from the server. Prototype has you covered there:</p>&#8220;</p>
-
-<div><figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
-</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>new Ajax.Request( "/path_to_server/ajax/AjaxHandler.ashx?op=getUsername&amp;value=bob",&lt;br>{&lt;br>method: "get",&lt;br>onSuccesss: function(result) {&lt;br> if(result.responseText) alert('available!); else alert('taken');&lt;br>},&lt;br>onFailure: function(e) { alert('something went wrong ' + e); }&lt;br>}</div></code></pre></td></tr></table></div></figure></div>
-
-
-<p>I don&#8217;t know about you, but that&#8217;s pretty painless to me.</p>
-
-
-<p>Want something a bit richer?&nbsp;<b> How about an autocomplete textbox</b>?I wrote this one to auto-complete cities as you type.</p>
-
-
-<p>&#8220;</p>
-
-<div><figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
-</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>var url = '~/AjaxHandler.ashx?op=get_cities';&lt;br>&lt;br>ac = new Ajax.Autocompleter(city_textbox_id, results_id, url, &lt;br>{&lt;br>paramName: 'filter',&lt;br>frequency: 0.2,&lt;br>minChars: 1,&lt;br>indicator: indicator_id,&lt;br>callback : function(element, filter) { &lt;br>var state = $(state_dropdown_id);&lt;br>var state_code = state.options[state.selectedIndex].value;&lt;br>&lt;br>return filter + '&amp;state=' + state_code;&lt;br>}&lt;br>});</div></code></pre></td></tr></table></div></figure></div>
-
-
-<p><i>That&#8217;s it</i>.I&#8217;m not kidding.I handed it a textbox, a div to display the results, and a url to get the data.It takes care of all of the ajax requests, the frequency limiter to prevent us from firing a request with every single keystroke, and returning the results into a list.It even has full keyboard support.The url looks like ~/AjaxHandler.ashx?op=get_citiees&amp;state=TX&amp;filter=Hou and it will return the matches that it finds (based on an HttpHandler I wrote).</p>
-
-
-<p></p>
-
-
-<p>What are <b>your</b> favorite prototype / scriptaculous protiops?</p>
-
-</div>
-  <footer>
-    <a rel="full-article" href="/2007/11/prototype-scriptaculous-protips-1/">Read on &rarr;</a>
-  </footer>
-
-
-  </article>
-
 <nav role="pagination">
   <div>
     
@@ -713,6 +674,10 @@
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2012/02/hello/">Hello, NSScreencast</a>
+      </li>
+    
+      <li class="post">
         <a href="/2012/01/nsscreencasts/">NSScreencasts, Coming Soon</a>
       </li>
     
@@ -726,10 +691,6 @@
     
       <li class="post">
         <a href="/2011/10/houston-tech-fest-2011-recap/">Houston Tech Fest 2011 Recap</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2011/10/appsites-is-now-appkickstand/">Appsites Is Now AppKickstand</a>
       </li>
     
   </ul>

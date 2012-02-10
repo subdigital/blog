@@ -1,0 +1,28 @@
+---
+layout: post
+title: "Hello, NSScreencast"
+date: 2012-02-10 06:27
+comments: true
+categories: iOS
+---
+
+[NSScreencast](http://nsscreencast.com) is now live. The first 2 videos have been posted:
+
+- [Objective-C Basics](http://nsscreencast.com/episodes/1-objective-c-basics)
+- [Diagnosing Memory Problems](http://nsscreencast.com/episodes/2-diagnosing-memory-problems)
+
+Now that the site has launched, I can share more details with you about it.
+
+### A new video each week
+Each week, a new video will be posted covering a single, focused topic related to iOS development. 
+
+### Don't waste the listener's time
+Each video will be short and to the point. It boils down to this: a 20 minute video is an easy thing to watch.  A 60-minute video is a serious time commitment.
+
+### Some Free, Some Paid
+Eventually, NSScreencast will be a subscription service.  I'll announce details once they are nailed down, but for now, enjoy the videos!
+If you'd like to be notified when an episode is released, you can [subscribe to the RSS feed](http://feeds.feedburner.com/NSScreencast), 
+or follow [@nsscreencast](http://twitter.com/nsscreencast) on twitter.  (_Subscribing in iTunes is coming soon_)
+
+If you have any video topic suggestions, feel free to share them at the [User Voice Forum](http://nsscreencast.uservoice.com).
+Seriously, I'd love to hear your feedback!

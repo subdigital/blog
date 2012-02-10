@@ -110,6 +110,58 @@
     
   <header>
     
+      <h1 class="entry-title"><a href="/2007/06/asp-net-essentials-the-label/">ASP.NET Essentials - the Label</a></h1>
+    
+    
+      <p class="meta">
+
+
+
+
+<time datetime="2007-06-19 00:00:00 -0500" pubdate  updated >Jun 19<span>th</span>, 2007</time>
+
+
+</p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>After talking to developers for a few days about basic HTML and ASP.NET topics, I find that I always focus on the <strong>Label</strong> control.</p>
+
+
+<p>More specifically, I&rsquo;m talking about the `&lt;label&gt;` tag in HTML.&nbsp; What does this tag do?&nbsp; Why should we care, when we can just write the text before an input control on the page?</p>
+
+
+<p>For starters, the label has semantic meaning.&nbsp; The `&lt;label&gt;` tag gives meaning to a textbox or a dropdown.&nbsp; If you were blind and browsing using a screen reader, you&rsquo;d appreciate the little semantic tidbits that give you an easier browser experience.</p>
+
+
+<p>Another benefit is that we can select and style the label easily, making the transition to table-less forms so much easier.</p>
+
+
+<p>A third and possibly more useful benefit is that the mouse stays as a pointer, and clicking on the text sets the focus to the corresponding control.</p>
+
+
+<p>The usage in standard HTML is like this:</p>
+
+
+<p>`
+<div><figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>&lt;label for='user_name'&gt;User Name:&lt;/label&gt;&lt;input type='text' id='user_name' /&gt;</div></code></pre></td></tr></table></div></figure></div>
+`<p></p>This results in the following example: <p><label for="'user_name'">User Name:</label> <input id="'user_name'" type="'text'"> </p><p>(notice how the mouse cursor stays as a pointer, instead of the standard text cursor)</p><p>If you were a reasonable person, you&rsquo;d think that the `&lt;asp:label&gt;` control would render as an HTML `&lt;label&gt;`, but you&rsquo;d be wrong.&nbsp; ASP.NET renders a standard `&lt;asp:label&gt;` as a `&lt;span&gt;`.&nbsp; ASP.NET 2.0 fixed this, however you have to specify the `AssociatedControlID` property to change the rendering behavior.</p><p>This leads me to another point that I&rsquo;d like to make with the <strong>Label</strong> control.&nbsp; Often times we just want a static label, like in the example above.&nbsp; If we use the &lt;asp:label&gt; then we&rsquo;ll have a server-side component as well and a viewstate hit.</p><p><a href="http://www.flux88.com/uploads/label_render.JPG"><img src="/images/label_render_thumb.jpg" alt="Label_render"  border="0"  /></a></p><p>We certainly don&rsquo;t need viewstate in this scenario,&nbsp; Often times we just neglect these things until they are a problem.&nbsp; </p><p>I can hear you say it now&hellip; &ldquo;but Ben, you can disable Viewstate by specifying EnableViewState=&rsquo;false&rsquo; &ldquo;&hellip;&nbsp; I know you can.&nbsp; But it&rsquo;s too easy to just leave it as is.&nbsp; There&rsquo;s also an easy alternative.</p><p>You can accomplish the same rendering without the viewstate issue by just typing this:</p><p>`&lt;label for=&#8217;&lt;%= txtUsername.ClientID %&gt;&#8217;&gt;User Name:&lt;/label&gt;`</p><p>This will render the same way, but also ensure that we get the generated ID of the control that we are associating with.&nbsp; This will not have any server-side component or any correlation to ViewState, and it is actually less characters to type.</p><p>Hope you find this information useful!</p>
+
+</div>
+  <footer>
+    <a rel="full-article" href="/2007/06/asp-net-essentials-the-label/">Read on &rarr;</a>
+  </footer>
+
+
+  </article>
+
+
+  <article>
+    
+  <header>
+    
       <h1 class="entry-title"><a href="/2007/06/hdnug-last-night/">HDNUG Last Night</a></h1>
     
     
@@ -605,73 +657,6 @@ alibri" size="3">I think it&rsquo;s time for an example.<span style="mso-spaceru
 
   </article>
 
-
-  <article>
-    
-  <header>
-    
-      <h1 class="entry-title"><a href="/2007/04/paris-day-1/">Paris - Day 1</a></h1>
-    
-    
-      <p class="meta">
-
-
-
-
-<time datetime="2007-04-23 00:00:00 -0500" pubdate  updated >Apr 23<span>rd</span>, 2007</time>
-
-
-</p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>My company, <a href="http://www.us.sogeti.com/" target="_blank">Sogeti</a>, has sent me to the beautiful county of France to attend a global enterprise SOA training from some of the folks at IBM.</p>
-
-
-<p>So far, France is absolutely gorgeous.&nbsp; I braved the subway system with my friend <a href="http://blogs.sarkhouston.com/amurrell" target="_blank">Aaron Murrell</a>, which was very humorous.&nbsp; We got a bit turned around a few times, but we eventually found our stop.</p>
-
-
-<p><img src="/images/IMG_3191_small3.jpg" alt="Streets of Paris"  border="0"  /></p>
-
-
-<p><img src="/images/IMG_3243_small.jpg" alt="old building"  border="0"  /></p>
-
-
-<p>We noticed that people park crazy in Paris&hellip;</p>
-
-
-<p><img src="/images/IMG_3199_small.jpg" alt="Smart car parking job"  border="0"  /></p>
-
-
-<p>We went into Paris and tried to find a restaurant called Chartier, however we couldn&rsquo;t locate the street.&nbsp; A quaint restarant called Le Flash caught our eye and we walked in.&nbsp; The owner greeted us with many french words (which I do not understand) and we had a fun time ordering our food and communicating with him.&nbsp; The food was excellent, the beer was even better, and the owner even played Alan Jackson for us, ha!&nbsp; I don&rsquo;t care for country music, but it was funny and appreciated nonetheless.</p>
-
-
-<p><img src="/images/IMG_3201_small.jpg" alt="Le Flash"  border="0"  /></p>
-
-
-<p>We then took a taxi north to the city of Gouvieux where the corporate chateau resides.&nbsp; It really is breath-taking.&nbsp; It was built by Eiffel a long time ago, and is now home for our Capgemini University (well, the bar and dining area, that is).</p>
-
-
-<p><img src="/images/IMG_3290_small.jpg" alt="Le Chateau"  border="0"  /></p>
-
-
-<p>We start our training tomorrow and I&rsquo;m sure our day will be full of introductions and hands-on training.</p>
-
-
-<p>&nbsp;</p>
-
-
-<div class="bjtags">Tags:<a rel="tag" href="http://technorati.com/tag/paris">paris</a>, <a rel="tag" href="http://technorati.com/tag/travel">travel</a></div>
-
-</div>
-  <footer>
-    <a rel="full-article" href="/2007/04/paris-day-1/">Read on &rarr;</a>
-  </footer>
-
-
-  </article>
-
 <nav role="pagination">
   <div>
     
@@ -706,6 +691,10 @@ alibri" size="3">I think it&rsquo;s time for an example.<span style="mso-spaceru
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2012/02/hello/">Hello, NSScreencast</a>
+      </li>
+    
+      <li class="post">
         <a href="/2012/01/nsscreencasts/">NSScreencasts, Coming Soon</a>
       </li>
     
@@ -719,10 +708,6 @@ alibri" size="3">I think it&rsquo;s time for an example.<span style="mso-spaceru
     
       <li class="post">
         <a href="/2011/10/houston-tech-fest-2011-recap/">Houston Tech Fest 2011 Recap</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2011/10/appsites-is-now-appkickstand/">Appsites Is Now AppKickstand</a>
       </li>
     
   </ul>
