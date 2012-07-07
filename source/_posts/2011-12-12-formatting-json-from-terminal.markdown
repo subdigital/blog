@@ -37,9 +37,9 @@ make it easy to read.
 
 I looked at ways of doing this all from the Terminal, and came across this python command:
 
-````
+```
 python -mjson.tool
-````
+```
 
 It takes input from stdin and outputs it formatted nicely.  Sweet!  Now all that's needed is to make this a bit more easy to remember,
 so I made a script to do this for me called `format_json` and put it in my path.

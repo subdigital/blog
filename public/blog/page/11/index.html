@@ -5,11 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>
-    
-    Fickle Bits
-  </title>
+  <title>Fickle Bits</title>
   <meta name="author" content="Ben Scheirman">
+
+  
+  <meta name="description" content="I&#8217;ve had it with TFS.&nbsp; It&#8217;s a thorn in my side.&nbsp; It sits there, embedded in Visual studio like ivy on a brick wall, mocking me &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -18,14 +18,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-
-  <link rel="canonical" href="http://benscheirman.com/blog/page/11/index.html"/>
-  <link href="/favicon.png" rel="shortcut icon" />
+  <link rel="canonical" href="http://benscheirman.com/blog/page/11/">
+  <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
-  <script src="http://s3.amazonaws.com/ender-js/jeesh.min.js"></script>
+  <script src="/javascripts/ender.js"></script>
   <script src="/javascripts/octopress.js" type="text/javascript"></script>
-  <link href="http://feeds.feedburner.com/ficklebits" rel="alternate" title="Fickle Bits" type="application/atom+xml"/>
+  <link href="http://feeds.feedburner.com/ficklebits" rel="alternate" title="Fickle Bits" type="application/atom+xml">
+  <!--Fonts from Google's Web font directory at http://google.com/webfonts -->
+<link href='http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic' rel='stylesheet' type='text/css'>
+
   
   <script type="text/javascript">
     var _gaq = _gaq || [];
@@ -40,36 +43,10 @@
   </script>
 
 
-  
-  <script type="text/javascript">
-    (function() {
-      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
-      script.src = 'https://apis.google.com/js/plusone.js';
-      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
-    })();
-  </script>
-
-
-  
-  <script type="text/javascript">
-    (function(){
-      var twitterWidgets = document.createElement('script');
-      twitterWidgets.type = 'text/javascript';
-      twitterWidgets.async = true;
-      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
-      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
-    })();
-  </script>
-
-
-  <!--Fonts from Google's Web font directory at http://google.com/webfonts -->
-<link href='http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic' rel='stylesheet' type='text/css'>
-<link href='http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic' rel='stylesheet' type='text/css'>
-
 </head>
 
-<body  >
-  <header><hgroup>
+<body   >
+  <header role="banner"><hgroup>
   <h1><a href="/">Fickle Bits</a></h1>
   
     <h2>You're doing it wrong.</h2>
@@ -77,24 +54,26 @@
 </hgroup>
 
 </header>
-  <nav role=navigation><ul role=subscription data-subscription="rss">
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
   <li><a href="http://feeds.feedburner.com/ficklebits" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
   
 </ul>
+  
 <form action="http://google.com/search" method="get">
-  <fieldset role="site-search">
+  <fieldset role="search">
     <input type="hidden" name="q" value="site:benscheirman.com" />
     <input class="search" type="text" name="q" results="0" placeholder="Search"/>
   </fieldset>
 </form>
+  
 <ul role=main-navigation>
   <li><a href="/">Blog</a></li>
   <li><a href="/about-me">About Me</a></li>
   <li><a href="/speaking">Speaking</a></li>
   <li><a href="/contact">Contact</a></li>
-  <li><a href="http://giggletouch.com">Giggle Touch for
-    iOS</a></li>
-  <li><a href="http://appkickstand.com">AppKickstand</a></li>
+  <li><a href="/projects">Projects</a></li>
+  <!-- <li><a href="http://giggletouch.com">Giggle Touch</a></li> -->
+  <!-- <li><a href="http://appkickstand.com">AppKickstand</a></li> -->
   <li><a href="/blog/archives">Archives</a></li>
 
 </ul>
@@ -103,25 +82,82 @@
   <div id="main">
     <div id="content">
       <div class="blog-index">
-
-
-
-  <article>
+  
+  
+  
+    <article>
+      
+  <header>
     
+      <h1 class="entry-title"><a href="/2009/02/a-story-of-tfs-wtfery/">A Story of TFS WTFery</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-02-05T00:00:00-06:00" pubdate data-updated="true">Feb 5<span>th</span>, 2009</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I&#8217;ve had it with TFS.&nbsp; It&#8217;s a thorn in my side.&nbsp; It sits there, embedded in Visual studio like ivy on a brick wall, mocking me.&nbsp; It&#8217;s like developing in a hot tar pit.&nbsp; Sticky, smelly, and literally the <strong>biggest source of developer pain I feel these days</strong>.&nbsp; I finished up a set of bug fixes and application features that I needed to deploy to QA today.&nbsp;&nbsp; <p>One of them was updating a text file.&nbsp; Easy, right?&nbsp; Just double click the file!&nbsp; WRONG.&nbsp; If you do this you can&#8217;t save it, you need to open Visual Studio &amp; explicitly check-out the file.&nbsp; Then you can edit it.&nbsp; This is done because apparently the developers of TFS decided that Visual Studio is our only editor&#8230;.  <p><strong>Don&#8217;t lock my files, bro!</strong>  <p><a href="http://flux88.com/files/media/image/WindowsLiveWriter/AStoryofTFSWTFery_FA86/203-41266207d6209dc6_2.png"><img src="/images/203-41266207d6209dc6_thumb.png" alt="203-41266207d6209dc6"  border="0" /></a>  <p>That is a minor gripe, but it&#8217;s pretty substantial when you think about the fact that I have batch files, a NAnt build, configuration files, and a readme&#8230; all of which I&#8217;d like to use either <a href="http://www.flos-freeware.ch/notepad2.html">Notepad2</a> or <a href="http://e-texteditor.com">e-texteditor</a> to edit.  <p>If I want to edit a text file, Visual Studio is <strong>the last editor on the planet that I want to use</strong>.  <p>Then I finish up some other boring SSRS work and commit it to our dev branch.&nbsp; Our CI build shows success, and I&#8217;m ready to merge to integration, which is where we deploy from.&nbsp; I kick off the deploy process and it fails.&nbsp; Apparently there was a missing file in the integration branch.  <p>This file was a new file in a directory that was already branched, so when mergine shouldn&#8217;t it get merged too?&nbsp; I guess not, because when I go to merge the folder, the new file is excluded.&nbsp; If you right click &amp; try to merge just the file, it shows no branching targets.&nbsp; Ok, so let&#8217;s branch it.&nbsp;&nbsp; <p><a href="http://flux88.com/files/media/image/WindowsLiveWriter/AStoryofTFSWTFery_FA86/203-41266207ce9264e2_2.png"><img src="/images/203-41266207ce9264e2_thumb.png" alt="203-41266207ce9264e2"  border="0" /></a>  <p>Branching in the same folder?&nbsp; Why on earth would you ever want to do that?&nbsp; That, my friends, is <strong>the path to madness</strong>.&nbsp; I correct the path to branch the file into the integration path.  <p>So I finally do my build again, and get more errors.&nbsp; Reading the build output it looks like some changes still haven&#8217;t made it over.&nbsp; I do another merge on this folder and&#8230;  <p><a href="http://flux88.com/files/media/image/WindowsLiveWriter/AStoryofTFSWTFery_FA86/203-41266207d6c2f073_2.png"><img src="/images/203-41266207d6c2f073_thumb.png" alt="203-41266207d6c2f073"  border="0" /></a>  <p>then do a diff of the files:  <p><a href="http://flux88.com/files/media/image/WindowsLiveWriter/AStoryofTFSWTFery_FA86/203-41266207d71aed6b_2.png"><img src="/images/203-41266207d71aed6b_thumb.png" alt="203-41266207d71aed6b"  border="0" /></a>  <p>WTFF!  <p>So I guess now I&#8217;ll need to merge each file, not the directory.&nbsp; Select the files and&#8230;  <p><a href="http://flux88.com/files/media/image/WindowsLiveWriter/AStoryofTFSWTFery_FA86/203-41266207d8308b91_2.png"><img src="/images/203-41266207d8308b91_thumb.png" alt="203-41266207d8308b91"  border="0" /></a>  <p>Doh!&nbsp; You can&#8217;t branch multiple files via selection like this.&nbsp; Why?&nbsp; I&#8217;m sure there&#8217;s a technical reason, but <strong>I don&#8217;t flippin care</strong>.&nbsp; This is an abismal user-experience.  <p>Ok, so I&#8217;ll branch <em>each one</em> individually&#8230;.&nbsp; Merging individually didn&#8217;t work either:  <p><a href="http://flux88.com/files/media/image/WindowsLiveWriter/AStoryofTFSWTFery_FA86/203-41266207e0fbd402_2.png"><img src="/images/203-41266207e0fbd402_thumb.png" alt="203-41266207e0fbd402"  border="0" /></a>  <p>At this point I&#8217;m feeling a little bit like this guy:  <p><a href="http://flux88.com/files/media/image/WindowsLiveWriter/AStoryofTFSWTFery_FA86/60371673_0eb0b14f91_2.jpg"><img src="/images/60371673_0eb0b14f91_thumb.jpg" alt="60371673_0eb0b14f91"  border="0" /></a>  <p><em>(</em><a href="http://flickr.com/photos/dannyboyster"><em>http://flickr.com/photos/dannyboyster</em></a><em>)</em>  <p>So I went to the command-line to try a baseless merge.&nbsp; You can do that like this: 
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>c:\project&gt;tf merge /baseless &lt;source&gt; &lt;target&gt; /recursive</span></code></pre></td></tr></table></div></figure>
+
+<p>This seemed to do the trick.&nbsp; Time to commit the changes.
+<p>Now I&#8217;m greeted with a host of conflicts.&nbsp; I have <strong>never</strong> made code changes to my target branch.&nbsp; I have only merged to it.&nbsp; There should never be an incompatible change!
+<p>Now, here&#8217;s what really gets me:&nbsp; I get different conflict resolution <em>language</em> depending on if I select a single file or multiple files.
+<p>Single file conflict resolution dialog:
+<p><a href="http://flux88.com/files/media/image/WindowsLiveWriter/AStoryofTFSWTFery_FA86/203-41266207dfeac2f0_2.png"><img src="/images/203-41266207dfeac2f0_thumb.png" alt="203-41266207dfeac2f0"  border="0" /></a>
+<p>Multiple file conflict resolution dialog:
+<p><a href="http://flux88.com/files/media/image/WindowsLiveWriter/AStoryofTFSWTFery_FA86/203-41266207dfcdf012_2.png"><img src="/images/203-41266207dfcdf012_thumb.png" alt="203-41266207dfcdf012"  border="0" /></a>
+<p>So which is it TFS?&nbsp; Source/Target, or Local/Server?&nbsp; This is so confusing I&#8217;m not sure what to do in the latter.&nbsp; I guess I need discard server version, so I do that.
+<p>Two hours after completing my feature work, I&#8217;m finally able to check in the changes, do my deploy, and see it running successfully on the QA box.
+<p>What a day.&nbsp; <strong>TFS:&nbsp; I hate you</strong>.</p>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
   <header>
     
       <h1 class="entry-title"><a href="/2009/02/february-alt-net-geek-dinner/">February ALT.NET Geek Dinner</a></h1>
     
     
       <p class="meta">
+        
 
 
 
 
-<time datetime="2009-02-03 00:00:00 -0600" pubdate  updated >Feb 3<span>rd</span>, 2009</time>
 
 
-</p>
+
+
+  
+
+
+<time datetime="2009-02-03T00:00:00-06:00" pubdate data-updated="true">Feb 3<span>rd</span>, 2009</time>
+        
+      </p>
     
   </header>
 
@@ -131,30 +167,36 @@
 
 <p> <p>Star Pizza has a quiet-ish upstairs that is much better suited to our group.&nbsp; The topic this month will be &#8220;Organizing the Conference&#8221; (<a href="http://houston.altnetconf.com">http://houston.altnetconf.com</a>).&nbsp; Bring ideas &amp; an appetite!&nbsp; See you there.</p> <h3>Where?</h3> <p>Star Pizza<br>2111 Norfolk</p> <p><iframe marginwidth="0" marginheight="0" src="http://maps.google.com/maps?f=q&amp;source=s_q&amp;hl=en&amp;geocode=&amp;q=2111+Norfolk,+houston&amp;sll=37.0625,-95.677068&amp;sspn=47.301626,65.126953&amp;ie=UTF8&amp;z=14&amp;ll=29.744184,-95.40699&amp;output=embed&amp;s=AARTsJprrN-PcPjW7argBcbbRa34B9mezg" frameborder="0" width="425" scrolling="no" height="350"></iframe><br><small><a style="color: #0000ff; text-align: left" href="http://maps.google.com/maps?f=q&amp;source=embed&amp;hl=en&amp;geocode=&amp;q=2111+Norfolk,+houston&amp;sll=37.0625,-95.677068&amp;sspn=47.301626,65.126953&amp;ie=UTF8&amp;z=14&amp;ll=29.744184,-95.40699">View Larger Map</a></small> </p> <h3>When?</h3> <p>Monday, February 9th, 6pm-8pm</p> <p><a href="http://www.google.com/calendar/event?action=TEMPLATE&amp;tmeid=cXA2YjNnNDFzZmRvZmF0cTAyMTdzcTVrNTQgc3ViZGlnaXRhbEBt&amp;tmsrc=c3ViZGlnaXRhbEBnbWFpbC5jb20" target="_blank"><img src="/images/gc_button1_en_.gif"  border="0" /></a></p></p>
 </div>
-  <footer>
-    <a rel="full-article" href="/2009/02/february-alt-net-geek-dinner/">Read on &rarr;</a>
-  </footer>
+  
+  
 
 
-  </article>
-
-
-  <article>
-    
+    </article>
+  
+  
+    <article>
+      
   <header>
     
       <h1 class="entry-title"><a href="/2009/02/access-denied-on-microsoft-visual-studio-web-authoring-component/">Access Denied on Microsoft Visual Studio Web Authoring Component</a></h1>
     
     
       <p class="meta">
+        
 
 
 
 
-<time datetime="2009-02-02 00:00:00 -0600" pubdate  updated >Feb 2<span>nd</span>, 2009</time>
 
 
-</p>
+
+
+  
+
+
+<time datetime="2009-02-02T00:00:00-06:00" pubdate data-updated="true">Feb 2<span>nd</span>, 2009</time>
+        
+      </p>
     
   </header>
 
@@ -164,30 +206,36 @@
 
 <p> <p>Anyway, when installing Visual Studio 2008 I was promptly greeted with a slew of errors.&nbsp; Checking the log yielded this not very helpful statement:</p> <blockquote> <p><em>[02/02/09,13:53:22] Microsoft Visual Studio Web Authoring Component: [2] Error code 5 for this component means &#8220;Access is denied.</em></p></blockquote> <p>The knowledge base article it linked to was less than helpful as well.&nbsp; A colleague asked me to crack open McAfee&#8217;s logs and sure enough&#8230; we found this in there:</p> <blockquote> <p><em>2/2/2009&nbsp;&nbsp;&nbsp; 1:41:20 PM&nbsp;&nbsp;&nbsp; Blocked by Access Protection ru&nbsp;&nbsp;&nbsp; ZZZ\user&nbsp;&nbsp;&nbsp;&nbsp; d:\wcu\webdesignercore\WebDesignerCore.EXE&nbsp;&nbsp;&nbsp; C:\7912618bc3a93fed0bab\autorun.inf&nbsp;&nbsp;&nbsp; User-defined Rules:Autorun_inf&nbsp;&nbsp;&nbsp; Action blocked : Create<br>2/2/2009&nbsp;&nbsp;&nbsp; 1:53:22 PM&nbsp;&nbsp;&nbsp; Blocked by Access Protection rule&nbsp;&nbsp;&nbsp;&nbsp; ZZZ\user d:\wcu\webdesignercore\WebDesignerCore.EXE&nbsp;&nbsp;&nbsp; C:\e300576fb9ee95c7e7e9c2cb\autorun.inf&nbsp;&nbsp;&nbsp; User-defined Rules:Autorun_inf&nbsp;&nbsp;&nbsp; Action blocked : Create<br>2/2/2009&nbsp;&nbsp;&nbsp; 2:02:08 PM&nbsp;&nbsp;&nbsp; Blocked by Access Protection rule&nbsp;&nbsp;&nbsp;&nbsp; ZZZ\user d:\wcu\webdesignercore\WebDesignerCore.EXE&nbsp;&nbsp;&nbsp; C:\9e98c3f777aff7da331d68c05065b5\autorun.inf&nbsp;&nbsp;&nbsp; User-defined Rules:Autorun_inf&nbsp;&nbsp;&nbsp; Action blocked : Create</em></p></blockquote> <p>That is three separate installation attempts that failed.&nbsp; Luckily my account had the ability to disable the sometimes-annoying-file-blocking-thingy in McAfee Enterprise.</p> <p><img src="/images/mcaffee-file-access-dialog_3.png" alt="mcaffee-file-access-dialog"  border="0" /> </p> <p>If you&#8217;re getting this error, try disabling that guy to install Visual Studio.&nbsp; Don&#8217;t forget to turn it back on though, or the corp network security guys with shotguns might visit your desk wondering why a worm installed on your machine was sending out emails to everyone in the company with a vulgar photo&#8230;</p> <p>Hope this saves someone the 30 minutes it cost me today!</p></p>
 </div>
-  <footer>
-    <a rel="full-article" href="/2009/02/access-denied-on-microsoft-visual-studio-web-authoring-component/">Read on &rarr;</a>
-  </footer>
+  
+  
 
 
-  </article>
-
-
-  <article>
-    
+    </article>
+  
+  
+    <article>
+      
   <header>
     
       <h1 class="entry-title"><a href="/2009/02/announcing-houston-alt-net-open-spaces-conference/">Announcing Houston ALT.NET Open Spaces Conference</a></h1>
     
     
       <p class="meta">
+        
 
 
 
 
-<time datetime="2009-02-01 00:00:00 -0600" pubdate  updated >Feb 1<span>st</span>, 2009</time>
 
 
-</p>
+
+
+  
+
+
+<time datetime="2009-02-01T00:00:00-06:00" pubdate data-updated="true">Feb 1<span>st</span>, 2009</time>
+        
+      </p>
     
   </header>
 
@@ -233,30 +281,36 @@
 <br />
 
 </div>
-  <footer>
-    <a rel="full-article" href="/2009/02/announcing-houston-alt-net-open-spaces-conference/">Read on &rarr;</a>
-  </footer>
+  
+  
 
 
-  </article>
-
-
-  <article>
-    
+    </article>
+  
+  
+    <article>
+      
   <header>
     
       <h1 class="entry-title"><a href="/2009/01/building-a-hackintosh/">Building a Hackintosh</a></h1>
     
     
       <p class="meta">
+        
 
 
 
 
-<time datetime="2009-01-10 00:00:00 -0600" pubdate  updated >Jan 10<span>th</span>, 2009</time>
 
 
-</p>
+
+
+  
+
+
+<time datetime="2009-01-10T00:00:00-06:00" pubdate data-updated="true">Jan 10<span>th</span>, 2009</time>
+        
+      </p>
     
   </header>
 
@@ -353,8 +407,8 @@ You can get this at an Apple store, ebay, craigslist, or the usual places. I fou
 
 
 
-<div><figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
-</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>sudo chmod -R 755 /System/Library/Extensions/yourkext.kext&lt;br />sudo chown -R root:wheel /System/Library/Extensions/yourkext.kext</div></code></pre></td></tr></table></div></figure></div>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>sudo chmod -R 755 /System/Library/Extensions/yourkext.kext&lt;br />sudo chown -R root:wheel /System/Library/Extensions/yourkext.kext</span></code></pre></td></tr></table></div></figure>
 
 
 
@@ -364,8 +418,8 @@ You can get this at an Apple store, ebay, craigslist, or the usual places. I fou
 
 
 
-<div><figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
-</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>sudo rm -R /System/Library/Extensions.kextcache&lt;br />sudo rm -R /System/Library/Extensions.mkext</div></code></pre></td></tr></table></div></figure></div>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>sudo rm -R /System/Library/Extensions.kextcache&lt;br />sudo rm -R /System/Library/Extensions.mkext</span></code></pre></td></tr></table></div></figure>
 
 
 
@@ -411,30 +465,36 @@ You can get this at an Apple store, ebay, craigslist, or the usual places. I fou
 <p>&nbsp;&#160;</p>
 
 </div>
-  <footer>
-    <a rel="full-article" href="/2009/01/building-a-hackintosh/">Read on &rarr;</a>
-  </footer>
+  
+  
 
 
-  </article>
-
-
-  <article>
-    
+    </article>
+  
+  
+    <article>
+      
   <header>
     
       <h1 class="entry-title"><a href="/2009/01/last-night-at-hdnug/">Last Night at HDNUG</a></h1>
     
     
       <p class="meta">
+        
 
 
 
 
-<time datetime="2009-01-09 00:00:00 -0600" pubdate  updated >Jan 9<span>th</span>, 2009</time>
 
 
-</p>
+
+
+  
+
+
+<time datetime="2009-01-09T00:00:00-06:00" pubdate data-updated="true">Jan 9<span>th</span>, 2009</time>
+        
+      </p>
     
   </header>
 
@@ -444,30 +504,36 @@ You can get this at an Apple store, ebay, craigslist, or the usual places. I fou
 
 <p> <p>I spoke about latest updates to the ASP.NET MVC Framework, and did some off-the-cuff coding to demonstrate the features.&nbsp; I didn&#8217;t get a chance to touch on a few subjects, but all in all I think it was well received.</p> <p>I made the point early on that ASP.NET MVC is an option, and that not everyone would get it.&nbsp; That&#8217;s fine!&nbsp; It&#8217;s meant for a specific type of developer who cares deeply about certain things, namely control over HTML, URLS, tight integration with HTTP and Javascript, and ajax.&nbsp; And who can possibly leave out better separation of concerns &amp; testability.</p> <p><img src="/images/mvc-an-option_3.png" alt="mvc-an-option"  border="0" /> </p> <p>There were certainly folks in the camp that didn&#8217;t get it in the audience.&nbsp; I hope that I adequately represented what MVC is and how it works well on ASP.NET.</p> <p>You can <a href="http://benscheirman.googlecode.com/svn/trunk/presentations/hdnug%20%2001-2009/hdnug%2009.pptx" target="_blank">download the slides for the talk</a>, however I am unable to post the code because it references a private release that I cannot distribute.&nbsp; As soon as the RC becomes available, I&#8217;ll post the code online.</p></p>
 </div>
-  <footer>
-    <a rel="full-article" href="/2009/01/last-night-at-hdnug/">Read on &rarr;</a>
-  </footer>
+  
+  
 
 
-  </article>
-
-
-  <article>
-    
+    </article>
+  
+  
+    <article>
+      
   <header>
     
       <h1 class="entry-title"><a href="/2008/12/obligatory-2008-recap/">Obligatory 2008 Recap</a></h1>
     
     
       <p class="meta">
+        
 
 
 
 
-<time datetime="2008-12-31 00:00:00 -0600" pubdate  updated >Dec 31<span>st</span>, 2008</time>
 
 
-</p>
+
+
+  
+
+
+<time datetime="2008-12-31T00:00:00-06:00" pubdate data-updated="true">Dec 31<span>st</span>, 2008</time>
+        
+      </p>
     
   </header>
 
@@ -477,30 +543,36 @@ You can get this at an Apple store, ebay, craigslist, or the usual places. I fou
 
 <p> <h2></h2> <h2>Me</h2> <p>I started out the year doing my <a href="http://flux88.com/blog/asp-net-mvc-tour-of-texas/">ASP.NET MVC Tour of Texas</a>, where I visited San Antonio, Austin, Fort Worth, and Houston talking about ASP.NET MVC.&nbsp; It must have gotten some notice, because shortly after I was invited to be a co-author for <a href="http://manning.com/palermo" target="_blank">ASP.NET MVC in Action</a>.&nbsp; The book is getting close to being completed, so expect to see it on store shelves in the coming months.</p> <p>In April, I attended the 2nd ALT.NET gathering, which inspirational and eye-opening (<a href="http://flux88.com/blog/alt-net-day-1/">Day1</a>, <a href="http://flux88.com/blog/alt-net-day-2/">Day2</a>, <a href="http://flux88.com/blog/alt-net-day-2-continued/">Day2.2</a>, <a href="http://flux88.com/blog/alt-net-day-3/">Day3</a>).</p> <p>In May <a href="http://flux88.com/blog/i-m-an-insider/">I became an ASP Insider</a>.&nbsp; This has been the very best way to give my feedback to Microsoft about upcoming releases.&nbsp; Also in May I started holding semi-regular <a href="http://flux88.com/blog/houston-alt-net-geek-dinner-next-tuesday/">Houston ALT.NET Geek Dinners</a>.</p> <p>In September, the nasty hurricane Ike rolled through Houston, luckily <a href="http://flux88.com/blog/ike-is-gone-we-re-okay/">we made it through with little damage</a>.&nbsp; Others were not as fortunate.</p> <p>In October <a href="http://flux88.com/blog/recent-developments/">I was given the Microsoft MVP Award for ASP.NET</a>.&nbsp; I&#8217;m looking forward to going to the summit next March &amp; meeting other MVPs from around the world.</p> <p>I attended <a href="http://kaizenconf.com/" target="_blank">KaizenConf</a> in November, which was really great.&nbsp; Every time I go to one of these conferences I feel energized to go out and do good in the world.&nbsp; It sounds cheesy, but it&#8217;s really great.&nbsp; I hope that others find their way out of the mainstream marketing jungle of conferences and attend one of these open spaces.</p> <p>In December, my wife and I found out that <a href="http://flux88.com/blog/hello-world-x-2/">we are having twins</a>!&nbsp; For those counting, we&#8217;ll now have a full basketball team :).&nbsp; Needless to say 2009 will be a busy year.</p> <h2>The blog</h2> <p>This blog has gone under some transition too.&nbsp; Originally I was using <a href="http://dasblog.info" target="_blank">dasBlog</a> hosted at <a href="http://webhost4life.com" target="_blank">WebHost4Life</a> and things worked pretty well.&nbsp; I wanted to have some more control over what I could do with my server, so I ordered a VPS plan with VPS Land.&nbsp; That turned out to be a big mistake.&nbsp; </p> <p>I quickly moved over to a VPS over at <a href="http://godaddy.com" target="_blank">GoDaddy</a> which worked out okay for most of the year.&nbsp; It turns out their domain service is better than their hosting service.&nbsp; My blog kept making it run out of memory, so I moved my blog over to <a href="http://www.orcsweb.com" target="_blank">Orcsweb</a>.&nbsp; I also ported the content over to Graffiti, and so far it has been smooth sailing ever since.&nbsp; I still host my <a href="http://silvia.flux88.com" target="_blank">wife&#8217;s</a> and <a href="http://heather.flux88.com" target="_blank">sister&#8217;s</a> blogs on GoDaddy, as well as my <a href="http://www.cripplecreekwoodworks.com" target="_blank">uncle&#8217;s furniture business</a>.</p> <h2>What&#8217;s in store for 2009?</h2> <p>I have a few goals for 2009 that I&#8217;d like to publicly share, if for no other reason than to really commit to it.&nbsp; I&#8217;d like to wrap up the book.&nbsp; It is time consuming like you wouldn&#8217;t believe, and I&#8217;ll be glad when it&#8217;s over.&nbsp; </p> <p>I&#8217;d also like to read more.&nbsp; It seems that I only read 6 or 7 books in 2008, and that&#8217;s pathetic.&nbsp; At the rate that my book list is growing, I&#8217;ll never read all that I want.&nbsp; So far 99% of the books on my list are about software development, and I&#8217;d like to change that.&nbsp; I&#8217;m starting to get interested in other things, like GTD, organization, fiction&#8230;&nbsp; I need to broaden my horizons.</p> <p>I&#8217;d like to do another long series of posts, similar to my <a href="http://flux88.com/blog/a-journey-with-nhibernate-part-1/" target="_blank">Journey with NHibernate</a> series.&nbsp; It still remains my all time most popular set of posts, and now the material is a little dated.&nbsp; I&#8217;ve learned a lot since then.&nbsp; I&#8217;m definitely open to ideas.</p> <p>I&#8217;m also going to get back into guitar.&nbsp; In 2008 I really didn&#8217;t play more than once a month, and it shows.&nbsp; My fingers are soft, I&#8217;ve forgotten how to play many songs, and I&#8217;ve definitely lost my technique for fingering.&nbsp; It&#8217;s all chords now.&nbsp; I&#8217;m looking at purchasing a new electric guitar to help give me the nudge.</p> <p>Lastly, I would like to do another speaking tour, only this time I&#8217;m not sure what topic.&nbsp; It was a ton of fun, and maybe this time I can get a sponsor to help me visit more cities.</p> <p>So long 2008, you were great.</p></p>
 </div>
-  <footer>
-    <a rel="full-article" href="/2008/12/obligatory-2008-recap/">Read on &rarr;</a>
-  </footer>
+  
+  
 
 
-  </article>
-
-
-  <article>
-    
+    </article>
+  
+  
+    <article>
+      
   <header>
     
       <h1 class="entry-title"><a href="/2008/12/houston-alt-net-geek-dinner-january-7th/">Houston ALT.NET Geek Dinner - January 7th</a></h1>
     
     
       <p class="meta">
+        
 
 
 
 
-<time datetime="2008-12-30 00:00:00 -0600" pubdate  updated >Dec 30<span>th</span>, 2008</time>
 
 
-</p>
+
+
+  
+
+
+<time datetime="2008-12-30T00:00:00-06:00" pubdate data-updated="true">Dec 30<span>th</span>, 2008</time>
+        
+      </p>
     
   </header>
 
@@ -510,30 +582,36 @@ You can get this at an Apple store, ebay, craigslist, or the usual places. I fou
 
 <p> <p>Now that the holidays are coming to a close, it&#8217;s time to get back in the grind.&nbsp; That means community, baby!&nbsp; </p> <p>We&#8217;re going to hold our semi-monthly casual Houston ALT.NET Geek Dinner at Freebird&#8217;s World Burrito near 59 &amp; Shepherd.&nbsp; If you haven&#8217;t eaten a Freebird&#8217;s burrito then you&#8217;re in for a treat.&nbsp; They&#8217;re huge and delicious.&nbsp; <em>(Veggie burritos are certainly available for you herbivores out there).</em></p> <table cellspacing="0" cellpadding="2" width="447" border="0"> <tbody> <tr> <td valign="top" width="116"><strong>When?</strong></td> <td valign="top" width="329">Wednesday Jan 07th, 2008 @ 6:00pm<br><a href="https://www.google.com/calendar/event?action=TEMPLATE&amp;tmeid=b3FnYmw1NTkyb2RjYjEzcmtqbzlxdDEwNG8gc3ViZGlnaXRhbEBt&amp;tmsrc=c3ViZGlnaXRhbEBnbWFpbC5jb20" target="_blank"><img src="/images/gc_button1_en.gif"  border="0" /></a> </td></tr> <tr> <td valign="top" width="116"><strong>Where?</strong></td> <td valign="top" width="329"><a href="http://freebirds.com/" target="_blank">Freebirds</a> (<a href="http://maps.google.com/maps?f=q&amp;hl=en&amp;geocode=&amp;q=3745+Greenbriar,+Houston&amp;sll=37.0625,-95.677068&amp;sspn=55.148262,79.101563&amp;ie=UTF8&amp;ll=29.732772,-95.41244&amp;spn=0.007472,0.009656&amp;z=17&amp;g=3745+Greenbriar,+Houston&amp;iwloc=addr" target="_blank">map</a>)</td></tr></tbody></table> <p><em></em>&nbsp;<br>Hopefully <em>somebody</em> will join me for a beer this time!</p> <p>Some topics that have been suggested:</p> <ul> <li>Oxite Aftermath</li> <li>ASP.NET MVC</li> <li>DDD Discussion</li> <li>RIA Frameworks</li> <li>DI / IoC Frameworks</li> <li>Survey:&nbsp; What are you doing to be/promote agile where you work?</li> <li>Mentoring</li> <li>The agile wall &amp; pull systems</li> <li>Cloud Computing</li> <li>DSLs</li></ul> <p>We&#8217;ll have to trim that list otherwise we&#8217;ll be there all night.&nbsp; Tell your friends, blog about it, whatever you have to do, but <em>get your co-workers out here!</em>&nbsp; Making connections in the community is a great way to becoming a better developer.</p></p>
 </div>
-  <footer>
-    <a rel="full-article" href="/2008/12/houston-alt-net-geek-dinner-january-7th/">Read on &rarr;</a>
-  </footer>
+  
+  
 
 
-  </article>
-
-
-  <article>
-    
+    </article>
+  
+  
+    <article>
+      
   <header>
     
       <h1 class="entry-title"><a href="/2008/12/hello-world-x-2/">Hello World X 2</a></h1>
     
     
       <p class="meta">
+        
 
 
 
 
-<time datetime="2008-12-10 00:00:00 -0600" pubdate  updated >Dec 10<span>th</span>, 2008</time>
 
 
-</p>
+
+
+  
+
+
+<time datetime="2008-12-10T00:00:00-06:00" pubdate data-updated="true">Dec 10<span>th</span>, 2008</time>
+        
+      </p>
     
   </header>
 
@@ -541,30 +619,36 @@ You can get this at an Apple store, ebay, craigslist, or the usual places. I fou
   <div class="entry-content"><p>&#160;<img src="/images/image0_6.jpg" alt="sonogram"  border="0"  /></p>
 
 </div>
-  <footer>
-    <a rel="full-article" href="/2008/12/hello-world-x-2/">Read on &rarr;</a>
-  </footer>
+  
+  
 
 
-  </article>
-
-
-  <article>
-    
+    </article>
+  
+  
+    <article>
+      
   <header>
     
       <h1 class="entry-title"><a href="/2008/12/speaking-at-the-microsoft-developer-conference/">Speaking at the Microsoft Developer Conference</a></h1>
     
     
       <p class="meta">
+        
 
 
 
 
-<time datetime="2008-12-02 00:00:00 -0600" pubdate  updated >Dec 2<span>nd</span>, 2008</time>
 
 
-</p>
+
+
+  
+
+
+<time datetime="2008-12-02T00:00:00-06:00" pubdate data-updated="true">Dec 2<span>nd</span>, 2008</time>
+        
+      </p>
     
   </header>
 
@@ -646,163 +730,13 @@ You can get this at an Apple store, ebay, craigslist, or the usual places. I fou
 <p>Hope to see you there!</p>
 
 </div>
-  <footer>
-    <a rel="full-article" href="/2008/12/speaking-at-the-microsoft-developer-conference/">Read on &rarr;</a>
-  </footer>
+  
+  
 
 
-  </article>
-
-
-  <article>
-    
-  <header>
-    
-      <h1 class="entry-title"><a href="/2008/11/fluent-route-testing-in-asp-net-mvc/">Fluent Route Testing in ASP.NET MVC</a></h1>
-    
-    
-      <p class="meta">
-
-
-
-
-<time datetime="2008-11-25 00:00:00 -0600" pubdate  updated >Nov 25<span>th</span>, 2008</time>
-
-
-</p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Have you written code like this recently?</p>
-
-
-<p>&nbsp;</p>
-
-
-<!--
-{\rtf1\ansi\ansicpg\lang1024\noproof1252\uc1 \deff0{\fonttbl{\f0\fnil\fcharset0\fprq1 Consolas;}}{\colortbl;??\red238\green238\blue238;\red32\green32\blue32;\red255\green0\blue128;\red144\green238\blue144;\red242\green240\blue223;\red192\green192\blue192;\red0\green255\blue255;}??\fs26 \cf1\cb2\highlight2 [\cf3 Test\cf1 ]\par ??\cf4 public\cf1  \cf4 void\cf1  \cf5 tedious_route_test\cf1 ()\par ??\{\par ??    \cf3 Global\cf6 .\cf5 RegisterRoutes\cf1 (\cf3 RouteTable\cf6 .\cf5 Routes\cf1 );\par ??    \cf4 var\cf1  \cf5 httpContext\cf1  \cf6 =\cf1  \cf3 MockRepository\cf6 .\cf5 GenerateStub\cf6 &lt;\cf3 HttpContextBase\cf6 &gt;\cf1 ();\par ??    \cf5 httpContext\cf6 .\cf5 Stub\cf1 (\cf5 x\cf1  \cf6 =&gt;\cf1  \cf5 x\cf6 .\cf5 Request\cf1 )\cf6 .\cf5 Return\cf1 (\cf3 MockRepository\cf6 .\cf5 GenerateStub\cf6 &lt;\cf3 HttpRequestBase\cf6 &gt;\cf1 ());\par ??    \cf5 httpContext\cf6 .\cf5 Request\cf6 .\cf5 Stub\cf1 (\cf5 x\cf1  \cf6 =&gt;\cf1  \cf5 x\cf6 .\cf5 PathInfo\cf1 )\cf6 .\cf5 Return\cf1 (\cf7 {\b ""}\cf1 );\par ??    \cf5 httpContext\cf6 .\cf5 Request\cf6 .\cf5 Stub\cf1 (\cf5 x\cf1  \cf6 =&gt;\cf1  \cf5 x\cf6 .\cf5 AppRelativeCurrentExecutionFilePath\cf1 )\cf6 .\cf5 Return\cf1 (\cf7 {\b "~/foo/bar"}\cf1 );\par ??\par ??    \cf4 var\cf1  \cf5 routeData\cf1  \cf6 =\cf1  \cf3 RouteTable\cf6 .\cf5 Routes\cf6 .\cf5 GetRouteData\cf1 (\cf5 httpContext\cf1 );\par ??\par ??    \cf3 Assert\cf6 .\cf5 That\cf1 (\cf5 routeData\cf6 .\cf5 Values\cf1 [\cf7 {\b "controller"}\cf1 ], \cf3 Is\cf6 .\cf5 EqualTo\cf1 (\cf7 {\b "foo"}\cf1 ));\par ??    \cf3 Assert\cf6 .\cf5 That\cf1 (\cf5 routeData\cf6 .\cf5 Values\cf1 [\cf7 {\b "action"}\cf1 ], \cf3 Is\cf6 .\cf5 EqualTo\cf1 (\cf7 {\b "bar"}\cf1 ));\par ??\}\par ??}
--->
-
-
-<div style="padding: 10px; background: rgb(32, 32, 32) none repeat scroll 0% 0%; font-size: 13pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial; color: rgb(238, 238, 238); font-family: consolas,courier new;">
-<p style="margin: 0px;">[<span style="color: rgb(255, 0, 128);">Test</span>]</p>
-<p style="margin: 0px;"><span style="color: rgb(144, 238, 144);">public</span> <span style="color: rgb(144, 238, 144);">void</span> <span style="color: rgb(242, 240, 223);">tedious_route_test</span>()</p>
-<p style="margin: 0px;">{</p>
-<p style="margin: 0px;">&nbsp;&nbsp;&nbsp; <span style="color: rgb(255, 0, 128);">Global</span><span style="color: silver;">.</span><span style="color: rgb(242, 240, 223);">RegisterRoutes</span>(<span style="color: rgb(255, 0, 128);">RouteTable</span><span style="color: silver;">.</span><span style="color: rgb(242, 240, 223);">Routes</span>);</p>
-<p style="margin: 0px;">&nbsp;&nbsp;&nbsp; <span style="color: rgb(144, 238, 144);">var</span> <span style="color: rgb(242, 240, 223);">httpContext</span> <span style="color: silver;">=</span> <span style="color: rgb(255, 0, 128);">MockRepository</span><span style="color: silver;">.</span><span style="color: rgb(242, 240, 223);">GenerateStub</span><span style="color: silver;">&lt;</span><span style="color: rgb(255, 0, 128);">HttpContextBase</span><span style="color: silver;">&gt;</span>();</p>
-<p style="margin: 0px;">&nbsp;&nbsp;&nbsp; <span style="color: rgb(242, 240, 223);">httpContext</span><span style="color: silver;">.</span><span style="color: rgb(242, 240, 223);">Stub</span>(<span style="color: rgb(242, 240, 223);">x</span> <span style="color: silver;">=&gt;</span> <span style="color: rgb(242, 240, 223);">x</span><span style="color: silver;">.</span><span style="color: rgb(242, 240, 223);">Request</span>)<span style="color: silver;">.</span><span style="color: rgb(242, 240, 223);">Return</span>(<span style="color: rgb(255, 0, 128);">MockRepository</span><span style="color: silver;">.</span><span style="color: rgb(242, 240, 223);">GenerateStub</span><span style="color: silver;">&lt;</span><span style="color: rgb(255, 0, 128);">HttpRequestBase</span><span style="color: silver;">&gt;</span>());</p>
-<p style="margin: 0px;">&nbsp;&nbsp;&nbsp; <span style="color: rgb(242, 240, 223);">httpContext</span><span style="color: silver;">.</span><span style="color: rgb(242, 240, 223);">Request</span><span style="color: silver;">.</span><span style="color: rgb(242, 240, 223);">Stub</span>(<span style="color: rgb(242, 240, 223);">x</span> <span style="color: silver;">=&gt;</span> <span style="color: rgb(242, 240, 223);">x</span><span style="color: silver;">.</span><span style="color: rgb(242, 240, 223);">PathInfo</span>)<span style="color: silver;">.</span><span style="color: rgb(242, 240, 223);">Return</span>(<span style="font-weight: bold; color: aqua;">&quot;&quot;</span>);</p>
-<p style="margin: 0px;">&nbsp;&nbsp;&nbsp; <span style="color: rgb(242, 240, 223);">httpContext</span><span style="color: silver;">.</span><span style="color: rgb(242, 240, 223);">Request</span><span style="color: silver;">.</span><span style="color: rgb(242, 240, 223);">Stub</span>(<span style="color: rgb(242, 240, 223);">x</span> <span style="color: silver;">=&gt;</span> <span style="color: rgb(242, 240, 223);">x</span><span style="color: silver;">.</span><span style="color: rgb(242, 240, 223);">AppRelativeCurrentExecutionFilePath</span>)<span style="color: silver;">.</span><span style="color: rgb(242, 240, 223);">Return</span>(<span style="font-weight: bold; color: aqua;">&quot;~/foo/bar&quot;</span>);</p>
-<p style="margin: 0px;">&nbsp;</p>
-<p style="margin: 0px;">&nbsp;&nbsp;&nbsp; <span style="color: rgb(144, 238, 144);">var</span> <span style="color: rgb(242, 240, 223);">routeData</span> <span style="color: silver;">=</span> <span style="color: rgb(255, 0, 128);">RouteTable</span><span style="color: silver;">.</span><span style="color: rgb(242, 240, 223);">Routes</span><span style="color: silver;">.</span><span style="color: rgb(242, 240, 223);">GetRouteData</span>(<span style="color: rgb(242, 240, 223);">httpContext</span>);</p>
-<p style="margin: 0px;">&nbsp;</p>
-<p style="margin: 0px;">&nbsp;&nbsp;&nbsp; <span style="color: rgb(255, 0, 128);">Assert</span><span style="color: silver;">.</span><span style="color: rgb(242, 240, 223);">That</span>(<span style="color: rgb(242, 240, 223);">routeData</span><span style="color: silver;">.</span><span style="color: rgb(242, 240, 223);">Values</span>[<span style="font-weight: bold; color: aqua;">&quot;controller&quot;</span>], <span style="color: rgb(255, 0, 128);">Is</span><span style="color: silver;">.</span><span style="color: rgb(242, 240, 223);">EqualTo</span>(<span style="font-weight: bold; color: aqua;">&quot;foo&quot;</span>));</p>
-<p style="margin: 0px;">&nbsp;&nbsp;&nbsp; <span style="color: rgb(255, 0, 128);">Assert</span><span style="color: silver;">.</span><span style="color: rgb(242, 240, 223);">That</span>(<span style="color: rgb(242, 240, 223);">routeData</span><span style="color: silver;">.</span><span style="color: rgb(242, 240, 223);">Values</span>[<span style="font-weight: bold; color: aqua;">&quot;action&quot;</span>], <span style="color: rgb(255, 0, 128);">Is</span><span style="color: silver;">.</span><span style="color: rgb(242, 240, 223);">EqualTo</span>(<span style="font-weight: bold; color: aqua;">&quot;bar&quot;</span>));</p>
-<p style="margin: 0px;">}</p>
-</div>
-
-
-<p>This mess of nastiness is what is required to test your routes in ASP.NET MVC.&nbsp; There are a number of things wrong with this.&nbsp; First and foremost, we&#8217;re doing magical-mocking here.&nbsp; That is - we somehow know exactly the two properties we need to mock for this to work.&nbsp; It turns out this isn&#8217;t such a magical process as it is looking at reflector and a lot of trial and error.&nbsp; The next thing wrong that I see is that our route values (and keys) are case-insensitive, so we&#8217;d need to include some more flexibility in our Asserts here.</p>
-
-
-<p>Who wants to deal with that mess?&nbsp; I sure don&#8217;t.&nbsp; Last night, my pal &amp; co-author <a href="http://www.lostechies.com/blogs/jimmy_bogard" target="_blank">Jimmy Bogard</a> banged together a fluent API for testing routes without needing all of this crap.</p>
-
-
-<p>Here is a test to verify our root route is working properly:</p>
-
-
-<!--
-{\rtf1\ansi\ansicpg\lang1024\noproof1252\uc1 \deff0{\fonttbl{\f0\fnil\fcharset0\fprq1 Consolas;}}{\colortbl;??\red0\green255\blue255;\red32\green32\blue32;\red192\green192\blue192;\red242\green240\blue223;\red238\green238\blue238;\red255\green0\blue128;}??\fs26 \cf1\cb2\highlight2 {\b "~/"}\cf3 .\cf4 Route\cf5 ()\cf3 .\cf4 ShouldMapTo\cf3 &lt;\cf6 FooController\cf3 &gt;\cf5 (); }
--->
-
-
-<div style="padding: 10px; background: rgb(32, 32, 32) none repeat scroll 0% 0%; font-size: 13pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial; color: rgb(238, 238, 238); font-family: consolas,courier new;">
-<p style="margin: 0px;"><span style="font-weight: bold; color: aqua;">&quot;~/&quot;</span><span style="color: silver;">.</span><span style="color: rgb(242, 240, 223);">Route</span>()<span style="color: silver;">.</span><span style="color: rgb(242, 240, 223);">ShouldMapTo</span><span style="color: silver;">&lt;</span><span style="color: rgb(255, 0, 128);">FooController</span><span style="color: silver;">&gt;</span>();</p>
-</div>
-
-
-<p>And a more complex case where we have an action parameter:</p>
-
-
-<!--
-{\rtf1\ansi\ansicpg\lang1024\noproof1252\uc1 \deff0{\fonttbl{\f0\fnil\fcharset0\fprq1 Consolas;}}{\colortbl;??\red0\green255\blue255;\red32\green32\blue32;\red192\green192\blue192;\red242\green240\blue223;\red238\green238\blue238;\red255\green0\blue128;}??\fs26 \cf1\cb2\highlight2 {\b "~/foo/bar/widget"}\cf3 .\cf4 Route\cf5 ()\cf3 .\cf4 ShouldMapTo\cf3 &lt;\cf6 FooController\cf3 &gt;\cf5 (\cf4 x\cf5  \cf3 =&gt;\cf5  \cf4 x\cf3 .\cf4 Bar\cf5 (\cf1 {\b "widget"}\cf5 ));}
--->
-
-
-<div style="padding: 10px; background: rgb(32, 32, 32) none repeat scroll 0% 0%; font-size: 13pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial; color: rgb(238, 238, 238); font-family: consolas,courier new;">
-<p style="margin: 0px;"><span style="font-weight: bold; color: aqua;">&quot;~/foo/bar/widget&quot;</span><span style="color: silver;">.</span><span style="color: rgb(242, 240, 223);">Route</span>()<span style="color: silver;">.</span><span style="color: rgb(242, 240, 223);">ShouldMapTo</span><span style="color: silver;">&lt;</span><span style="color: rgb(255, 0, 128);">FooController</span><span style="color: silver;">&gt;</span>(<span style="color: rgb(242, 240, 223);">x</span> <span style="color: silver;">=&gt;</span> <span style="color: rgb(242, 240, 223);">x</span><span style="color: silver;">.</span><span style="color: rgb(242, 240, 223);">Bar</span>(<span style="font-weight: bold; color: aqua;">&quot;widget&quot;</span>));</p>
-</div>
-
-
-<p>These are a lot nicer, as we are dealing with no unnecessary string here, the controller are now strongly-typed (we get intellisense and refactoring support), and we can easily test routes with a single line.</p>
-
-
-<p>This does have a couple caveats though:&nbsp; it assumes</p>
-
-
-<ul>
-<li>you&#8217;re using NUnit</li>
-<li>you&#8217;re using RhinoMocks</li>
-<li>you add your routes to the RouteTable.Routes collection</li>
-</ul>
-
-
-<p>So how did we do this?&nbsp; I have to admit, I tried to get this to work on the bus ride to work, but without an internet connection I was dead in the water.&nbsp; Jimmy helped me grasp the way that Expression&lt;T&gt; works.&nbsp; His wise words were: &quot;Here&#8217;s where you just set a breakpoint and fire up the debugger and look.&quot;&nbsp; He&#8217;s right - the API there is quite opaque.&nbsp; But once I got it to&nbsp; work it made a lot of sense.&nbsp; Expression&lt;T&gt; is awesome!</p>
-
-
-<p>Here&#8217;s the method with most of the goods:</p>
-
-
-<!--
-{\rtf1\ansi\ansicpg\lang1024\noproof65001\uc1 \deff0{\fonttbl{\f0\fnil\fcharset0\fprq1 Consolas;}}{\colortbl;??\red144\green238\blue144;\red32\green32\blue32;\red238\green238\blue238;\red255\green0\blue128;\red242\green240\blue223;\red192\green192\blue192;\red255\green255\blue0;\red0\green255\blue255;\red164\green164\blue164;}??\fs26 \cf1\cb2\highlight2 public\cf3  \cf1 static\cf3  \cf4 RouteData\cf3  \cf5 ShouldMapTo\cf6 &lt;\cf5 TController\cf6 &gt;\cf3 (\cf1 this\cf3  \cf4 RouteData\cf3  \cf5 routeData\cf3 , \cf4 Expression\cf6 &lt;\cf7 Func\cf6 &lt;\cf5 TController\cf3 , \cf4 ActionResult\cf6 &gt;&gt;\cf3  \cf5 action\cf3 )\par ??    \cf1 where\cf3  \cf5 TController\cf3  : \cf4 Controller\par ??\cf3 \{            \par ??    \cf4 Assert\cf6 .\cf5 That\cf3 (\cf5 routeData\cf3 , \cf4 Is\cf6 .\cf5 Not\cf6 .\cf5 Null\cf3 , \cf8 {\b "The URL did not match any route"}\cf3 );\par ??\par ??    \cf9 {\b //check controller}\par ??\cf3     \cf5 routeData\cf6 .\cf5 ShouldMapTo\cf6 &lt;\cf5 TController\cf6 &gt;\cf3 ();\par ??    \par ??    \cf9 {\b //check action}\par ??\cf3     \cf1 var\cf3  \cf5 methodCall\cf3  \cf6 =\cf3  (\cf4 MethodCallExpression\cf3 ) \cf5 action\cf6 .\cf5 Body\cf3 ;\par ??    \cf1 string\cf3  \cf5 actualAction\cf3  \cf6 =\cf3  \cf5 routeData\cf6 .\cf5 Values\cf6 .\cf5 GetValue\cf3 (\cf8 {\b "action"}\cf3 )\cf6 .\cf5 ToString\cf3 ();\par ??    \cf1 string\cf3  \cf5 expectedAction\cf3  \cf6 =\cf3  \cf5 methodCall\cf6 .\cf5 Method\cf6 .\cf5 Name\cf3 ;\par ??    \cf5 actualAction\cf6 .\cf5 AssertSameStringAs\cf3 (\cf5 expectedAction\cf3 );\par ??                \par ??    \cf9 {\b //check parameters}\par ??\cf3     \cf1 for\cf3  (\cf1 int\cf3  \cf5 i\cf3  \cf6 =\cf3  \cf8 0\cf3 ; \cf5 i\cf3  \cf6 &lt;\cf3  \cf5 methodCall\cf6 .\cf5 Arguments\cf6 .\cf5 Count\cf3 ; \cf5 i\cf6 ++\cf3 )\par ??    \{\par ??        \cf1 string\cf3  \cf5 name\cf3  \cf6 =\cf3  \cf5 methodCall\cf6 .\cf5 Method\cf6 .\cf5 GetParameters\cf3 ()[\cf5 i\cf3 ]\cf6 .\cf5 Name\cf3 ;\par ??        \cf1 object\cf3  \cf5 value\cf3  \cf6 =\cf3  ((\cf4 ConstantExpression\cf3 ) \cf5 methodCall\cf6 .\cf5 Arguments\cf3 [\cf5 i\cf3 ])\cf6 .\cf5 Value\cf3 ;\par ??\par ??        \cf4 Assert\cf6 .\cf5 That\cf3 (\cf5 routeData\cf6 .\cf5 Values\cf6 .\cf5 GetValue\cf3 (\cf5 name\cf3 ), \cf4 Is\cf6 .\cf5 EqualTo\cf3 (\cf5 value\cf6 .\cf5 ToString\cf3 ()));\par ??    \}\par ??\par ??    \cf1 return\cf3  \cf5 routeData\cf3 ;\par ??\}\par ??}
--->
-
-
-<div style="padding: 10px; background: rgb(32, 32, 32) none repeat scroll 0% 0%; font-size: 13pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial; color: rgb(238, 238, 238); font-family: consolas,courier new;">
-<p style="margin: 0px;"><span style="color: rgb(144, 238, 144);">public</span> <span style="color: rgb(144, 238, 144);">static</span> <span style="color: rgb(255, 0, 128);">RouteData</span> <span style="color: rgb(242, 240, 223);">ShouldMapTo</span><span style="color: silver;">&lt;</span><span style="color: rgb(242, 240, 223);">TController</span><span style="color: silver;">&gt;</span>(<span style="color: rgb(144, 238, 144);">this</span> <span style="color: rgb(255, 0, 128);">RouteData</span> <span style="color: rgb(242, 240, 223);">routeData</span>, <span style="color: rgb(255, 0, 128);">Expression</span><span style="color: silver;">&lt;</span><span style="color: yellow;">Func</span><span style="color: silver;">&lt;</span><span style="color: rgb(242, 240, 223);">TController</span>, <span style="color: rgb(255, 0, 128);">ActionResult</span><span style="color: silver;">&gt;&gt;</span> <span style="color: rgb(242, 240, 223);">action</span>)</p>
-<p style="margin: 0px;">&nbsp;&nbsp;&nbsp; <span style="color: rgb(144, 238, 144);">where</span> <span style="color: rgb(242, 240, 223);">TController</span> : <span style="color: rgb(255, 0, 128);">Controller</span></p>
-<p style="margin: 0px;">{&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
-<p style="margin: 0px;">&nbsp;&nbsp;&nbsp; <span style="color: rgb(255, 0, 128);">Assert</span><span style="color: silver;">.</span><span style="color: rgb(242, 240, 223);">That</span>(<span style="color: rgb(242, 240, 223);">routeData</span>, <span style="color: rgb(255, 0, 128);">Is</span><span style="color: silver;">.</span><span style="color: rgb(242, 240, 223);">Not</span><span style="color: silver;">.</span><span style="color: rgb(242, 240, 223);">Null</span>, <span style="font-weight: bold; color: aqua;">&quot;The URL did not match any route&quot;</span>);</p>
-<p style="margin: 0px;">&nbsp;</p>
-<p style="margin: 0px;">&nbsp;&nbsp;&nbsp; <span style="font-weight: bold; color: rgb(164, 164, 164);">//check controller</span></p>
-<p style="margin: 0px;">&nbsp;&nbsp;&nbsp; <span style="color: rgb(242, 240, 223);">routeData</span><span style="color: silver;">.</span><span style="color: rgb(242, 240, 223);">ShouldMapTo</span><span style="color: silver;">&lt;</span><span style="color: rgb(242, 240, 223);">TController</span><span style="color: silver;">&gt;</span>();</p>
-<p style="margin: 0px;">&nbsp;</p>
-<p style="margin: 0px;">&nbsp;&nbsp;&nbsp; <span style="font-weight: bold; color: rgb(164, 164, 164);">//check action</span></p>
-<p style="margin: 0px;">&nbsp;&nbsp;&nbsp; <span style="color: rgb(144, 238, 144);">var</span> <span style="color: rgb(242, 240, 223);">methodCall</span> <span style="color: silver;">=</span> (<span style="color: rgb(255, 0, 128);">MethodCallExpression</span>) <span style="color: rgb(242, 240, 223);">action</span><span style="color: silver;">.</span><span style="color: rgb(242, 240, 223);">Body</span>;</p>
-<p style="margin: 0px;">&nbsp;&nbsp;&nbsp; <span style="color: rgb(144, 238, 144);">string</span> <span style="color: rgb(242, 240, 223);">actualAction</span> <span style="color: silver;">=</span> <span style="color: rgb(242, 240, 223);">routeData</span><span style="color: silver;">.</span><span style="color: rgb(242, 240, 223);">Values</span><span style="color: silver;">.</span><span style="color: rgb(242, 240, 223);">GetValue</span>(<span style="font-weight: bold; color: aqua;">&quot;action&quot;</span>)<span style="color: silver;">.</span><span style="color: rgb(242, 240, 223);">ToString</span>();</p>
-<p style="margin: 0px;">&nbsp;&nbsp;&nbsp; <span style="color: rgb(144, 238, 144);">string</span> <span style="color: rgb(242, 240, 223);">expectedAction</span> <span style="color: silver;">=</span> <span style="color: rgb(242, 240, 223);">methodCall</span><span style="color: silver;">.</span><span style="color: rgb(242, 240, 223);">Method</span><span style="color: silver;">.</span><span style="color: rgb(242, 240, 223);">Name</span>;</p>
-<p style="margin: 0px;">&nbsp;&nbsp;&nbsp; <span style="color: rgb(242, 240, 223);">actualAction</span><span style="color: silver;">.</span><span style="color: rgb(242, 240, 223);">AssertSameStringAs</span>(<span style="color: rgb(242, 240, 223);">expectedAction</span>);</p>
-<p style="margin: 0px;">&nbsp;</p>
-<p style="margin: 0px;">&nbsp;&nbsp;&nbsp; <span style="font-weight: bold; color: rgb(164, 164, 164);">//check parameters</span></p>
-<p style="margin: 0px;">&nbsp;&nbsp;&nbsp; <span style="color: rgb(144, 238, 144);">for</span> (<span style="color: rgb(144, 238, 144);">int</span> <span style="color: rgb(242, 240, 223);">i</span> <span style="color: silver;">=</span> <span style="color: aqua;">0</span>; <span style="color: rgb(242, 240, 223);">i</span> <span style="color: silver;">&lt;</span> <span style="color: rgb(242, 240, 223);">methodCall</span><span style="color: silver;">.</span><span style="color: rgb(242, 240, 223);">Arguments</span><span style="color: silver;">.</span><span style="color: rgb(242, 240, 223);">Count</span>; <span style="color: rgb(242, 240, 223);">i</span><span style="color: silver;">++</span>)</p>
-<p style="margin: 0px;">&nbsp;&nbsp;&nbsp; {</p>
-<p style="margin: 0px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color: rgb(144, 238, 144);">string</span> <span style="color: rgb(242, 240, 223);">name</span> <span style="color: silver;">=</span> <span style="color: rgb(242, 240, 223);">methodCall</span><span style="color: silver;">.</span><span style="color: rgb(242, 240, 223);">Method</span><span style="color: silver;">.</span><span style="color: rgb(242, 240, 223);">GetParameters</span>()[<span style="color: rgb(242, 240, 223);">i</span>]<span style="color: silver;">.</span><span style="color: rgb(242, 240, 223);">Name</span>;</p>
-<p style="margin: 0px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color: rgb(144, 238, 144);">object</span> <span style="color: rgb(242, 240, 223);">value</span> <span style="color: silver;">=</span> ((<span style="color: rgb(255, 0, 128);">ConstantExpression</span>) <span style="color: rgb(242, 240, 223);">methodCall</span><span style="color: silver;">.</span><span style="color: rgb(242, 240, 223);">Arguments</span>[<span style="color: rgb(242, 240, 223);">i</span>])<span style="color: silver;">.</span><span style="color: rgb(242, 240, 223);">Value</span>;</p>
-<p style="margin: 0px;">&nbsp;</p>
-<p style="margin: 0px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color: rgb(255, 0, 128);">Assert</span><span style="color: silver;">.</span><span style="color: rgb(242, 240, 223);">That</span>(<span style="color: rgb(242, 240, 223);">routeData</span><span style="color: silver;">.</span><span style="color: rgb(242, 240, 223);">Values</span><span style="color: silver;">.</span><span style="color: rgb(242, 240, 223);">GetValue</span>(<span style="color: rgb(242, 240, 223);">name</span>), <span style="color: rgb(255, 0, 128);">Is</span><span style="color: silver;">.</span><span style="color: rgb(242, 240, 223);">EqualTo</span>(<span style="color: rgb(242, 240, 223);">value</span><span style="color: silver;">.</span><span style="color: rgb(242, 240, 223);">ToString</span>()));</p>
-<p style="margin: 0px;">&nbsp;&nbsp;&nbsp; }</p>
-<p style="margin: 0px;">&nbsp;</p>
-<p style="margin: 0px;">&nbsp;&nbsp;&nbsp; <span style="color: rgb(144, 238, 144);">return</span> <span style="color: rgb(242, 240, 223);">routeData</span>;</p>
-<p style="margin: 0px;">}</p>
-</div>
-
-
-<p>This might be a tad brittle, but in my preliminary testing it worked wonders.&nbsp; This code is now in <a href="http://mvccontrib.org" target="_blank">MvcContrib</a>&#8217;s TestHelper project.&nbsp;</p>
-
-
-<div class="wlWriterSmartContent" id="scid:0767317B-992E-4b12-91E0-4F059A8CECA8:b04a1ca3-9141-402a-955f-b9b27054f6ac" style="margin: 0px; padding: 0px; display: inline;">Technorati Tags: <a href="http://technorati.com/tags/asp.net%20mvc" rel="tag">asp.net mvc</a></div>
-
-</div>
-  <footer>
-    <a rel="full-article" href="/2008/11/fluent-route-testing-in-asp-net-mvc/">Read on &rarr;</a>
-  </footer>
-
-
-  </article>
-
-<nav role="pagination">
-  <div>
+    </article>
+  
+  <div class="pagination">
     
       <a class="prev" href="/blog/page/12/">&larr; Older</a>
     
@@ -811,20 +745,8 @@ You can get this at an Apple store, ebay, craigslist, or the usual places. I fou
     <a class="next" href="/blog/page/10/">Newer &rarr;</a>
     
   </div>
-</nav>
-
-<script type="text/javascript">
-    var disqus_shortname = 'subdigital';
-    (function () {
-      var s = document.createElement('script'); s.async = true;
-      s.type = 'text/javascript';
-      s.src = 'http://' + disqus_shortname + '.disqus.com/count.js';
-      (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
-    }());
-</script>
-
 </div>
-<aside role=sidebar>
+<aside class="sidebar">
   
     <section>
   <h1>Who am I?</h1>
@@ -833,6 +755,10 @@ You can get this at an Apple store, ebay, craigslist, or the usual places. I fou
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/2012/07/serving-assets-from-s3-on-heroku/">Serving Assets from S3 on Heroku</a>
+      </li>
     
       <li class="post">
         <a href="/2012/02/hello/">Hello, NSScreencast</a>
@@ -850,10 +776,6 @@ You can get this at an Apple store, ebay, craigslist, or the usual places. I fou
         <a href="/2011/12/formatting-json-from-terminal/">Formatting JSON From Terminal</a>
       </li>
     
-      <li class="post">
-        <a href="/2011/10/houston-tech-fest-2011-recap/">Houston Tech Fest 2011 Recap</a>
-      </li>
-    
   </ul>
 </section>
 
@@ -869,16 +791,19 @@ You can get this at an Apple store, ebay, craigslist, or the usual places. I fou
   </script>
   <script src="/javascripts/twitter.js" type="text/javascript"> </script>
   
-    <a href="http://twitter.com/subdigital" class="twitter-follow-button" data-width="208px" data-show-count="false">Follow @subdigital</a>
+    <a href="http://twitter.com/subdigital" class="twitter-follow-button" data-show-count="false">Follow @subdigital</a>
   
 </section>
 
 
 <section>
   <h1>On Delicious</h1>
-  <script type="text/javascript" src="http://feeds.delicious.com/v2/js/subdigital?title=&count=3&sort=date&extended"></script>
+  <div id="delicious"></div>
+  <script type="text/javascript" src="http://feeds.delicious.com/v2/json/subdigital?count=3&amp;sort=date&amp;callback=renderDeliciousLinks"></script>
   <p><a href="http://delicious.com/subdigital">My Delicious Bookmarks &raquo;</a></p>
 </section>
+
+
 
 
 
@@ -887,7 +812,7 @@ You can get this at an Apple store, ebay, craigslist, or the usual places. I fou
 
     </div>
   </div>
-  <footer>
+  <footer role="contentinfo">
 <a style="display:block; float: right" title="Real Time Analytics" href="http://getclicky.com/66470389"><img alt="Real Time Analytics" src="//static.getclicky.com/media/links/badge.gif" border="0" /></a>
 <script src="//static.getclicky.com/js" type="text/javascript"></script>
 <script type="text/javascript">try{ clicky.init(66470389); }catch(e){}</script>
@@ -914,5 +839,40 @@ You can get this at an Apple store, ebay, craigslist, or the usual places. I fou
 </p>
 
 </footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'subdigital';
+      
+        
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
 </body>
 </html>

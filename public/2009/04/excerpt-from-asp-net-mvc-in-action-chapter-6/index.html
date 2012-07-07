@@ -5,13 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>
-    
-      Excerpt from ASP.NET MVC in Action Chapter 6 - 
-    
-    Fickle Bits
-  </title>
+  <title>Excerpt from ASP.NET MVC in Action Chapter 6 - Fickle Bits</title>
   <meta name="author" content="Ben Scheirman">
+
+  
+  <meta name="description" content="Extending URL Routing in ASP.NET MVC Excerpted from ASP.NET MVC in Action Jeffrey Palermo, Ben Scheirman, and Jimmy Bogard This article is taken from &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -20,14 +18,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-
-  <link rel="canonical" href="http://benscheirman.com/2009/04/excerpt-from-asp-net-mvc-in-action-chapter-6/"/>
-  <link href="/favicon.png" rel="shortcut icon" />
+  <link rel="canonical" href="http://benscheirman.com/2009/04/excerpt-from-asp-net-mvc-in-action-chapter-6/">
+  <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
-  <script src="http://s3.amazonaws.com/ender-js/jeesh.min.js"></script>
+  <script src="/javascripts/ender.js"></script>
   <script src="/javascripts/octopress.js" type="text/javascript"></script>
-  <link href="http://feeds.feedburner.com/ficklebits" rel="alternate" title="Fickle Bits" type="application/atom+xml"/>
+  <link href="http://feeds.feedburner.com/ficklebits" rel="alternate" title="Fickle Bits" type="application/atom+xml">
+  <!--Fonts from Google's Web font directory at http://google.com/webfonts -->
+<link href='http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic' rel='stylesheet' type='text/css'>
+
   
   <script type="text/javascript">
     var _gaq = _gaq || [];
@@ -42,36 +43,10 @@
   </script>
 
 
-  
-  <script type="text/javascript">
-    (function() {
-      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
-      script.src = 'https://apis.google.com/js/plusone.js';
-      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
-    })();
-  </script>
-
-
-  
-  <script type="text/javascript">
-    (function(){
-      var twitterWidgets = document.createElement('script');
-      twitterWidgets.type = 'text/javascript';
-      twitterWidgets.async = true;
-      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
-      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
-    })();
-  </script>
-
-
-  <!--Fonts from Google's Web font directory at http://google.com/webfonts -->
-<link href='http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic' rel='stylesheet' type='text/css'>
-<link href='http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic' rel='stylesheet' type='text/css'>
-
 </head>
 
-<body  >
-  <header><hgroup>
+<body   >
+  <header role="banner"><hgroup>
   <h1><a href="/">Fickle Bits</a></h1>
   
     <h2>You're doing it wrong.</h2>
@@ -79,24 +54,26 @@
 </hgroup>
 
 </header>
-  <nav role=navigation><ul role=subscription data-subscription="rss">
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
   <li><a href="http://feeds.feedburner.com/ficklebits" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
   
 </ul>
+  
 <form action="http://google.com/search" method="get">
-  <fieldset role="site-search">
+  <fieldset role="search">
     <input type="hidden" name="q" value="site:benscheirman.com" />
     <input class="search" type="text" name="q" results="0" placeholder="Search"/>
   </fieldset>
 </form>
+  
 <ul role=main-navigation>
   <li><a href="/">Blog</a></li>
   <li><a href="/about-me">About Me</a></li>
   <li><a href="/speaking">Speaking</a></li>
   <li><a href="/contact">Contact</a></li>
-  <li><a href="http://giggletouch.com">Giggle Touch for
-    iOS</a></li>
-  <li><a href="http://appkickstand.com">AppKickstand</a></li>
+  <li><a href="/projects">Projects</a></li>
+  <!-- <li><a href="http://giggletouch.com">Giggle Touch</a></li> -->
+  <!-- <li><a href="http://appkickstand.com">AppKickstand</a></li> -->
   <li><a href="/blog/archives">Archives</a></li>
 
 </ul>
@@ -105,7 +82,7 @@
   <div id="main">
     <div id="content">
       <div>
-<article class="hentry">
+<article class="hentry" role="article">
   
   <header>
     
@@ -113,39 +90,46 @@
     
     
       <p class="meta">
+        
 
 
 
 
-<time datetime="2009-04-09 00:00:00 -0500" pubdate  updated >Apr 9<span>th</span>, 2009</time>
 
 
-</p>
+
+
+  
+
+
+<time datetime="2009-04-09T00:00:00-05:00" pubdate data-updated="true">Apr 9<span>th</span>, 2009</time>
+        
+      </p>
     
   </header>
 
 
 <div class="entry-content"><p><i>Extending URL Routing in ASP.NET MVC</i>  <p>Excerpted from  <p><img src="/images/clip_image004_e87da01d-98f6-479d-b891-3b4df10d5fa6.jpg" alt="clip_image004"  height="238" />  <p><a href="http://manning.com/palermo/">ASP.NET MVC in Action</a>  <p><img src="/images/clip_image005_1ad1421a-e8c2-4bda-8544-5d3dfff458b6.gif" alt="clip_image005"  height="24" />  <p><b>Jeffrey Palermo, Ben Scheirman, and Jimmy Bogard</b>  <blockquote> <p>This article is taken from the book <a href="http://manning.com/palermo/">ASP.NET MVC in Action</a> from Manning Publications. One of the greatest aspects of ASP.NET MVC is its flexibility. Among other things, this gives us the capability to customize standard components. In this article, we&#8217;ll take a look at how URL routing functions, and then explore how to enhance it to behave differently. For the book’s table of contents, the Author Forum, and other resources, go to <a href="http://manning.com/palermo/">http://manning.com/palermo/</a>.</p></blockquote> <p>The UrlRouteModule is an HttpModule and represents the entry point into the ASP.NET MVC Framework. This module examines each request, builds up the RouteData for the request, finds an appropriate IRouteHandler for the given route matched, and finally redirects the request to the IRouteHandler&#8217;s IHttpHandler. Make sense?  <p>Our default route looks like Listing 1. The MapRoute method is actually a simplified way of specifying routes. The same route can be specified with more detail, as is shown in Listing 2.  <p><strong>Listing 1 – a simple way of specifying routes</strong></p>
-<div><figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
-<span class='line'>2</span>
-</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>routes.MapRoute("default", "{controller}/{action}/{id}",
-</div><div class='line'>new { Controller="home", Action="index", id=""});</div></code></pre></td></tr></table></div></figure></div>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>routes.MapRoute("default", "{controller}/{action}/{id}",
+</span><span class='line'>new { Controller="home", Action="index", id=""});</span></code></pre></td></tr></table></div></figure>
 
 <p><strong>Listing 2 – a more detailed way of specifying routes</strong></p>
-<div><figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
-<span class='line'>2</span>
-<span class='line'>3</span>
-</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>routes.Add(new Route("{controller}/{action}/{id}",
-</div><div class='line'>new RouteValueDictionary(new { Controller = "home", Action = "index", id = "" }),
-</div><div class='line'>new MvcRouteHandler()));</div></code></pre></td></tr></table></div></figure></div>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>routes.Add(new Route("{controller}/{action}/{id}",
+</span><span class='line'>new RouteValueDictionary(new { Controller = "home", Action = "index", id = "" }),
+</span><span class='line'>new MvcRouteHandler()));</span></code></pre></td></tr></table></div></figure>
 
 <p>That third argument in Listing 2 is telling the framework which `IRouteHandler` to use for this route. We are using the built-in MvcRouteHandler that ships with the framework. By default we are using this class when using the MapRoute method. We can change this to be a custom route handler and take control in interesting ways. An IRouteHandler&#8217;s responsibility is to create an appropriate IHttpHandler to handle the request given the details of the request. This is a good place to change the way routing works, or perhaps to gain control extremely early in the request pipeline. The MvcRouteHandler simply constructs an MvcHandler to handle a request, passing it a RequestContext, which contains the RouteData and IHttpContext.
 <p>A quick example will help illustrate the need for a custom route handler. When starting out defining your routes, you&#8217;ll sometimes run across errors. Let&#8217;s assume you also have the route shown in Listing 3 defined.
 <p><strong>Listing 3 – Adding another route</strong> 
-<div><figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
-<span class='line'>2</span>
-</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>routes.MapRoute(&lt;span class="str">"conferenceKey"&lt;/span>, &lt;span class="str">"{conferenceKey}/{action}"&lt;/span>,
-</div><div class='line'>&lt;span class="kwrd">new&lt;/span> { Controller = &lt;span class="str">"Conference"&lt;/span>, Action=&lt;span class="str">"index"&lt;/span> });</div></code></pre></td></tr></table></div></figure></div>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>routes.MapRoute(&lt;span class="str">"conferenceKey"&lt;/span>, &lt;span class="str">"{conferenceKey}/{action}"&lt;/span>,
+</span><span class='line'>&lt;span class="kwrd">new&lt;/span> { Controller = &lt;span class="str">"Conference"&lt;/span>, Action=&lt;span class="str">"index"&lt;/span> });</span></code></pre></td></tr></table></div></figure>
 
 <style type="text/css">.csharpcode, .csharpcode pre
 {
@@ -174,22 +158,22 @@ margin: 0em;
 </style>
 <p>Here we’ve added a new custom route at the top position. What does it do? This will accept URLs like /HoustonCodeCamp2008/register and use the conference controller and call the register action on it, passing in the conferenceKey as a parameter to the action.
 <p><strong>Listing 4 – a controller action that handles the new route </strong>
-<div><figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
-<span class='line'>2</span>
-<span class='line'>3</span>
-<span class='line'>4</span>
-<span class='line'>5</span>
-<span class='line'>6</span>
-<span class='line'>7</span>
-<span class='line'>8</span>
-</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>&lt;span class="kwrd">public&lt;/span> &lt;span class="kwrd">class&lt;/span> ConferenceController : Controller
-</div><div class='line'>{
-</div><div class='line'>&lt;span class="rem">/* snip */&lt;/span>
-</div><div class='line'>&lt;span class="kwrd">public&lt;/span> ActionResult Register(&lt;span class="kwrd">string&lt;/span> conferenceKey)
-</div><div class='line'>{
-</div><div class='line'>&lt;span class="kwrd">return&lt;/span> View();
-</div><div class='line'>}
-</div><div class='line'>}</div></code></pre></td></tr></table></div></figure></div>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;span class="kwrd">public&lt;/span> &lt;span class="kwrd">class&lt;/span> ConferenceController : Controller
+</span><span class='line'>{
+</span><span class='line'>&lt;span class="rem">/* snip */&lt;/span>
+</span><span class='line'>&lt;span class="kwrd">public&lt;/span> ActionResult Register(&lt;span class="kwrd">string&lt;/span> conferenceKey)
+</span><span class='line'>{
+</span><span class='line'>&lt;span class="kwrd">return&lt;/span> View();
+</span><span class='line'>}
+</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
 
 <style type="text/css">.csharpcode, .csharpcode pre
 {
@@ -219,22 +203,22 @@ margin: 0em;
 <p>This is a good example of a custom route that makes your URLs a lot more readable.
 <p>Now let&#8217;s assume that we have another controller called Home. HomeController has an index action to show the start page.
 <p><strong>Listing 5 – A controller action to respond to the default route </strong>
-<div><figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
-<span class='line'>2</span>
-<span class='line'>3</span>
-<span class='line'>4</span>
-<span class='line'>5</span>
-<span class='line'>6</span>
-<span class='line'>7</span>
-<span class='line'>8</span>
-</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>&lt;span class="kwrd">public&lt;/span> &lt;span class="kwrd">class&lt;/span> HomeController : Controller
-</div><div class='line'>{
-</div><div class='line'>&lt;span class="kwrd">public&lt;/span> ActionResult Index()
-</div><div class='line'>{
-</div><div class='line'>&lt;span class="kwrd">return&lt;/span> View();
-</div><div class='line'>}
-</div><div class='line'>&lt;span class="rem">/* snip */&lt;/span>
-</div><div class='line'>}</div></code></pre></td></tr></table></div></figure></div>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;span class="kwrd">public&lt;/span> &lt;span class="kwrd">class&lt;/span> HomeController : Controller
+</span><span class='line'>{
+</span><span class='line'>&lt;span class="kwrd">public&lt;/span> ActionResult Index()
+</span><span class='line'>{
+</span><span class='line'>&lt;span class="kwrd">return&lt;/span> View();
+</span><span class='line'>}
+</span><span class='line'>&lt;span class="rem">/* snip */&lt;/span>
+</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
 
 <style type="text/css">.csharpcode, .csharpcode pre
 {
@@ -268,40 +252,40 @@ margin: 0em;
 <p>With lots of custom routes, it is easy for a URL to be caught by the wrong route. Wouldn&#8217;t it be nice if we had a diagnostics tool to display which routes are being matched (and used) for quickly catching these types of errors?
 <p>What we’d like to do is have an extra query string parameter that we can tack on if we want to see the route information. The current route information is stored in an object called RouteData, which is available to us in the IRouteHandler interface. The route handler is also first to get control of the request, so it is a great place to intercept and alter the behavior for any route.
 <p><strong>Listing 6 – A custom route handler creates an associated IHttpHandler </strong>
-<div><figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
-<span class='line'>2</span>
-<span class='line'>3</span>
-<span class='line'>4</span>
-<span class='line'>5</span>
-<span class='line'>6</span>
-<span class='line'>7</span>
-<span class='line'>8</span>
-<span class='line'>9</span>
-<span class='line'>10</span>
-<span class='line'>11</span>
-<span class='line'>12</span>
-<span class='line'>13</span>
-<span class='line'>14</span>
-<span class='line'>15</span>
-<span class='line'>16</span>
-<span class='line'>17</span>
-</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>&lt;span class="kwrd">public&lt;/span> &lt;span class="kwrd">class&lt;/span> CustomRouteHandler : IRouteHandler
-</div><div class='line'>{
-</div><div class='line'>&lt;span class="kwrd">public&lt;/span> IHttpHandler GetHttpHandler(RequestContext requestContext)
-</div><div class='line'>{
-</div><div class='line'>&lt;span class="kwrd">if&lt;/span>(HasQueryStringKey(&lt;span class="str">"routeInfo"&lt;/span>, requestContext.HttpContext.Request))
-</div><div class='line'>{
-</div><div class='line'>OutputRouteDiagnostics(requestContext.RouteData, requestContext.HttpContext);
-</div><div class='line'>}
-</div><div class='line'>var handler = &lt;span class="kwrd">new&lt;/span> CustomMvcHandler(requestContext);
-</div><div class='line'>&lt;span class="kwrd">return&lt;/span> handler;
-</div><div class='line'>}
-</div><div class='line'>&lt;span class="kwrd">private&lt;/span> &lt;span class="kwrd">bool&lt;/span> HasQueryStringKey(&lt;span class="kwrd">string&lt;/span> keyToTest, HttpRequestBase request)
-</div><div class='line'>{
-</div><div class='line'>&lt;span class="kwrd">return&lt;/span> Regex.IsMatch(request.Url.Query, &lt;span class="kwrd">string&lt;/span>.Format(&lt;span class="str">@"^\?{0}$"&lt;/span>, keyToTest));
-</div><div class='line'>}
-</div><div class='line'>&lt;span class="rem">/* snip */&lt;/span>
-</div><div class='line'>}</div></code></pre></td></tr></table></div></figure></div>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;span class="kwrd">public&lt;/span> &lt;span class="kwrd">class&lt;/span> CustomRouteHandler : IRouteHandler
+</span><span class='line'>{
+</span><span class='line'>&lt;span class="kwrd">public&lt;/span> IHttpHandler GetHttpHandler(RequestContext requestContext)
+</span><span class='line'>{
+</span><span class='line'>&lt;span class="kwrd">if&lt;/span>(HasQueryStringKey(&lt;span class="str">"routeInfo"&lt;/span>, requestContext.HttpContext.Request))
+</span><span class='line'>{
+</span><span class='line'>OutputRouteDiagnostics(requestContext.RouteData, requestContext.HttpContext);
+</span><span class='line'>}
+</span><span class='line'>var handler = &lt;span class="kwrd">new&lt;/span> CustomMvcHandler(requestContext);
+</span><span class='line'>&lt;span class="kwrd">return&lt;/span> handler;
+</span><span class='line'>}
+</span><span class='line'>&lt;span class="kwrd">private&lt;/span> &lt;span class="kwrd">bool&lt;/span> HasQueryStringKey(&lt;span class="kwrd">string&lt;/span> keyToTest, HttpRequestBase request)
+</span><span class='line'>{
+</span><span class='line'>&lt;span class="kwrd">return&lt;/span> Regex.IsMatch(request.Url.Query, &lt;span class="kwrd">string&lt;/span>.Format(&lt;span class="str">@"^\?{0}$"&lt;/span>, keyToTest));
+</span><span class='line'>}
+</span><span class='line'>&lt;span class="rem">/* snip */&lt;/span>
+</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
 
 <style type="text/css">.csharpcode, .csharpcode pre
 {
@@ -330,78 +314,78 @@ margin: 0em;
 </style>
 <p>A route handler’s normal responsibility is to construct and hand-off the IHttpHandler that will handle this request. By default, this is MvcHandler. In our CustomRouteHandler we first check to see if the query string parameter is present (we do this with a simple regular expression on the URL query section). The OutputRouteDiagnostics method is shown in Listing 7.
 <p><strong>Listing 7 – Rendering route diagnostics information to the response stream</strong> 
-<div><figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
-<span class='line'>2</span>
-<span class='line'>3</span>
-<span class='line'>4</span>
-<span class='line'>5</span>
-<span class='line'>6</span>
-<span class='line'>7</span>
-<span class='line'>8</span>
-<span class='line'>9</span>
-<span class='line'>10</span>
-<span class='line'>11</span>
-<span class='line'>12</span>
-<span class='line'>13</span>
-<span class='line'>14</span>
-<span class='line'>15</span>
-<span class='line'>16</span>
-<span class='line'>17</span>
-<span class='line'>18</span>
-<span class='line'>19</span>
-<span class='line'>20</span>
-<span class='line'>21</span>
-<span class='line'>22</span>
-<span class='line'>23</span>
-<span class='line'>24</span>
-<span class='line'>25</span>
-<span class='line'>26</span>
-<span class='line'>27</span>
-<span class='line'>28</span>
-<span class='line'>29</span>
-<span class='line'>30</span>
-<span class='line'>31</span>
-<span class='line'>32</span>
-<span class='line'>33</span>
-<span class='line'>34</span>
-<span class='line'>35</span>
-<span class='line'>36</span>
-</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>&lt;span class="kwrd">private&lt;/span> &lt;span class="kwrd">void&lt;/span> OutputRouteDiagnostics(RouteData routeData, HttpContextBase context)
-</div><div class='line'>{
-</div><div class='line'>var response = context.Response;
-</div><div class='line'>response.Write(
-</div><div class='line'>&lt;span class="str">@"&lt;style&gt;body {font-family: Arial;}
-</div><div class='line'>table th {background-color: #359; color: #fff;}
-</div><div class='line'>&lt;/style&gt;
-</div><div class='line'>&lt;h1&gt;Route Data:&lt;/h1&gt;
-</div><div class='line'>&lt;table border='1' cellspacing='0' cellpadding='3'&gt;
-</div><div class='line'>&lt;tr&gt;&lt;th&gt;Key&lt;/th&gt;&lt;th&gt;Value&lt;/th&gt;&lt;/tr&gt;"&lt;/span>); &lt;strong>#1&lt;/strong>
-</div><div class='line'>&lt;span class="kwrd">foreach&lt;/span> (var pair &lt;span class="kwrd">in&lt;/span> routeData.Values)
-</div><div class='line'>{
-</div><div class='line'>response.Write(&lt;span class="kwrd">string&lt;/span>.Format(&lt;span class="str">"&lt;tr&gt;&lt;td&gt;{0}&lt;/td&gt;&lt;td&gt;{1}&lt;/td&gt;&lt;/tr&gt;"&lt;/span>,
-</div><div class='line'>pair.Key, pair.Value));
-</div><div class='line'>}
-</div><div class='line'>response.Write(&lt;span class="str">@"&lt;/table&gt;
-</div><div class='line'>&lt;h1&gt;Routes:&lt;/h1&gt;
-</div><div class='line'>&lt;table border='1' cellspacing='0' cellpadding='3'&gt;
-</div><div class='line'>&lt;tr&gt;&lt;th&gt;&lt;/th&gt;&lt;th&gt;Route&lt;/th&gt;&lt;/tr&gt;"&lt;/span>); &lt;strong>#2&lt;/strong>
-</div><div class='line'>&lt;span class="kwrd">bool&lt;/span> foundRouteUsed = &lt;span class="kwrd">false&lt;/span>;
-</div><div class='line'>&lt;span class="kwrd">foreach&lt;/span>(Route r &lt;span class="kwrd">in&lt;/span> RouteTable.Routes)
-</div><div class='line'>{
-</div><div class='line'>response.Write(&lt;span class="str">"&lt;tr&gt;&lt;td&gt;"&lt;/span>);
-</div><div class='line'>&lt;span class="kwrd">bool&lt;/span> matches = r.GetRouteData(context) != &lt;span class="kwrd">null&lt;/span>;
-</div><div class='line'>&lt;span class="kwrd">string&lt;/span> backgroundColor = matches ? &lt;span class="str">"#bfb"&lt;/span> : &lt;span class="str">"#fbb"&lt;/span>; &lt;strong>#3&lt;/strong>
-</div><div class='line'>&lt;span class="kwrd">if&lt;/span>(matches &amp;&amp; !foundRouteUsed)
-</div><div class='line'>{
-</div><div class='line'>response.Write(&lt;span class="str">"&amp;raquo;"&lt;/span>); &lt;strong>#4&lt;/strong>
-</div><div class='line'>foundRouteUsed = &lt;span class="kwrd">true&lt;/span>;
-</div><div class='line'>}
-</div><div class='line'>response.Write(&lt;span class="kwrd">string&lt;/span>.Format(
-</div><div class='line'>&lt;span class="str">"&lt;/td&gt;&lt;td style='font-family: Courier New; background-color:{0}'&gt;{1}&lt;/td&gt;&lt;/tr&gt;"&lt;/span>,
-</div><div class='line'>backgroundColor, r.Url));
-</div><div class='line'>}
-</div><div class='line'>response.End();
-</div><div class='line'>}</div></code></pre></td></tr></table></div></figure></div>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;span class="kwrd">private&lt;/span> &lt;span class="kwrd">void&lt;/span> OutputRouteDiagnostics(RouteData routeData, HttpContextBase context)
+</span><span class='line'>{
+</span><span class='line'>var response = context.Response;
+</span><span class='line'>response.Write(
+</span><span class='line'>&lt;span class="str">@"&lt;style&gt;body {font-family: Arial;}
+</span><span class='line'>table th {background-color: #359; color: #fff;}
+</span><span class='line'>&lt;/style&gt;
+</span><span class='line'>&lt;h1&gt;Route Data:&lt;/h1&gt;
+</span><span class='line'>&lt;table border='1' cellspacing='0' cellpadding='3'&gt;
+</span><span class='line'>&lt;tr&gt;&lt;th&gt;Key&lt;/th&gt;&lt;th&gt;Value&lt;/th&gt;&lt;/tr&gt;"&lt;/span>); &lt;strong>#1&lt;/strong>
+</span><span class='line'>&lt;span class="kwrd">foreach&lt;/span> (var pair &lt;span class="kwrd">in&lt;/span> routeData.Values)
+</span><span class='line'>{
+</span><span class='line'>response.Write(&lt;span class="kwrd">string&lt;/span>.Format(&lt;span class="str">"&lt;tr&gt;&lt;td&gt;{0}&lt;/td&gt;&lt;td&gt;{1}&lt;/td&gt;&lt;/tr&gt;"&lt;/span>,
+</span><span class='line'>pair.Key, pair.Value));
+</span><span class='line'>}
+</span><span class='line'>response.Write(&lt;span class="str">@"&lt;/table&gt;
+</span><span class='line'>&lt;h1&gt;Routes:&lt;/h1&gt;
+</span><span class='line'>&lt;table border='1' cellspacing='0' cellpadding='3'&gt;
+</span><span class='line'>&lt;tr&gt;&lt;th&gt;&lt;/th&gt;&lt;th&gt;Route&lt;/th&gt;&lt;/tr&gt;"&lt;/span>); &lt;strong>#2&lt;/strong>
+</span><span class='line'>&lt;span class="kwrd">bool&lt;/span> foundRouteUsed = &lt;span class="kwrd">false&lt;/span>;
+</span><span class='line'>&lt;span class="kwrd">foreach&lt;/span>(Route r &lt;span class="kwrd">in&lt;/span> RouteTable.Routes)
+</span><span class='line'>{
+</span><span class='line'>response.Write(&lt;span class="str">"&lt;tr&gt;&lt;td&gt;"&lt;/span>);
+</span><span class='line'>&lt;span class="kwrd">bool&lt;/span> matches = r.GetRouteData(context) != &lt;span class="kwrd">null&lt;/span>;
+</span><span class='line'>&lt;span class="kwrd">string&lt;/span> backgroundColor = matches ? &lt;span class="str">"#bfb"&lt;/span> : &lt;span class="str">"#fbb"&lt;/span>; &lt;strong>#3&lt;/strong>
+</span><span class='line'>&lt;span class="kwrd">if&lt;/span>(matches &amp;&amp; !foundRouteUsed)
+</span><span class='line'>{
+</span><span class='line'>response.Write(&lt;span class="str">"&amp;raquo;"&lt;/span>); &lt;strong>#4&lt;/strong>
+</span><span class='line'>foundRouteUsed = &lt;span class="kwrd">true&lt;/span>;
+</span><span class='line'>}
+</span><span class='line'>response.Write(&lt;span class="kwrd">string&lt;/span>.Format(
+</span><span class='line'>&lt;span class="str">"&lt;/td&gt;&lt;td style='font-family: Courier New; background-color:{0}'&gt;{1}&lt;/td&gt;&lt;/tr&gt;"&lt;/span>,
+</span><span class='line'>backgroundColor, r.Url));
+</span><span class='line'>}
+</span><span class='line'>response.End();
+</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
 
 <style type="text/css">.csharpcode, .csharpcode pre
 {
@@ -432,22 +416,22 @@ margin: 0em;
 <p>This method outputs two tables, one for the current route data, and one for the routes in the system. Each route will return null for GetRouteData if the route doesn’t match the current request. The table is then colored to show which routes matched, and a little arrow indicates which route is the one in use for the current URL. The response is then ended to prevent any further rendering.
 <p>To finalize this change, we have to alter the current routes to use our new handler.
 <p><strong>Listing 8 – Assigning routes to our custom route handler </strong>
-<div><figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
-<span class='line'>2</span>
-<span class='line'>3</span>
-<span class='line'>4</span>
-<span class='line'>5</span>
-<span class='line'>6</span>
-<span class='line'>7</span>
-<span class='line'>8</span>
-</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>RouteTable.Routes.Add(
-</div><div class='line'>&lt;span class="kwrd">new&lt;/span> Route(&lt;span class="str">"{conferenceKey}/{action}"&lt;/span>,
-</div><div class='line'>&lt;span class="kwrd">new&lt;/span> RouteValueDictionary( &lt;span class="kwrd">new&lt;/span> { Controller=&lt;span class="str">"Conference"&lt;/span> }),
-</div><div class='line'>&lt;span class="kwrd">new&lt;/span> CustomRouteHandler()));
-</div><div class='line'>RouteTable.Routes.Add(
-</div><div class='line'>&lt;span class="kwrd">new&lt;/span> Route(&lt;span class="str">"{controller}/{action}/{id}"&lt;/span>,
-</div><div class='line'>&lt;span class="kwrd">new&lt;/span> RouteValueDictionary( &lt;span class="kwrd">new&lt;/span> { Action=&lt;span class="str">"Index"&lt;/span>, id=(&lt;span class="kwrd">string&lt;/span>)&lt;span class="kwrd">null&lt;/span> }),
-</div><div class='line'>&lt;span class="kwrd">new&lt;/span> CustomRouteHandler()));</div></code></pre></td></tr></table></div></figure></div>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>RouteTable.Routes.Add(
+</span><span class='line'>&lt;span class="kwrd">new&lt;/span> Route(&lt;span class="str">"{conferenceKey}/{action}"&lt;/span>,
+</span><span class='line'>&lt;span class="kwrd">new&lt;/span> RouteValueDictionary( &lt;span class="kwrd">new&lt;/span> { Controller=&lt;span class="str">"Conference"&lt;/span> }),
+</span><span class='line'>&lt;span class="kwrd">new&lt;/span> CustomRouteHandler()));
+</span><span class='line'>RouteTable.Routes.Add(
+</span><span class='line'>&lt;span class="kwrd">new&lt;/span> Route(&lt;span class="str">"{controller}/{action}/{id}"&lt;/span>,
+</span><span class='line'>&lt;span class="kwrd">new&lt;/span> RouteValueDictionary( &lt;span class="kwrd">new&lt;/span> { Action=&lt;span class="str">"Index"&lt;/span>, id=(&lt;span class="kwrd">string&lt;/span>)&lt;span class="kwrd">null&lt;/span> }),
+</span><span class='line'>&lt;span class="kwrd">new&lt;/span> CustomRouteHandler()));</span></code></pre></td></tr></table></div></figure>
 
 <style type="text/css">.csharpcode, .csharpcode pre
 {
@@ -485,46 +469,46 @@ margin: 0em;
 <p><a href="http://haacked.com/archive/2008/03/13/url-routing-debugger.aspx">http://haacked.com/archive/2008/03/13/url-routing-debugger.aspx</a>. </p></blockquote>
 <p>Another potential use of a custom route handler would be to append a specific identifier to the query string automatically. This could be useful in scenarios where you rely on cookie-less sessions or maybe you have a company identifier that limits what is displayed on the screen (your author has interfaced with such a framework). An IHttpHandler that would satisfy this requirement might look like this:
 <p><strong>Listing 9 – An MvcHandler that can enforce query string parameters</strong> 
-<div><figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
-<span class='line'>2</span>
-<span class='line'>3</span>
-<span class='line'>4</span>
-<span class='line'>5</span>
-<span class='line'>6</span>
-<span class='line'>7</span>
-<span class='line'>8</span>
-<span class='line'>9</span>
-<span class='line'>10</span>
-<span class='line'>11</span>
-<span class='line'>12</span>
-<span class='line'>13</span>
-<span class='line'>14</span>
-<span class='line'>15</span>
-<span class='line'>16</span>
-<span class='line'>17</span>
-<span class='line'>18</span>
-<span class='line'>19</span>
-<span class='line'>20</span>
-</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>&lt;span class="kwrd">public&lt;/span> &lt;span class="kwrd">class&lt;/span> EnsureCompanyKeyHandler : MvcHandler
-</div><div class='line'>{
-</div><div class='line'>&lt;span class="kwrd">public&lt;/span> EnsureCompanyKeyHandler(RequestContext requestContext)
-</div><div class='line'>: &lt;span class="kwrd">base&lt;/span>(requestContext)
-</div><div class='line'>{
-</div><div class='line'>}
-</div><div class='line'>&lt;span class="kwrd">protected&lt;/span> &lt;span class="kwrd">override&lt;/span> &lt;span class="kwrd">void&lt;/span> ProcessRequest(HttpContextBase context)
-</div><div class='line'>{
-</div><div class='line'>var controller = (&lt;span class="kwrd">string&lt;/span>) RequestContext.RouteData.Values[&lt;span class="str">"controller"&lt;/span>];
-</div><div class='line'>var company = context.Request.QueryString[&lt;span class="str">"company"&lt;/span>];
-</div><div class='line'>&lt;span class="kwrd">if&lt;/span> (controller != &lt;span class="str">"login"&lt;/span> &amp;&amp; company == &lt;span class="kwrd">null&lt;/span>)
-</div><div class='line'>{
-</div><div class='line'>context.Response.Redirect(&lt;span class="str">"~/login"&lt;/span>); &lt;strong>#1&lt;/strong>
-</div><div class='line'>}
-</div><div class='line'>&lt;span class="kwrd">else&lt;/span>
-</div><div class='line'>{
-</div><div class='line'>&lt;span class="kwrd">base&lt;/span>.ProcessRequest(context); &lt;strong>#2&lt;/strong>
-</div><div class='line'>}
-</div><div class='line'>}
-</div><div class='line'>}</div></code></pre></td></tr></table></div></figure></div>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;span class="kwrd">public&lt;/span> &lt;span class="kwrd">class&lt;/span> EnsureCompanyKeyHandler : MvcHandler
+</span><span class='line'>{
+</span><span class='line'>&lt;span class="kwrd">public&lt;/span> EnsureCompanyKeyHandler(RequestContext requestContext)
+</span><span class='line'>: &lt;span class="kwrd">base&lt;/span>(requestContext)
+</span><span class='line'>{
+</span><span class='line'>}
+</span><span class='line'>&lt;span class="kwrd">protected&lt;/span> &lt;span class="kwrd">override&lt;/span> &lt;span class="kwrd">void&lt;/span> ProcessRequest(HttpContextBase context)
+</span><span class='line'>{
+</span><span class='line'>var controller = (&lt;span class="kwrd">string&lt;/span>) RequestContext.RouteData.Values[&lt;span class="str">"controller"&lt;/span>];
+</span><span class='line'>var company = context.Request.QueryString[&lt;span class="str">"company"&lt;/span>];
+</span><span class='line'>&lt;span class="kwrd">if&lt;/span> (controller != &lt;span class="str">"login"&lt;/span> &amp;&amp; company == &lt;span class="kwrd">null&lt;/span>)
+</span><span class='line'>{
+</span><span class='line'>context.Response.Redirect(&lt;span class="str">"~/login"&lt;/span>); &lt;strong>#1&lt;/strong>
+</span><span class='line'>}
+</span><span class='line'>&lt;span class="kwrd">else&lt;/span>
+</span><span class='line'>{
+</span><span class='line'>&lt;span class="kwrd">base&lt;/span>.ProcessRequest(context); &lt;strong>#2&lt;/strong>
+</span><span class='line'>}
+</span><span class='line'>}
+</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
 
 <style type="text/css">.csharpcode, .csharpcode pre
 {
@@ -572,10 +556,14 @@ margin: 0em;
 
 
 
-<time datetime="2009-04-09 00:00:00 -0500" pubdate  updated >Apr 9<span>th</span>, 2009</time>
 
 
 
+
+  
+
+
+<time datetime="2009-04-09T00:00:00-05:00" pubdate data-updated="true">Apr 9<span>th</span>, 2009</time>
       
 
 
@@ -586,43 +574,42 @@ margin: 0em;
   <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://benscheirman.com/2009/04/excerpt-from-asp-net-mvc-in-action-chapter-6/" data-via="subdigital" data-counturl="http://benscheirman.com/2009/04/excerpt-from-asp-net-mvc-in-action-chapter-6/" >Tweet</a>
   
   
-  <g:plusone size="medium"></g:plusone>
   
 </div>
 
     
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/2009/04/post-alt-net-houston-thoughts/" title="Previous Post: Post ALT.NET Houston Thoughts">&laquo; Post ALT.NET Houston Thoughts</a>
+      
+      
+        <a class="basic-alignment right" href="/2009/04/exporting-visual-studio-solutions-with-solutionfactory/" title="Next Post: Exporting Visual Studio Solutions with SolutionFactory">Exporting Visual Studio Solutions with SolutionFactory &raquo;</a>
+      
+    </p>
   </footer>
 </article>
 
   <section>
     <h1>Comments</h1>
-    <div id="disqus_thread"><div id="disqus_thread"></div>
-<script type="text/javascript">
-  var disqus_shortname = 'subdigital';
-  var disqus_identifier = 'http://benscheirman.com/2009/04/excerpt-from-asp-net-mvc-in-action-chapter-6/';
-  var disqus_url = 'http://benscheirman.com/2009/04/excerpt-from-asp-net-mvc-in-action-chapter-6/';
-  //var disqus_developer = 1;
-  (function() {
-    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-    dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
-    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-  })();
-</script>
-<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 </div>
   </section>
 
 </div>
 
-<aside role=sidebar>
+<aside class="sidebar">
   
     <section>
   <h1>Who am I?</h1>
-  <p>I&#8217;m Ben Scheirman. I make Rails &amp; iPhone apps for <a href="http://chaione.com" target="_blank">ChaiONE</a> in Houston, TX.</p>
+  <p>I'm Ben Scheirman. I make Rails &amp; iPhone apps for <a href="http://chaione.com" target="_blank">ChaiONE</a> in Houston, TX.</p>
 </section>
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/2012/07/serving-assets-from-s3-on-heroku/">Serving Assets from S3 on Heroku</a>
+      </li>
     
       <li class="post">
         <a href="/2012/02/hello/">Hello, NSScreencast</a>
@@ -640,17 +627,13 @@ margin: 0em;
         <a href="/2011/12/formatting-json-from-terminal/">Formatting JSON From Terminal</a>
       </li>
     
-      <li class="post">
-        <a href="/2011/10/houston-tech-fest-2011-recap/">Houston Tech Fest 2011 Recap</a>
-      </li>
-    
   </ul>
 </section>
 
 <section>
   <h1>Latest Tweets</h1>
   <ul id="tweets">
-    <li class="loading">Status updating&#8230;</li>
+    <li class="loading">Status updating...</li>
   </ul>
   <script type="text/javascript">
     $.domReady(function(){
@@ -659,16 +642,19 @@ margin: 0em;
   </script>
   <script src="/javascripts/twitter.js" type="text/javascript"> </script>
   
-    <a href="http://twitter.com/subdigital" class="twitter-follow-button" data-width="208px" data-show-count="false">Follow @subdigital</a>
+    <a href="http://twitter.com/subdigital" class="twitter-follow-button" data-show-count="false">Follow @subdigital</a>
   
 </section>
 
 
 <section>
   <h1>On Delicious</h1>
-  <script type="text/javascript" src="http://feeds.delicious.com/v2/js/subdigital?title=&count=3&sort=date&extended"></script>
+  <div id="delicious"></div>
+  <script type="text/javascript" src="http://feeds.delicious.com/v2/json/subdigital?count=3&amp;sort=date&amp;callback=renderDeliciousLinks"></script>
   <p><a href="http://delicious.com/subdigital">My Delicious Bookmarks &raquo;</a></p>
 </section>
+
+
 
 
 
@@ -678,7 +664,7 @@ margin: 0em;
 
     </div>
   </div>
-  <footer>
+  <footer role="contentinfo">
 <a style="display:block; float: right" title="Real Time Analytics" href="http://getclicky.com/66470389"><img alt="Real Time Analytics" src="//static.getclicky.com/media/links/badge.gif" border="0" /></a>
 <script src="//static.getclicky.com/js" type="text/javascript"></script>
 <script type="text/javascript">try{ clicky.init(66470389); }catch(e){}</script>
@@ -705,5 +691,43 @@ margin: 0em;
 </p>
 
 </footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'subdigital';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://benscheirman.com/2009/04/excerpt-from-asp-net-mvc-in-action-chapter-6/';
+        var disqus_url = 'http://benscheirman.com/2009/04/excerpt-from-asp-net-mvc-in-action-chapter-6/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
 </body>
 </html>

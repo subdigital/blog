@@ -5,13 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>
-    
-      SubSonic and Projections - 
-    
-    Fickle Bits
-  </title>
+  <title>SubSonic and Projections - Fickle Bits</title>
   <meta name="author" content="Ben Scheirman">
+
+  
+  <meta name="description" content="I&#8217;ve said in the past that we use SubSonic on my current project.&#160; It does what it says it does (mostly) and generates some usable code &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -20,14 +18,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-
-  <link rel="canonical" href="http://benscheirman.com/2008/11/subsonic-and-projections/"/>
-  <link href="/favicon.png" rel="shortcut icon" />
+  <link rel="canonical" href="http://benscheirman.com/2008/11/subsonic-and-projections/">
+  <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
-  <script src="http://s3.amazonaws.com/ender-js/jeesh.min.js"></script>
+  <script src="/javascripts/ender.js"></script>
   <script src="/javascripts/octopress.js" type="text/javascript"></script>
-  <link href="http://feeds.feedburner.com/ficklebits" rel="alternate" title="Fickle Bits" type="application/atom+xml"/>
+  <link href="http://feeds.feedburner.com/ficklebits" rel="alternate" title="Fickle Bits" type="application/atom+xml">
+  <!--Fonts from Google's Web font directory at http://google.com/webfonts -->
+<link href='http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic' rel='stylesheet' type='text/css'>
+
   
   <script type="text/javascript">
     var _gaq = _gaq || [];
@@ -42,36 +43,10 @@
   </script>
 
 
-  
-  <script type="text/javascript">
-    (function() {
-      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
-      script.src = 'https://apis.google.com/js/plusone.js';
-      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
-    })();
-  </script>
-
-
-  
-  <script type="text/javascript">
-    (function(){
-      var twitterWidgets = document.createElement('script');
-      twitterWidgets.type = 'text/javascript';
-      twitterWidgets.async = true;
-      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
-      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
-    })();
-  </script>
-
-
-  <!--Fonts from Google's Web font directory at http://google.com/webfonts -->
-<link href='http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic' rel='stylesheet' type='text/css'>
-<link href='http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic' rel='stylesheet' type='text/css'>
-
 </head>
 
-<body  >
-  <header><hgroup>
+<body   >
+  <header role="banner"><hgroup>
   <h1><a href="/">Fickle Bits</a></h1>
   
     <h2>You're doing it wrong.</h2>
@@ -79,24 +54,26 @@
 </hgroup>
 
 </header>
-  <nav role=navigation><ul role=subscription data-subscription="rss">
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
   <li><a href="http://feeds.feedburner.com/ficklebits" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
   
 </ul>
+  
 <form action="http://google.com/search" method="get">
-  <fieldset role="site-search">
+  <fieldset role="search">
     <input type="hidden" name="q" value="site:benscheirman.com" />
     <input class="search" type="text" name="q" results="0" placeholder="Search"/>
   </fieldset>
 </form>
+  
 <ul role=main-navigation>
   <li><a href="/">Blog</a></li>
   <li><a href="/about-me">About Me</a></li>
   <li><a href="/speaking">Speaking</a></li>
   <li><a href="/contact">Contact</a></li>
-  <li><a href="http://giggletouch.com">Giggle Touch for
-    iOS</a></li>
-  <li><a href="http://appkickstand.com">AppKickstand</a></li>
+  <li><a href="/projects">Projects</a></li>
+  <!-- <li><a href="http://giggletouch.com">Giggle Touch</a></li> -->
+  <!-- <li><a href="http://appkickstand.com">AppKickstand</a></li> -->
   <li><a href="/blog/archives">Archives</a></li>
 
 </ul>
@@ -105,7 +82,7 @@
   <div id="main">
     <div id="content">
       <div>
-<article class="hentry">
+<article class="hentry" role="article">
   
   <header>
     
@@ -113,14 +90,21 @@
     
     
       <p class="meta">
+        
 
 
 
 
-<time datetime="2008-11-11 00:00:00 -0600" pubdate  updated >Nov 11<span>th</span>, 2008</time>
 
 
-</p>
+
+
+  
+
+
+<time datetime="2008-11-11T00:00:00-06:00" pubdate data-updated="true">Nov 11<span>th</span>, 2008</time>
+        
+      </p>
     
   </header>
 
@@ -130,18 +114,18 @@
 
 <p>  <p>With the most recent release of the new query API in SubSonic, we were given a lot of flexibility.&#160; This was much needed in our project because getting single results and collections off of a single entity is rarely sufficient for complex applications.&#160; Often times the data needed to display on a page comes from multiple tables.</p>  <p>In the past, I was forced to do this sort of ugly nastiness:</p></p>
 
-<div><figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
-<span class='line'>2</span>
-<span class='line'>3</span>
-<span class='line'>4</span>
-<span class='line'>5</span>
-<span class='line'>6</span>
-</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>&lt;span class="rem">//get schedules (1 query)&lt;/span>
-</div><div class='line'>Schedule[] schedules = _repository.GetSchedulesInRange(start, end);
-</div><div class='line'>&lt;span class="rem">//get employee info (2 queries)&lt;/span>
-</div><div class='line'>Employee[] employees = _repository.GetEmployeesInSchedules(schedules);
-</div><div class='line'>ScheduleDisplayMapper mapper = &lt;span class="kwrd">new&lt;/span> ScheduleDisplayMapper();
-</div><div class='line'>&lt;span class="kwrd">return&lt;/span> mapper.Map(schedules, employees);</div></code></pre></td></tr></table></div></figure></div>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;span class="rem">//get schedules (1 query)&lt;/span>
+</span><span class='line'>Schedule[] schedules = _repository.GetSchedulesInRange(start, end);
+</span><span class='line'>&lt;span class="rem">//get employee info (2 queries)&lt;/span>
+</span><span class='line'>Employee[] employees = _repository.GetEmployeesInSchedules(schedules);
+</span><span class='line'>ScheduleDisplayMapper mapper = &lt;span class="kwrd">new&lt;/span> ScheduleDisplayMapper();
+</span><span class='line'>&lt;span class="kwrd">return&lt;/span> mapper.Map(schedules, employees);</span></code></pre></td></tr></table></div></figure>
 
 
 
@@ -159,28 +143,28 @@
 
 
 
-<div><figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
-<span class='line'>2</span>
-<span class='line'>3</span>
-<span class='line'>4</span>
-<span class='line'>5</span>
-<span class='line'>6</span>
-<span class='line'>7</span>
-<span class='line'>8</span>
-<span class='line'>9</span>
-<span class='line'>10</span>
-<span class='line'>11</span>
-</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>SqlQuery query = &lt;span class="kwrd">new&lt;/span> Select()
-</div><div class='line'>.From&lt;OnCallSchedule&gt;()
-</div><div class='line'>.InnerJoin(Area.AreaIdColumn, OnCallSchedule.AreaIdColumn)
-</div><div class='line'>.InnerJoin(EmployeeProfile.EmployeeProfileIdColumn, OnCallSchedule.EmployeeProfileIdColumn)
-</div><div class='line'>.Where(OnCallSchedule.StartDtColumn).IsLessThanOrEqualTo(date)
-</div><div class='line'>.And(OnCallSchedule.EndDtColumn).IsGreaterThanOrEqualTo(date)
-</div><div class='line'>.OpenExpression()
-</div><div class='line'>.And(Area.AreaIdColumn).IsNull()
-</div><div class='line'>.Or(Area.AreaIdColumn).IsEqualTo(areaId)
-</div><div class='line'>.CloseExpression()
-</div><div class='line'>.OrderAsc(OnCallSchedule.PriorityColumn.ColumnName);</div></code></pre></td></tr></table></div></figure></div>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>SqlQuery query = &lt;span class="kwrd">new&lt;/span> Select()
+</span><span class='line'>.From&lt;OnCallSchedule&gt;()
+</span><span class='line'>.InnerJoin(Area.AreaIdColumn, OnCallSchedule.AreaIdColumn)
+</span><span class='line'>.InnerJoin(EmployeeProfile.EmployeeProfileIdColumn, OnCallSchedule.EmployeeProfileIdColumn)
+</span><span class='line'>.Where(OnCallSchedule.StartDtColumn).IsLessThanOrEqualTo(date)
+</span><span class='line'>.And(OnCallSchedule.EndDtColumn).IsGreaterThanOrEqualTo(date)
+</span><span class='line'>.OpenExpression()
+</span><span class='line'>.And(Area.AreaIdColumn).IsNull()
+</span><span class='line'>.Or(Area.AreaIdColumn).IsEqualTo(areaId)
+</span><span class='line'>.CloseExpression()
+</span><span class='line'>.OrderAsc(OnCallSchedule.PriorityColumn.ColumnName);</span></code></pre></td></tr></table></div></figure>
 
 
 
@@ -193,36 +177,36 @@
 
 
 
-<div><figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
-<span class='line'>2</span>
-<span class='line'>3</span>
-<span class='line'>4</span>
-<span class='line'>5</span>
-<span class='line'>6</span>
-<span class='line'>7</span>
-<span class='line'>8</span>
-<span class='line'>9</span>
-<span class='line'>10</span>
-<span class='line'>11</span>
-<span class='line'>12</span>
-<span class='line'>13</span>
-<span class='line'>14</span>
-<span class='line'>15</span>
-</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>&lt;span class="kwrd">public&lt;/span> &lt;span class="kwrd">static&lt;/span> ScheduleDTO FetchFromRow(IDataReader dr)
-</div><div class='line'>{
-</div><div class='line'>&lt;span class="kwrd">int&lt;/span> i = 0;
-</div><div class='line'>ScheduleDTO schedule = &lt;span class="kwrd">new&lt;/span> ScheduleDTO();
-</div><div class='line'>schedule.OnCallScheduleId = dr.GetGuid(i++);
-</div><div class='line'>schedule.Start = dr.GetDateTime(i++);
-</div><div class='line'>schedule.End = dr.GetDateTime(i++);
-</div><div class='line'>schedule.Comments = dr[i++] &lt;span class="kwrd">as&lt;/span> &lt;span class="kwrd">string&lt;/span>;
-</div><div class='line'>schedule.Priority = dr.GetInt32(i++);
-</div><div class='line'>schedule.EmployeeProfileId = dr.GetGuid(i++);
-</div><div class='line'>&lt;span class="kwrd">string&lt;/span> firstName = dr.GetString(i++);
-</div><div class='line'>&lt;span class="kwrd">string&lt;/span> lastName = dr.GetString(i++);
-</div><div class='line'>schedule.EmployeeName = firstName + &lt;span class="str">&quot; &quot;&lt;/span> + lastName;
-</div><div class='line'>&lt;span class="kwrd">return&lt;/span> schedule;
-</div><div class='line'>}</div></code></pre></td></tr></table></div></figure></div>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;span class="kwrd">public&lt;/span> &lt;span class="kwrd">static&lt;/span> ScheduleDTO FetchFromRow(IDataReader dr)
+</span><span class='line'>{
+</span><span class='line'>&lt;span class="kwrd">int&lt;/span> i = 0;
+</span><span class='line'>ScheduleDTO schedule = &lt;span class="kwrd">new&lt;/span> ScheduleDTO();
+</span><span class='line'>schedule.OnCallScheduleId = dr.GetGuid(i++);
+</span><span class='line'>schedule.Start = dr.GetDateTime(i++);
+</span><span class='line'>schedule.End = dr.GetDateTime(i++);
+</span><span class='line'>schedule.Comments = dr[i++] &lt;span class="kwrd">as&lt;/span> &lt;span class="kwrd">string&lt;/span>;
+</span><span class='line'>schedule.Priority = dr.GetInt32(i++);
+</span><span class='line'>schedule.EmployeeProfileId = dr.GetGuid(i++);
+</span><span class='line'>&lt;span class="kwrd">string&lt;/span> firstName = dr.GetString(i++);
+</span><span class='line'>&lt;span class="kwrd">string&lt;/span> lastName = dr.GetString(i++);
+</span><span class='line'>schedule.EmployeeName = firstName + &lt;span class="str">&quot; &quot;&lt;/span> + lastName;
+</span><span class='line'>&lt;span class="kwrd">return&lt;/span> schedule;
+</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
 
 
 
@@ -241,32 +225,32 @@
 
 
 
-<div><figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
-<span class='line'>2</span>
-<span class='line'>3</span>
-<span class='line'>4</span>
-<span class='line'>5</span>
-<span class='line'>6</span>
-<span class='line'>7</span>
-<span class='line'>8</span>
-<span class='line'>9</span>
-<span class='line'>10</span>
-<span class='line'>11</span>
-<span class='line'>12</span>
-<span class='line'>13</span>
-</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>[AttributeUsage(AttributeTargets.Property)]
-</div><div class='line'>&lt;span class="kwrd">public&lt;/span> &lt;span class="kwrd">class&lt;/span> MapToColumnAttribute : Attribute
-</div><div class='line'>{
-</div><div class='line'>&lt;span class="kwrd">private&lt;/span> &lt;span class="kwrd">readonly&lt;/span> &lt;span class="kwrd">string&lt;/span> _columnName;
-</div><div class='line'>&lt;span class="kwrd">public&lt;/span> MapToColumnAttribute(&lt;span class="kwrd">string&lt;/span> columnName)
-</div><div class='line'>{
-</div><div class='line'>_columnName = columnName;
-</div><div class='line'>}
-</div><div class='line'>&lt;span class="kwrd">public&lt;/span> &lt;span class="kwrd">string&lt;/span> ColumnName
-</div><div class='line'>{
-</div><div class='line'>get { &lt;span class="kwrd">return&lt;/span> _columnName; }
-</div><div class='line'>}
-</div><div class='line'>}</div></code></pre></td></tr></table></div></figure></div>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>[AttributeUsage(AttributeTargets.Property)]
+</span><span class='line'>&lt;span class="kwrd">public&lt;/span> &lt;span class="kwrd">class&lt;/span> MapToColumnAttribute : Attribute
+</span><span class='line'>{
+</span><span class='line'>&lt;span class="kwrd">private&lt;/span> &lt;span class="kwrd">readonly&lt;/span> &lt;span class="kwrd">string&lt;/span> _columnName;
+</span><span class='line'>&lt;span class="kwrd">public&lt;/span> MapToColumnAttribute(&lt;span class="kwrd">string&lt;/span> columnName)
+</span><span class='line'>{
+</span><span class='line'>_columnName = columnName;
+</span><span class='line'>}
+</span><span class='line'>&lt;span class="kwrd">public&lt;/span> &lt;span class="kwrd">string&lt;/span> ColumnName
+</span><span class='line'>{
+</span><span class='line'>get { &lt;span class="kwrd">return&lt;/span> _columnName; }
+</span><span class='line'>}
+</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
 
 
 
@@ -282,36 +266,36 @@
 
 
 
-<div><figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
-<span class='line'>2</span>
-<span class='line'>3</span>
-<span class='line'>4</span>
-<span class='line'>5</span>
-<span class='line'>6</span>
-<span class='line'>7</span>
-<span class='line'>8</span>
-<span class='line'>9</span>
-<span class='line'>10</span>
-<span class='line'>11</span>
-<span class='line'>12</span>
-<span class='line'>13</span>
-<span class='line'>14</span>
-<span class='line'>15</span>
-</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>&lt;span class="kwrd">public&lt;/span> &lt;span class="kwrd">class&lt;/span> ScheduleDTO
-</div><div class='line'>{
-</div><div class='line'>[MapToColumn(OnCallSchedule.Columns.Priority)]
-</div><div class='line'>&lt;span class="kwrd">public&lt;/span> &lt;span class="kwrd">int&lt;/span> Priority
-</div><div class='line'>{
-</div><div class='line'>get { &lt;span class="kwrd">return&lt;/span> _priority; }
-</div><div class='line'>set { _priority = &lt;span class="kwrd">value&lt;/span>; }
-</div><div class='line'>}
-</div><div class='line'>[MapToColumn(EmployeeProfile.Columns.EmployeeProfileId)]
-</div><div class='line'>&lt;span class="kwrd">public&lt;/span> Guid ProfileId
-</div><div class='line'>{
-</div><div class='line'>get { &lt;span class="kwrd">return&lt;/span> _profileId; }
-</div><div class='line'>set { _profileId = &lt;span class="kwrd">value&lt;/span>; }
-</div><div class='line'>}
-</div><div class='line'>&lt;span class="rem">/* snip */&lt;/span></div></code></pre></td></tr></table></div></figure></div>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;span class="kwrd">public&lt;/span> &lt;span class="kwrd">class&lt;/span> ScheduleDTO
+</span><span class='line'>{
+</span><span class='line'>[MapToColumn(OnCallSchedule.Columns.Priority)]
+</span><span class='line'>&lt;span class="kwrd">public&lt;/span> &lt;span class="kwrd">int&lt;/span> Priority
+</span><span class='line'>{
+</span><span class='line'>get { &lt;span class="kwrd">return&lt;/span> _priority; }
+</span><span class='line'>set { _priority = &lt;span class="kwrd">value&lt;/span>; }
+</span><span class='line'>}
+</span><span class='line'>[MapToColumn(EmployeeProfile.Columns.EmployeeProfileId)]
+</span><span class='line'>&lt;span class="kwrd">public&lt;/span> Guid ProfileId
+</span><span class='line'>{
+</span><span class='line'>get { &lt;span class="kwrd">return&lt;/span> _profileId; }
+</span><span class='line'>set { _profileId = &lt;span class="kwrd">value&lt;/span>; }
+</span><span class='line'>}
+</span><span class='line'>&lt;span class="rem">/* snip */&lt;/span></span></code></pre></td></tr></table></div></figure>
 
 
 
@@ -330,34 +314,34 @@
 
 
 
-<div><figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
-<span class='line'>2</span>
-<span class='line'>3</span>
-<span class='line'>4</span>
-<span class='line'>5</span>
-<span class='line'>6</span>
-<span class='line'>7</span>
-<span class='line'>8</span>
-<span class='line'>9</span>
-<span class='line'>10</span>
-<span class='line'>11</span>
-<span class='line'>12</span>
-<span class='line'>13</span>
-<span class='line'>14</span>
-</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>&lt;span class="kwrd">public&lt;/span> T Map&lt;T&gt;(IDataReader dr) &lt;span class="kwrd">where&lt;/span> T : &lt;span class="kwrd">new&lt;/span>()
-</div><div class='line'>{
-</div><div class='line'>Type type = &lt;span class="kwrd">typeof&lt;/span>(T);
-</div><div class='line'>T target = &lt;span class="kwrd">new&lt;/span> T();
-</div><div class='line'>&lt;span class="kwrd">foreach&lt;/span>(PropertyInfo property &lt;span class="kwrd">in&lt;/span> type.GetProperties())
-</div><div class='line'>{
-</div><div class='line'>&lt;span class="kwrd">foreach&lt;/span>(MapToColumnAttribute attr &lt;span class="kwrd">in&lt;/span> ReflectionUtil.GetAttributes&lt;MapToColumnAttribute&gt;(property))
-</div><div class='line'>{
-</div><div class='line'>&lt;span class="kwrd">object&lt;/span> &lt;span class="kwrd">value&lt;/span> = dr[attr.ColumnName];
-</div><div class='line'>property.SetValue(target, &lt;span class="kwrd">value&lt;/span>, &lt;span class="kwrd">null&lt;/span>);
-</div><div class='line'>}
-</div><div class='line'>}
-</div><div class='line'>&lt;span class="kwrd">return&lt;/span> target;
-</div><div class='line'>}</div></code></pre></td></tr></table></div></figure></div>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;span class="kwrd">public&lt;/span> T Map&lt;T&gt;(IDataReader dr) &lt;span class="kwrd">where&lt;/span> T : &lt;span class="kwrd">new&lt;/span>()
+</span><span class='line'>{
+</span><span class='line'>Type type = &lt;span class="kwrd">typeof&lt;/span>(T);
+</span><span class='line'>T target = &lt;span class="kwrd">new&lt;/span> T();
+</span><span class='line'>&lt;span class="kwrd">foreach&lt;/span>(PropertyInfo property &lt;span class="kwrd">in&lt;/span> type.GetProperties())
+</span><span class='line'>{
+</span><span class='line'>&lt;span class="kwrd">foreach&lt;/span>(MapToColumnAttribute attr &lt;span class="kwrd">in&lt;/span> ReflectionUtil.GetAttributes&lt;MapToColumnAttribute&gt;(property))
+</span><span class='line'>{
+</span><span class='line'>&lt;span class="kwrd">object&lt;/span> &lt;span class="kwrd">value&lt;/span> = dr[attr.ColumnName];
+</span><span class='line'>property.SetValue(target, &lt;span class="kwrd">value&lt;/span>, &lt;span class="kwrd">null&lt;/span>);
+</span><span class='line'>}
+</span><span class='line'>}
+</span><span class='line'>&lt;span class="kwrd">return&lt;/span> target;
+</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
 
 
 
@@ -376,18 +360,18 @@
 
 
 
-<div><figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
-<span class='line'>2</span>
-<span class='line'>3</span>
-<span class='line'>4</span>
-<span class='line'>5</span>
-<span class='line'>6</span>
-</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>ProjectionMapper mapper = &lt;span class="kwrd">new&lt;/span> ProjectionMapper();
-</div><div class='line'>&lt;span class="kwrd">using&lt;/span>(IDataReader dr = query.ExecuteReader())
-</div><div class='line'>{
-</div><div class='line'>&lt;span class="kwrd">while&lt;/span>(dr.Read())
-</div><div class='line'>results.Add(mapper.Map&lt;ScheduleDTO&gt;(dr));
-</div><div class='line'>}</div></code></pre></td></tr></table></div></figure></div>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>ProjectionMapper mapper = &lt;span class="kwrd">new&lt;/span> ProjectionMapper();
+</span><span class='line'>&lt;span class="kwrd">using&lt;/span>(IDataReader dr = query.ExecuteReader())
+</span><span class='line'>{
+</span><span class='line'>&lt;span class="kwrd">while&lt;/span>(dr.Read())
+</span><span class='line'>results.Add(mapper.Map&lt;ScheduleDTO&gt;(dr));
+</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
 
 
 
@@ -424,10 +408,14 @@
 
 
 
-<time datetime="2008-11-11 00:00:00 -0600" pubdate  updated >Nov 11<span>th</span>, 2008</time>
 
 
 
+
+  
+
+
+<time datetime="2008-11-11T00:00:00-06:00" pubdate data-updated="true">Nov 11<span>th</span>, 2008</time>
       
 
 
@@ -438,43 +426,42 @@
   <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://benscheirman.com/2008/11/subsonic-and-projections/" data-via="subdigital" data-counturl="http://benscheirman.com/2008/11/subsonic-and-projections/" >Tweet</a>
   
   
-  <g:plusone size="medium"></g:plusone>
   
 </div>
 
     
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/2008/11/photos/" title="Previous Post: Photos">&laquo; Photos</a>
+      
+      
+        <a class="basic-alignment right" href="/2008/11/fluent-route-testing-in-asp-net-mvc/" title="Next Post: Fluent Route Testing in ASP.NET MVC">Fluent Route Testing in ASP.NET MVC &raquo;</a>
+      
+    </p>
   </footer>
 </article>
 
   <section>
     <h1>Comments</h1>
-    <div id="disqus_thread"><div id="disqus_thread"></div>
-<script type="text/javascript">
-  var disqus_shortname = 'subdigital';
-  var disqus_identifier = 'http://benscheirman.com/2008/11/subsonic-and-projections/';
-  var disqus_url = 'http://benscheirman.com/2008/11/subsonic-and-projections/';
-  //var disqus_developer = 1;
-  (function() {
-    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-    dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
-    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-  })();
-</script>
-<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 </div>
   </section>
 
 </div>
 
-<aside role=sidebar>
+<aside class="sidebar">
   
     <section>
   <h1>Who am I?</h1>
-  <p>I&#8217;m Ben Scheirman. I make Rails &amp; iPhone apps for <a href="http://chaione.com" target="_blank">ChaiONE</a> in Houston, TX.</p>
+  <p>I'm Ben Scheirman. I make Rails &amp; iPhone apps for <a href="http://chaione.com" target="_blank">ChaiONE</a> in Houston, TX.</p>
 </section>
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/2012/07/serving-assets-from-s3-on-heroku/">Serving Assets from S3 on Heroku</a>
+      </li>
     
       <li class="post">
         <a href="/2012/02/hello/">Hello, NSScreencast</a>
@@ -492,17 +479,13 @@
         <a href="/2011/12/formatting-json-from-terminal/">Formatting JSON From Terminal</a>
       </li>
     
-      <li class="post">
-        <a href="/2011/10/houston-tech-fest-2011-recap/">Houston Tech Fest 2011 Recap</a>
-      </li>
-    
   </ul>
 </section>
 
 <section>
   <h1>Latest Tweets</h1>
   <ul id="tweets">
-    <li class="loading">Status updating&#8230;</li>
+    <li class="loading">Status updating...</li>
   </ul>
   <script type="text/javascript">
     $.domReady(function(){
@@ -511,16 +494,19 @@
   </script>
   <script src="/javascripts/twitter.js" type="text/javascript"> </script>
   
-    <a href="http://twitter.com/subdigital" class="twitter-follow-button" data-width="208px" data-show-count="false">Follow @subdigital</a>
+    <a href="http://twitter.com/subdigital" class="twitter-follow-button" data-show-count="false">Follow @subdigital</a>
   
 </section>
 
 
 <section>
   <h1>On Delicious</h1>
-  <script type="text/javascript" src="http://feeds.delicious.com/v2/js/subdigital?title=&count=3&sort=date&extended"></script>
+  <div id="delicious"></div>
+  <script type="text/javascript" src="http://feeds.delicious.com/v2/json/subdigital?count=3&amp;sort=date&amp;callback=renderDeliciousLinks"></script>
   <p><a href="http://delicious.com/subdigital">My Delicious Bookmarks &raquo;</a></p>
 </section>
+
+
 
 
 
@@ -530,7 +516,7 @@
 
     </div>
   </div>
-  <footer>
+  <footer role="contentinfo">
 <a style="display:block; float: right" title="Real Time Analytics" href="http://getclicky.com/66470389"><img alt="Real Time Analytics" src="//static.getclicky.com/media/links/badge.gif" border="0" /></a>
 <script src="//static.getclicky.com/js" type="text/javascript"></script>
 <script type="text/javascript">try{ clicky.init(66470389); }catch(e){}</script>
@@ -557,5 +543,43 @@
 </p>
 
 </footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'subdigital';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://benscheirman.com/2008/11/subsonic-and-projections/';
+        var disqus_url = 'http://benscheirman.com/2008/11/subsonic-and-projections/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
 </body>
 </html>

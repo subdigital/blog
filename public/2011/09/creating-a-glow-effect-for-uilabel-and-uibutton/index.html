@@ -5,13 +5,12 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>
-    
-      Creating a Glow Effect for UILabel and UIButton - 
-    
-    Fickle Bits
-  </title>
+  <title>Creating a Glow Effect for UILabel and UIButton - Fickle Bits</title>
   <meta name="author" content="Ben Scheirman">
+
+  
+  <meta name="description" content="One recent iPhone design mockup called for a glowing effect for a
+UIButton. This can be accomplished with images, however I needed a series of &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -20,14 +19,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-
-  <link rel="canonical" href="http://benscheirman.com/2011/09/creating-a-glow-effect-for-uilabel-and-uibutton/"/>
-  <link href="/favicon.png" rel="shortcut icon" />
+  <link rel="canonical" href="http://benscheirman.com/2011/09/creating-a-glow-effect-for-uilabel-and-uibutton/">
+  <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
-  <script src="http://s3.amazonaws.com/ender-js/jeesh.min.js"></script>
+  <script src="/javascripts/ender.js"></script>
   <script src="/javascripts/octopress.js" type="text/javascript"></script>
-  <link href="http://feeds.feedburner.com/ficklebits" rel="alternate" title="Fickle Bits" type="application/atom+xml"/>
+  <link href="http://feeds.feedburner.com/ficklebits" rel="alternate" title="Fickle Bits" type="application/atom+xml">
+  <!--Fonts from Google's Web font directory at http://google.com/webfonts -->
+<link href='http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic' rel='stylesheet' type='text/css'>
+
   
   <script type="text/javascript">
     var _gaq = _gaq || [];
@@ -42,36 +44,10 @@
   </script>
 
 
-  
-  <script type="text/javascript">
-    (function() {
-      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
-      script.src = 'https://apis.google.com/js/plusone.js';
-      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
-    })();
-  </script>
-
-
-  
-  <script type="text/javascript">
-    (function(){
-      var twitterWidgets = document.createElement('script');
-      twitterWidgets.type = 'text/javascript';
-      twitterWidgets.async = true;
-      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
-      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
-    })();
-  </script>
-
-
-  <!--Fonts from Google's Web font directory at http://google.com/webfonts -->
-<link href='http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic' rel='stylesheet' type='text/css'>
-<link href='http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic' rel='stylesheet' type='text/css'>
-
 </head>
 
-<body  >
-  <header><hgroup>
+<body   >
+  <header role="banner"><hgroup>
   <h1><a href="/">Fickle Bits</a></h1>
   
     <h2>You're doing it wrong.</h2>
@@ -79,24 +55,26 @@
 </hgroup>
 
 </header>
-  <nav role=navigation><ul role=subscription data-subscription="rss">
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
   <li><a href="http://feeds.feedburner.com/ficklebits" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
   
 </ul>
+  
 <form action="http://google.com/search" method="get">
-  <fieldset role="site-search">
+  <fieldset role="search">
     <input type="hidden" name="q" value="site:benscheirman.com" />
     <input class="search" type="text" name="q" results="0" placeholder="Search"/>
   </fieldset>
 </form>
+  
 <ul role=main-navigation>
   <li><a href="/">Blog</a></li>
   <li><a href="/about-me">About Me</a></li>
   <li><a href="/speaking">Speaking</a></li>
   <li><a href="/contact">Contact</a></li>
-  <li><a href="http://giggletouch.com">Giggle Touch for
-    iOS</a></li>
-  <li><a href="http://appkickstand.com">AppKickstand</a></li>
+  <li><a href="/projects">Projects</a></li>
+  <!-- <li><a href="http://giggletouch.com">Giggle Touch</a></li> -->
+  <!-- <li><a href="http://appkickstand.com">AppKickstand</a></li> -->
   <li><a href="/blog/archives">Archives</a></li>
 
 </ul>
@@ -105,7 +83,7 @@
   <div id="main">
     <div id="content">
       <div>
-<article class="hentry">
+<article class="hentry" role="article">
   
   <header>
     
@@ -113,14 +91,21 @@
     
     
       <p class="meta">
+        
 
 
 
 
-<time datetime="2011-09-27 19:57:00 -0500" pubdate  updated >Sep 27<span>th</span>, 2011</time>
 
 
-</p>
+
+
+  
+
+
+<time datetime="2011-09-27T19:57:00-05:00" pubdate data-updated="true">Sep 27<span>th</span>, 2011</time>
+        
+      </p>
     
   </header>
 
@@ -134,9 +119,10 @@ with Core Graphics.</p>
 
 <p>The first step is to include the Core Graphics headers:</p>
 
-<figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
-</pre></td><td class='code' width='100%'><pre><code class='objc'><div class='line'><span class="cp">#import &lt;QuartzCore/QuartzCore.h&gt;</span>
-</div></code></pre></td></tr></table></div></figure>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="cp">#import &lt;QuartzCore/QuartzCore.h&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
 
 <p>Next, the effect is achieved by using a shadow with no offset (meaning
 the shadow will be directly underneath the text, not shifted down or to
@@ -145,24 +131,25 @@ the shadow to bleed outward.  Unsetting <code>masksToBounds</code> will allow th
 glow to be drawn even outside of the label&#8217;s frame. Finally the shadow color is set to either the
 foreground color or something a bit lighter.</p>
 
-<figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
-<span class='line'>2</span>
-<span class='line'>3</span>
-<span class='line'>4</span>
-<span class='line'>5</span>
-<span class='line'>6</span>
-</pre></td><td class='code' width='100%'><pre><code class='objc'><div class='line'><span class="n">UIColor</span> <span class="o">*</span><span class="n">color</span> <span class="o">=</span> <span class="n">button</span><span class="p">.</span><span class="n">currentTitleColor</span><span class="p">;</span>
-</div><div class='line'><span class="n">button</span><span class="p">.</span><span class="n">titleLabel</span><span class="p">.</span><span class="n">layer</span><span class="p">.</span><span class="n">shadowColor</span> <span class="o">=</span> <span class="p">[</span><span class="n">color</span> <span class="n">CGColor</span><span class="p">];</span>
-</div><div class='line'><span class="n">button</span><span class="p">.</span><span class="n">titleLabel</span><span class="p">.</span><span class="n">layer</span><span class="p">.</span><span class="n">shadowRadius</span> <span class="o">=</span> <span class="mf">4.0f</span><span class="p">;</span>
-</div><div class='line'><span class="n">button</span><span class="p">.</span><span class="n">titleLabel</span><span class="p">.</span><span class="n">layer</span><span class="p">.</span><span class="n">shadowOpacity</span> <span class="o">=</span> <span class="mf">.9</span><span class="p">;</span>
-</div><div class='line'><span class="n">button</span><span class="p">.</span><span class="n">titleLabel</span><span class="p">.</span><span class="n">layer</span><span class="p">.</span><span class="n">shadowOffset</span> <span class="o">=</span> <span class="n">CGSizeZero</span><span class="p">;</span>
-</div><div class='line'><span class="n">button</span><span class="p">.</span><span class="n">titleLabel</span><span class="p">.</span><span class="n">layer</span><span class="p">.</span><span class="n">masksToBounds</span> <span class="o">=</span> <span class="n">NO</span><span class="p">;</span>
-</div></code></pre></td></tr></table></div></figure>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">UIColor</span> <span class="o">*</span><span class="n">color</span> <span class="o">=</span> <span class="n">button</span><span class="p">.</span><span class="n">currentTitleColor</span><span class="p">;</span>
+</span><span class='line'><span class="n">button</span><span class="p">.</span><span class="n">titleLabel</span><span class="p">.</span><span class="n">layer</span><span class="p">.</span><span class="n">shadowColor</span> <span class="o">=</span> <span class="p">[</span><span class="n">color</span> <span class="n">CGColor</span><span class="p">];</span>
+</span><span class='line'><span class="n">button</span><span class="p">.</span><span class="n">titleLabel</span><span class="p">.</span><span class="n">layer</span><span class="p">.</span><span class="n">shadowRadius</span> <span class="o">=</span> <span class="mf">4.0f</span><span class="p">;</span>
+</span><span class='line'><span class="n">button</span><span class="p">.</span><span class="n">titleLabel</span><span class="p">.</span><span class="n">layer</span><span class="p">.</span><span class="n">shadowOpacity</span> <span class="o">=</span> <span class="mf">.9</span><span class="p">;</span>
+</span><span class='line'><span class="n">button</span><span class="p">.</span><span class="n">titleLabel</span><span class="p">.</span><span class="n">layer</span><span class="p">.</span><span class="n">shadowOffset</span> <span class="o">=</span> <span class="n">CGSizeZero</span><span class="p">;</span>
+</span><span class='line'><span class="n">button</span><span class="p">.</span><span class="n">titleLabel</span><span class="p">.</span><span class="n">layer</span><span class="p">.</span><span class="n">masksToBounds</span> <span class="o">=</span> <span class="n">NO</span><span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure>
+
 
 <p>This effect works on plain <code>UILabel</code> or the <code>titleLabel</code> property of a
 <code>UIButton</code>.  You can see the results of the effect here:</p>
 
-<p><img class='image ' src='/images/uibutton-gloweffect.png' width='' height='' alt='' title=''></p>
+<p><img class="image" src="/images/uibutton-gloweffect.png"></p>
 
 <p>Don&#8217;t go overboard with this.  It&#8217;s a subtle effect, but looks great
 when used effectively.</p>
@@ -181,15 +168,19 @@ when used effectively.</p>
 
 
 
-<time datetime="2011-09-27 19:57:00 -0500" pubdate  updated >Sep 27<span>th</span>, 2011</time>
 
 
 
+
+  
+
+
+<time datetime="2011-09-27T19:57:00-05:00" pubdate data-updated="true">Sep 27<span>th</span>, 2011</time>
       
 
 <span class="categories">
   
-    <a class='category' href='/blog/categories/iOS/'>iOS</a>
+    <a class='category' href='/blog/categories/ios/'>iOS</a>
   
 </span>
 
@@ -201,43 +192,42 @@ when used effectively.</p>
   <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://benscheirman.com/2011/09/creating-a-glow-effect-for-uilabel-and-uibutton/" data-via="subdigital" data-counturl="http://benscheirman.com/2011/09/creating-a-glow-effect-for-uilabel-and-uibutton/" >Tweet</a>
   
   
-  <g:plusone size="medium"></g:plusone>
   
 </div>
 
     
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/2011/09/introducing-appsites/" title="Previous Post: Introducing App Sites">&laquo; Introducing App Sites</a>
+      
+      
+        <a class="basic-alignment right" href="/2011/10/making-a-uibutton-flip-over/" title="Next Post: Making a UIButton Flip Over">Making a UIButton Flip Over &raquo;</a>
+      
+    </p>
   </footer>
 </article>
 
   <section>
     <h1>Comments</h1>
-    <div id="disqus_thread"><div id="disqus_thread"></div>
-<script type="text/javascript">
-  var disqus_shortname = 'subdigital';
-  var disqus_identifier = 'http://benscheirman.com/2011/09/creating-a-glow-effect-for-uilabel-and-uibutton/';
-  var disqus_url = 'http://benscheirman.com/2011/09/creating-a-glow-effect-for-uilabel-and-uibutton/';
-  //var disqus_developer = 1;
-  (function() {
-    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-    dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
-    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-  })();
-</script>
-<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 </div>
   </section>
 
 </div>
 
-<aside role=sidebar>
+<aside class="sidebar">
   
     <section>
   <h1>Who am I?</h1>
-  <p>I&#8217;m Ben Scheirman. I make Rails &amp; iPhone apps for <a href="http://chaione.com" target="_blank">ChaiONE</a> in Houston, TX.</p>
+  <p>I'm Ben Scheirman. I make Rails &amp; iPhone apps for <a href="http://chaione.com" target="_blank">ChaiONE</a> in Houston, TX.</p>
 </section>
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/2012/07/serving-assets-from-s3-on-heroku/">Serving Assets from S3 on Heroku</a>
+      </li>
     
       <li class="post">
         <a href="/2012/02/hello/">Hello, NSScreencast</a>
@@ -255,17 +245,13 @@ when used effectively.</p>
         <a href="/2011/12/formatting-json-from-terminal/">Formatting JSON From Terminal</a>
       </li>
     
-      <li class="post">
-        <a href="/2011/10/houston-tech-fest-2011-recap/">Houston Tech Fest 2011 Recap</a>
-      </li>
-    
   </ul>
 </section>
 
 <section>
   <h1>Latest Tweets</h1>
   <ul id="tweets">
-    <li class="loading">Status updating&#8230;</li>
+    <li class="loading">Status updating...</li>
   </ul>
   <script type="text/javascript">
     $.domReady(function(){
@@ -274,16 +260,19 @@ when used effectively.</p>
   </script>
   <script src="/javascripts/twitter.js" type="text/javascript"> </script>
   
-    <a href="http://twitter.com/subdigital" class="twitter-follow-button" data-width="208px" data-show-count="false">Follow @subdigital</a>
+    <a href="http://twitter.com/subdigital" class="twitter-follow-button" data-show-count="false">Follow @subdigital</a>
   
 </section>
 
 
 <section>
   <h1>On Delicious</h1>
-  <script type="text/javascript" src="http://feeds.delicious.com/v2/js/subdigital?title=&count=3&sort=date&extended"></script>
+  <div id="delicious"></div>
+  <script type="text/javascript" src="http://feeds.delicious.com/v2/json/subdigital?count=3&amp;sort=date&amp;callback=renderDeliciousLinks"></script>
   <p><a href="http://delicious.com/subdigital">My Delicious Bookmarks &raquo;</a></p>
 </section>
+
+
 
 
 
@@ -293,7 +282,7 @@ when used effectively.</p>
 
     </div>
   </div>
-  <footer>
+  <footer role="contentinfo">
 <a style="display:block; float: right" title="Real Time Analytics" href="http://getclicky.com/66470389"><img alt="Real Time Analytics" src="//static.getclicky.com/media/links/badge.gif" border="0" /></a>
 <script src="//static.getclicky.com/js" type="text/javascript"></script>
 <script type="text/javascript">try{ clicky.init(66470389); }catch(e){}</script>
@@ -320,5 +309,43 @@ when used effectively.</p>
 </p>
 
 </footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'subdigital';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://benscheirman.com/2011/09/creating-a-glow-effect-for-uilabel-and-uibutton/';
+        var disqus_url = 'http://benscheirman.com/2011/09/creating-a-glow-effect-for-uilabel-and-uibutton/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
 </body>
 </html>

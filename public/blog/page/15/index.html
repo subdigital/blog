@@ -5,11 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>
-    
-    Fickle Bits
-  </title>
+  <title>Fickle Bits</title>
   <meta name="author" content="Ben Scheirman">
+
+  
+  <meta name="description" content="This is a very strange problem that burned quite a bit of my time last week.&nbsp; Hopefully this will be found by someone else with a similar &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -18,14 +18,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-
-  <link rel="canonical" href="http://benscheirman.com/blog/page/15/index.html"/>
-  <link href="/favicon.png" rel="shortcut icon" />
+  <link rel="canonical" href="http://benscheirman.com/blog/page/15/">
+  <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
-  <script src="http://s3.amazonaws.com/ender-js/jeesh.min.js"></script>
+  <script src="/javascripts/ender.js"></script>
   <script src="/javascripts/octopress.js" type="text/javascript"></script>
-  <link href="http://feeds.feedburner.com/ficklebits" rel="alternate" title="Fickle Bits" type="application/atom+xml"/>
+  <link href="http://feeds.feedburner.com/ficklebits" rel="alternate" title="Fickle Bits" type="application/atom+xml">
+  <!--Fonts from Google's Web font directory at http://google.com/webfonts -->
+<link href='http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic' rel='stylesheet' type='text/css'>
+
   
   <script type="text/javascript">
     var _gaq = _gaq || [];
@@ -40,36 +43,10 @@
   </script>
 
 
-  
-  <script type="text/javascript">
-    (function() {
-      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
-      script.src = 'https://apis.google.com/js/plusone.js';
-      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
-    })();
-  </script>
-
-
-  
-  <script type="text/javascript">
-    (function(){
-      var twitterWidgets = document.createElement('script');
-      twitterWidgets.type = 'text/javascript';
-      twitterWidgets.async = true;
-      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
-      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
-    })();
-  </script>
-
-
-  <!--Fonts from Google's Web font directory at http://google.com/webfonts -->
-<link href='http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic' rel='stylesheet' type='text/css'>
-<link href='http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic' rel='stylesheet' type='text/css'>
-
 </head>
 
-<body  >
-  <header><hgroup>
+<body   >
+  <header role="banner"><hgroup>
   <h1><a href="/">Fickle Bits</a></h1>
   
     <h2>You're doing it wrong.</h2>
@@ -77,24 +54,26 @@
 </hgroup>
 
 </header>
-  <nav role=navigation><ul role=subscription data-subscription="rss">
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
   <li><a href="http://feeds.feedburner.com/ficklebits" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
   
 </ul>
+  
 <form action="http://google.com/search" method="get">
-  <fieldset role="site-search">
+  <fieldset role="search">
     <input type="hidden" name="q" value="site:benscheirman.com" />
     <input class="search" type="text" name="q" results="0" placeholder="Search"/>
   </fieldset>
 </form>
+  
 <ul role=main-navigation>
   <li><a href="/">Blog</a></li>
   <li><a href="/about-me">About Me</a></li>
   <li><a href="/speaking">Speaking</a></li>
   <li><a href="/contact">Contact</a></li>
-  <li><a href="http://giggletouch.com">Giggle Touch for
-    iOS</a></li>
-  <li><a href="http://appkickstand.com">AppKickstand</a></li>
+  <li><a href="/projects">Projects</a></li>
+  <!-- <li><a href="http://giggletouch.com">Giggle Touch</a></li> -->
+  <!-- <li><a href="http://appkickstand.com">AppKickstand</a></li> -->
   <li><a href="/blog/archives">Archives</a></li>
 
 </ul>
@@ -103,25 +82,154 @@
   <div id="main">
     <div id="content">
       <div class="blog-index">
-
-
-
-  <article>
+  
+  
+  
+    <article>
+      
+  <header>
     
+      <h1 class="entry-title"><a href="/2008/07/precompiling-asp-net-applications-and-the-dreaded-loadresource-failure-error/">Precompiling ASP.NET Applications and the Dreaded LoadResource Failure Error</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2008-07-02T00:00:00-05:00" pubdate data-updated="true">Jul 2<span>nd</span>, 2008</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>This is a very strange problem that burned quite a bit of my time last week.&nbsp; Hopefully this will be found by someone else with a similar dilemma.</p>
+
+
+<p>Basically I&rsquo;ve got a central web application project that I use to house user controls to be shared by many applications.&nbsp; To accomplish this, I&rsquo;ve followed <a href="http://odetocode.com/Blogs/scott/archive/2005/10/06/2326.aspx" target="_blank">this post</a> by&nbsp;K. Scott Allen (of OdeToCode fame).</p>
+
+
+<p>Since precompiling an ASP.NET project produces (at least) one funkily-named dll, I decided to ILMerge it with the code-behind assembly.&nbsp; So the process looks like this:</p>
+
+
+<p>After-build:</p>
+
+
+<ul><li>Precompile the website, updatable=false, into a temporary directory</li><li>Merge App_Web*.dll &amp; my project assembly together into one</li><li>Reference this in another project &amp; use the controls</li></ul>
+
+
+<p>If you look at this dll in reflector, you get something like this:</p>
+
+
+<p><img src="/images/reflector1.png" alt="Reflector1"  border="0"  /></p>
+
+
+<p><em>As a side-note, If you haven&rsquo;t ever tried doing this before then you should know that you have to reference the compiled user control classes from the ASP namespace in your pages&hellip; so in this example &lt;cc1:keywordgrid_ascx /&gt; rather than &lt;cc1:KeywordGrid /&gt;.</em></p>
+
+
+<p>This first control worked just fine.&nbsp; It was basically a custom GridView control.&nbsp; Then I added that next control, SelectKeywords.&nbsp; Adding it caused the assembly to crash upon loading, i.e. even when we weren&#8217;t using SelectKeywords it was crashing pages that used KeywordGrid.&nbsp; The error:</p>
+
+
+<p><img src="/images/error1.png" alt="Error1"  border="0"  /></p>
+
+
+<p>This happened in the constructor of any control in the assembly.&nbsp; Digging a little deeper into the error, I found that this happens when your user control has literal content in it that gets embedded as a Win32 resource file during precompilation.</p>
+
+
+<p>In reflector, this is what it looked like:</p>
+
+
+<p><a href="http://www.flux88.com/uploads/reflector2.png"><img src="/images/reflector2_thumb.jpg" alt="Reflector2"  border="0"  /></a></p>
+
+
+<p>When building the control tree, the compiler was embedding literal content as a resource.&nbsp; To try and fix the issue, I started removing literal content.&nbsp; Bit-by-bit I removed some HTML until the error went away.&nbsp; This is what reflector looked like when it was working:</p>
+
+
+<p><a href="http://www.flux88.com/uploads/reflector3.png"><img src="/images/reflector3_thumb.jpg" alt="Reflector3"  border="0"  /></a></p>
+
+
+<p>But where is this resource file?&nbsp; Clearly the assembly is referencing <em>some resource file</em> somewhere, right?&nbsp; I peeked into Temporary ASP.NET Files to find the answer.</p>
+
+
+<p><img src="/images/temp_2Daspnet_2Dfiles.png" alt="Temp-aspnet-files"  border="0"  /></p>
+
+
+<p>If you open this up in Notepad, you&rsquo;ll find your missing literals!</p>
+
+
+<p><img src="/images/notepad_2Dresource.png" alt="Notepad-resource"  border="0"  /></p>
+
+
+<p>For some reason, this file wasn&rsquo;t making it into the final assembly.&nbsp; </p>
+
+
+<p>So if you have more than 256 characters of contiguous literal content, the compiler will put this into a resource file (likely for perf reasons).&nbsp; Sadly there is no way to turn this off.&nbsp; </p>
+
+
+<p>I&rsquo;m not sure if ILMerging the assembly was the reason why this was getting lost, but luckily <a href="http://blogs.msdn.com/davidebb/" target="_blank">David Ebbo</a> from Microsoft was able to provide me with a couple of options.</p>
+
+
+<ol><li>You can break up the literal content by injecting empty code blocks like <code style="BACKGROUND-COLOR: yellow">&lt;% %&gt;</code> but who would really want to do that?</li><li>You can fake out the compiler &amp; supply a code provider that claims to not support Win32 Resource files.&nbsp; This is what I chose.</li></ol>
+
+
+<p>I created a class (of course in another assembly, otherwise you have a chicken-and-egg problem):</p>
+
+
+<p><span style="FONT-SIZE: 12pt; FONT-FAMILY: Consolas"><span style="COLOR: blue">public</span> <span style="COLOR: blue">class</span> <span style="COLOR: rgb(43,145,175)">CustomCodeDomProviderWithoutWin<wbr>32ResSupport</span> : <span style="COLOR: rgb(43,145,175)">CSharpCodeProvider<br /></span></span><span style="FONT-SIZE: 12pt; FONT-FAMILY: Consolas">{<br /></span><span style="FONT-SIZE: 12pt; FONT-FAMILY: Consolas">&nbsp;&nbsp;&nbsp; <span style="COLOR: blue">public</span> <span style="COLOR: blue">override</span> <span style="COLOR: blue">bool</span> Supports(<span style="COLOR: rgb(43,145,175)">GeneratorSupport</span> generatorSupport)<br /></span><span style="FONT-SIZE: 12pt; FONT-FAMILY: Consolas">&nbsp;&nbsp;&nbsp; {<br /></span><span style="FONT-SIZE: 12pt; FONT-FAMILY: Consolas">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="COLOR: blue">if</span> ((generatorSupport &amp; <span style="COLOR: rgb(43,145,175)">GeneratorSupport</span>.Win32Resources) == generatorSupport)<br /></span><span style="FONT-SIZE: 12pt; FONT-FAMILY: Consolas">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="COLOR: blue">return</span> <span style="COLOR: blue">false</span>;</span><span style="FONT-SIZE: 12pt; FONT-FAMILY: Consolas">&nbsp;</span></p>
+
+
+<p><span style="FONT-SIZE: 12pt; FONT-FAMILY: Consolas">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="COLOR: blue">return</span> <span style="COLOR: blue">base</span>.Supports(generatorSupport);<br /></span><span style="FONT-SIZE: 12pt; FONT-FAMILY: Consolas">&nbsp;&nbsp;&nbsp; }<br /></span><span style="FONT-SIZE: 12pt; FONT-FAMILY: Consolas">}</span></p>
+
+
+<p>To get the precompiler to use this new class, add this to your web.config:</p>
+
+
+<p><span style="FONT-SIZE: 12pt; COLOR: blue; FONT-FAMILY: Consolas">&lt;</span><span style="FONT-SIZE: 12pt; COLOR: rgb(163,21,21); FONT-FAMILY: Consolas">system.codedom</span><span style="FONT-SIZE: 12pt; COLOR: blue; FONT-FAMILY: Consolas">&gt;<br /></span><span style="FONT-SIZE: 12pt; COLOR: blue; FONT-FAMILY: Consolas">&nbsp;&nbsp;&nbsp; &lt;</span><span style="FONT-SIZE: 12pt; COLOR: rgb(163,21,21); FONT-FAMILY: Consolas">compilers</span><span style="FONT-SIZE: 12pt; COLOR: blue; FONT-FAMILY: Consolas">&gt;<br /></span><span style="FONT-SIZE: 12pt; COLOR: blue; FONT-FAMILY: Consolas">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;</span><span style="FONT-SIZE: 12pt; COLOR: rgb(163,21,21); FONT-FAMILY: Consolas">compiler</span><span style="FONT-SIZE: 12pt; COLOR: blue; FONT-FAMILY: Consolas"> </span><span style="FONT-SIZE: 12pt; COLOR: red; FONT-FAMILY: Consolas">language</span><span style="FONT-SIZE: 12pt; COLOR: blue; FONT-FAMILY: Consolas">=</span><span style="FONT-SIZE: 12pt; FONT-FAMILY: Consolas">&#8221;<SPAN style="color: blue">c#;cs;csharp</SPAN>&#8221;<span style="COLOR: blue"> </span><span style="COLOR: red">extension</span><span style="COLOR: blue">=</span>&#8221;<SPAN style="color: blue">.cs</SPAN>&#8221;<span style="COLOR: blue"> </span><span style="COLOR: red">type</span><span style="COLOR: blue">=</span>&#8221;<SPAN style="color: blue">MyAssembly.CustomCodeDomProvide<WBR>rWithoutWin32ResSupport, MyAssembly</SPAN>&#8221;<span style="COLOR: blue"> </span><span style="COLOR: red">warningLevel</span><span style="COLOR: blue">=</span>&#8221;<SPAN style="color: blue">1</SPAN>&#8221;<span style="COLOR: blue"> /&gt;<br /></span></span><span style="FONT-SIZE: 12pt; COLOR: blue; FONT-FAMILY: Consolas">&nbsp;&nbsp;&nbsp; &lt;/</span><span style="FONT-SIZE: 12pt; COLOR: rgb(163,21,21); FONT-FAMILY: Consolas">compilers</span><span style="FONT-SIZE: 12pt; COLOR: blue; FONT-FAMILY: Consolas">&gt;<br /></span><span style="FONT-SIZE: 12pt; COLOR: blue; FONT-FAMILY: Consolas">&lt;/</span><span style="FONT-SIZE: 12pt; COLOR: rgb(163,21,21); FONT-FAMILY: Consolas">system.codedom</span><span style="FONT-SIZE: 12pt; COLOR: blue; FONT-FAMILY: Consolas">&gt;</span></p>
+
+
+<p>Now my user controls can have as much literal content as they need and resources will not get added.&nbsp; I&rsquo;d like to thank <a href="http://blogs.msdn.com/davidebb/"
+target="_blank">David Ebbo</a> for his assistance in helping me figure this out.&nbsp; Thanks David!</p>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
   <header>
     
       <h1 class="entry-title"><a href="/2008/06/net-database-migration-tool-roundup/">.NET Database Migration Tool Roundup</a></h1>
     
     
       <p class="meta">
+        
 
 
 
 
-<time datetime="2008-06-05 00:00:00 -0500" pubdate  updated >Jun 5<span>th</span>, 2008</time>
 
 
-</p>
+
+
+  
+
+
+<time datetime="2008-06-05T00:00:00-05:00" pubdate data-updated="true">Jun 5<span>th</span>, 2008</time>
+        
+      </p>
     
   </header>
 
@@ -153,8 +261,8 @@
 <p>Rails Migrations look like this:</p>
 
 
-<div><figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
-</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>class AddSystemSettings &lt; ActiveRecord::Migrationdef self.upcreate_table :system_settings do |t|t.string:namet.string:labelt.text:valuet.string:typet.integer:positionendSystemSetting.create :name =&gt; "notice", :label =&gt; "Use notice?", :value =&gt; 1enddef self.downdrop_table :system_settingsendend&lt;br></div></code></pre></td></tr></table></div></figure></div>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>class AddSystemSettings &lt; ActiveRecord::Migrationdef self.upcreate_table :system_settings do |t|t.string:namet.string:labelt.text:valuet.string:typet.integer:positionendSystemSetting.create :name =&gt; "notice", :label =&gt; "Use notice?", :value =&gt; 1enddef self.downdrop_table :system_settingsendend&lt;br></span></code></pre></td></tr></table></div></figure>
 
 
 <p><br><em>taken from: <a href="http://api.rubyonrails.org/classes/ActiveRecord/Migration.html">http://api.rubyonrails.org/classes/ActiveRecord/Migration.html</a></em> </p>
@@ -163,8 +271,8 @@
 <p>Running migrations is as easy as the command: </p>
 
 
-<div><figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
-</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>rake db:migrate&nbsp;</div></code></pre></td></tr></table></div></figure></div>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>rake db:migrate&nbsp;</span></code></pre></td></tr></table></div></figure>
 
 
 <p><strong>RikMigrations</strong></p>
@@ -173,14 +281,14 @@
 <p>RikMigrations was the first one I tried.&nbsp; They have an excellent fluent API, and allows you to build tables and columns by chaining together commands.&nbsp; Unfortunately, they didn’t seem to have SQL 2005 Schema support and that is something that I require.&nbsp; I could probably send them a patch, but I decided to continue my search.</p>
 
 
-<div><figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
-</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>&lt;span style="color: blue;">using &lt;/span>RikMigrations;[assembly: &lt;span style="color: rgb(43, 145, 175);">Migration&lt;/span>(&lt;span style="color: blue;">typeof&lt;/span>(BlogMigration1), 1)][assembly: &lt;span style="color: rgb(43, 145, 175);">Migration&lt;/span>(&lt;span style="color: blue;">typeof&lt;/span>(BlogMigration2), 2)]&lt;span style="color: blue;">namespace &lt;/span>Blog.Migrations{&lt;span style="color: blue;">public class &lt;/span>&lt;span style="color: rgb(43, 145, 175);">BlogMigration1 &lt;/span>: &lt;span style="color: rgb(43, 145, 175);">IMigration&lt;/span>{&lt;span style="color: blue;">&lt;/span>&lt;span style="color: blue;">public void &lt;/span>Up(&lt;span style="color: rgb(43, 145, 175);">DbProvider &lt;/span>db){&lt;span style="color: rgb(43, 145, 175);">Table &lt;/span>t = db.AddTable(&lt;span style="color: rgb(163, 21, 21);">"Blog"&lt;/span>);t.AddColumn(&lt;span style="color: rgb(163, 21, 21);">"ID"&lt;/span>, &lt;span style="color: blue;">typeof&lt;/span>(&lt;span style="color: blue;">int&lt;/span>)).PrimaryKey().AutoGenerate();t.AddColumn(&lt;span style="color: rgb(163, 21, 21);">"Name"&lt;/span>, &lt;span style="color: blue;">typeof&lt;/span>(&lt;span style="color: blue;">string&lt;/span>), 64);t.Save();}&lt;span style="color: blue;">&lt;br>&lt;/span>&lt;span style="color: blue;">public void &lt;/span>Down(&lt;span style="color: rgb(43, 145, 175);">DbProvider &lt;/span>db){ db.DropTable(&lt;span style="color: rgb(163, 21, 21);">"Blog"&lt;/span>);}&lt;br>}&lt;span style="color: blue;">&lt;/span></div></code></pre></td></tr></table></div></figure></div>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;span style="color: blue;">using &lt;/span>RikMigrations;[assembly: &lt;span style="color: rgb(43, 145, 175);">Migration&lt;/span>(&lt;span style="color: blue;">typeof&lt;/span>(BlogMigration1), 1)][assembly: &lt;span style="color: rgb(43, 145, 175);">Migration&lt;/span>(&lt;span style="color: blue;">typeof&lt;/span>(BlogMigration2), 2)]&lt;span style="color: blue;">namespace &lt;/span>Blog.Migrations{&lt;span style="color: blue;">public class &lt;/span>&lt;span style="color: rgb(43, 145, 175);">BlogMigration1 &lt;/span>: &lt;span style="color: rgb(43, 145, 175);">IMigration&lt;/span>{&lt;span style="color: blue;">&lt;/span>&lt;span style="color: blue;">public void &lt;/span>Up(&lt;span style="color: rgb(43, 145, 175);">DbProvider &lt;/span>db){&lt;span style="color: rgb(43, 145, 175);">Table &lt;/span>t = db.AddTable(&lt;span style="color: rgb(163, 21, 21);">"Blog"&lt;/span>);t.AddColumn(&lt;span style="color: rgb(163, 21, 21);">"ID"&lt;/span>, &lt;span style="color: blue;">typeof&lt;/span>(&lt;span style="color: blue;">int&lt;/span>)).PrimaryKey().AutoGenerate();t.AddColumn(&lt;span style="color: rgb(163, 21, 21);">"Name"&lt;/span>, &lt;span style="color: blue;">typeof&lt;/span>(&lt;span style="color: blue;">string&lt;/span>), 64);t.Save();}&lt;span style="color: blue;">&lt;br>&lt;/span>&lt;span style="color: blue;">public void &lt;/span>Down(&lt;span style="color: rgb(43, 145, 175);">DbProvider &lt;/span>db){ db.DropTable(&lt;span style="color: rgb(163, 21, 21);">"Blog"&lt;/span>);}&lt;br>}&lt;span style="color: blue;">&lt;/span></span></code></pre></td></tr></table></div></figure>
 
 
 
 
-<div><figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
-</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>&lt;span style="color: blue;">public class &lt;/span>&lt;span style="color: rgb(43, 145, 175);">BlogMigration2 &lt;/span>: &lt;span style="color: rgb(43, 145, 175);">IMigration&lt;/span>{&lt;span style="color: blue;">&lt;/span>&lt;span style="color: blue;"> public void &lt;/span>Up(&lt;span style="color: rgb(43, 145, 175);">DbProvider &lt;/span>db) {&lt;span style="color: rgb(43, 145, 175);"> Table &lt;/span>t = db.AlterTable(&lt;span style="color: rgb(163, 21, 21);">"Blog"&lt;/span>); t.AddColumn(&lt;span style="color: rgb(163, 21, 21);">"Description"&lt;/span>, &lt;span style="color: blue;">typeof&lt;/span>(&lt;span style="color: blue;">string&lt;/span>), &lt;span style="color: blue;">int&lt;/span>.MaxValue); t.Save(); }&lt;span style="color: blue;"> &lt;br> public void &lt;/span>Down(&lt;span style="color: rgb(43, 145, 175);">DbProvider &lt;/span>db) {&lt;span style="color: rgb(43, 145, 175);"> Table &lt;/span>t = db.AlterTable(&lt;span style="color: rgb(163, 21, 21);">"Blog"&lt;/span>); t.DropColumn(&lt;span style="color: rgb(163, 21, 21);">"Description"&lt;/span>); t.Save(); }&lt;font color="#0000ff"> &lt;/font>}}</div></code></pre></td></tr></table></div></figure></div>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;span style="color: blue;">public class &lt;/span>&lt;span style="color: rgb(43, 145, 175);">BlogMigration2 &lt;/span>: &lt;span style="color: rgb(43, 145, 175);">IMigration&lt;/span>{&lt;span style="color: blue;">&lt;/span>&lt;span style="color: blue;"> public void &lt;/span>Up(&lt;span style="color: rgb(43, 145, 175);">DbProvider &lt;/span>db) {&lt;span style="color: rgb(43, 145, 175);"> Table &lt;/span>t = db.AlterTable(&lt;span style="color: rgb(163, 21, 21);">"Blog"&lt;/span>); t.AddColumn(&lt;span style="color: rgb(163, 21, 21);">"Description"&lt;/span>, &lt;span style="color: blue;">typeof&lt;/span>(&lt;span style="color: blue;">string&lt;/span>), &lt;span style="color: blue;">int&lt;/span>.MaxValue); t.Save(); }&lt;span style="color: blue;"> &lt;br> public void &lt;/span>Down(&lt;span style="color: rgb(43, 145, 175);">DbProvider &lt;/span>db) {&lt;span style="color: rgb(43, 145, 175);"> Table &lt;/span>t = db.AlterTable(&lt;span style="color: rgb(163, 21, 21);">"Blog"&lt;/span>); t.DropColumn(&lt;span style="color: rgb(163, 21, 21);">"Description"&lt;/span>); t.Save(); }&lt;font color="#0000ff"> &lt;/font>}}</span></code></pre></td></tr></table></div></figure>
 
 
 <p>Running this migration is done like so:</p>
@@ -283,30 +391,36 @@ on 1 of the database schema, so it could safely skip the script.&nbsp; This is d
 <div class="bjtags">Tags:<a rel="tag" href="http://technorati.com/tag/database+migrations">database+migrations</a></div>
 
 </div>
-  <footer>
-    <a rel="full-article" href="/2008/06/net-database-migration-tool-roundup/">Read on &rarr;</a>
-  </footer>
+  
+  
 
 
-  </article>
-
-
-  <article>
-    
+    </article>
+  
+  
+    <article>
+      
   <header>
     
       <h1 class="entry-title"><a href="/2008/05/alt-net-geek-dinner-recap/">ALT.NET Geek Dinner Recap</a></h1>
     
     
       <p class="meta">
+        
 
 
 
 
-<time datetime="2008-05-28 00:00:00 -0500" pubdate  updated >May 28<span>th</span>, 2008</time>
 
 
-</p>
+
+
+  
+
+
+<time datetime="2008-05-28T00:00:00-05:00" pubdate data-updated="true">May 28<span>th</span>, 2008</time>
+        
+      </p>
     
   </header>
 
@@ -316,30 +430,36 @@ on 1 of the database schema, so it could safely skip the script.&nbsp; This is d
 
 <p> <p>I brought up the subject of possibly organizing an ALT.NET Open Spaces conference here in Houston, and folks seemed interested.&nbsp; I&#8217;m a little frightened by the amount of work this will be, but in the end I think it will be worth it.&nbsp; We also decided on getting a google group setup, so if you&#8217;re in the Houston area (or just want to listen in) then join us at <a href="http://groups.google.com/group/houstonaltdotnet" target="_blank">http://groups.google.com/group/houstonaltdotnet</a>.&nbsp; We&#8217;ll use this for future planning.</p> <p>Unfortunately I forgot to take a picture of the group, whoops!&nbsp; I guess that just means we&#8217;ll have to meet again :)</p></p>
 </div>
-  <footer>
-    <a rel="full-article" href="/2008/05/alt-net-geek-dinner-recap/">Read on &rarr;</a>
-  </footer>
+  
+  
 
 
-  </article>
-
-
-  <article>
-    
+    </article>
+  
+  
+    <article>
+      
   <header>
     
       <h1 class="entry-title"><a href="/2008/05/using-asp-net-mvc-on-iis-6-without-the-mvc-extension/">Using ASP.NET MVC on IIS 6 Without the .MVC Extension</a></h1>
     
     
       <p class="meta">
+        
 
 
 
 
-<time datetime="2008-05-27 00:00:00 -0500" pubdate  updated >May 27<span>th</span>, 2008</time>
 
 
-</p>
+
+
+  
+
+
+<time datetime="2008-05-27T00:00:00-05:00" pubdate data-updated="true">May 27<span>th</span>, 2008</time>
+        
+      </p>
     
   </header>
 
@@ -349,8 +469,8 @@ on 1 of the database schema, so it could safely skip the script.&nbsp; This is d
 
 <p> <blockquote> <p>/products/list</p> <p>(versus a typical /ProductList.aspx)</p></blockquote> <p>The default route for ASP.NET MVC looks like this:</p> <blockquote> <p>/{controller}/{action}</p></blockquote> <p>Using this route you can map most of the URLs that your application will need.&nbsp; There is a problem, however, when running ASP.NET MVC on IIS6 (and 5).&nbsp; The URL above doesn&#8217;t have an extension, so IIS will assume that it is a virtual directory on the server.&nbsp; We have a couple of options we can do to get around this:</p> <ul> <li>We could create wild card mappings and pass every request through ASP.NET, however this is not recommended for performance reasons<li>We can add an extension that maps to ASP.NET (.mvc)</li></ul> <p>In the latter option your routes must change to something like this:</p> <blockquote> <p>/{controller}.mvc/{action}</p></blockquote> <p>So URLs generated with this route will look like:</p> <blockquote> <p>/products.mvc/list</p></blockquote> <p>&#8230;which basically reverts our clean urls into, well&#8230; less clean ones.</p> <p>So if you want to deploy to Windows Server 2003 &amp; IIS 6, you&#8217;re out of luck.&nbsp; Well, mostly&#8230;</p> <h2>URL Rewriting to the Rescue</h2> <p>We can leverage an ISAPI filter to rewrite URLs which will allow us to have the nice URLs while still on IIS 6.&nbsp; There are 2 major products that do this for IIS:</p> <ul> <li><a href="http://www.isapirewrite.com/" target="_blank">ISAPI Rewrite</a> ($99)<li><a href="http://cheeso.members.winisp.net/IIRF.aspx" target="_blank">Ionic&#8217;s ISAPI Rewrite Filter</a> (Free)</li></ul> <p>ISAPI Rewrite is the more mature of the two, however it&#8217;s not free.&nbsp; They do provide a free version, but it doesn&#8217;t support regular expressions, so it&#8217;s pretty useless.</p> <p>Jeff Atwood has <a href="http://www.codinghorror.com/blog/archives/000797.html" target="_blank">a nice write-up of these two utilities</a>.&nbsp; In it he notes that the syntax for Ionic&#8217;s ISAPI Rewrite is a little stranger and doesn&#8217;t support the regex that we&#8217;re all used to (since it uses a C regex library, not a .NET one).</p> <p>I decided to choose Ionic&#8217;s because it was free, however there was a lack of information on how to structure URLs, and it required a lot of trial and error to get it working.&nbsp; Luckily they have an automatic logging facility that tells you how the rules are matching up.</p> <p>For ASP.NET MVC, I needed to cover these cases:</p> <ul> <li><strong>A request for / should be redirected to /home</strong><br><em>This isn&#8217;t really required, as .NET can do this for me, however I wanted to ensure that all entry points are at the same URL to avoid Page Rank issues.&nbsp; (See the same Atwood post for information on how important this is)</em><li><strong>A request for /something should be rewritten to /something.mvc<br></strong><em>That is, the user will request it without an extension, but the filter will rewrite it without the user&#8217;s address bar ever changing.</em><li><strong>A request for /something/index should be rewritten to /something.mvc/index<br></strong><em>Just making sure that URLs with actions get the extension only on the first part</em><li><strong>The content directory that contains our javascript, CSS, and images should be excluded from the above rule<br></strong><em>Otherwise we&#8217;d have /content.mvc/styles.css which would be interpreted as a controller, rather than a direct file request.</em></li></ul> <p>I found <a href="http://biasecurities.com/blog/2008/how-to-enable-pretty-urls-with-asp-net-mvc-and-iis6/" target="_blank">a good resource that outlined how to do this with ISAPI Rewrite</a>, however the rules were quite different with Ionic&#8217;s.</p> <p>Here are my rules for Ionic&#8217;s ISAPI Rewrite that works for ASP.NET MVC:</p></p>
 
-<div><figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
-</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>&lt;strong># empty URL gets mapped to home controller &lt;br>RewriteRule&nbsp; ^/$&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; /home [R] # map controller parts of urls to .mvc, ignoring the content directory&lt;br>RewriteRule&nbsp; ^(?!/Content)(/[A-Za-z0-9_-]+)(/.*)?$&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; $1.mvc$2&nbsp; [I]&lt;/strong></div></code></pre></td></tr></table></div></figure></div>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;strong># empty URL gets mapped to home controller &lt;br>RewriteRule&nbsp; ^/$&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; /home [R] # map controller parts of urls to .mvc, ignoring the content directory&lt;br>RewriteRule&nbsp; ^(?!/Content)(/[A-Za-z0-9_-]+)(/.*)?$&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; $1.mvc$2&nbsp; [I]&lt;/strong></span></code></pre></td></tr></table></div></figure>
 
 
 <p>It turns out that I only need 2 rules to satisfy the above requirements.&nbsp; The first rule forces the browser to redirect, which will aid in making sure that I <a href="http://www.hanselman.com/blog/UsingISAPIRewriteToCanonicalizeASPNETURLsAndRemoveDefaultaspx.aspx" target="_blank">only have 1 entry point to my website</a>.</p>
@@ -380,30 +500,36 @@ on 1 of the database schema, so it could safely skip the script.&nbsp; This is d
 <p>Hard coding a route in 1 single location will prevent you from doing this.&nbsp; Did I mention route testing is important?</p>
 
 </div>
-  <footer>
-    <a rel="full-article" href="/2008/05/using-asp-net-mvc-on-iis-6-without-the-mvc-extension/">Read on &rarr;</a>
-  </footer>
+  
+  
 
 
-  </article>
-
-
-  <article>
-    
+    </article>
+  
+  
+    <article>
+      
   <header>
     
       <h1 class="entry-title"><a href="/2008/05/houston-alt-net-geek-dinner-next-tuesday/">Houston ALT.NET Geek Dinner - Next Tuesday</a></h1>
     
     
       <p class="meta">
+        
 
 
 
 
-<time datetime="2008-05-21 00:00:00 -0500" pubdate  updated >May 21<span>st</span>, 2008</time>
 
 
-</p>
+
+
+  
+
+
+<time datetime="2008-05-21T00:00:00-05:00" pubdate data-updated="true">May 21<span>st</span>, 2008</time>
+        
+      </p>
     
   </header>
 
@@ -413,30 +539,36 @@ on 1 of the database schema, so it could safely skip the script.&nbsp; This is d
 
 <p> <table cellspacing="0" cellpadding="4" width="400" border="1"> <tbody> <tr> <td valign="top" width="200"><strong>When: </strong></td> <td valign="top" width="200">5/27/2008 @ 7:00 PM&nbsp; (That&#8217;s next Tuesday)</td></tr> <tr> <td valign="top" width="200"><strong>Where:</strong></td> <td valign="top" width="200"> <p>Star Pizza<br>2111 Norfolk<br>Houston, TX 77098 <p><a href="http://maps.google.com/maps?f=q&amp;hl=en&amp;geocode=&amp;q=2111+Norfolk,+Houston&amp;sll=37.0625,-95.677068&amp;sspn=44.658568,75.673828&amp;ie=UTF8&amp;z=16&amp;iwloc=addr" target="_blank">(google map)</a></p></td></tr></tbody></table> <p>We&#8217;re not really sure how many are going to attend, so please leave a comment if you plan on joining us.&nbsp; I&#8217;d like to notify the restaurant if we&#8217;re expecting more than 20 to show up. <p>Hope to see you there!</p></p>
 </div>
-  <footer>
-    <a rel="full-article" href="/2008/05/houston-alt-net-geek-dinner-next-tuesday/">Read on &rarr;</a>
-  </footer>
+  
+  
 
 
-  </article>
-
-
-  <article>
-    
+    </article>
+  
+  
+    <article>
+      
   <header>
     
       <h1 class="entry-title"><a href="/2008/05/austin-code-camp-rocked-and-im-tired/">Austin Code Camp Rocked! (and I&#8217;m Tired)</a></h1>
     
     
       <p class="meta">
+        
 
 
 
 
-<time datetime="2008-05-18 00:00:00 -0500" pubdate  updated >May 18<span>th</span>, 2008</time>
 
 
-</p>
+
+
+  
+
+
+<time datetime="2008-05-18T00:00:00-05:00" pubdate data-updated="true">May 18<span>th</span>, 2008</time>
+        
+      </p>
     
   </header>
 
@@ -498,30 +630,36 @@ on 1 of the database schema, so it could safely skip the script.&nbsp; This is d
 <p>&nbsp;</p>
 
 </div>
-  <footer>
-    <a rel="full-article" href="/2008/05/austin-code-camp-rocked-and-im-tired/">Read on &rarr;</a>
-  </footer>
+  
+  
 
 
-  </article>
-
-
-  <article>
-    
+    </article>
+  
+  
+    <article>
+      
   <header>
     
       <h1 class="entry-title"><a href="/2008/05/speaking-at-austin-code-camp-this-saturday/">Speaking at Austin Code Camp This Saturday</a></h1>
     
     
       <p class="meta">
+        
 
 
 
 
-<time datetime="2008-05-13 00:00:00 -0500" pubdate  updated >May 13<span>th</span>, 2008</time>
 
 
-</p>
+
+
+  
+
+
+<time datetime="2008-05-13T00:00:00-05:00" pubdate data-updated="true">May 13<span>th</span>, 2008</time>
+        
+      </p>
     
   </header>
 
@@ -531,30 +669,36 @@ on 1 of the database schema, so it could safely skip the script.&nbsp; This is d
 
 <p> <p>If you&#8217;re going to attend, be sure to hit up one of my talks:</p> <ul> <li>ReSharper-Fu</li> <li>Inversion of Control Quickstart</li> <li>Advanced CSS and Javascript</li> <li>Domain Driven Design w/ NHibernate</li></ul> <p>I&#8217;m sure that we&#8217;ll put together some sort of geek dinner to unwind afterwards.&nbsp; If you&#8217;re interested, drop me a line in the comments!</p></p>
 </div>
-  <footer>
-    <a rel="full-article" href="/2008/05/speaking-at-austin-code-camp-this-saturday/">Read on &rarr;</a>
-  </footer>
+  
+  
 
 
-  </article>
-
-
-  <article>
-    
+    </article>
+  
+  
+    <article>
+      
   <header>
     
       <h1 class="entry-title"><a href="/2008/05/screencast-test-driving-an-inventory-screen/">Screencast - Test Driving an Inventory Screen</a></h1>
     
     
       <p class="meta">
+        
 
 
 
 
-<time datetime="2008-05-13 00:00:00 -0500" pubdate  updated >May 13<span>th</span>, 2008</time>
 
 
-</p>
+
+
+  
+
+
+<time datetime="2008-05-13T00:00:00-05:00" pubdate data-updated="true">May 13<span>th</span>, 2008</time>
+        
+      </p>
     
   </header>
 
@@ -586,30 +730,36 @@ on 1 of the database schema, so it could safely skip the script.&nbsp; This is d
 <p><a href="http://www.flux88.com/uploads/TDDInventory.zip" target="_blank"><strong>File Attachment: TDDInventory.zip (139 KB)</strong></a></p>
 
 </div>
-  <footer>
-    <a rel="full-article" href="/2008/05/screencast-test-driving-an-inventory-screen/">Read on &rarr;</a>
-  </footer>
+  
+  
 
 
-  </article>
-
-
-  <article>
-    
+    </article>
+  
+  
+    <article>
+      
   <header>
     
       <h1 class="entry-title"><a href="/2008/05/cage-match-gantt-charts-vs-burndowns/">Cage Match: Gantt Charts vs. Burndowns</a></h1>
     
     
       <p class="meta">
+        
 
 
 
 
-<time datetime="2008-05-11 00:00:00 -0500" pubdate  updated >May 11<span>th</span>, 2008</time>
 
 
-</p>
+
+
+  
+
+
+<time datetime="2008-05-11T00:00:00-05:00" pubdate data-updated="true">May 11<span>th</span>, 2008</time>
+        
+      </p>
     
   </header>
 
@@ -744,30 +894,36 @@ on 1 of the database schema, so it could safely skip the script.&nbsp; This is d
 <ul> <li><a href="http://www.amazon.com/Agile-Project-Management-Microsoft-Professional/dp/073561993X" target="_blank">Agile Project Management with Scrum</a> by Ken Schwaber </li><li><a href="http://www.amazon.com/Agile-Estimating-Planning-Robert-Martin/dp/0131479415" target="_blank">Agile Estimating and Planning</a> by Mike Cohn </li> </ul>
 
 </div>
-  <footer>
-    <a rel="full-article" href="/2008/05/cage-match-gantt-charts-vs-burndowns/">Read on &rarr;</a>
-  </footer>
+  
+  
 
 
-  </article>
-
-
-  <article>
-    
+    </article>
+  
+  
+    <article>
+      
   <header>
     
       <h1 class="entry-title"><a href="/2008/05/asp-net-mvc-preview-2-update/">ASP.NET MVC Preview 2 Update</a></h1>
     
     
       <p class="meta">
+        
 
 
 
 
-<time datetime="2008-05-03 00:00:00 -0500" pubdate  updated >May 3<span>rd</span>, 2008</time>
 
 
-</p>
+
+
+  
+
+
+<time datetime="2008-05-03T00:00:00-05:00" pubdate data-updated="true">May 3<span>rd</span>, 2008</time>
+        
+      </p>
     
   </header>
 
@@ -808,45 +964,13 @@ on 1 of the database schema, so it could safely skip the script.&nbsp; This is d
 <p>Some people wonder how to do validation, since the existing ASP.NET Validators don&rsquo;t work with ASP.NET MVC.&nbsp; I ran across this, where Steven Sanderson shows how to do <a href="http://blog.codeville.net/2008/04/30/model-based-client-side-validation-for-aspnet-mvc/" target="_blank">Model-based Client-side Validation</a> in ASP.NET MVC using Castle Validator.&nbsp; There&rsquo;s even a 6&ndash;minute screencast!&nbsp; Keep that kind of stuff coming Steve!&nbsp;</p>
 
 </div>
-  <footer>
-    <a rel="full-article" href="/2008/05/asp-net-mvc-preview-2-update/">Read on &rarr;</a>
-  </footer>
+  
+  
 
 
-  </article>
-
-
-  <article>
-    
-  <header>
-    
-      <h1 class="entry-title"><a href="/2008/05/im-an-insider/">I&#8217;m an Insider</a></h1>
-    
-    
-      <p class="meta">
-
-
-
-
-<time datetime="2008-05-02 00:00:00 -0500" pubdate  updated >May 2<span>nd</span>, 2008</time>
-
-
-</p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Quick update:&nbsp; I&#8217;ve been invited to join ASP Insiders!&nbsp; I&#8217;m proud to be part of a select group of ASP.NET professionals who reach out to the community via forums, blogs, conferences, etc and are generally recognized experts in ASP.NET.<br><br><p></p><img src="http://flux88.com/content/binary/ASPInsider-LOGO-big.gif" border="0"><br><br>Some of the benefits of being an ASP Insider is to get in on some private discussion about design, new features, etc.&nbsp; While I cannot publish any of this on my blog, I will be able to provide feedback in some areas (such as ASP.NET MVC).<br><br>Now, to go learn the secret handshake..<br></p>
-</div>
-  <footer>
-    <a rel="full-article" href="/2008/05/im-an-insider/">Read on &rarr;</a>
-  </footer>
-
-
-  </article>
-
-<nav role="pagination">
-  <div>
+    </article>
+  
+  <div class="pagination">
     
       <a class="prev" href="/blog/page/16/">&larr; Older</a>
     
@@ -855,20 +979,8 @@ on 1 of the database schema, so it could safely skip the script.&nbsp; This is d
     <a class="next" href="/blog/page/14/">Newer &rarr;</a>
     
   </div>
-</nav>
-
-<script type="text/javascript">
-    var disqus_shortname = 'subdigital';
-    (function () {
-      var s = document.createElement('script'); s.async = true;
-      s.type = 'text/javascript';
-      s.src = 'http://' + disqus_shortname + '.disqus.com/count.js';
-      (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
-    }());
-</script>
-
 </div>
-<aside role=sidebar>
+<aside class="sidebar">
   
     <section>
   <h1>Who am I?</h1>
@@ -877,6 +989,10 @@ on 1 of the database schema, so it could safely skip the script.&nbsp; This is d
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/2012/07/serving-assets-from-s3-on-heroku/">Serving Assets from S3 on Heroku</a>
+      </li>
     
       <li class="post">
         <a href="/2012/02/hello/">Hello, NSScreencast</a>
@@ -894,10 +1010,6 @@ on 1 of the database schema, so it could safely skip the script.&nbsp; This is d
         <a href="/2011/12/formatting-json-from-terminal/">Formatting JSON From Terminal</a>
       </li>
     
-      <li class="post">
-        <a href="/2011/10/houston-tech-fest-2011-recap/">Houston Tech Fest 2011 Recap</a>
-      </li>
-    
   </ul>
 </section>
 
@@ -913,16 +1025,19 @@ on 1 of the database schema, so it could safely skip the script.&nbsp; This is d
   </script>
   <script src="/javascripts/twitter.js" type="text/javascript"> </script>
   
-    <a href="http://twitter.com/subdigital" class="twitter-follow-button" data-width="208px" data-show-count="false">Follow @subdigital</a>
+    <a href="http://twitter.com/subdigital" class="twitter-follow-button" data-show-count="false">Follow @subdigital</a>
   
 </section>
 
 
 <section>
   <h1>On Delicious</h1>
-  <script type="text/javascript" src="http://feeds.delicious.com/v2/js/subdigital?title=&count=3&sort=date&extended"></script>
+  <div id="delicious"></div>
+  <script type="text/javascript" src="http://feeds.delicious.com/v2/json/subdigital?count=3&amp;sort=date&amp;callback=renderDeliciousLinks"></script>
   <p><a href="http://delicious.com/subdigital">My Delicious Bookmarks &raquo;</a></p>
 </section>
+
+
 
 
 
@@ -931,7 +1046,7 @@ on 1 of the database schema, so it could safely skip the script.&nbsp; This is d
 
     </div>
   </div>
-  <footer>
+  <footer role="contentinfo">
 <a style="display:block; float: right" title="Real Time Analytics" href="http://getclicky.com/66470389"><img alt="Real Time Analytics" src="//static.getclicky.com/media/links/badge.gif" border="0" /></a>
 <script src="//static.getclicky.com/js" type="text/javascript"></script>
 <script type="text/javascript">try{ clicky.init(66470389); }catch(e){}</script>
@@ -958,5 +1073,40 @@ on 1 of the database schema, so it could safely skip the script.&nbsp; This is d
 </p>
 
 </footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'subdigital';
+      
+        
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
 </body>
 </html>

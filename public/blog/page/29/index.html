@@ -5,11 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>
-    
-    Fickle Bits
-  </title>
+  <title>Fickle Bits</title>
   <meta name="author" content="Ben Scheirman">
+
+  
+  <meta name="description" content="I wrapped up my project at a client today, so I&rsquo;m on to a new one on Monday. The project consisted mainly of SharePoint, but I did get to do &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -18,14 +18,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-
-  <link rel="canonical" href="http://benscheirman.com/blog/page/29/index.html"/>
-  <link href="/favicon.png" rel="shortcut icon" />
+  <link rel="canonical" href="http://benscheirman.com/blog/page/29/">
+  <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
-  <script src="http://s3.amazonaws.com/ender-js/jeesh.min.js"></script>
+  <script src="/javascripts/ender.js"></script>
   <script src="/javascripts/octopress.js" type="text/javascript"></script>
-  <link href="http://feeds.feedburner.com/ficklebits" rel="alternate" title="Fickle Bits" type="application/atom+xml"/>
+  <link href="http://feeds.feedburner.com/ficklebits" rel="alternate" title="Fickle Bits" type="application/atom+xml">
+  <!--Fonts from Google's Web font directory at http://google.com/webfonts -->
+<link href='http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic' rel='stylesheet' type='text/css'>
+
   
   <script type="text/javascript">
     var _gaq = _gaq || [];
@@ -40,36 +43,10 @@
   </script>
 
 
-  
-  <script type="text/javascript">
-    (function() {
-      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
-      script.src = 'https://apis.google.com/js/plusone.js';
-      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
-    })();
-  </script>
-
-
-  
-  <script type="text/javascript">
-    (function(){
-      var twitterWidgets = document.createElement('script');
-      twitterWidgets.type = 'text/javascript';
-      twitterWidgets.async = true;
-      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
-      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
-    })();
-  </script>
-
-
-  <!--Fonts from Google's Web font directory at http://google.com/webfonts -->
-<link href='http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic' rel='stylesheet' type='text/css'>
-<link href='http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic' rel='stylesheet' type='text/css'>
-
 </head>
 
-<body  >
-  <header><hgroup>
+<body   >
+  <header role="banner"><hgroup>
   <h1><a href="/">Fickle Bits</a></h1>
   
     <h2>You're doing it wrong.</h2>
@@ -77,24 +54,26 @@
 </hgroup>
 
 </header>
-  <nav role=navigation><ul role=subscription data-subscription="rss">
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
   <li><a href="http://feeds.feedburner.com/ficklebits" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
   
 </ul>
+  
 <form action="http://google.com/search" method="get">
-  <fieldset role="site-search">
+  <fieldset role="search">
     <input type="hidden" name="q" value="site:benscheirman.com" />
     <input class="search" type="text" name="q" results="0" placeholder="Search"/>
   </fieldset>
 </form>
+  
 <ul role=main-navigation>
   <li><a href="/">Blog</a></li>
   <li><a href="/about-me">About Me</a></li>
   <li><a href="/speaking">Speaking</a></li>
   <li><a href="/contact">Contact</a></li>
-  <li><a href="http://giggletouch.com">Giggle Touch for
-    iOS</a></li>
-  <li><a href="http://appkickstand.com">AppKickstand</a></li>
+  <li><a href="/projects">Projects</a></li>
+  <!-- <li><a href="http://giggletouch.com">Giggle Touch</a></li> -->
+  <!-- <li><a href="http://appkickstand.com">AppKickstand</a></li> -->
   <li><a href="/blog/archives">Archives</a></li>
 
 </ul>
@@ -103,25 +82,87 @@
   <div id="main">
     <div id="content">
       <div class="blog-index">
-
-
-
-  <article>
+  
+  
+  
+    <article>
+      
+  <header>
     
+      <h1 class="entry-title"><a href="/2007/02/on-to-a-new-client/">On to a New Client</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2007-02-28T00:00:00-06:00" pubdate data-updated="true">Feb 28<span>th</span>, 2007</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I wrapped up my project at a client today, so I&rsquo;m on to a new one on Monday.</p>
+
+
+<p>The project consisted mainly of SharePoint, but I did get to do some interesting development aside from that.&nbsp; I worked on a Stock Quote web service that would gather information from pluggable sources.&nbsp; They wanted to pay for a dedicated source, however politics and paperwork were such a barrier I ended up just scraping Google finance.&nbsp; It won&rsquo;t last forever, but it&rsquo;s free and avoids the paperwork.</p>
+
+
+<p>We wrote a few custom SharePoint Web Parts, and I found out first hand what a pain in the ass it is to deploy these things.&nbsp; The deployment project outputs a CAB file.&nbsp; This CAB file needs to be copied onto the server, and you have to use the STSADM tool to install it into the portal server.&nbsp; This means you need Remote Desktop access just to deploy to&nbsp;a server!&nbsp; Our production servers are load-balanced, so this means you have to do it twice.&nbsp; To save us a lot of time and headaches I wrote a Windows service that would monitor a CAB file for changes using a FileSystemWatcher, when it detected a change, it would&hellip;</p>
+
+
+<ul><li>Extract the CAB to get the dlls</li><li>Copy the dlls to the target bin folder</li><li>Optionally sign the assembly so it can be installed into the GAC</li><li>Run STSADM to remove the old CAB file from the portal server</li><li>Run STSADM to get the new CAB file in the portal&nbsp;server</li><li>Reset IIS</li></ul>
+
+
+<p>This thing worked like a charm!&nbsp; We could kick off a build, run a batch file the copy the new CAB over, and the thing would install itself.&nbsp; I wish I could release the code here, but I wrote it at a client site, so it belongs to them.</p>
+
+
+<p>We also managed to contort a SharePoint Portal site into something actually pleasing to look at, and ripped out most of SharePoints crappy markup.&nbsp; Why in the world does SharePoint output so many damn tables?</p>
+
+
+<p>To be clear, this is all with SharePoint 2003, so I imagine MOSS 2007 is loads better, but I haven&rsquo;t yet worked on it.&nbsp; Anyway, my next project doesn&rsquo;t involve SharePoint, so I&rsquo;m happy.</p>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
   <header>
     
       <h1 class="entry-title"><a href="/2007/02/javascript-memory-leaks/">JavaScript Memory Leaks</a></h1>
     
     
       <p class="meta">
+        
 
 
 
 
-<time datetime="2007-02-28 00:00:00 -0600" pubdate  updated >Feb 28<span>th</span>, 2007</time>
 
 
-</p>
+
+
+  
+
+
+<time datetime="2007-02-28T00:00:00-06:00" pubdate data-updated="true">Feb 28<span>th</span>, 2007</time>
+        
+      </p>
     
   </header>
 
@@ -134,30 +175,36 @@
 
 <p>Take a look at this <a href="http://www.codeproject.com/jscript/leakpatterns.asp" target="_blank" title ="Code Project Article">incredible article onjavascript memory leakage</a> up at CodeProject posted by Volkan Ocelik to find out the different leakage patterns and how to avoid them.In order to fully understand how to avoid memory leakage, it is important that you understant closures.The best explanation I have found is <a href="http://jibbering.com/faq/faq_notes/closures.html" target="_blank" title ="jibbering.com">here</a>.So make sure you think when writing JavaScript so you don&#8217;t hurt yourself.</p>
 </div>
-  <footer>
-    <a rel="full-article" href="/2007/02/javascript-memory-leaks/">Read on &rarr;</a>
-  </footer>
+  
+  
 
 
-  </article>
-
-
-  <article>
-    
+    </article>
+  
+  
+    <article>
+      
   <header>
     
       <h1 class="entry-title"><a href="/2007/01/mcms-installation-woes/">MCMS Installation Woes</a></h1>
     
     
       <p class="meta">
+        
 
 
 
 
-<time datetime="2007-01-31 00:00:00 -0600" pubdate  updated >Jan 31<span>st</span>, 2007</time>
 
 
-</p>
+
+
+  
+
+
+<time datetime="2007-01-31T00:00:00-06:00" pubdate data-updated="true">Jan 31<span>st</span>, 2007</time>
+        
+      </p>
     
   </header>
 
@@ -189,30 +236,36 @@
 <p><font face="Arial" size="2"><span style="FONT-SIZE: 10pt; FONT-FAMILY: Arial">That was a waste of a day.&nbsp; I could have gotten much more accomplished if this installation had been easier.</span></font></p>
 
 </div>
-  <footer>
-    <a rel="full-article" href="/2007/01/mcms-installation-woes/">Read on &rarr;</a>
-  </footer>
+  
+  
 
 
-  </article>
-
-
-  <article>
-    
+    </article>
+  
+  
+    <article>
+      
   <header>
     
       <h1 class="entry-title"><a href="/2007/01/nhibernate-in-action/">NHibernate in Action</a></h1>
     
     
       <p class="meta">
+        
 
 
 
 
-<time datetime="2007-01-28 00:00:00 -0600" pubdate  updated >Jan 28<span>th</span>, 2007</time>
 
 
-</p>
+
+
+  
+
+
+<time datetime="2007-01-28T00:00:00-06:00" pubdate data-updated="true">Jan 28<span>th</span>, 2007</time>
+        
+      </p>
     
   </header>
 
@@ -226,30 +279,36 @@
 <p><a title="blog" href="http://dotnet.org.za/kuate" target="_blank">Pierre Henri Kuaté</a>&nbsp;should do an excellent job with the book, especially knowing that Bauer and King are behind him!&nbsp; (If you don&rsquo;t already know, they wrote the original <a title="amazon" href="http://www.amazon.com/Hibernate-Action-Christian-Bauer/dp/193239415X/sr=1-3/qid=1169968944/ref=pd_bbs_sr_3/103-9117190-2218201?ie=UTF8&amp;s=books" target="_blank">Hibernate in Action</a>&nbsp;&mdash; which is a must-have)</p>
 
 </div>
-  <footer>
-    <a rel="full-article" href="/2007/01/nhibernate-in-action/">Read on &rarr;</a>
-  </footer>
+  
+  
 
 
-  </article>
-
-
-  <article>
-    
+    </article>
+  
+  
+    <article>
+      
   <header>
     
       <h1 class="entry-title"><a href="/2007/01/my-presentation-on-continuous-integration/">My Presentation on Continuous Integration</a></h1>
     
     
       <p class="meta">
+        
 
 
 
 
-<time datetime="2007-01-26 00:00:00 -0600" pubdate  updated >Jan 26<span>th</span>, 2007</time>
 
 
-</p>
+
+
+  
+
+
+<time datetime="2007-01-26T00:00:00-06:00" pubdate data-updated="true">Jan 26<span>th</span>, 2007</time>
+        
+      </p>
     
   </header>
 
@@ -287,30 +346,36 @@
 <ul><li><a href="http://jamesshore.com/Blog/Continuous-Integration-on-a-Dollar-a-Day.html" target="_blank">James Shore &ndash; Continuous Integration on a Dollar a Day</a></li><li><a href="http://martinfowler.com/articles/continuousIntegration.html" target="_blank">Martin Fowler &ndash; Continuous Integration</a></li><li><a href="http://www.amazon.com/Pragmatic-Project-Automation-Deploy-Monitor/dp/0974514039" target="_blank">Pragmatic Project Automation by Mike Clark</a>&nbsp;</li><li><a href="http://www.amazon.com/Expert-Delivery-Using-CruiseControl-NET-Experts/dp/1590594851" target="_blank">Expert .NET Delivery with CruiseControl and NAnt by Marc Holmes</a></li></ul>
 
 </div>
-  <footer>
-    <a rel="full-article" href="/2007/01/my-presentation-on-continuous-integration/">Read on &rarr;</a>
-  </footer>
+  
+  
 
 
-  </article>
-
-
-  <article>
-    
+    </article>
+  
+  
+    <article>
+      
   <header>
     
       <h1 class="entry-title"><a href="/2007/01/my-wedding/">My Wedding</a></h1>
     
     
       <p class="meta">
+        
 
 
 
 
-<time datetime="2007-01-22 00:00:00 -0600" pubdate  updated >Jan 22<span>nd</span>, 2007</time>
 
 
-</p>
+
+
+  
+
+
+<time datetime="2007-01-22T00:00:00-06:00" pubdate data-updated="true">Jan 22<span>nd</span>, 2007</time>
+        
+      </p>
     
   </header>
 
@@ -363,30 +428,36 @@
 <p>&nbsp;</p>
 
 </div>
-  <footer>
-    <a rel="full-article" href="/2007/01/my-wedding/">Read on &rarr;</a>
-  </footer>
+  
+  
 
 
-  </article>
-
-
-  <article>
-    
+    </article>
+  
+  
+    <article>
+      
   <header>
     
       <h1 class="entry-title"><a href="/2007/01/database-migrations-for-net/">Database Migrations for .NET</a></h1>
     
     
       <p class="meta">
+        
 
 
 
 
-<time datetime="2007-01-20 00:00:00 -0600" pubdate  updated >Jan 20<span>th</span>, 2007</time>
 
 
-</p>
+
+
+  
+
+
+<time datetime="2007-01-20T00:00:00-06:00" pubdate data-updated="true">Jan 20<span>th</span>, 2007</time>
+        
+      </p>
     
   </header>
 
@@ -442,90 +513,108 @@
 <p>What does your team do to manage database changes and enable versioning?</p>
 
 </div>
-  <footer>
-    <a rel="full-article" href="/2007/01/database-migrations-for-net/">Read on &rarr;</a>
-  </footer>
+  
+  
 
 
-  </article>
-
-
-  <article>
-    
+    </article>
+  
+  
+    <article>
+      
   <header>
     
       <h1 class="entry-title"><a href="/2007/01/solid-gold-css-resource/">Solid Gold CSS Resource</a></h1>
     
     
       <p class="meta">
+        
 
 
 
 
-<time datetime="2007-01-19 00:00:00 -0600" pubdate  updated >Jan 19<span>th</span>, 2007</time>
 
 
-</p>
+
+
+  
+
+
+<time datetime="2007-01-19T00:00:00-06:00" pubdate data-updated="true">Jan 19<span>th</span>, 2007</time>
+        
+      </p>
     
   </header>
 
 
   <div class="entry-content"><p>I came across this site today, which boats <a href="http://www.smashingmagazine.com/2007/01/19/53-css-techniques-you-couldnt-live-without/"><b>53 CSS Techniques you can&#8217;t live without</b></a>.<br><br>Normally I don&#8217;t like to blog just links, but this one is definitely worth it.&nbsp; It covers most of the major techniques, both simple and advanced for styling web pages.<br><p></p></p>
 </div>
-  <footer>
-    <a rel="full-article" href="/2007/01/solid-gold-css-resource/">Read on &rarr;</a>
-  </footer>
+  
+  
 
 
-  </article>
-
-
-  <article>
-    
+    </article>
+  
+  
+    <article>
+      
   <header>
     
       <h1 class="entry-title"><a href="/2007/01/free-book-on-domain-driven-design/">Free Book on Domain Driven Design</a></h1>
     
     
       <p class="meta">
+        
 
 
 
 
-<time datetime="2007-01-19 00:00:00 -0600" pubdate  updated >Jan 19<span>th</span>, 2007</time>
 
 
-</p>
+
+
+  
+
+
+<time datetime="2007-01-19T00:00:00-06:00" pubdate data-updated="true">Jan 19<span>th</span>, 2007</time>
+        
+      </p>
     
   </header>
 
 
   <div class="entry-content"><p>InfoQ has published a small book on DDD called <u><b>Domain Driven Design Quickly</b></u>.&nbsp; They&#8217;re giving away the PDF for free!&nbsp; The print version is only $22, so I&#8217;ll probably buy it if I like the PDF version.<br><br>Check it out:<br>http://www.infoq.com/minibooks/domain-driven-design-quickly<br><p></p></p>
 </div>
-  <footer>
-    <a rel="full-article" href="/2007/01/free-book-on-domain-driven-design/">Read on &rarr;</a>
-  </footer>
+  
+  
 
 
-  </article>
-
-
-  <article>
-    
+    </article>
+  
+  
+    <article>
+      
   <header>
     
       <h1 class="entry-title"><a href="/2007/01/eliga-a-new-development-methodology/">Eliga - a New Development Methodology</a></h1>
     
     
       <p class="meta">
+        
 
 
 
 
-<time datetime="2007-01-18 00:00:00 -0600" pubdate  updated >Jan 18<span>th</span>, 2007</time>
 
 
-</p>
+
+
+  
+
+
+<time datetime="2007-01-18T00:00:00-06:00" pubdate data-updated="true">Jan 18<span>th</span>, 2007</time>
+        
+      </p>
     
   </header>
 
@@ -545,61 +634,13 @@
 <p><em>Forget users, they will only slow me down!&nbsp; Don&rsquo;t disturb me when I&rsquo;m coding you peons!&nbsp; I&rsquo;ll hear your impressions when I&rsquo;m finished!&nbsp; I can&rsquo;t be bothered with workflow changes!&nbsp; They&rsquo;re already coded and set in stone!</em></p>
 
 </div>
-  <footer>
-    <a rel="full-article" href="/2007/01/eliga-a-new-development-methodology/">Read on &rarr;</a>
-  </footer>
+  
+  
 
 
-  </article>
-
-
-  <article>
-    
-  <header>
-    
-      <h1 class="entry-title"><a href="/2007/01/tag-im-it-5-things-you-didnt-know-about-me/">Tag I&#8217;m It! - 5 Things You Didn&#8217;t Know About Me</a></h1>
-    
-    
-      <p class="meta">
-
-
-
-
-<time datetime="2007-01-09 00:00:00 -0600" pubdate  updated >Jan 9<span>th</span>, 2007</time>
-
-
-</p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Well the internet sure is a tiny place. I was tagged by <a href="http://www.jpboodhoo.com/blog" target="_blank">JP Boodhoo</a> and <a href="http://blogs.sarkhouston.com/amurrell" target="_blank">Aaron Murrell</a>. </p>
-
-
-<p>Here it goes, 5 things that you probably didn&#8217;t know about me before: </p>
-
-
-<ul><li>I was born on a farm in Oregon.&nbsp; I still remember my favorite cow (Jesse) from our farm.&nbsp; One day he was gone.&nbsp; Where did he go?</li><li>I used to be insane on rollerblades.&nbsp; My friends and I would jump pretty much anything.&nbsp; It&rsquo;s actually amazing that I didn&rsquo;t break any bones jumping over staircases and stuff, especially since I am so accident prone.</li><li>I got my first guitar when I was 7, however I didn&rsquo;t really pick up playing until 12 or so.&nbsp; I still play, but not as often as I would like to.</li><li>I first got into computer programming watching my dad write a hangman game from scratch.&nbsp; I picked up QBASIC when I was 13 or 14, and I would write little screen savers using the primitive graphics drawing routines it had.&nbsp; My pinnacle QBASIC program was a hoax that my friend and I pulled on his younger brother.&nbsp; We called it &ldquo;DelBug&rdquo; and it was supposed to remove bugs from programs, such as Doom 2, which just-so-happened to be causing him troubles.&nbsp; It went through a series of fake menus and ended up pretending to format his hard drive.&nbsp; It was great!&nbsp; He almost wet himself when it started flashing and rebooting in a loop.</li><li>And lastly, I just got married!&nbsp; (Pictures coming soon).&nbsp; Silvia and I had a beautiful ceremony and lots of close friends and family were present.</li></ul>
-
-
-<p>And I&rsquo;ll tag:</p>
-
-
-<ul><li><a href="http://agiledeveloper.com/blog/" target="_blank">Venkat Subramaniam</a></li><li><a href="http://www.sheysrebellion.net/blog/" target="_blank">Shey Sewani</a></li><li><a href="http://blogs.giffordconsulting.com/" target="_blank">Tim Gifford</a></li><li><a href="http://blog.benday.com/default.aspx" target="_blank">Ben Day</a></li><li>and my sweetheart <a href="http://silvia.flux88.com/" target="_blank">Silvia</a>&nbsp;</li></ul>
-
-
-<p>&nbsp;</p>
-
-</div>
-  <footer>
-    <a rel="full-article" href="/2007/01/tag-im-it-5-things-you-didnt-know-about-me/">Read on &rarr;</a>
-  </footer>
-
-
-  </article>
-
-<nav role="pagination">
-  <div>
+    </article>
+  
+  <div class="pagination">
     
       <a class="prev" href="/blog/page/30/">&larr; Older</a>
     
@@ -608,20 +649,8 @@
     <a class="next" href="/blog/page/28/">Newer &rarr;</a>
     
   </div>
-</nav>
-
-<script type="text/javascript">
-    var disqus_shortname = 'subdigital';
-    (function () {
-      var s = document.createElement('script'); s.async = true;
-      s.type = 'text/javascript';
-      s.src = 'http://' + disqus_shortname + '.disqus.com/count.js';
-      (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
-    }());
-</script>
-
 </div>
-<aside role=sidebar>
+<aside class="sidebar">
   
     <section>
   <h1>Who am I?</h1>
@@ -630,6 +659,10 @@
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/2012/07/serving-assets-from-s3-on-heroku/">Serving Assets from S3 on Heroku</a>
+      </li>
     
       <li class="post">
         <a href="/2012/02/hello/">Hello, NSScreencast</a>
@@ -647,10 +680,6 @@
         <a href="/2011/12/formatting-json-from-terminal/">Formatting JSON From Terminal</a>
       </li>
     
-      <li class="post">
-        <a href="/2011/10/houston-tech-fest-2011-recap/">Houston Tech Fest 2011 Recap</a>
-      </li>
-    
   </ul>
 </section>
 
@@ -666,16 +695,19 @@
   </script>
   <script src="/javascripts/twitter.js" type="text/javascript"> </script>
   
-    <a href="http://twitter.com/subdigital" class="twitter-follow-button" data-width="208px" data-show-count="false">Follow @subdigital</a>
+    <a href="http://twitter.com/subdigital" class="twitter-follow-button" data-show-count="false">Follow @subdigital</a>
   
 </section>
 
 
 <section>
   <h1>On Delicious</h1>
-  <script type="text/javascript" src="http://feeds.delicious.com/v2/js/subdigital?title=&count=3&sort=date&extended"></script>
+  <div id="delicious"></div>
+  <script type="text/javascript" src="http://feeds.delicious.com/v2/json/subdigital?count=3&amp;sort=date&amp;callback=renderDeliciousLinks"></script>
   <p><a href="http://delicious.com/subdigital">My Delicious Bookmarks &raquo;</a></p>
 </section>
+
+
 
 
 
@@ -684,7 +716,7 @@
 
     </div>
   </div>
-  <footer>
+  <footer role="contentinfo">
 <a style="display:block; float: right" title="Real Time Analytics" href="http://getclicky.com/66470389"><img alt="Real Time Analytics" src="//static.getclicky.com/media/links/badge.gif" border="0" /></a>
 <script src="//static.getclicky.com/js" type="text/javascript"></script>
 <script type="text/javascript">try{ clicky.init(66470389); }catch(e){}</script>
@@ -711,5 +743,40 @@
 </p>
 
 </footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'subdigital';
+      
+        
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
 </body>
 </html>

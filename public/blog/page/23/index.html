@@ -5,11 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>
-    
-    Fickle Bits
-  </title>
+  <title>Fickle Bits</title>
   <meta name="author" content="Ben Scheirman">
+
+  
+  <meta name="description" content="There&#8217;s no doubt that e kicks ass.&nbsp; On one of my computers, however I was having a problem using some of the bundles.&nbsp; Specifically &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -18,14 +18,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-
-  <link rel="canonical" href="http://benscheirman.com/blog/page/23/index.html"/>
-  <link href="/favicon.png" rel="shortcut icon" />
+  <link rel="canonical" href="http://benscheirman.com/blog/page/23/">
+  <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
-  <script src="http://s3.amazonaws.com/ender-js/jeesh.min.js"></script>
+  <script src="/javascripts/ender.js"></script>
   <script src="/javascripts/octopress.js" type="text/javascript"></script>
-  <link href="http://feeds.feedburner.com/ficklebits" rel="alternate" title="Fickle Bits" type="application/atom+xml"/>
+  <link href="http://feeds.feedburner.com/ficklebits" rel="alternate" title="Fickle Bits" type="application/atom+xml">
+  <!--Fonts from Google's Web font directory at http://google.com/webfonts -->
+<link href='http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic' rel='stylesheet' type='text/css'>
+
   
   <script type="text/javascript">
     var _gaq = _gaq || [];
@@ -40,36 +43,10 @@
   </script>
 
 
-  
-  <script type="text/javascript">
-    (function() {
-      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
-      script.src = 'https://apis.google.com/js/plusone.js';
-      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
-    })();
-  </script>
-
-
-  
-  <script type="text/javascript">
-    (function(){
-      var twitterWidgets = document.createElement('script');
-      twitterWidgets.type = 'text/javascript';
-      twitterWidgets.async = true;
-      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
-      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
-    })();
-  </script>
-
-
-  <!--Fonts from Google's Web font directory at http://google.com/webfonts -->
-<link href='http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic' rel='stylesheet' type='text/css'>
-<link href='http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic' rel='stylesheet' type='text/css'>
-
 </head>
 
-<body  >
-  <header><hgroup>
+<body   >
+  <header role="banner"><hgroup>
   <h1><a href="/">Fickle Bits</a></h1>
   
     <h2>You're doing it wrong.</h2>
@@ -77,24 +54,26 @@
 </hgroup>
 
 </header>
-  <nav role=navigation><ul role=subscription data-subscription="rss">
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
   <li><a href="http://feeds.feedburner.com/ficklebits" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
   
 </ul>
+  
 <form action="http://google.com/search" method="get">
-  <fieldset role="site-search">
+  <fieldset role="search">
     <input type="hidden" name="q" value="site:benscheirman.com" />
     <input class="search" type="text" name="q" results="0" placeholder="Search"/>
   </fieldset>
 </form>
+  
 <ul role=main-navigation>
   <li><a href="/">Blog</a></li>
   <li><a href="/about-me">About Me</a></li>
   <li><a href="/speaking">Speaking</a></li>
   <li><a href="/contact">Contact</a></li>
-  <li><a href="http://giggletouch.com">Giggle Touch for
-    iOS</a></li>
-  <li><a href="http://appkickstand.com">AppKickstand</a></li>
+  <li><a href="/projects">Projects</a></li>
+  <!-- <li><a href="http://giggletouch.com">Giggle Touch</a></li> -->
+  <!-- <li><a href="http://appkickstand.com">AppKickstand</a></li> -->
   <li><a href="/blog/archives">Archives</a></li>
 
 </ul>
@@ -103,55 +82,111 @@
   <div id="main">
     <div id="content">
       <div class="blog-index">
-
-
-
-  <article>
+  
+  
+  
+    <article>
+      
+  <header>
     
+      <h1 class="entry-title"><a href="/2007/08/e-text-editor-no-such-file-exists-ubygems/">E - Text Editor - No Such File Exists &#8211; Ubygems</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2007-08-23T00:00:00-05:00" pubdate data-updated="true">Aug 23<span>rd</span>, 2007</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>There&#8217;s no doubt that <a href="http://www.e-texteditor.com">e</a> kicks ass.&nbsp; On one of my computers, however I was having a problem using some of the bundles.&nbsp; Specifically some of the bundles utilize <a href="http://www.cygwin.com/">cygwin</a> to do their magic.<br><br>I was receiving this weird error, where ruby is complaining that it can&#8217;t locat a file named &#8220;ubygems&#8221;.&nbsp; Obviously, they are referring to rubygems, and the problem exists when you have a windows install of ruby and a cygwin install of ruby.<br><br>To fix it you need to reinstall ruby gems within cygwin.&nbsp; Download the <a href="http://rubyforge.org/frs/?group_id=126">latest version of rubygems</a> from rubyforge.&nbsp; Put the tarball in the c:\cygwin\home\USER folder, then open up your cygwin prompt and type:<br></p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ tar -x -f rubygems-0.9.4.tgz(this will change if you download a different version)&lt;br>$ cd rubygems-0.9.4&lt;br>$ unset RUBYOPT&lt;br>$ ruby setup.rb&lt;br>&lt;br></span></code></pre></td></tr></table></div></figure>
+
+
+<p>At this point rubygems should be installing and you should be good to go.&nbsp; Back to &#8220;e goodness&#8221;!<br></p>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
   <header>
     
       <h1 class="entry-title"><a href="/2007/08/sogeti-is-hiring/">Sogeti Is Hiring</a></h1>
     
     
       <p class="meta">
+        
 
 
 
 
-<time datetime="2007-08-22 00:00:00 -0500" pubdate  updated >Aug 22<span>nd</span>, 2007</time>
 
 
-</p>
+
+
+  
+
+
+<time datetime="2007-08-22T00:00:00-05:00" pubdate data-updated="true">Aug 22<span>nd</span>, 2007</time>
+        
+      </p>
     
   </header>
 
 
   <div class="entry-content"><p>My company, <a href="http://www.us.sogeti.com">Sogeti</a>, is always seeking out new candidates.&nbsp; If you&#8217;ve got experience or are just out of college, there is a place for you.<br><br>Currently we have an immediate need for someone to help out on a project.&nbsp; No development experience needed for this role.&nbsp; It would be a great way to get started in a BA, QA, or PM position.&nbsp;&nbsp; This position is in Houston, but I can always help pass the word to one of our other offices as well.<br><br>If you&#8217;re interested, or know of anyone who might be, please send me an email at ben.scheirman <em>AT</em> us.sogeti.com.<br><p></p></p>
 </div>
-  <footer>
-    <a rel="full-article" href="/2007/08/sogeti-is-hiring/">Read on &rarr;</a>
-  </footer>
+  
+  
 
 
-  </article>
-
-
-  <article>
-    
+    </article>
+  
+  
+    <article>
+      
   <header>
     
       <h1 class="entry-title"><a href="/2007/08/elegant-asp-net-caching/">Elegant ASP.NET Caching</a></h1>
     
     
       <p class="meta">
+        
 
 
 
 
-<time datetime="2007-08-16 00:00:00 -0500" pubdate  updated >Aug 16<span>th</span>, 2007</time>
 
 
-</p>
+
+
+  
+
+
+<time datetime="2007-08-16T00:00:00-05:00" pubdate data-updated="true">Aug 16<span>th</span>, 2007</time>
+        
+      </p>
     
   </header>
 
@@ -238,60 +273,72 @@
 <div class="bjtags">Tags:<a rel="tag" href="http://technorati.com/tag/ASP.NET">ASP.NET</a>, <a rel="tag" href="http://technorati.com/tag/Cache">Cache</a></div>
 
 </div>
-  <footer>
-    <a rel="full-article" href="/2007/08/elegant-asp-net-caching/">Read on &rarr;</a>
-  </footer>
+  
+  
 
 
-  </article>
-
-
-  <article>
-    
+    </article>
+  
+  
+    <article>
+      
   <header>
     
       <h1 class="entry-title"><a href="/2007/08/see-you-at-houston-tech-fest/">See You at Houston Tech Fest</a></h1>
     
     
       <p class="meta">
+        
 
 
 
 
-<time datetime="2007-08-15 00:00:00 -0500" pubdate  updated >Aug 15<span>th</span>, 2007</time>
 
 
-</p>
+
+
+  
+
+
+<time datetime="2007-08-15T00:00:00-05:00" pubdate data-updated="true">Aug 15<span>th</span>, 2007</time>
+        
+      </p>
     
   </header>
 
 
   <div class="entry-content"><p>If you&#8217;re going to <a href="http://houstontechfest.com">HoustonTechFest</a>, then be sure to check out my presentations:<br><ul><li>Advanced CSS and Javascript</li><li>ORM with NHibernate</li></ul>It&#8217;s all going down August 25th at the University of Houston.&nbsp; See you there!<br><p></p></p>
 </div>
-  <footer>
-    <a rel="full-article" href="/2007/08/see-you-at-houston-tech-fest/">Read on &rarr;</a>
-  </footer>
+  
+  
 
 
-  </article>
-
-
-  <article>
-    
+    </article>
+  
+  
+    <article>
+      
   <header>
     
       <h1 class="entry-title"><a href="/2007/08/dasblog-2-0-released/">dasBlog 2.0 Released!</a></h1>
     
     
       <p class="meta">
+        
 
 
 
 
-<time datetime="2007-08-15 00:00:00 -0500" pubdate  updated >Aug 15<span>th</span>, 2007</time>
 
 
-</p>
+
+
+  
+
+
+<time datetime="2007-08-15T00:00:00-05:00" pubdate data-updated="true">Aug 15<span>th</span>, 2007</time>
+        
+      </p>
     
   </header>
 
@@ -308,30 +355,36 @@
 <p>Check out the release notes to see all of the great new features.</p>
 
 </div>
-  <footer>
-    <a rel="full-article" href="/2007/08/dasblog-2-0-released/">Read on &rarr;</a>
-  </footer>
+  
+  
 
 
-  </article>
-
-
-  <article>
-    
+    </article>
+  
+  
+    <article>
+      
   <header>
     
       <h1 class="entry-title"><a href="/2007/08/blue-october-august-4th/">Blue October - August 4th</a></h1>
     
     
       <p class="meta">
+        
 
 
 
 
-<time datetime="2007-08-09 00:00:00 -0500" pubdate  updated >Aug 9<span>th</span>, 2007</time>
 
 
-</p>
+
+
+  
+
+
+<time datetime="2007-08-09T00:00:00-05:00" pubdate data-updated="true">Aug 9<span>th</span>, 2007</time>
+        
+      </p>
     
   </header>
 
@@ -372,30 +425,36 @@
 <p>Blue October always puts on such a great show.&nbsp; The band is full of energy and Justin’s vocals seem to never end.&nbsp; I don’t know how he does it… I was singing along all night and nearly lost my voice.&nbsp; I guess I can let go of my hopes of being a rock god <img src="http://www.flux88.com/uploads/smile1.gif">.&nbsp; Well, there’s always Guitar Hero.</p>
 
 </div>
-  <footer>
-    <a rel="full-article" href="/2007/08/blue-october-august-4th/">Read on &rarr;</a>
-  </footer>
+  
+  
 
 
-  </article>
-
-
-  <article>
-    
+    </article>
+  
+  
+    <article>
+      
   <header>
     
       <h1 class="entry-title"><a href="/2007/08/professional-gender-transmogriphier/">Professional Gender Transmogriphier</a></h1>
     
     
       <p class="meta">
+        
 
 
 
 
-<time datetime="2007-08-08 00:00:00 -0500" pubdate  updated >Aug 8<span>th</span>, 2007</time>
 
 
-</p>
+
+
+  
+
+
+<time datetime="2007-08-08T00:00:00-05:00" pubdate data-updated="true">Aug 8<span>th</span>, 2007</time>
+        
+      </p>
     
   </header>
 
@@ -415,30 +474,36 @@
 <p>That just might send the wrong message&#8230; whaddyathink?</p>
 
 </div>
-  <footer>
-    <a rel="full-article" href="/2007/08/professional-gender-transmogriphier/">Read on &rarr;</a>
-  </footer>
+  
+  
 
 
-  </article>
-
-
-  <article>
-    
+    </article>
+  
+  
+    <article>
+      
   <header>
     
       <h1 class="entry-title"><a href="/2007/08/html-5-sneak-peek/">HTML 5 Sneak Peek</a></h1>
     
     
       <p class="meta">
+        
 
 
 
 
-<time datetime="2007-08-08 00:00:00 -0500" pubdate  updated >Aug 8<span>th</span>, 2007</time>
 
 
-</p>
+
+
+  
+
+
+<time datetime="2007-08-08T00:00:00-05:00" pubdate data-updated="true">Aug 8<span>th</span>, 2007</time>
+        
+      </p>
     
   </header>
 
@@ -467,30 +532,36 @@
 <p>Check out the article, it is worth a read.&nbsp; These changes are long overdue and will help raise the bar on web standards usage even further.&nbsp; Let&rsquo;s just hope IE plays nice this time (I think they will).</p>
 
 </div>
-  <footer>
-    <a rel="full-article" href="/2007/08/html-5-sneak-peek/">Read on &rarr;</a>
-  </footer>
+  
+  
 
 
-  </article>
-
-
-  <article>
-    
+    </article>
+  
+  
+    <article>
+      
   <header>
     
       <h1 class="entry-title"><a href="/2007/08/e-goes-gold/">E Goes Gold</a></h1>
     
     
       <p class="meta">
+        
 
 
 
 
-<time datetime="2007-08-08 00:00:00 -0500" pubdate  updated >Aug 8<span>th</span>, 2007</time>
 
 
-</p>
+
+
+  
+
+
+<time datetime="2007-08-08T00:00:00-05:00" pubdate data-updated="true">Aug 8<span>th</span>, 2007</time>
+        
+      </p>
     
   </header>
 
@@ -498,30 +569,36 @@
   <div class="entry-content"><div><p>My favorite text editor for HTML, CSS, JavaScript, Ruby/Rails, etc development just announced its 1.0 stable release.&nbsp; The beta versions were very good and I rarely ran into issues.</p><p></p><p>If you aren’t using e, you should check it out:</p><p><img src="/images/image001_.jpg" alt="e"  border="0" /></p><p>If you’re like me and jealous of the Mac crowd who gets to use TextMate ( /drool ) then this is the best alternative for Windows.&nbsp; (I hear there is a Linux version coming soon).</p><p></p><p>But if you’re not privy to what coolness awaits you, allow me to tantalize you with some e-excellence:</p><ul><li>Keep looking up the exact doctype syntax?&nbsp; Type <strong>doctype&lt;TAB&gt;</strong> and a context menu appears allowing you to select your doctype (XHTML 1.0 Transitional for example).&nbsp; &nbsp;(And you <strong>should be using a doctype</strong> header).</li><li>Type head&lt;TAB&gt;, it creates the header section for you, places the cursor right where you put the title, press &lt;TAB&gt; again and you&#8217;re ready to enter scripts and style sheets.</li><li>Want more?Try link, style, body, div, table, ul li &#8230; the list goes on. </li></ul><p>These are just the HTML bundles.There are a crap-ton of bundles that already exist for TextMate, and they are supported with e.</p><p>So head on over to <a href="http://www.e-texteditor.com/" target="_blank">http://www.e-texteditor.com</a> and pick up a trial copy.If you like it, consider buying it.The time you save will surpass the measly $35 you spent in no time.time.</p><div class="bjtags">Tags:<a rel="tag" href="http://technorati.com/tag/Tools">Tools</a></div></div>
 
 </div>
-  <footer>
-    <a rel="full-article" href="/2007/08/e-goes-gold/">Read on &rarr;</a>
-  </footer>
+  
+  
 
 
-  </article>
-
-
-  <article>
-    
+    </article>
+  
+  
+    <article>
+      
   <header>
     
       <h1 class="entry-title"><a href="/2007/08/dear-vsts-testi-hate-you/">Dear VSTS Test:I Hate You</a></h1>
     
     
       <p class="meta">
+        
 
 
 
 
-<time datetime="2007-08-06 00:00:00 -0500" pubdate  updated >Aug 6<span>th</span>, 2007</time>
 
 
-</p>
+
+
+  
+
+
+<time datetime="2007-08-06T00:00:00-05:00" pubdate data-updated="true">Aug 6<span>th</span>, 2007</time>
+        
+      </p>
     
   </header>
 
@@ -568,58 +645,13 @@
 <div class="bjtags">Tags:<a rel="tag" href="http://technorati.com/tag/VSTS">VSTS</a>, <a rel="tag" href="http://technorati.com/tag/Unit+Test">Unit+Test</a></div>
 
 </div>
-  <footer>
-    <a rel="full-article" href="/2007/08/dear-vsts-testi-hate-you/">Read on &rarr;</a>
-  </footer>
+  
+  
 
 
-  </article>
-
-
-  <article>
-    
-  <header>
-    
-      <h1 class="entry-title"><a href="/2007/08/resharper-coolness-move-methods/">ReSharper Coolness - Move Methods</a></h1>
-    
-    
-      <p class="meta">
-
-
-
-
-<time datetime="2007-08-03 00:00:00 -0500" pubdate  updated >Aug 3<span>rd</span>, 2007</time>
-
-
-</p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Every once and a while I come across a new feature that just makes me stop and think &ldquo;<a href="http://jetbrains.com/resharper" target="_blank">ReSharper</a>, I love you MAN!&rdquo;</p>
-
-
-<p>If you have your cursor on a method, press <strong>CTRL+ALT+SHIFT&nbsp; </strong>and the <strong>Up</strong> or <strong>Down</strong> arrow keys.</p>
-
-
-<p>Here it is in action:</p>
-
-
-<p><img src="/images/resharper_movemethod.gif" alt="Resharper:move method"  border="0"  /></p>
-
-
-<div class="bjtags">Tags:<a rel="tag" href="http://technorati.com/tag/ReSharper">ReSharper</a>, <a rel="tag" href="http://technorati.com/tag/Tools">Tools</a></div>
-
-</div>
-  <footer>
-    <a rel="full-article" href="/2007/08/resharper-coolness-move-methods/">Read on &rarr;</a>
-  </footer>
-
-
-  </article>
-
-<nav role="pagination">
-  <div>
+    </article>
+  
+  <div class="pagination">
     
       <a class="prev" href="/blog/page/24/">&larr; Older</a>
     
@@ -628,20 +660,8 @@
     <a class="next" href="/blog/page/22/">Newer &rarr;</a>
     
   </div>
-</nav>
-
-<script type="text/javascript">
-    var disqus_shortname = 'subdigital';
-    (function () {
-      var s = document.createElement('script'); s.async = true;
-      s.type = 'text/javascript';
-      s.src = 'http://' + disqus_shortname + '.disqus.com/count.js';
-      (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
-    }());
-</script>
-
 </div>
-<aside role=sidebar>
+<aside class="sidebar">
   
     <section>
   <h1>Who am I?</h1>
@@ -650,6 +670,10 @@
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/2012/07/serving-assets-from-s3-on-heroku/">Serving Assets from S3 on Heroku</a>
+      </li>
     
       <li class="post">
         <a href="/2012/02/hello/">Hello, NSScreencast</a>
@@ -667,10 +691,6 @@
         <a href="/2011/12/formatting-json-from-terminal/">Formatting JSON From Terminal</a>
       </li>
     
-      <li class="post">
-        <a href="/2011/10/houston-tech-fest-2011-recap/">Houston Tech Fest 2011 Recap</a>
-      </li>
-    
   </ul>
 </section>
 
@@ -686,16 +706,19 @@
   </script>
   <script src="/javascripts/twitter.js" type="text/javascript"> </script>
   
-    <a href="http://twitter.com/subdigital" class="twitter-follow-button" data-width="208px" data-show-count="false">Follow @subdigital</a>
+    <a href="http://twitter.com/subdigital" class="twitter-follow-button" data-show-count="false">Follow @subdigital</a>
   
 </section>
 
 
 <section>
   <h1>On Delicious</h1>
-  <script type="text/javascript" src="http://feeds.delicious.com/v2/js/subdigital?title=&count=3&sort=date&extended"></script>
+  <div id="delicious"></div>
+  <script type="text/javascript" src="http://feeds.delicious.com/v2/json/subdigital?count=3&amp;sort=date&amp;callback=renderDeliciousLinks"></script>
   <p><a href="http://delicious.com/subdigital">My Delicious Bookmarks &raquo;</a></p>
 </section>
+
+
 
 
 
@@ -704,7 +727,7 @@
 
     </div>
   </div>
-  <footer>
+  <footer role="contentinfo">
 <a style="display:block; float: right" title="Real Time Analytics" href="http://getclicky.com/66470389"><img alt="Real Time Analytics" src="//static.getclicky.com/media/links/badge.gif" border="0" /></a>
 <script src="//static.getclicky.com/js" type="text/javascript"></script>
 <script type="text/javascript">try{ clicky.init(66470389); }catch(e){}</script>
@@ -731,5 +754,40 @@
 </p>
 
 </footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'subdigital';
+      
+        
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
 </body>
 </html>

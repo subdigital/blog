@@ -5,13 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>
-    
-      GridView Cell.Text Versus Cell.Controls.Add - 
-    
-    Fickle Bits
-  </title>
+  <title>GridView Cell.Text Versus Cell.Controls.Add - Fickle Bits</title>
   <meta name="author" content="Ben Scheirman">
+
+  
+  <meta name="description" content="I&#8217;m sure I&#8217;ve come across this before, but I&#8217;m writing this down so that I don&#8217;t forget it later.I&#8217;m working with a &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -20,14 +18,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-
-  <link rel="canonical" href="http://benscheirman.com/2007/09/gridview-cell-text-versus-cell-controls-add/"/>
-  <link href="/favicon.png" rel="shortcut icon" />
+  <link rel="canonical" href="http://benscheirman.com/2007/09/gridview-cell-text-versus-cell-controls-add/">
+  <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
-  <script src="http://s3.amazonaws.com/ender-js/jeesh.min.js"></script>
+  <script src="/javascripts/ender.js"></script>
   <script src="/javascripts/octopress.js" type="text/javascript"></script>
-  <link href="http://feeds.feedburner.com/ficklebits" rel="alternate" title="Fickle Bits" type="application/atom+xml"/>
+  <link href="http://feeds.feedburner.com/ficklebits" rel="alternate" title="Fickle Bits" type="application/atom+xml">
+  <!--Fonts from Google's Web font directory at http://google.com/webfonts -->
+<link href='http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic' rel='stylesheet' type='text/css'>
+
   
   <script type="text/javascript">
     var _gaq = _gaq || [];
@@ -42,36 +43,10 @@
   </script>
 
 
-  
-  <script type="text/javascript">
-    (function() {
-      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
-      script.src = 'https://apis.google.com/js/plusone.js';
-      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
-    })();
-  </script>
-
-
-  
-  <script type="text/javascript">
-    (function(){
-      var twitterWidgets = document.createElement('script');
-      twitterWidgets.type = 'text/javascript';
-      twitterWidgets.async = true;
-      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
-      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
-    })();
-  </script>
-
-
-  <!--Fonts from Google's Web font directory at http://google.com/webfonts -->
-<link href='http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic' rel='stylesheet' type='text/css'>
-<link href='http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic' rel='stylesheet' type='text/css'>
-
 </head>
 
-<body  >
-  <header><hgroup>
+<body   >
+  <header role="banner"><hgroup>
   <h1><a href="/">Fickle Bits</a></h1>
   
     <h2>You're doing it wrong.</h2>
@@ -79,24 +54,26 @@
 </hgroup>
 
 </header>
-  <nav role=navigation><ul role=subscription data-subscription="rss">
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
   <li><a href="http://feeds.feedburner.com/ficklebits" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
   
 </ul>
+  
 <form action="http://google.com/search" method="get">
-  <fieldset role="site-search">
+  <fieldset role="search">
     <input type="hidden" name="q" value="site:benscheirman.com" />
     <input class="search" type="text" name="q" results="0" placeholder="Search"/>
   </fieldset>
 </form>
+  
 <ul role=main-navigation>
   <li><a href="/">Blog</a></li>
   <li><a href="/about-me">About Me</a></li>
   <li><a href="/speaking">Speaking</a></li>
   <li><a href="/contact">Contact</a></li>
-  <li><a href="http://giggletouch.com">Giggle Touch for
-    iOS</a></li>
-  <li><a href="http://appkickstand.com">AppKickstand</a></li>
+  <li><a href="/projects">Projects</a></li>
+  <!-- <li><a href="http://giggletouch.com">Giggle Touch</a></li> -->
+  <!-- <li><a href="http://appkickstand.com">AppKickstand</a></li> -->
   <li><a href="/blog/archives">Archives</a></li>
 
 </ul>
@@ -105,7 +82,7 @@
   <div id="main">
     <div id="content">
       <div>
-<article class="hentry">
+<article class="hentry" role="article">
   
   <header>
     
@@ -113,34 +90,41 @@
     
     
       <p class="meta">
+        
 
 
 
 
-<time datetime="2007-09-12 00:00:00 -0500" pubdate  updated >Sep 12<span>th</span>, 2007</time>
 
 
-</p>
+
+
+  
+
+
+<time datetime="2007-09-12T00:00:00-05:00" pubdate data-updated="true">Sep 12<span>th</span>, 2007</time>
+        
+      </p>
     
   </header>
 
 
 <div class="entry-content"><p>I&#8217;m sure I&#8217;ve come across this before, but I&#8217;m writing this down so that I don&#8217;t forget it later.<br/><br/>I&#8217;m working with a pretty hefty custom GridView and it&#8217;s really trying my patience for this control.&nbsp; Yeah yeah, it&#8217;s all great if you want to bind a list of data coming from a SQL Query written in your aspx in plain-text.&nbsp; The minute you start to customize it all that goodness turns into a mess of weird templating and strange quirks about ASP.NET, but I digress.<br/><br/>Anyway, this post relates to the fact that the TableCell class has a Text property <i>and</i> a controls collection.<br/><br/>If you are creating custom rows of data, you have to choose between doing <br/></p>
 
-<div><figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
-</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>cell.Text = "content";</div></code></pre></td></tr></table></div></figure></div>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>cell.Text = "content";</span></code></pre></td></tr></table></div></figure>
 
 
 <p>or <br /></p>
 
-<div><figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
-</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>cell.Controls.Add( new LiteralControl("content") );</div></code></pre></td></tr></table></div></figure></div>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>cell.Controls.Add( new LiteralControl("content") );</span></code></pre></td></tr></table></div></figure>
 
 
 <p>The difference is that the two are mutually exclusive.&nbsp; If you have controls inside the table cell, then the Text property will be empty.&nbsp; If you have the Text property set, then there can&#8217;t be any controls.<br /><br/>So in my case I was setting the Text property, then trying to insert a LinkButton control right <i>before</i> the text.&nbsp; So I diligently put <br/></p>
 
-<div><figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
-</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>row.Cells[index].Controls.AddAt(0, theLinkButton);</div></code></pre></td></tr></table></div></figure></div>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>row.Cells[index].Controls.AddAt(0, theLinkButton);</span></code></pre></td></tr></table></div></figure>
 
 
 <p>Which happily wipes everything that was previously in the Text property.&nbsp; Ugh.</p>
@@ -159,10 +143,14 @@
 
 
 
-<time datetime="2007-09-12 00:00:00 -0500" pubdate  updated >Sep 12<span>th</span>, 2007</time>
 
 
 
+
+  
+
+
+<time datetime="2007-09-12T00:00:00-05:00" pubdate data-updated="true">Sep 12<span>th</span>, 2007</time>
       
 
 
@@ -173,43 +161,42 @@
   <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://benscheirman.com/2007/09/gridview-cell-text-versus-cell-controls-add/" data-via="subdigital" data-counturl="http://benscheirman.com/2007/09/gridview-cell-text-versus-cell-controls-add/" >Tweet</a>
   
   
-  <g:plusone size="medium"></g:plusone>
   
 </div>
 
     
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/2007/09/anywhere-fm-its-the-bees-knees/" title="Previous Post: Anywhere.FM - It's the Bee's Knees!">&laquo; Anywhere.FM - It's the Bee's Knees!</a>
+      
+      
+        <a class="basic-alignment right" href="/2007/09/putting-your-logic-in-stored-procedures-or-how-to-create-a-maze-of-unescapable-complexity/" title="Next Post: Putting your Logic in Stored Procedures OR How to Create a Maze of Unescapable Complexity">Putting your Logic in Stored Procedures OR How to Create a Maze of Unescapable Complexity &raquo;</a>
+      
+    </p>
   </footer>
 </article>
 
   <section>
     <h1>Comments</h1>
-    <div id="disqus_thread"><div id="disqus_thread"></div>
-<script type="text/javascript">
-  var disqus_shortname = 'subdigital';
-  var disqus_identifier = 'http://benscheirman.com/2007/09/gridview-cell-text-versus-cell-controls-add/';
-  var disqus_url = 'http://benscheirman.com/2007/09/gridview-cell-text-versus-cell-controls-add/';
-  //var disqus_developer = 1;
-  (function() {
-    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-    dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
-    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-  })();
-</script>
-<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 </div>
   </section>
 
 </div>
 
-<aside role=sidebar>
+<aside class="sidebar">
   
     <section>
   <h1>Who am I?</h1>
-  <p>I&#8217;m Ben Scheirman. I make Rails &amp; iPhone apps for <a href="http://chaione.com" target="_blank">ChaiONE</a> in Houston, TX.</p>
+  <p>I'm Ben Scheirman. I make Rails &amp; iPhone apps for <a href="http://chaione.com" target="_blank">ChaiONE</a> in Houston, TX.</p>
 </section>
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/2012/07/serving-assets-from-s3-on-heroku/">Serving Assets from S3 on Heroku</a>
+      </li>
     
       <li class="post">
         <a href="/2012/02/hello/">Hello, NSScreencast</a>
@@ -227,17 +214,13 @@
         <a href="/2011/12/formatting-json-from-terminal/">Formatting JSON From Terminal</a>
       </li>
     
-      <li class="post">
-        <a href="/2011/10/houston-tech-fest-2011-recap/">Houston Tech Fest 2011 Recap</a>
-      </li>
-    
   </ul>
 </section>
 
 <section>
   <h1>Latest Tweets</h1>
   <ul id="tweets">
-    <li class="loading">Status updating&#8230;</li>
+    <li class="loading">Status updating...</li>
   </ul>
   <script type="text/javascript">
     $.domReady(function(){
@@ -246,16 +229,19 @@
   </script>
   <script src="/javascripts/twitter.js" type="text/javascript"> </script>
   
-    <a href="http://twitter.com/subdigital" class="twitter-follow-button" data-width="208px" data-show-count="false">Follow @subdigital</a>
+    <a href="http://twitter.com/subdigital" class="twitter-follow-button" data-show-count="false">Follow @subdigital</a>
   
 </section>
 
 
 <section>
   <h1>On Delicious</h1>
-  <script type="text/javascript" src="http://feeds.delicious.com/v2/js/subdigital?title=&count=3&sort=date&extended"></script>
+  <div id="delicious"></div>
+  <script type="text/javascript" src="http://feeds.delicious.com/v2/json/subdigital?count=3&amp;sort=date&amp;callback=renderDeliciousLinks"></script>
   <p><a href="http://delicious.com/subdigital">My Delicious Bookmarks &raquo;</a></p>
 </section>
+
+
 
 
 
@@ -265,7 +251,7 @@
 
     </div>
   </div>
-  <footer>
+  <footer role="contentinfo">
 <a style="display:block; float: right" title="Real Time Analytics" href="http://getclicky.com/66470389"><img alt="Real Time Analytics" src="//static.getclicky.com/media/links/badge.gif" border="0" /></a>
 <script src="//static.getclicky.com/js" type="text/javascript"></script>
 <script type="text/javascript">try{ clicky.init(66470389); }catch(e){}</script>
@@ -292,5 +278,43 @@
 </p>
 
 </footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'subdigital';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://benscheirman.com/2007/09/gridview-cell-text-versus-cell-controls-add/';
+        var disqus_url = 'http://benscheirman.com/2007/09/gridview-cell-text-versus-cell-controls-add/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
 </body>
 </html>

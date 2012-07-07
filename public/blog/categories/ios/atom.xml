@@ -1,0 +1,463 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: iOS | Fickle Bits]]></title>
+  <link href="http://benscheirman.com/blog/categories/ios/atom.xml" rel="self"/>
+  <link href="http://benscheirman.com/"/>
+  <updated>2012-07-07T16:09:13-05:00</updated>
+  <id>http://benscheirman.com/</id>
+  <author>
+    <name><![CDATA[Ben Scheirman]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Hello, NSScreencast]]></title>
+    <link href="http://benscheirman.com/2012/02/hello/"/>
+    <updated>2012-02-10T06:27:00-06:00</updated>
+    <id>http://benscheirman.com/2012/02/hello</id>
+    <content type="html"><![CDATA[<p><a href="http://nsscreencast.com">NSScreencast</a> is now live. The first 2 videos have been posted:</p>
+
+<ul>
+<li><a href="http://nsscreencast.com/episodes/1-objective-c-basics">Objective-C Basics</a></li>
+<li><a href="http://nsscreencast.com/episodes/2-diagnosing-memory-problems">Diagnosing Memory Problems</a></li>
+</ul>
+
+
+<p>Now that the site has launched, I can share more details with you about it.</p>
+
+<h3>A new video each week</h3>
+
+<p>Each week, a new video will be posted covering a single, focused topic related to iOS development.</p>
+
+<h3>Don't waste the listener's time</h3>
+
+<p>Each video will be short and to the point. It boils down to this: a 20 minute video is an easy thing to watch.  A 60-minute video is a serious time commitment.</p>
+
+<h3>Some Free, Some Paid</h3>
+
+<p>Eventually, NSScreencast will be a subscription service.  I'll announce details once they are nailed down, but for now, enjoy the videos!
+If you'd like to be notified when an episode is released, you can <a href="http://feeds.feedburner.com/NSScreencast">subscribe to the RSS feed</a>,
+or follow <a href="http://twitter.com/nsscreencast">@nsscreencast</a> on twitter.  (<em>Subscribing in iTunes is coming soon</em>)</p>
+
+<p>If you have any video topic suggestions, feel free to share them at the <a href="http://nsscreencast.uservoice.com">User Voice Forum</a>.
+Seriously, I'd love to hear your feedback!</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[NSScreencasts, Coming Soon]]></title>
+    <link href="http://benscheirman.com/2012/01/nsscreencasts/"/>
+    <updated>2012-01-19T22:47:00-06:00</updated>
+    <id>http://benscheirman.com/2012/01/nsscreencasts</id>
+    <content type="html"><![CDATA[<h2>Bite-Sized Learning</h2>
+
+<p>Video training is becoming a very common way to learn these days.  With <a href="http://tekpub.com">Tekpub</a>, <a href="http://peepcode.com/">Peepcode</a>, <a href="http://pluralsight.com">Pluralsight</a>,
+<a href="http://codeschool.com">Code School</a>, and many others, there are usually great productions to teach you any development topic that you'd want to learn about.</p>
+
+<p>All of these services are great, however I'm becoming a fan of the smaller, more focused screencasts.  <a href="http://railscasts.com">Railscasts</a>, for instance, has
+been <em>instrumental</em> to my Rails learning development.  <a href="http://destroyallsoftware.com/">Destroy all Software</a> teaches me new things every week.</p>
+
+<p>Smaller videos like this are easier to digest, and are more focused on a single topic.  Like the <a href="http://en.wikipedia.org/wiki/Boiling_frog">boiled frog</a>
+you eventually realize how far you've come on a topic, simply by watching regular videos.</p>
+
+<p>iOS Development is an ever-changing landscape, with so many topic areas to cover, that a single training class or screencast series just
+can't teach you all of it.  Instead of trying to cover everything in depth (increasing the length of videos). I find it valuable to
+have smaller, focused tutorials that teach you one thing, and do it quickly and effectively.</p>
+
+<h2>Introducing NSScreencast</h2>
+
+<p><a href="http://nsscreencast.com">NSScreencast</a> will be launching soon and will feature regular bite-sized videos
+focused on a single topic related to Objective-C and building iOS applications.</p>
+
+<p>NSScreencast <em>will</em> include free videos. Down the road, a nominal paid subsribtion will unlock access to more content.</p>
+
+<p>I still have lots to do before I release the first video, but if you like the idea, please sign up on
+the site to be notified when it launches. Thanks!</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Careful With Block-Based Notification Handlers]]></title>
+    <link href="http://benscheirman.com/2012/01/careful-with-block-based-notification-handlers/"/>
+    <updated>2012-01-11T16:27:00-06:00</updated>
+    <id>http://benscheirman.com/2012/01/careful-with-block-based-notification-handlers</id>
+    <content type="html"><![CDATA[<p>In general, I prefer using block-based APIs over those that accept selectors.</p>
+
+<p>The block based APIs are generally easier to read &amp; follow, and don't clutter up your class with methods that are
+out of context with the code that might potentially invoke them.</p>
+
+<h2>An Example</h2>
+
+<p>One good example is view animations.  Here we're fading out a view and removing it from the hierarchy once
+the view has been completely faded out.  It's concise, easy to read, and you don't need to go anywhere else in the
+class to get a complete picture of how this works.</p>
+
+<p>Also, since you can have multiple animations going on, having a block-based completion handler means
+you don't have to distinguish between what the animations were in some generic completion method.</p>
+
+<p>``` objc</p>
+
+<pre><code>[UIView animateWithDuration:0.5 animations:^{
+  someView.alpha = 0;
+} completion:^ (BOOL finished) {
+  [someView removeFromSuperView];
+}];
+</code></pre>
+
+<p>```</p>
+
+<p>Contrast this with the non-block version:</p>
+
+<p>``` objc</p>
+
+<pre><code>- (void)fadeOutView {
+  [UIView beginAnimations];
+  [UIView setAnimationDuration:0.5];
+  [UIView setAnimationDelegate:self];
+  [UIView setAnimationDidStopSelector:@selector(animationDidStop:finished:context:)];
+
+  someView.alpha = 0;
+
+  [UIView commitAnimations];
+}
+
+- (void)animationDidStop:(NSString *)animationID finished:(NSNumber *)finished context:(void *)context {
+  [someView removeFromSuperView];
+}
+</code></pre>
+
+<p>```</p>
+
+<h2>Block-Based Notification Handlers</h2>
+
+<p><code>NSNotificationCenter</code> also got some block love when iOS SDK 4.0 came around.  The old form looked like this:</p>
+
+<p>``` objc</p>
+
+<pre><code>- (void)setupNotifications {
+  [[NSNotificationCenter defaultCenter] addObserver:self
+                                           selector:@selector(onWhizBang:)
+                                               name:MyWhizBangnotification
+                                             object:nil];
+}
+
+- (void)onWhizBang:(NSNotification *)notification {
+  // reload the table to show the new whiz bangs
+  [self.tableView reloadData];
+}
+
+- (void)dealloc {
+  [[NSNotificationCenter defaultCenter] removeObserver:self];
+  [super dealloc];
+}
+</code></pre>
+
+<p>```</p>
+
+<p>This isn't a lot of code (and it is easy to remember, unlike the previous UIView animation block code), however
+the action and the notification handler are separated from each other.</p>
+
+<p>The block-based API looks like this:</p>
+
+<p>``` objc</p>
+
+<pre><code>- (void)setupNotifications {
+  [[NSNotificationCenter defaultCenter] 
+      addObserverForNotificationName:MyWhizBangNotification
+                              object:nil
+                               queue:[NSOperationQueue mainQueue]
+                               block:^(NSNotification *notification) {
+                                 //reload the table to show the new whiz bangs
+                                 [self.tableView reloadData];
+                               }];
+}
+
+- (void)dealloc {
+  [[NSNotificationCenter defaultCenter] removeObserver:self];
+  [super dealloc];
+}
+</code></pre>
+
+<p>```</p>
+
+<p>Aside from some funky indentation, this is preferable in some cases, especially when the action to
+be completed is as simple as reloading the table.</p>
+
+<p>But there's a bug.  Can you spot it?</p>
+
+<h2>Blocks Are Closures</h2>
+
+<p>There's a subtle bug here that you might not notice at first.  I didn't realize this until it was littered all
+over my code base.</p>
+
+<p>Blocks are <a href="http://simple.wikipedia.org/wiki/Closure_(computer_science)">closures</a>, and they will capture any values declared outside the scope of the block (and retained) so that
+they can be used when the block executes.  This includes variables declared in the enclosing method or any ivars
+that you reference from inside the block.</p>
+
+<p>Here, we used <code>self.tableView</code>.  <code>self</code> gets retained by the block, which is also retained by self.  We have a <em>retain-cycle</em>
+which is generally a bad thing.  It's especially bad here, because we don't clear out the block until <code>dealloc</code>,
+but <em>dealloc won't ever be called because the block is retaining the instance</em>!</p>
+
+<h2>Weak Pointers Save the Day</h2>
+
+<p>If you've read up on blocks, you've probably seen the <code>__block</code> keyword.  This specifier tells blocks not to retain the pointer.
+So all we need is a new pointer, like so:</p>
+
+<p>``` objc</p>
+
+<pre><code>__block MyViewController *weakSelf = self;
+
+// use weakSelf in the blocks, instead of self
+</code></pre>
+
+<p>```</p>
+
+<p>This sort of code drives me nuts.  It won't be apparent to the next developer why it's there, and it's
+pretty ugly.</p>
+
+<h2>Retain Cycles are Elsewhere, Too</h2>
+
+<p>You might also run into this if you have a parent-child view controller relationship, or perhaps a
+an parent->object->delegate chain, where the parent <em>is</em> the delegate.  This is why you typically mark
+your delegate property signatures with <code>assign</code> instead of <code>retain</code> semantics.</p>
+
+<p>Not all retain-cycles are terrible though.  If you have a way of breaking the cycle, then you just need
+to weigh how long these objects will remain active for to decide if you need to fix it.</p>
+
+<p>Hopefully this will save you a few headaches down the line.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Appsites Is Now AppKickstand]]></title>
+    <link href="http://benscheirman.com/2011/10/appsites-is-now-appkickstand/"/>
+    <updated>2011-10-13T21:50:00-05:00</updated>
+    <id>http://benscheirman.com/2011/10/appsites-is-now-appkickstand</id>
+    <content type="html"><![CDATA[<p>A few weeks ago I launched Appsites, a free way to quickly host an
+attractive splash page for iPhone applications.</p>
+
+<p>Instead of competing with another site with the same name for traffic
+when we could be sharing it, I decided a new name was in order.</p>
+
+<p><strong>I now present to you:  <a href="http://appkickstand.com">AppKickstand</a>.</strong></p>
+
+<p><a href="http://appkickstand.com"><img src="http://benscheirman.com/images/appkickstand.png"
+alt="AppKickstand" border="0" /></a></p>
+
+<p>For an example of what it looks like with real apps, check out
+<a href="http://appkickstand.com/giggletouch">Giggle Touch</a> or
+<a href="http://appkickstand.com/tallythings">Tally Things</a>.</p>
+
+<p>If you have an iPhone app, what are you waiting for?  It's <strong>FREE</strong>!</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Making a UIButton Flip Over]]></title>
+    <link href="http://benscheirman.com/2011/10/making-a-uibutton-flip-over/"/>
+    <updated>2011-10-04T08:44:00-05:00</updated>
+    <id>http://benscheirman.com/2011/10/making-a-uibutton-flip-over</id>
+    <content type="html"><![CDATA[<p>If you've used the iPod app on the iPhone, you've probably seen an
+interesting trick when switching from album art to the track listing:
+the button in the top right corner flips over synchronized with the flip
+animation of the main view.</p>
+
+<p>I wanted to achieve a similar effect for the iPhone app that I'm
+building, Deli Radio (<a href="http://itunes.com/apps/deliradio">app store link</a>).</p>
+
+<p>If you've ever struggled with the flip transitions before, you probably
+know how finicky it can be to get it all working. The best way to set it
+up is to have a parent view contain both views that you want to swap,
+and set the animation transition type on <em>that</em> view.</p>
+
+<p>For a button (either in the navigation bar or elsewhere) we'd need to
+introduce a parent view to achieve this effect.  This is how I achieved
+the effect.</p>
+
+<p><img class="right" src="/images/btn-info-border@2x.png">
+<img class="right" src="/images/btn-images@2x.png"></p>
+
+<p>First, I had two images I wanted to use for my <code>UIBarButtonItem</code>.</p>
+
+<p>I wanted this to be easily reusable (since I need to do this in more
+than one place in this application), so I created a category method on
+<code>UIButton</code>.</p>
+
+<p><div><script src='https://gist.github.com/1261810.js?file=UIButtonCHButtonFlip.h'></script>
+<noscript><pre><code>@interface UIButton (CHFlipButton)
+
++ (UIView *)flipButtonWithFirstImage:(UIImage *)firstImage 
+                         secondImage:(UIImage *)secondImage
+                     firstTransition:(UIViewAnimationTransition)firstTransition
+                    secondTransition:(UIViewAnimationTransition)secondTransition
+                      animationCurve:(UIViewAnimationCurve)curve
+                            duration:(NSTimeInterval)duration
+                              target:(id)target
+                            selector:(SEL)selector;
+
+
+@end
+</code></pre></noscript></div>
+</p>
+
+<p>It may look strange that a <code>UIButton</code> class method returns a <code>UIView</code>
+instance, but we need to have a container view to base the animations
+off of.</p>
+
+<p>Here is the implementation:</p>
+
+<p><div><script src='https://gist.github.com/1261810.js?file=UIButtonCHButtonFlip.m'></script>
+<noscript><pre><code>#import &lt;objc/runtime.h&gt;
+
+#import &quot;UIButton+CHFlipButton.h&quot;
+
+// keys used for assigning associated objects
+static char UIButtonFlipBlockKey;
+static char UIButtonFlipAltButtonKey;
+static char UIButtonFlipTransitionKey;
+static char UIButtonFlipContainerViewKey;
+
+typedef void (^UIButtonFlipActionBlock)(id sender);
+
+@implementation UIButton (CHFlipButton)
+
+// associate the block with the button instance, then set the default button handler
+
+- (void)chFlipButton_handleControlEvent:(UIControlEvents)event withBlock:(UIButtonFlipActionBlock)block {
+    objc_setAssociatedObject(self, &amp;UIButtonFlipBlockKey, block, OBJC_ASSOCIATION_COPY);
+    [self addTarget:self action:@selector(chFlipButton_callFlipBlock:) forControlEvents:UIControlEventTouchUpInside];
+}
+
+// the default button handler just calls the block
+
+- (void)chFlipButton_callFlipBlock:(id)sender {
+    UIButtonFlipActionBlock block = objc_getAssociatedObject(self, &amp;UIButtonFlipBlockKey);
+    if (block) {
+        block(sender);
+    }
+}
+
++ (UIView *)flipButtonWithFirstImage:(UIImage *)firstImage 
+                         secondImage:(UIImage *)secondImage
+                     firstTransition:(UIViewAnimationTransition)firstTransition
+                    secondTransition:(UIViewAnimationTransition)secondTransition
+                      animationCurve:(UIViewAnimationCurve)curve
+                            duration:(NSTimeInterval)duration
+                              target:(id)target
+                            selector:(SEL)selector {
+    
+    UIButtonFlipActionBlock flipButtonAction = ^(id sender) { /* shown further down */ };
+    
+    //create the first button
+    UIButton *button1 = [UIButton buttonWithType:UIButtonTypeCustom];
+    [button1 setBackgroundImage:firstImage forState:UIControlStateNormal];
+    [button1 chFlipButton_handleControlEvent:UIControlEventTouchUpInside withBlock:flipButtonAction];
+    [button1 setFrame:CGRectMake(0, 0, firstImage.size.width, firstImage.size.height)];
+
+    //create the 2nd button
+    UIButton *button2 = [UIButton buttonWithType:UIButtonTypeCustom];
+    [button2 setBackgroundImage:secondImage forState:UIControlStateNormal];
+    [button2 chFlipButton_handleControlEvent:UIControlEventTouchUpInside withBlock:flipButtonAction];
+    [button2 setFrame:CGRectMake(0, 0, secondImage.size.width, secondImage.size.height)];    
+ 
+    //create a container to hold them
+    UIView *container = [[[UIView alloc] initWithFrame:button1.bounds] autorelease];
+    [container addSubview:button1];
+    
+    //record state so we can access it later (in the block)
+    objc_setAssociatedObject(button1, &amp;UIButtonFlipAltButtonKey, button2, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    objc_setAssociatedObject(button1, &amp;UIButtonFlipTransitionKey, [NSNumber numberWithInt:firstTransition], OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    objc_setAssociatedObject(button1, &amp;UIButtonFlipContainerViewKey, container, OBJC_ASSOCIATION_ASSIGN);
+    
+    objc_setAssociatedObject(button2, &amp;UIButtonFlipAltButtonKey, button1, OBJC_ASSOCIATION_ASSIGN);
+    objc_setAssociatedObject(button2, &amp;UIButtonFlipTransitionKey, [NSNumber numberWithInt:secondTransition], OBJC_ASSOCIATION_ASSIGN);  //button1 is in charge of the retains initially
+    objc_setAssociatedObject(button2, &amp;UIButtonFlipContainerViewKey, container, OBJC_ASSOCIATION_ASSIGN);
+    
+    //returns the container, because this is what needs to be added to your view
+    return container;
+}
+
+@end
+</code></pre></noscript></div>
+</p>
+
+<p>I am using a little-known technique of setting associated objects
+using <code>objc_setAssociatedObject(...)</code>.  This uses the runtime to attach
+state to an existing class without needing to subclass.</p>
+
+<p>Now that you understand how it is all setup, the block body will now
+make sense:</p>
+
+<p><div><script src='https://gist.github.com/1261810.js?file=UIButtonCHButtonFlipBlock.m'></script>
+<noscript><pre><code>/* Here is that block definition from above */
+
+    UIButtonFlipActionBlock flipButtonAction = ^(id sender) {
+
+        //get the alternate button &amp; container
+        UIButton *otherButton = (UIButton *)objc_getAssociatedObject(sender, &amp;UIButtonFlipAltButtonKey);
+        UIView *container = (UIView *)objc_getAssociatedObject(sender, &amp;UIButtonFlipContainerViewKey);
+        
+        //figure out our transition
+        NSNumber *transitionNumber = (NSNumber *)objc_getAssociatedObject(sender, &amp;UIButtonFlipTransitionKey);
+        UIViewAnimationTransition transition = (UIViewAnimationTransition)[transitionNumber intValue];
+                
+        [UIView animateWithDuration:duration animations:^ {
+            
+            [UIView setAnimationTransition:transition forView:container cache:YES];
+            [UIView setAnimationCurve:curve];
+            
+            //the view has the last retain count on the sender button, so we need to retain it first
+            objc_setAssociatedObject(otherButton, &amp;UIButtonFlipAltButtonKey, sender, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+            
+            [sender removeFromSuperview];
+            [container addSubview:otherButton];
+            
+            //sender no longer needs to retain the other button, because the view now is...
+            objc_setAssociatedObject(sender, &amp;UIButtonFlipAltButtonKey, otherButton, OBJC_ASSOCIATION_ASSIGN);
+            
+        }];
+        
+        //call the original button handler
+        [target performSelector:selector withObject:self];
+    };
+</code></pre></noscript></div>
+</p>
+
+<p>Usage is really easy.  I just created a bar button item with a custom
+view, and was done.</p>
+
+<p>```objc</p>
+
+<pre><code>UIImage *firstImage  = [UIImage imageNamed:@"btn-info.png"];
+UIImage *secondImage = [UIImage imageNamed:@"btn-images.png"];
+UIView *container    = [UIButton flipButtonWithFirstImage:firstImage
+                                              secondImage:secondImage
+                                          firstTransition:UIViewAnimationTransitionFlipFromRight
+                                         secondTransition:UIViewAnimationTransitionFlipFromLeft
+                                           animationCurve:UIViewAnimationCurveEaseInOut
+                                                 duration:0.8
+                                                   target:self
+                                                 selector:@selector(flipContent)];
+
+self.navigationItem.rightBarButtonItem = [[[UIBarButtonItem alloc] 
+  initWithCustomView:container] autorelease];
+</code></pre>
+
+<p>```</p>
+
+<p>The effect can be seen below.</p>
+
+<p><video width='389' height='336' preload='none' controls poster=' https://flux88.s3.amazonaws.com/videos/button_flip1.jpeg'><source src='https://flux88.s3.amazonaws.com/videos/button_flip.m4v' type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"'/></video></p>
+
+<p>Note that the flip effect on the main view is achieved separately, but
+the 2 strategies share identical values for the animation, so the flip
+transition types match, as well as the duration &amp; animation curve.</p>
+
+<p>The code for this can be seen in the <a href="https://github.com/chaione/chaioneui">ChaiOneUI project on Github</a>.</p>
+]]></content>
+  </entry>
+  
+</feed>

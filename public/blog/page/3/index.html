@@ -5,11 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>
-    
-    Fickle Bits
-  </title>
+  <title>Fickle Bits</title>
   <meta name="author" content="Ben Scheirman">
+
+  
+  <meta name="description" content="Xcode 4 has changed a lot of things. Most of those things are ok, but occasionally I find that I just cannot do something any other way than to use &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -18,14 +18,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-
-  <link rel="canonical" href="http://benscheirman.com/blog/page/3/index.html"/>
-  <link href="/favicon.png" rel="shortcut icon" />
+  <link rel="canonical" href="http://benscheirman.com/blog/page/3/">
+  <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
-  <script src="http://s3.amazonaws.com/ender-js/jeesh.min.js"></script>
+  <script src="/javascripts/ender.js"></script>
   <script src="/javascripts/octopress.js" type="text/javascript"></script>
-  <link href="http://feeds.feedburner.com/ficklebits" rel="alternate" title="Fickle Bits" type="application/atom+xml"/>
+  <link href="http://feeds.feedburner.com/ficklebits" rel="alternate" title="Fickle Bits" type="application/atom+xml">
+  <!--Fonts from Google's Web font directory at http://google.com/webfonts -->
+<link href='http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic' rel='stylesheet' type='text/css'>
+
   
   <script type="text/javascript">
     var _gaq = _gaq || [];
@@ -40,36 +43,10 @@
   </script>
 
 
-  
-  <script type="text/javascript">
-    (function() {
-      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
-      script.src = 'https://apis.google.com/js/plusone.js';
-      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
-    })();
-  </script>
-
-
-  
-  <script type="text/javascript">
-    (function(){
-      var twitterWidgets = document.createElement('script');
-      twitterWidgets.type = 'text/javascript';
-      twitterWidgets.async = true;
-      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
-      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
-    })();
-  </script>
-
-
-  <!--Fonts from Google's Web font directory at http://google.com/webfonts -->
-<link href='http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic' rel='stylesheet' type='text/css'>
-<link href='http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic' rel='stylesheet' type='text/css'>
-
 </head>
 
-<body  >
-  <header><hgroup>
+<body   >
+  <header role="banner"><hgroup>
   <h1><a href="/">Fickle Bits</a></h1>
   
     <h2>You're doing it wrong.</h2>
@@ -77,24 +54,26 @@
 </hgroup>
 
 </header>
-  <nav role=navigation><ul role=subscription data-subscription="rss">
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
   <li><a href="http://feeds.feedburner.com/ficklebits" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
   
 </ul>
+  
 <form action="http://google.com/search" method="get">
-  <fieldset role="site-search">
+  <fieldset role="search">
     <input type="hidden" name="q" value="site:benscheirman.com" />
     <input class="search" type="text" name="q" results="0" placeholder="Search"/>
   </fieldset>
 </form>
+  
 <ul role=main-navigation>
   <li><a href="/">Blog</a></li>
   <li><a href="/about-me">About Me</a></li>
   <li><a href="/speaking">Speaking</a></li>
   <li><a href="/contact">Contact</a></li>
-  <li><a href="http://giggletouch.com">Giggle Touch for
-    iOS</a></li>
-  <li><a href="http://appkickstand.com">AppKickstand</a></li>
+  <li><a href="/projects">Projects</a></li>
+  <!-- <li><a href="http://giggletouch.com">Giggle Touch</a></li> -->
+  <!-- <li><a href="http://appkickstand.com">AppKickstand</a></li> -->
   <li><a href="/blog/archives">Archives</a></li>
 
 </ul>
@@ -103,25 +82,111 @@
   <div id="main">
     <div id="content">
       <div class="blog-index">
-
-
-
-  <article>
+  
+  
+  
+    <article>
+      
+  <header>
     
+      <h1 class="entry-title"><a href="/2011/06/creating-proper-ipa-files-in-xcode-4/">Creating Proper IPA Files in Xcode 4</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-06-02T00:00:00-05:00" pubdate data-updated="true">Jun 2<span>nd</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Xcode 4 has changed a lot of things. Most of those things are ok, but occasionally I find that I just cannot do something any other way than to use Xcode 3.</p>
+
+
+<p>Until today, I was creating Ad-hoc builds for my current project with Xcode 3, then selecting Share &amp; saving the resulting IPA file to disk.</p>
+
+
+<p>Xcode 4 has the new &#8220;Build -&gt; Archive&#8221; menu option, but every time I&#8217;d try to share this file, I&#8217;d presented with this lovely restricted dialog box:</p>
+
+
+<p><br />
+<img src="/images/Xcode3.png"  alt="Xcode.png"  /></p>
+
+
+<p>With the errors <i><b>No Packager exists for the type of archive</b></i> and <i><b>This kind of archive cannot be signed</b></i>.</p>
+
+
+<p>As it turns out, if you have static libraries that you&#8217;re linking in, your Archive step actually outputs those as well. Xcode doesn&#8217;t know how to create an IPA out of 1 .app file and a handful of .a files, so it gives up.</p>
+
+
+<p>You can tell that Xcode 4 is doing this if your Organizer -&gt; Applications list shows an icon like this:</p>
+
+
+<p><br />
+<img src="/images/Xcode2.png"  alt="Xcode.png"  /></p>
+
+
+<p>If you right-click on this build, and select &#8220;Reveal in Finder&#8221; you&#8217;ll see the files are .xcarchive files. Right click on that and select &#8220;Show Package Contents&#8221; to see what I&#8217;m talking about. If you see a usr/lib/mystaticlibary.a file, then read on for the fix.</p>
+
+
+<p>You need to tell Xcode 4 <b>not</b> to &#8220;install&#8221; the static libraries. For each of the static library targets, select them in Xcode 4, and under Build Settings, search for &#8220;Skip Install&#8221;. Set that flag to YES. I had to do this to both of the static libraries I include in my project.</p>
+
+
+<p><img src="/images/Xcode1.png"  alt="Xcode1.png"  /></p>
+
+
+<p>Once that&#8217;s done, your app should show a normal icon again &amp; have the ability to export to IPA just like before. Yay!</p>
+
+
+<p><br />
+<img src="/images/Xcode.png"  alt="Xcode.png"  /></p>
+
+
+<p>Huge thanks to <a href="http://stackoverflow.com/questions/5265292/xcode-4-create-ipa-file-instead-of-xcarchive">this stackoverflow question</a> for pointing me in the right direction.</p>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
   <header>
     
       <h1 class="entry-title"><a href="/2011/05/rails-intrigue-video-at-nhdnug/">Rails Intrigue Video at NHDNUG</a></h1>
     
     
       <p class="meta">
+        
 
 
 
 
-<time datetime="2011-05-31 00:00:00 -0500" pubdate  updated >May 31<span>st</span>, 2011</time>
 
 
-</p>
+
+
+  
+
+
+<time datetime="2011-05-31T00:00:00-05:00" pubdate data-updated="true">May 31<span>st</span>, 2011</time>
+        
+      </p>
     
   </header>
 
@@ -144,30 +209,36 @@
 <iframe width="560" height="349" src="http://www.youtube.com/embed/GIksgdjQ82g" frameborder="0" allowfullscreen></iframe>
 
 </div>
-  <footer>
-    <a rel="full-article" href="/2011/05/rails-intrigue-video-at-nhdnug/">Read on &rarr;</a>
-  </footer>
+  
+  
 
 
-  </article>
-
-
-  <article>
-    
+    </article>
+  
+  
+    <article>
+      
   <header>
     
       <h1 class="entry-title"><a href="/2011/05/houston-code-camp-call-for-speakers/">Houston Code Camp - Call for Speakers</a></h1>
     
     
       <p class="meta">
+        
 
 
 
 
-<time datetime="2011-05-25 00:00:00 -0500" pubdate  updated >May 25<span>th</span>, 2011</time>
 
 
-</p>
+
+
+  
+
+
+<time datetime="2011-05-25T00:00:00-05:00" pubdate data-updated="true">May 25<span>th</span>, 2011</time>
+        
+      </p>
     
   </header>
 
@@ -195,30 +266,36 @@
 <p>Registration will open soon, but for now&#8230;. <b>save the date</b>!</p>
 
 </div>
-  <footer>
-    <a rel="full-article" href="/2011/05/houston-code-camp-call-for-speakers/">Read on &rarr;</a>
-  </footer>
+  
+  
 
 
-  </article>
-
-
-  <article>
-    
+    </article>
+  
+  
+    <article>
+      
   <header>
     
       <h1 class="entry-title"><a href="/2011/05/dry-up-your-rspec-files-with-subject-let-blocks/">Dry Up Your Rspec Files With Subject & Let Blocks</a></h1>
     
     
       <p class="meta">
+        
 
 
 
 
-<time datetime="2011-05-14 00:00:00 -0500" pubdate  updated >May 14<span>th</span>, 2011</time>
 
 
-</p>
+
+
+  
+
+
+<time datetime="2011-05-14T00:00:00-05:00" pubdate data-updated="true">May 14<span>th</span>, 2011</time>
+        
+      </p>
     
   </header>
 
@@ -283,40 +360,40 @@
 
 
 
-<div><figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
-<span class='line'>2</span>
-<span class='line'>3</span>
-<span class='line'>4</span>
-<span class='line'>5</span>
-<span class='line'>6</span>
-<span class='line'>7</span>
-<span class='line'>8</span>
-<span class='line'>9</span>
-<span class='line'>10</span>
-<span class='line'>11</span>
-<span class='line'>12</span>
-<span class='line'>13</span>
-<span class='line'>14</span>
-<span class='line'>15</span>
-<span class='line'>16</span>
-<span class='line'>17</span>
-</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>Card
-</div><div class='line'>  #value
-</div><div class='line'>    Two of Hearts
-</div><div class='line'>      value
-</div><div class='line'>        should == 2
-</div><div class='line'>    Face Cards
-</div><div class='line'>      King of Clubs
-</div><div class='line'>        value
-</div><div class='line'>          should == 13
-</div><div class='line'>      Queen of Clubs
-</div><div class='line'>        value
-</div><div class='line'>          should == 12
-</div><div class='line'>      Jack of Hearts
-</div><div class='line'>        value
-</div><div class='line'>          should == 11
-</div><div class='line'>    Bad Value
-</div><div class='line'>      should raise StandardError</div></code></pre></td></tr></table></div></figure></div>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>Card
+</span><span class='line'>  #value
+</span><span class='line'>    Two of Hearts
+</span><span class='line'>      value
+</span><span class='line'>        should == 2
+</span><span class='line'>    Face Cards
+</span><span class='line'>      King of Clubs
+</span><span class='line'>        value
+</span><span class='line'>          should == 13
+</span><span class='line'>      Queen of Clubs
+</span><span class='line'>        value
+</span><span class='line'>          should == 12
+</span><span class='line'>      Jack of Hearts
+</span><span class='line'>        value
+</span><span class='line'>          should == 11
+</span><span class='line'>    Bad Value
+</span><span class='line'>      should raise StandardError</span></code></pre></td></tr></table></div></figure>
 
 
 
@@ -329,30 +406,36 @@
 <p><em>Note:  The code in this post is delivered via Github Gists, which unfortunately don&#8217;t render in Google Reader.  Click through to see the code.</em></p>
 
 </div>
-  <footer>
-    <a rel="full-article" href="/2011/05/dry-up-your-rspec-files-with-subject-let-blocks/">Read on &rarr;</a>
-  </footer>
+  
+  
 
 
-  </article>
-
-
-  <article>
-    
+    </article>
+  
+  
+    <article>
+      
   <header>
     
       <h1 class="entry-title"><a href="/2011/05/2011-ultimate-tools-list-for-mac/">2011 Ultimate Tools List for Mac</a></h1>
     
     
       <p class="meta">
+        
 
 
 
 
-<time datetime="2011-05-05 00:00:00 -0500" pubdate  updated >May 5<span>th</span>, 2011</time>
 
 
-</p>
+
+
+  
+
+
+<time datetime="2011-05-05T00:00:00-05:00" pubdate data-updated="true">May 5<span>th</span>, 2011</time>
+        
+      </p>
     
   </header>
 
@@ -757,30 +840,36 @@
 <p>Phew! That&#8217;s a big list. I&#8217;m sure that I&#8217;ve left out some gems, so if there&#8217;s something blatantly obvious that I should have included in this list, please feel free to leave a comment.</p>
 
 </div>
-  <footer>
-    <a rel="full-article" href="/2011/05/2011-ultimate-tools-list-for-mac/">Read on &rarr;</a>
-  </footer>
+  
+  
 
 
-  </article>
-
-
-  <article>
-    
+    </article>
+  
+  
+    <article>
+      
   <header>
     
       <h1 class="entry-title"><a href="/2011/04/using-guard-spork-with-mongoid-devise/">Using Guard & Spork With Mongoid & Devise</a></h1>
     
     
       <p class="meta">
+        
 
 
 
 
-<time datetime="2011-04-22 00:00:00 -0500" pubdate  updated >Apr 22<span>nd</span>, 2011</time>
 
 
-</p>
+
+
+  
+
+
+<time datetime="2011-04-22T00:00:00-05:00" pubdate data-updated="true">Apr 22<span>nd</span>, 2011</time>
+        
+      </p>
     
   </header>
 
@@ -865,23 +954,23 @@ You might be saying, <em>&#8220;What the hell are all these gems for?!?!&#8221;<
 
 
 
-<div><figure role=code> <div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
-<span class='line'>2</span>
-<span class='line'>3</span>
-<span class='line'>4</span>
-<span class='line'>5</span>
-<span class='line'>6</span>
-<span class='line'>7</span>
-<span class='line'>8</span>
-</pre></td><td class='code' width='100%'><pre><code class='ruby'><div class='line'><span class="no">Spork</span><span class="o">.</span><span class="n">prefork</span> <span class="k">do</span><span class="o">&lt;</span><span class="n">br</span><span class="sr"> /&gt;  ENV[&quot;RAILS_ENV&quot;] ||= &#39;test&#39;&lt;br /</span><span class="o">&gt;&lt;</span><span class="n">br</span><span class="sr"> /&gt;</span>
-</div><div class='line'><span class="sr">  require &#39;rails/mon</span><span class="n">goid</span><span class="s1">&#39;</span>
-</div><div class='line'><span class="s1">  Spork.trap_class_method(Rails::Mongoid, :load_models)</span>
-</div><div class='line'>
-</div><div class='line'><span class="s1">  # Now load our environment</span>
-</div><div class='line'><span class="s1">  require File.expand_path(&quot;../../config/environment&quot;, __FILE__)</span>
-</div><div class='line'><span class="s1">  require &#39;</span><span class="n">rspec</span><span class="o">/</span><span class="n">rails</span><span class="err">&#39;</span>
-</div><div class='line'>  <span class="o">.</span><span class="n">.</span><span class="o">.</span>
-</div></code></pre></td></tr></table></div></figure></div>
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="no">Spork</span><span class="o">.</span><span class="n">prefork</span> <span class="k">do</span><span class="o">&lt;</span><span class="n">br</span> <span class="sr">/&gt;  ENV[&quot;RAILS_ENV&quot;] ||= &#39;test&#39;&lt;br /</span><span class="o">&gt;&lt;</span><span class="n">br</span> <span class="sr">/&gt;</span>
+</span><span class='line'><span class="sr">  require &#39;rails/mon</span><span class="n">goid</span><span class="s1">&#39;</span>
+</span><span class='line'><span class="s1">  Spork.trap_class_method(Rails::Mongoid, :load_models)</span>
+</span><span class='line'>
+</span><span class='line'><span class="s1">  # Now load our environment</span>
+</span><span class='line'><span class="s1">  require File.expand_path(&quot;../../config/environment&quot;, __FILE__)</span>
+</span><span class='line'><span class="s1">  require &#39;</span><span class="n">rspec</span><span class="o">/</span><span class="n">rails</span><span class="err">&#39;</span>
+</span><span class='line'>  <span class="o">.</span><span class="n">.</span><span class="o">.</span>
+</span></code></pre></td></tr></table></div></figure>
 
 
 
@@ -904,30 +993,36 @@ You might be saying, <em>&#8220;What the hell are all these gems for?!?!&#8221;<
 <p>For a great discussion about how to make your specs fast without requiring the complexity of Spork, check out the latest episode of Destroy All Software: <a href="https://www.destroyallsoftware.com/screencasts/catalog/fast-tests-with-and-without-rails">Fast Specs with and without Rails</a>. These screencasts are excellent..</p>
 
 </div>
-  <footer>
-    <a rel="full-article" href="/2011/04/using-guard-spork-with-mongoid-devise/">Read on &rarr;</a>
-  </footer>
+  
+  
 
 
-  </article>
-
-
-  <article>
-    
+    </article>
+  
+  
+    <article>
+      
   <header>
     
       <h1 class="entry-title"><a href="/2011/04/private-categories-in-objective-c/">Private Categories in Objective-C</a></h1>
     
     
       <p class="meta">
+        
 
 
 
 
-<time datetime="2011-04-16 00:00:00 -0500" pubdate  updated >Apr 16<span>th</span>, 2011</time>
 
 
-</p>
+
+
+  
+
+
+<time datetime="2011-04-16T00:00:00-05:00" pubdate data-updated="true">Apr 16<span>th</span>, 2011</time>
+        
+      </p>
     
   </header>
 
@@ -936,72 +1031,72 @@ You might be saying, <em>&#8220;What the hell are all these gems for?!?!&#8221;<
 
 <p><em>MyTableViewController.h</em></p>
 
-<div><figure role=code> <div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
-<span class='line'>2</span>
-<span class='line'>3</span>
-<span class='line'>4</span>
-<span class='line'>5</span>
-<span class='line'>6</span>
-<span class='line'>7</span>
-<span class='line'>8</span>
-<span class='line'>9</span>
-</pre></td><td class='code' width='100%'><pre><code class='objc'><div class='line'><span class="k">@interface</span> <span class="nc">MyTableViewController</span> : <span class="nc">UITableViewController</span> <span class="p">{</span>
-</div><div class='line'>    <span class="n">NSArray</span> <span class="o">*</span><span class="n">items</span><span class="p">;</span>
-</div><div class='line'><span class="p">}</span>
-</div><div class='line'>
-</div><div class='line'><span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">retain</span><span class="p">)</span> <span class="n">NSArray</span> <span class="o">*</span><span class="n">items</span><span class="p">;</span>
-</div><div class='line'>
-</div><div class='line'><span class="o">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">somethingChanged</span><span class="p">;</span>
-</div><div class='line'>
-</div><div class='line'><span class="k">@end</span>
-</div></code></pre></td></tr></table></div></figure></div>
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="k">@interface</span> <span class="nc">MyTableViewController</span> : <span class="nc">UITableViewController</span> <span class="p">{</span>
+</span><span class='line'>    <span class="n">NSArray</span> <span class="o">*</span><span class="n">items</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">retain</span><span class="p">)</span> <span class="n">NSArray</span> <span class="o">*</span><span class="n">items</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">somethingChanged</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">@end</span>
+</span></code></pre></td></tr></table></div></figure>
 
 
 <p><em>MyTableViewController.m</em></p>
 
-<div><figure role=code> <div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
-<span class='line'>2</span>
-<span class='line'>3</span>
-<span class='line'>4</span>
-<span class='line'>5</span>
-<span class='line'>6</span>
-<span class='line'>7</span>
-<span class='line'>8</span>
-<span class='line'>9</span>
-<span class='line'>10</span>
-<span class='line'>11</span>
-<span class='line'>12</span>
-<span class='line'>13</span>
-<span class='line'>14</span>
-<span class='line'>15</span>
-<span class='line'>16</span>
-<span class='line'>17</span>
-<span class='line'>18</span>
-<span class='line'>19</span>
-<span class='line'>20</span>
-<span class='line'>21</span>
-</pre></td><td class='code' width='100%'><pre><code class='objc'><div class='line'><span class="k">@implementation</span> <span class="nc">MyTableViewController</span>
-</div><div class='line'><span class="o">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">viewDidLoad</span> <span class="p">{</span>
-</div><div class='line'>    <span class="p">[</span><span class="n">super</span> <span class="n">viewDidLoad</span><span class="p">];</span>
-</div><div class='line'>    <span class="c1">//using the ivar</span>
-</div><div class='line'>    <span class="n">items</span> <span class="o">=</span> <span class="p">[[</span><span class="n">NSArray</span> <span class="nl">arrayWithObjects:</span><span class="s">@&quot;Item 1&quot;</span><span class="p">,</span> <span class="s">@&quot;Item 2&quot;</span><span class="p">,</span> <span class="nb">nil</span><span class="p">]</span> <span class="n">retain</span><span class="p">];</span>
-</div><div class='line'>    <span class="c1">//using the property</span>
-</div><div class='line'>    <span class="n">self</span><span class="p">.</span><span class="n">items</span> <span class="o">=</span> <span class="p">[</span><span class="n">NSArray</span> <span class="nl">arrayWithObjects:</span><span class="s">@&quot;Item 1&quot;</span><span class="p">,</span> <span class="s">@&quot;Item 2&quot;</span><span class="p">,</span> <span class="nb">nil</span><span class="p">];}</span>
-</div><div class='line'>
-</div><div class='line'><span class="o">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">somethingChanged</span> <span class="p">{</span>
-</div><div class='line'>    <span class="c1">//using the ivar</span>
-</div><div class='line'>    <span class="p">[</span><span class="n">items</span> <span class="n">release</span><span class="p">];</span>
-</div><div class='line'>    <span class="n">items</span> <span class="o">=</span> <span class="p">[[</span><span class="n">NSArray</span> <span class="nl">arrayWithObjects:</span><span class="s">@&quot;New Item 1&quot;</span><span class="p">,</span> <span class="s">@&quot;New Item 2&quot;</span><span class="p">,</span> <span class="nb">nil</span><span class="p">]</span> <span class="n">retain</span><span class="p">];</span>
-</div><div class='line'>    <span class="c1">//using the property</span>
-</div><div class='line'>    <span class="n">self</span><span class="p">.</span><span class="n">items</span> <span class="o">=</span> <span class="p">[</span><span class="n">NSArray</span> <span class="nl">arrayWithObjects:</span><span class="s">@&quot;New Item 1&quot;</span><span class="p">,</span> <span class="s">@&quot;New Item 2&quot;</span><span class="p">,</span> <span class="nb">nil</span><span class="p">];</span>
-</div><div class='line'>    <span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">tableView</span> <span class="n">reloadData</span><span class="p">];</span>
-</div><div class='line'><span class="p">}</span>
-</div><div class='line'>
-</div><div class='line'><span class="o">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">dealloc</span> <span class="p">{</span>
-</div><div class='line'>    <span class="p">[</span><span class="n">items</span> <span class="n">release</span><span class="p">];</span>
-</div><div class='line'>    <span class="p">[</span><span class="n">super</span> <span class="n">dealloc</span><span class="p">];</span>
-</div><div class='line'><span class="p">}</span><span class="k">@end</span>
-</div></code></pre></td></tr></table></div></figure></div>
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="k">@implementation</span> <span class="nc">MyTableViewController</span>
+</span><span class='line'><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">viewDidLoad</span> <span class="p">{</span>
+</span><span class='line'>    <span class="p">[</span><span class="n">super</span> <span class="n">viewDidLoad</span><span class="p">];</span>
+</span><span class='line'>    <span class="c1">//using the ivar</span>
+</span><span class='line'>    <span class="n">items</span> <span class="o">=</span> <span class="p">[[</span><span class="n">NSArray</span> <span class="nl">arrayWithObjects:</span><span class="s">@&quot;Item 1&quot;</span><span class="p">,</span> <span class="s">@&quot;Item 2&quot;</span><span class="p">,</span> <span class="nb">nil</span><span class="p">]</span> <span class="n">retain</span><span class="p">];</span>
+</span><span class='line'>    <span class="c1">//using the property</span>
+</span><span class='line'>    <span class="n">self</span><span class="p">.</span><span class="n">items</span> <span class="o">=</span> <span class="p">[</span><span class="n">NSArray</span> <span class="nl">arrayWithObjects:</span><span class="s">@&quot;Item 1&quot;</span><span class="p">,</span> <span class="s">@&quot;Item 2&quot;</span><span class="p">,</span> <span class="nb">nil</span><span class="p">];}</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">somethingChanged</span> <span class="p">{</span>
+</span><span class='line'>    <span class="c1">//using the ivar</span>
+</span><span class='line'>    <span class="p">[</span><span class="n">items</span> <span class="n">release</span><span class="p">];</span>
+</span><span class='line'>    <span class="n">items</span> <span class="o">=</span> <span class="p">[[</span><span class="n">NSArray</span> <span class="nl">arrayWithObjects:</span><span class="s">@&quot;New Item 1&quot;</span><span class="p">,</span> <span class="s">@&quot;New Item 2&quot;</span><span class="p">,</span> <span class="nb">nil</span><span class="p">]</span> <span class="n">retain</span><span class="p">];</span>
+</span><span class='line'>    <span class="c1">//using the property</span>
+</span><span class='line'>    <span class="n">self</span><span class="p">.</span><span class="n">items</span> <span class="o">=</span> <span class="p">[</span><span class="n">NSArray</span> <span class="nl">arrayWithObjects:</span><span class="s">@&quot;New Item 1&quot;</span><span class="p">,</span> <span class="s">@&quot;New Item 2&quot;</span><span class="p">,</span> <span class="nb">nil</span><span class="p">];</span>
+</span><span class='line'>    <span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">tableView</span> <span class="n">reloadData</span><span class="p">];</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">dealloc</span> <span class="p">{</span>
+</span><span class='line'>    <span class="p">[</span><span class="n">items</span> <span class="n">release</span><span class="p">];</span>
+</span><span class='line'>    <span class="p">[</span><span class="n">super</span> <span class="n">dealloc</span><span class="p">];</span>
+</span><span class='line'><span class="p">}</span><span class="k">@end</span>
+</span></code></pre></td></tr></table></div></figure>
 
 
 <p>Notice that in each use of the ivar, we have to take special care to manage the memory properly. In the first case, we have to make sure to retain the value, because <code>[NSArray arrayWithObjects:]</code> returns an autoreleased instance. In the second case, we have to make sure and release the first array before assigning it to the second array.</p>
@@ -1017,45 +1112,45 @@ You might be saying, <em>&#8220;What the hell are all these gems for?!?!&#8221;<
 
 <p><em>NSString+FLUXAdditions.h</em></p>
 
-<div><figure role=code> <div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
-<span class='line'>2</span>
-<span class='line'>3</span>
-</pre></td><td class='code' width='100%'><pre><code class='objc'><div class='line'><span class="k">@interface</span> <span class="nc">NSString</span> <span class="nl">(FLUXAdditions)</span>
-</div><div class='line'><span class="o">-</span> <span class="p">(</span><span class="kt">BOOL</span><span class="p">)</span><span class="nl">startsWith:</span><span class="p">(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="n">prefix</span><span class="p">;</span>
-</div><div class='line'><span class="k">@end</span>
-</div></code></pre></td></tr></table></div></figure></div>
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="k">@interface</span> <span class="nc">NSString</span> <span class="nl">(FLUXAdditions)</span>
+</span><span class='line'><span class="k">-</span> <span class="p">(</span><span class="kt">BOOL</span><span class="p">)</span><span class="nf">startsWith:</span><span class="p">(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="nv">prefix</span><span class="p">;</span>
+</span><span class='line'><span class="k">@end</span>
+</span></code></pre></td></tr></table></div></figure>
 
 
 <p><em>NSString+FLUXAdditions.m</em></p>
 
-<div><figure role=code> <div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
-<span class='line'>2</span>
-<span class='line'>3</span>
-<span class='line'>4</span>
-<span class='line'>5</span>
-</pre></td><td class='code' width='100%'><pre><code class='objc'><div class='line'><span class="k">@implementation</span> <span class="nc">NSString</span> <span class="nl">(FLUXAdditions)</span>
-</div><div class='line'><span class="o">-</span> <span class="p">(</span><span class="kt">BOOL</span><span class="p">)</span><span class="nl">startsWith:</span><span class="p">(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="n">prefix</span> <span class="p">{</span>
-</div><div class='line'><span class="k">return</span> <span class="p">[[</span><span class="n">self</span> <span class="nl">substringToIndex:</span><span class="p">[</span><span class="n">prefix</span> <span class="n">length</span><span class="p">]</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="nl">isEqualTo:</span><span class="n">prefix</span><span class="p">];</span>
-</div><div class='line'><span class="p">}</span>
-</div><div class='line'><span class="k">@end</span>
-</div></code></pre></td></tr></table></div></figure></div>
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="k">@implementation</span> <span class="nc">NSString</span> <span class="nl">(FLUXAdditions)</span>
+</span><span class='line'><span class="k">-</span> <span class="p">(</span><span class="kt">BOOL</span><span class="p">)</span><span class="nf">startsWith:</span><span class="p">(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="nv">prefix</span> <span class="p">{</span>
+</span><span class='line'><span class="k">return</span> <span class="p">[[</span><span class="n">self</span> <span class="nl">substringToIndex:</span><span class="p">[</span><span class="n">prefix</span> <span class="n">length</span><span class="p">]</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="nl">isEqualTo:</span><span class="n">prefix</span><span class="p">];</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'><span class="k">@end</span>
+</span></code></pre></td></tr></table></div></figure>
 
 
 <p>[box type=&#8221;info&#8221;]Notice the naming of the filename &amp; the category name. Most people use the + syntax to denote a category on the class they&#8217;re adding on to. The prefix is also important. If you just name your category &#8220;Additions&#8221; then it&#8217;s possible that other libraries you include (or future versions of the SDK) could have the same name, leading to a collision. The common practice is to utilize a company prefix on classes that could be reused by others or that could cause collisions in the future.[/box]
 Now that I have that implemented, all I have to do is include my header file anywhere I want to use this method. You can even do this in a global header file.</p>
 
-<div><figure role=code> <div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
-</pre></td><td class='code' width='100%'><pre><code class='objc'><div class='line'><span class="cp">#import &quot;NSString+FLUXAdditions.h&quot;</span>
-</div></code></pre></td></tr></table></div></figure></div>
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="cp">#import &quot;NSString+FLUXAdditions.h&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
 
 
 
 
-<div><figure role=code> <div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
-<span class='line'>2</span>
-</pre></td><td class='code' width='100%'><pre><code class='objc'><div class='line'><span class="p">[</span><span class="s">@&quot;My awesome string&quot;</span> <span class="nl">startsWith:</span><span class="s">@&quot;My&quot;</span><span class="p">];</span>  <span class="c1">//returns YES</span>
-</div><div class='line'><span class="p">[</span><span class="s">@&quot;My awesome string&quot;</span> <span class="nl">startsWith:</span><span class="s">@&quot;Foo&quot;</span><span class="p">];</span> <span class="c1">//returns NO;</span>
-</div></code></pre></td></tr></table></div></figure></div>
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="p">[</span><span class="s">@&quot;My awesome string&quot;</span> <span class="nl">startsWith:</span><span class="s">@&quot;My&quot;</span><span class="p">];</span>  <span class="c1">//returns YES</span>
+</span><span class='line'><span class="p">[</span><span class="s">@&quot;My awesome string&quot;</span> <span class="nl">startsWith:</span><span class="s">@&quot;Foo&quot;</span><span class="p">];</span> <span class="c1">//returns NO;</span>
+</span></code></pre></td></tr></table></div></figure>
 
 
 <p>So now that we understand how categories work, how can we utilize this to solve our original problem?</p>
@@ -1067,13 +1162,13 @@ Now that I have that implemented, all I have to do is include my header file any
 
 <p><em>MyTableViewController.m</em></p>
 
-<div><figure role=code> <div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
-<span class='line'>2</span>
-<span class='line'>3</span>
-</pre></td><td class='code' width='100%'><pre><code class='objc'><div class='line'><span class="k">@interface</span> <span class="nc">MyTableViewController</span> <span class="p">()</span>
-</div><div class='line'><span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">retain</span><span class="p">)</span> <span class="n">NSArray</span> <span class="o">*</span><span class="n">items</span><span class="p">;</span>
-</div><div class='line'><span class="k">@end@implementation</span> <span class="nc">MyTableViewController</span><span class="k">@synthesize</span> <span class="n">items</span><span class="p">;...</span><span class="k">@end</span>
-</div></code></pre></td></tr></table></div></figure></div>
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="k">@interface</span> <span class="nc">MyTableViewController</span> <span class="p">()</span>
+</span><span class='line'><span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">retain</span><span class="p">)</span> <span class="n">NSArray</span> <span class="o">*</span><span class="n">items</span><span class="p">;</span>
+</span><span class='line'><span class="k">@end@implementation</span> <span class="nc">MyTableViewController</span><span class="k">@synthesize</span> <span class="n">items</span><span class="p">;...</span><span class="k">@end</span>
+</span></code></pre></td></tr></table></div></figure>
 
 
 <p>Notice how we declared the category interface directly the implementation file. This works because the .m file will only be loaded once, and since it&#8217;s inside the .m file, no other classes will ever know it existed. We can remove the property declaration from the header file and everything should work the same.</p>
@@ -1093,30 +1188,36 @@ Now that I have that implemented, all I have to do is include my header file any
 
 <p>Hopefully this helped you understand how to leverage categories to clean up your public APIs!</p>
 </div>
-  <footer>
-    <a rel="full-article" href="/2011/04/private-categories-in-objective-c/">Read on &rarr;</a>
-  </footer>
+  
+  
 
 
-  </article>
-
-
-  <article>
-    
+    </article>
+  
+  
+    <article>
+      
   <header>
     
       <h1 class="entry-title"><a href="/2011/04/increasing-shared-memory-for-postgres-on-os-x/">Increasing Shared Memory for Postgres on OS X</a></h1>
     
     
       <p class="meta">
+        
 
 
 
 
-<time datetime="2011-04-14 00:00:00 -0500" pubdate  updated >Apr 14<span>th</span>, 2011</time>
 
 
-</p>
+
+
+  
+
+
+<time datetime="2011-04-14T00:00:00-05:00" pubdate data-updated="true">Apr 14<span>th</span>, 2011</time>
+        
+      </p>
     
   </header>
 
@@ -1126,20 +1227,20 @@ Now that I have that implemented, all I have to do is include my header file any
 
 <blockquote>
   
-<div><figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
-<span class='line'>2</span>
-<span class='line'>3</span>
-<span class='line'>4</span>
-<span class='line'>5</span>
-<span class='line'>6</span>
-<span class='line'>7</span>
-</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>creating template1 database in data/base/1 ...
-</div><div class='line'>FATAL: could not create shared memory segment: Cannot allocate memory
-</div><div class='line'>DETAIL: Failed system call was shmget(key=1, size=1318912, 03600).
-</div><div class='line'>HINT: This error usually means that PostgreSQL's request for a shared&lt;br />memory segment exceeded available memory or swap space. To reduce the &lt;br />request size (currently 1318912 bytes), reduce PostgreSQL's shared_buffers &lt;br />parameter (currently 50) and/or its max_connections parameter (currently 10).
-</div><div class='line'>The PostgreSQL documentation contains more information about shared memory &lt;br />configuration.
-</div><div class='line'>child process exited with exit code 1
-</div><div class='line'>initdb: removing contents of data directory "data"</div></code></pre></td></tr></table></div></figure></div>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>creating template1 database in data/base/1 ...
+</span><span class='line'>FATAL: could not create shared memory segment: Cannot allocate memory
+</span><span class='line'>DETAIL: Failed system call was shmget(key=1, size=1318912, 03600).
+</span><span class='line'>HINT: This error usually means that PostgreSQL's request for a shared&lt;br />memory segment exceeded available memory or swap space. To reduce the &lt;br />request size (currently 1318912 bytes), reduce PostgreSQL's shared_buffers &lt;br />parameter (currently 50) and/or its max_connections parameter (currently 10).
+</span><span class='line'>The PostgreSQL documentation contains more information about shared memory &lt;br />configuration.
+</span><span class='line'>child process exited with exit code 1
+</span><span class='line'>initdb: removing contents of data directory "data"</span></code></pre></td></tr></table></div></figure>
 
 </blockquote>
 
@@ -1149,8 +1250,8 @@ Now that I have that implemented, all I have to do is include my header file any
 
 
 
-<div><figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
-</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>sysctl -a</div></code></pre></td></tr></table></div></figure></div>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>sysctl -a</span></code></pre></td></tr></table></div></figure>
 
 
 
@@ -1168,20 +1269,20 @@ Now that I have that implemented, all I have to do is include my header file any
 
 
 
-<div><figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
-<span class='line'>2</span>
-<span class='line'>3</span>
-<span class='line'>4</span>
-<span class='line'>5</span>
-<span class='line'>6</span>
-<span class='line'>7</span>
-</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>kern.sysv.shmmax=1610612736
-</div><div class='line'>kern.sysv.shmall=393216
-</div><div class='line'>kern.sysv.shmmin=1
-</div><div class='line'>kern.sysv.shmmni=32
-</div><div class='line'>kern.sysv.shmseg=8
-</div><div class='line'>kern.maxprocperuid=512
-</div><div class='line'>kern.maxproc=2048</div></code></pre></td></tr></table></div></figure></div>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>kern.sysv.shmmax=1610612736
+</span><span class='line'>kern.sysv.shmall=393216
+</span><span class='line'>kern.sysv.shmmin=1
+</span><span class='line'>kern.sysv.shmmni=32
+</span><span class='line'>kern.sysv.shmseg=8
+</span><span class='line'>kern.maxprocperuid=512
+</span><span class='line'>kern.maxproc=2048</span></code></pre></td></tr></table></div></figure>
 
 
 
@@ -1189,30 +1290,36 @@ Now that I have that implemented, all I have to do is include my header file any
 <p>You&#8217;ll need to reboot, but once you&#8217;re back up you should be able to create more Postgres databases with ease.<br /></p>
 
 </div>
-  <footer>
-    <a rel="full-article" href="/2011/04/increasing-shared-memory-for-postgres-on-os-x/">Read on &rarr;</a>
-  </footer>
+  
+  
 
 
-  </article>
-
-
-  <article>
-    
+    </article>
+  
+  
+    <article>
+      
   <header>
     
       <h1 class="entry-title"><a href="/2011/04/presentations-from-iphone-dev-con-boston/">Presentations From iPhone Dev Con Boston</a></h1>
     
     
       <p class="meta">
+        
 
 
 
 
-<time datetime="2011-04-13 00:00:00 -0500" pubdate  updated >Apr 13<span>th</span>, 2011</time>
 
 
-</p>
+
+
+  
+
+
+<time datetime="2011-04-13T00:00:00-05:00" pubdate data-updated="true">Apr 13<span>th</span>, 2011</time>
+        
+      </p>
     
   </header>
 
@@ -1250,30 +1357,36 @@ Now that I have that implemented, all I have to do is include my header file any
 <p>Thanks to all who attended and left me such great reviews!</p>
 
 </div>
-  <footer>
-    <a rel="full-article" href="/2011/04/presentations-from-iphone-dev-con-boston/">Read on &rarr;</a>
-  </footer>
+  
+  
 
 
-  </article>
-
-
-  <article>
-    
+    </article>
+  
+  
+    <article>
+      
   <header>
     
       <h1 class="entry-title"><a href="/2011/04/book-review-crafting-rails-applications/">Book Review: Crafting Rails Applications</a></h1>
     
     
       <p class="meta">
+        
 
 
 
 
-<time datetime="2011-04-13 00:00:00 -0500" pubdate  updated >Apr 13<span>th</span>, 2011</time>
 
 
-</p>
+
+
+  
+
+
+<time datetime="2011-04-13T00:00:00-05:00" pubdate data-updated="true">Apr 13<span>th</span>, 2011</time>
+        
+      </p>
     
   </header>
 
@@ -1305,77 +1418,13 @@ I tend to prefer RSpec with 1 assertion per test method and many fine-grained me
 <br />
 
 </div>
-  <footer>
-    <a rel="full-article" href="/2011/04/book-review-crafting-rails-applications/">Read on &rarr;</a>
-  </footer>
+  
+  
 
 
-  </article>
-
-
-  <article>
-    
-  <header>
-    
-      <h1 class="entry-title"><a href="/2011/04/mariachi-product-engineering/">Mariachi Product Engineering</a></h1>
-    
-    
-      <p class="meta">
-
-
-
-
-<time datetime="2011-04-12 00:00:00 -0500" pubdate  updated >Apr 12<span>th</span>, 2011</time>
-
-
-</p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>I spoke at iPhone Dev Con in Boston last week and I attended Mike Lee&#8217;s excellent keynote presentation: &#8220;Mariachi Product Engineering&#8221;</p>
-
-
-<p>At iPhone Dev Con in San Diego last year, Mike came out dressed like a Pirate. No kidding.</p>
-
-
-<p><br />
-<img src="/images/mikelee-pirate.jpg"  alt="mikelee-pirate"  /></p>
-
-
-<p>This year he came with a Mariachi outfit on. It&#8217;s pretty hilarious as nobody expects a keynote speaker to be dressed this way.</p>
-
-
-<p>Over beers some of the guys at the conference decided it would be awesomely-epic to hire a real mariachi band to play during his keynote. So how does one find a mariachi band with after midnight on a Monday? Apparently, AMEX. One of the guys called his AMEX service and they <i>delivered</i>. I swear this could be the makings of a new AMEX commercial.</p>
-
-
-<p>It made for a memorable keynote to say the least. The talk was excellent as well, as Mike certainly has a lot to say about Product Engineering.</p>
-
-
-<p>Here is the video of the first 30 or so minutes of the talk (I ran out of battery before it was over).</p>
-
-
-<iframe src="http://player.vimeo.com/video/22031658" width="400" height="300" frameborder="0"></iframe>
-
-
-<p><a href="http://vimeo.com/22031658">Mike Lee - Mariachi Product Engineering</a> from <a href="http://vimeo.com/user1579700">Ben Scheirman</a> on <a href="http://vimeo.com">Vimeo</a>.</p>
-
-
-<p><img src="/images/mikelee-mariachi.jpg"  alt="mikelee-mariachi.jpg"  /></p>
-
-
-<p>I&#8217;ll have links to my presentation material soon, but I wanted to share this awesome event. Certainly one for the books!</p>
-
-</div>
-  <footer>
-    <a rel="full-article" href="/2011/04/mariachi-product-engineering/">Read on &rarr;</a>
-  </footer>
-
-
-  </article>
-
-<nav role="pagination">
-  <div>
+    </article>
+  
+  <div class="pagination">
     
       <a class="prev" href="/blog/page/4/">&larr; Older</a>
     
@@ -1384,20 +1433,8 @@ I tend to prefer RSpec with 1 assertion per test method and many fine-grained me
     <a class="next" href="/blog/page/2/">Newer &rarr;</a>
     
   </div>
-</nav>
-
-<script type="text/javascript">
-    var disqus_shortname = 'subdigital';
-    (function () {
-      var s = document.createElement('script'); s.async = true;
-      s.type = 'text/javascript';
-      s.src = 'http://' + disqus_shortname + '.disqus.com/count.js';
-      (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
-    }());
-</script>
-
 </div>
-<aside role=sidebar>
+<aside class="sidebar">
   
     <section>
   <h1>Who am I?</h1>
@@ -1406,6 +1443,10 @@ I tend to prefer RSpec with 1 assertion per test method and many fine-grained me
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/2012/07/serving-assets-from-s3-on-heroku/">Serving Assets from S3 on Heroku</a>
+      </li>
     
       <li class="post">
         <a href="/2012/02/hello/">Hello, NSScreencast</a>
@@ -1423,10 +1464,6 @@ I tend to prefer RSpec with 1 assertion per test method and many fine-grained me
         <a href="/2011/12/formatting-json-from-terminal/">Formatting JSON From Terminal</a>
       </li>
     
-      <li class="post">
-        <a href="/2011/10/houston-tech-fest-2011-recap/">Houston Tech Fest 2011 Recap</a>
-      </li>
-    
   </ul>
 </section>
 
@@ -1442,16 +1479,19 @@ I tend to prefer RSpec with 1 assertion per test method and many fine-grained me
   </script>
   <script src="/javascripts/twitter.js" type="text/javascript"> </script>
   
-    <a href="http://twitter.com/subdigital" class="twitter-follow-button" data-width="208px" data-show-count="false">Follow @subdigital</a>
+    <a href="http://twitter.com/subdigital" class="twitter-follow-button" data-show-count="false">Follow @subdigital</a>
   
 </section>
 
 
 <section>
   <h1>On Delicious</h1>
-  <script type="text/javascript" src="http://feeds.delicious.com/v2/js/subdigital?title=&count=3&sort=date&extended"></script>
+  <div id="delicious"></div>
+  <script type="text/javascript" src="http://feeds.delicious.com/v2/json/subdigital?count=3&amp;sort=date&amp;callback=renderDeliciousLinks"></script>
   <p><a href="http://delicious.com/subdigital">My Delicious Bookmarks &raquo;</a></p>
 </section>
+
+
 
 
 
@@ -1460,7 +1500,7 @@ I tend to prefer RSpec with 1 assertion per test method and many fine-grained me
 
     </div>
   </div>
-  <footer>
+  <footer role="contentinfo">
 <a style="display:block; float: right" title="Real Time Analytics" href="http://getclicky.com/66470389"><img alt="Real Time Analytics" src="//static.getclicky.com/media/links/badge.gif" border="0" /></a>
 <script src="//static.getclicky.com/js" type="text/javascript"></script>
 <script type="text/javascript">try{ clicky.init(66470389); }catch(e){}</script>
@@ -1487,5 +1527,40 @@ I tend to prefer RSpec with 1 assertion per test method and many fine-grained me
 </p>
 
 </footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'subdigital';
+      
+        
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
 </body>
 </html>

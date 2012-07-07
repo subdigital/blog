@@ -5,11 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>
-    
-    Fickle Bits
-  </title>
+  <title>Fickle Bits</title>
   <meta name="author" content="Ben Scheirman">
+
+  
+  <meta name="description" content="I promised posts with more &ldquo;meat,&rdquo; so here it goes.&nbsp; I&rsquo;m going to demonstrate how to start writing a CAB application by &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -18,14 +18,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-
-  <link rel="canonical" href="http://benscheirman.com/blog/page/28/index.html"/>
-  <link href="/favicon.png" rel="shortcut icon" />
+  <link rel="canonical" href="http://benscheirman.com/blog/page/28/">
+  <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
-  <script src="http://s3.amazonaws.com/ender-js/jeesh.min.js"></script>
+  <script src="/javascripts/ender.js"></script>
   <script src="/javascripts/octopress.js" type="text/javascript"></script>
-  <link href="http://feeds.feedburner.com/ficklebits" rel="alternate" title="Fickle Bits" type="application/atom+xml"/>
+  <link href="http://feeds.feedburner.com/ficklebits" rel="alternate" title="Fickle Bits" type="application/atom+xml">
+  <!--Fonts from Google's Web font directory at http://google.com/webfonts -->
+<link href='http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic' rel='stylesheet' type='text/css'>
+
   
   <script type="text/javascript">
     var _gaq = _gaq || [];
@@ -40,36 +43,10 @@
   </script>
 
 
-  
-  <script type="text/javascript">
-    (function() {
-      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
-      script.src = 'https://apis.google.com/js/plusone.js';
-      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
-    })();
-  </script>
-
-
-  
-  <script type="text/javascript">
-    (function(){
-      var twitterWidgets = document.createElement('script');
-      twitterWidgets.type = 'text/javascript';
-      twitterWidgets.async = true;
-      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
-      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
-    })();
-  </script>
-
-
-  <!--Fonts from Google's Web font directory at http://google.com/webfonts -->
-<link href='http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic' rel='stylesheet' type='text/css'>
-<link href='http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic' rel='stylesheet' type='text/css'>
-
 </head>
 
-<body  >
-  <header><hgroup>
+<body   >
+  <header role="banner"><hgroup>
   <h1><a href="/">Fickle Bits</a></h1>
   
     <h2>You're doing it wrong.</h2>
@@ -77,24 +54,26 @@
 </hgroup>
 
 </header>
-  <nav role=navigation><ul role=subscription data-subscription="rss">
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
   <li><a href="http://feeds.feedburner.com/ficklebits" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
   
 </ul>
+  
 <form action="http://google.com/search" method="get">
-  <fieldset role="site-search">
+  <fieldset role="search">
     <input type="hidden" name="q" value="site:benscheirman.com" />
     <input class="search" type="text" name="q" results="0" placeholder="Search"/>
   </fieldset>
 </form>
+  
 <ul role=main-navigation>
   <li><a href="/">Blog</a></li>
   <li><a href="/about-me">About Me</a></li>
   <li><a href="/speaking">Speaking</a></li>
   <li><a href="/contact">Contact</a></li>
-  <li><a href="http://giggletouch.com">Giggle Touch for
-    iOS</a></li>
-  <li><a href="http://appkickstand.com">AppKickstand</a></li>
+  <li><a href="/projects">Projects</a></li>
+  <!-- <li><a href="http://giggletouch.com">Giggle Touch</a></li> -->
+  <!-- <li><a href="http://appkickstand.com">AppKickstand</a></li> -->
   <li><a href="/blog/archives">Archives</a></li>
 
 </ul>
@@ -103,25 +82,111 @@
   <div id="main">
     <div id="content">
       <div class="blog-index">
-
-
-
-  <article>
+  
+  
+  
+    <article>
+      
+  <header>
     
+      <h1 class="entry-title"><a href="/2007/03/writing-a-simple-image-editor-in-cab-part-1/">Writing a Simple Image Editor in CAB - Part 1</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2007-03-09T00:00:00-06:00" pubdate data-updated="true">Mar 9<span>th</span>, 2007</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I promised posts with more &ldquo;meat,&rdquo; so here it goes.&nbsp; I&rsquo;m going to demonstrate how to start writing a CAB application by building a simple image manipulation program.</p>
+
+
+<p><u>Overview:<br /></u><em>The application will load an image from some flexible source (file system, flickr, whatever).&nbsp; The image will be displayed on the canvas.&nbsp; The user will have various filters to apply to the image.&nbsp; These filters should be easily added later on, and they should all manipulate the image in some way.&nbsp; When everything is done, the user will have the option of saving the changes to disk.</em></p>
+
+
+<p>So now that we have our high-level description of the app, let&rsquo;s build it!</p>
+
+
+<p>Start up Visual Studio 2005, create a blank solution called <strong>CAB-ImageEditor</strong>.&nbsp; Add a new C# Windows application called <strong>ImageEditorShell</strong>.&nbsp; This will be the basic structure of the application, and we will add things to it.</p>
+
+
+<p>Add the following references to your project:</p>
+
+
+<ul><li>Microsoft.Practices.CompositeUI</li><li>Microsoft.Practices.ObjectBuilder</li><li>Microsoft.Practices.CompositeUI.WinForms</li></ul>
+
+
+<p>First you need to delete the files&nbsp;that Visual Studio gives you out of the box.&nbsp; We will start from scratch.</p>
+
+
+<p>Create a new Form called <strong>ImageEditorShell.cs</strong>.&nbsp; Give it a window title if you like.</p>
+
+
+<p><img src="/images/CropperCapture%5B41%5D_small.jpg" alt="Our blank shell"  border="1"  /></p>
+
+
+<p>Create a new class called <strong>ImageEditorApplication.cs</strong>.&nbsp; This will be the entry point for our application.&nbsp; We need to inherit the class from <strong>FormShellApplication&lt;T,K&gt;</strong> and give it the type of the root work item and our shell.</p>
+
+
+<div style="FONT-SIZE: 8pt; BACKGROUND: white; COLOR: black; FONT-FAMILY: Consolas"><p style="MARGIN: 0px"><span style="COLOR: blue">using</span> System;</p><p style="MARGIN: 0px"><span style="COLOR: blue">using</span> Microsoft.Practices.CompositeUI;</p><p style="MARGIN: 0px"><span style="COLOR: blue">using</span> Microsoft.Practices.CompositeUI.WinForms;</p><p style="MARGIN: 0px">&nbsp;</p><p style="MARGIN: 0px"><span style="COLOR: blue">namespace</span> ImageEditorShell</p><p style="MARGIN: 0px">{</p><p style="MARGIN: 0px">&nbsp; &nbsp; <span style="COLOR: blue">public</span> <span style="COLOR: blue">class</span> <span style="COLOR: teal">ImageEditorApplication</span> : <span style="COLOR: teal">FormShellApplication</span>&lt;<span style="COLOR: teal">WorkItem</span>, <span style="COLOR: teal">ImageEditorShell</span>&gt;</p><p style="MARGIN: 0px">&nbsp; &nbsp; {</p><p style="MARGIN: 0px">&nbsp;&nbsp;&nbsp; }</p><p style="MARGIN: 0px">}</p></div>
+
+
+<p>We need an entry point to start the application, so add that&hellip;</p>
+
+
+<div style="FONT-SIZE: 8pt; BACKGROUND: white; COLOR: black; FONT-FAMILY: Consolas"><p style="MARGIN: 0px"><span style="COLOR: blue">public</span> <span style="COLOR: blue">class</span> <span style="COLOR: teal">ImageEditorApplication</span> : <span style="COLOR: teal">FormShellApplication</span>&lt;<span style="COLOR: teal">WorkItem</span>, <span style="COLOR: teal">ImageEditorShell</span>&gt;</p><p style="MARGIN: 0px">{</p><p style="MARGIN: 0px">&nbsp; &nbsp; <strong>[<span style="COLOR: teal">STAThread</span>]</strong></p><p style="MARGIN: 0px"><strong>&nbsp; &nbsp; <span style="COLOR: blue">public</span> <span style="COLOR: blue">static</span> <span style="COLOR: blue">void</span> Main()</strong></p><p style="MARGIN: 0px"><strong>&nbsp; &nbsp; {</strong></p><p style="MARGIN: 0px"><strong>&nbsp; &nbsp; &nbsp; &nbsp; <span style="COLOR: blue">new</span> <span style="COLOR: teal">ImageEditorApplication</span>().Run();</strong></p><p style="MARGIN: 0px"><strong>&nbsp; &nbsp; }</strong>&nbsp; &nbsp; &nbsp; &nbsp; </p><p style="MARGIN: 0px">}</p></div>
+
+
+<p>That&rsquo;s all we need to get our application running.&nbsp; Go ahead and push F5 and see what happens.</p>
+
+
+<p>Man, are you impressed yet?&nbsp; Hehe, chill out.&nbsp; There&rsquo;s more to come&hellip;</p>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
   <header>
     
       <h1 class="entry-title"><a href="/2007/03/cab-hands-on-labs/">CAB - Hands on Labs</a></h1>
     
     
       <p class="meta">
+        
 
 
 
 
-<time datetime="2007-03-09 00:00:00 -0600" pubdate  updated >Mar 9<span>th</span>, 2007</time>
 
 
-</p>
+
+
+  
+
+
+<time datetime="2007-03-09T00:00:00-06:00" pubdate data-updated="true">Mar 9<span>th</span>, 2007</time>
+        
+      </p>
     
   </header>
 
@@ -135,30 +200,36 @@
 <p>If you&rsquo;re looking to understand CAB from a very beginner&rsquo;s perspective, then I highly recommend you go through them.&nbsp; There are 9 in total.</p>
 
 </div>
-  <footer>
-    <a rel="full-article" href="/2007/03/cab-hands-on-labs/">Read on &rarr;</a>
-  </footer>
+  
+  
 
 
-  </article>
-
-
-  <article>
-    
+    </article>
+  
+  
+    <article>
+      
   <header>
     
       <h1 class="entry-title"><a href="/2007/03/so-whats-a-workitem/">So What&#8217;s a WorkItem?</a></h1>
     
     
       <p class="meta">
+        
 
 
 
 
-<time datetime="2007-03-08 00:00:00 -0600" pubdate  updated >Mar 8<span>th</span>, 2007</time>
 
 
-</p>
+
+
+  
+
+
+<time datetime="2007-03-08T00:00:00-06:00" pubdate data-updated="true">Mar 8<span>th</span>, 2007</time>
+        
+      </p>
     
   </header>
 
@@ -184,30 +255,36 @@
 <p>If you don&rsquo;t do your use case homework, your work items will &ldquo;go against the grain&rdquo; of the application and add unnecessary complexity to the whole framework.&nbsp; Do your use case work up front, and you&rsquo;ll be designing better WorkItems.</p>
 
 </div>
-  <footer>
-    <a rel="full-article" href="/2007/03/so-whats-a-workitem/">Read on &rarr;</a>
-  </footer>
+  
+  
 
 
-  </article>
-
-
-  <article>
-    
+    </article>
+  
+  
+    <article>
+      
   <header>
     
       <h1 class="entry-title"><a href="/2007/03/whats-in-a-cab-module/">What&#8217;s in a CAB Module?</a></h1>
     
     
       <p class="meta">
+        
 
 
 
 
-<time datetime="2007-03-07 00:00:00 -0600" pubdate  updated >Mar 7<span>th</span>, 2007</time>
 
 
-</p>
+
+
+  
+
+
+<time datetime="2007-03-07T00:00:00-06:00" pubdate data-updated="true">Mar 7<span>th</span>, 2007</time>
+        
+      </p>
     
   </header>
 
@@ -233,30 +310,36 @@
 <p>&nbsp;</p>
 
 </div>
-  <footer>
-    <a rel="full-article" href="/2007/03/whats-in-a-cab-module/">Read on &rarr;</a>
-  </footer>
+  
+  
 
 
-  </article>
-
-
-  <article>
-    
+    </article>
+  
+  
+    <article>
+      
   <header>
     
       <h1 class="entry-title"><a href="/2007/03/digging-into-cab-the-terminology/">Digging Into CAB - the Terminology</a></h1>
     
     
       <p class="meta">
+        
 
 
 
 
-<time datetime="2007-03-07 00:00:00 -0600" pubdate  updated >Mar 7<span>th</span>, 2007</time>
 
 
-</p>
+
+
+  
+
+
+<time datetime="2007-03-07T00:00:00-06:00" pubdate data-updated="true">Mar 7<span>th</span>, 2007</time>
+        
+      </p>
     
   </header>
 
@@ -291,30 +374,36 @@
 <p>I think that gives us a good overview of the main terms and responsibilities.&nbsp; Until next time&hellip;</p>
 
 </div>
-  <footer>
-    <a rel="full-article" href="/2007/03/digging-into-cab-the-terminology/">Read on &rarr;</a>
-  </footer>
+  
+  
 
 
-  </article>
-
-
-  <article>
-    
+    </article>
+  
+  
+    <article>
+      
   <header>
     
       <h1 class="entry-title"><a href="/2007/03/getting-started-with-cab/">Getting Started With CAB</a></h1>
     
     
       <p class="meta">
+        
 
 
 
 
-<time datetime="2007-03-06 00:00:00 -0600" pubdate  updated >Mar 6<span>th</span>, 2007</time>
 
 
-</p>
+
+
+  
+
+
+<time datetime="2007-03-06T00:00:00-06:00" pubdate data-updated="true">Mar 6<span>th</span>, 2007</time>
+        
+      </p>
     
   </header>
 
@@ -352,30 +441,36 @@
 <p>The next post will definitely contain more &ldquo;meat.&rdquo;</p>
 
 </div>
-  <footer>
-    <a rel="full-article" href="/2007/03/getting-started-with-cab/">Read on &rarr;</a>
-  </footer>
+  
+  
 
 
-  </article>
-
-
-  <article>
-    
+    </article>
+  
+  
+    <article>
+      
   <header>
     
       <h1 class="entry-title"><a href="/2007/03/thats-just-plain-unprofessional/">That&#8217;s Just Plain Unprofessional</a></h1>
     
     
       <p class="meta">
+        
 
 
 
 
-<time datetime="2007-03-05 00:00:00 -0600" pubdate  updated >Mar 5<span>th</span>, 2007</time>
 
 
-</p>
+
+
+  
+
+
+<time datetime="2007-03-05T00:00:00-06:00" pubdate data-updated="true">Mar 5<span>th</span>, 2007</time>
+        
+      </p>
     
   </header>
 
@@ -389,30 +484,36 @@
 <div class="bjtags">Tags:<a rel="tag" href="http://technorati.com/tag/General">General</a></div>
 
 </div>
-  <footer>
-    <a rel="full-article" href="/2007/03/thats-just-plain-unprofessional/">Read on &rarr;</a>
-  </footer>
+  
+  
 
 
-  </article>
-
-
-  <article>
-    
+    </article>
+  
+  
+    <article>
+      
   <header>
     
       <h1 class="entry-title"><a href="/2007/03/sark-acquired-by-sogeti/">Sark Acquired by Sogeti</a></h1>
     
     
       <p class="meta">
+        
 
 
 
 
-<time datetime="2007-03-05 00:00:00 -0600" pubdate  updated >Mar 5<span>th</span>, 2007</time>
 
 
-</p>
+
+
+  
+
+
+<time datetime="2007-03-05T00:00:00-06:00" pubdate data-updated="true">Mar 5<span>th</span>, 2007</time>
+        
+      </p>
     
   </header>
 
@@ -435,30 +536,36 @@
 <div class="bjtags">Tags:<a rel="tag" href="http://technorati.com/tag/Sogeti">Sogeti</a></div>
 
 </div>
-  <footer>
-    <a rel="full-article" href="/2007/03/sark-acquired-by-sogeti/">Read on &rarr;</a>
-  </footer>
+  
+  
 
 
-  </article>
-
-
-  <article>
-    
+    </article>
+  
+  
+    <article>
+      
   <header>
     
       <h1 class="entry-title"><a href="/2007/03/texter-transform-any-textbox-into-a-snippet-aware-editor/">Texter - Transform Any Textbox Into a Snippet-aware Editor</a></h1>
     
     
       <p class="meta">
+        
 
 
 
 
-<time datetime="2007-03-02 00:00:00 -0600" pubdate  updated >Mar 2<span>nd</span>, 2007</time>
 
 
-</p>
+
+
+  
+
+
+<time datetime="2007-03-02T00:00:00-06:00" pubdate data-updated="true">Mar 2<span>nd</span>, 2007</time>
+        
+      </p>
     
   </header>
 
@@ -472,30 +579,36 @@
 <p><a href="http://lifehacker.com/software/texter/lifehacker-code-texter-windows-238306.php">http://lifehacker.com/software/texter/lifehacker-code-texter-windows-238306.php</a></p>
 
 </div>
-  <footer>
-    <a rel="full-article" href="/2007/03/texter-transform-any-textbox-into-a-snippet-aware-editor/">Read on &rarr;</a>
-  </footer>
+  
+  
 
 
-  </article>
-
-
-  <article>
-    
+    </article>
+  
+  
+    <article>
+      
   <header>
     
       <h1 class="entry-title"><a href="/2007/03/blogjet-version-2-rocks/">BlogJet - Version 2 Rocks!</a></h1>
     
     
       <p class="meta">
+        
 
 
 
 
-<time datetime="2007-03-02 00:00:00 -0600" pubdate  updated >Mar 2<span>nd</span>, 2007</time>
 
 
-</p>
+
+
+  
+
+
+<time datetime="2007-03-02T00:00:00-06:00" pubdate data-updated="true">Mar 2<span>nd</span>, 2007</time>
+        
+      </p>
     
   </header>
 
@@ -506,64 +619,13 @@
 <p>The interface looks a lot cleaner as well.&nbsp; I&rsquo;m sure I will uncover some other cool new features as I use it, but for now&hellip; if you&rsquo;re not writing to your blog with <a href="http://blogjet.com/">BlogJet</a>, go try it!</p>
 
 </div>
-  <footer>
-    <a rel="full-article" href="/2007/03/blogjet-version-2-rocks/">Read on &rarr;</a>
-  </footer>
+  
+  
 
 
-  </article>
-
-
-  <article>
-    
-  <header>
-    
-      <h1 class="entry-title"><a href="/2007/02/on-to-a-new-client/">On to a New Client</a></h1>
-    
-    
-      <p class="meta">
-
-
-
-
-<time datetime="2007-02-28 00:00:00 -0600" pubdate  updated >Feb 28<span>th</span>, 2007</time>
-
-
-</p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>I wrapped up my project at a client today, so I&rsquo;m on to a new one on Monday.</p>
-
-
-<p>The project consisted mainly of SharePoint, but I did get to do some interesting development aside from that.&nbsp; I worked on a Stock Quote web service that would gather information from pluggable sources.&nbsp; They wanted to pay for a dedicated source, however politics and paperwork were such a barrier I ended up just scraping Google finance.&nbsp; It won&rsquo;t last forever, but it&rsquo;s free and avoids the paperwork.</p>
-
-
-<p>We wrote a few custom SharePoint Web Parts, and I found out first hand what a pain in the ass it is to deploy these things.&nbsp; The deployment project outputs a CAB file.&nbsp; This CAB file needs to be copied onto the server, and you have to use the STSADM tool to install it into the portal server.&nbsp; This means you need Remote Desktop access just to deploy to&nbsp;a server!&nbsp; Our production servers are load-balanced, so this means you have to do it twice.&nbsp; To save us a lot of time and headaches I wrote a Windows service that would monitor a CAB file for changes using a FileSystemWatcher, when it detected a change, it would&hellip;</p>
-
-
-<ul><li>Extract the CAB to get the dlls</li><li>Copy the dlls to the target bin folder</li><li>Optionally sign the assembly so it can be installed into the GAC</li><li>Run STSADM to remove the old CAB file from the portal server</li><li>Run STSADM to get the new CAB file in the portal&nbsp;server</li><li>Reset IIS</li></ul>
-
-
-<p>This thing worked like a charm!&nbsp; We could kick off a build, run a batch file the copy the new CAB over, and the thing would install itself.&nbsp; I wish I could release the code here, but I wrote it at a client site, so it belongs to them.</p>
-
-
-<p>We also managed to contort a SharePoint Portal site into something actually pleasing to look at, and ripped out most of SharePoints crappy markup.&nbsp; Why in the world does SharePoint output so many damn tables?</p>
-
-
-<p>To be clear, this is all with SharePoint 2003, so I imagine MOSS 2007 is loads better, but I haven&rsquo;t yet worked on it.&nbsp; Anyway, my next project doesn&rsquo;t involve SharePoint, so I&rsquo;m happy.</p>
-
-</div>
-  <footer>
-    <a rel="full-article" href="/2007/02/on-to-a-new-client/">Read on &rarr;</a>
-  </footer>
-
-
-  </article>
-
-<nav role="pagination">
-  <div>
+    </article>
+  
+  <div class="pagination">
     
       <a class="prev" href="/blog/page/29/">&larr; Older</a>
     
@@ -572,20 +634,8 @@
     <a class="next" href="/blog/page/27/">Newer &rarr;</a>
     
   </div>
-</nav>
-
-<script type="text/javascript">
-    var disqus_shortname = 'subdigital';
-    (function () {
-      var s = document.createElement('script'); s.async = true;
-      s.type = 'text/javascript';
-      s.src = 'http://' + disqus_shortname + '.disqus.com/count.js';
-      (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
-    }());
-</script>
-
 </div>
-<aside role=sidebar>
+<aside class="sidebar">
   
     <section>
   <h1>Who am I?</h1>
@@ -594,6 +644,10 @@
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/2012/07/serving-assets-from-s3-on-heroku/">Serving Assets from S3 on Heroku</a>
+      </li>
     
       <li class="post">
         <a href="/2012/02/hello/">Hello, NSScreencast</a>
@@ -611,10 +665,6 @@
         <a href="/2011/12/formatting-json-from-terminal/">Formatting JSON From Terminal</a>
       </li>
     
-      <li class="post">
-        <a href="/2011/10/houston-tech-fest-2011-recap/">Houston Tech Fest 2011 Recap</a>
-      </li>
-    
   </ul>
 </section>
 
@@ -630,16 +680,19 @@
   </script>
   <script src="/javascripts/twitter.js" type="text/javascript"> </script>
   
-    <a href="http://twitter.com/subdigital" class="twitter-follow-button" data-width="208px" data-show-count="false">Follow @subdigital</a>
+    <a href="http://twitter.com/subdigital" class="twitter-follow-button" data-show-count="false">Follow @subdigital</a>
   
 </section>
 
 
 <section>
   <h1>On Delicious</h1>
-  <script type="text/javascript" src="http://feeds.delicious.com/v2/js/subdigital?title=&count=3&sort=date&extended"></script>
+  <div id="delicious"></div>
+  <script type="text/javascript" src="http://feeds.delicious.com/v2/json/subdigital?count=3&amp;sort=date&amp;callback=renderDeliciousLinks"></script>
   <p><a href="http://delicious.com/subdigital">My Delicious Bookmarks &raquo;</a></p>
 </section>
+
+
 
 
 
@@ -648,7 +701,7 @@
 
     </div>
   </div>
-  <footer>
+  <footer role="contentinfo">
 <a style="display:block; float: right" title="Real Time Analytics" href="http://getclicky.com/66470389"><img alt="Real Time Analytics" src="//static.getclicky.com/media/links/badge.gif" border="0" /></a>
 <script src="//static.getclicky.com/js" type="text/javascript"></script>
 <script type="text/javascript">try{ clicky.init(66470389); }catch(e){}</script>
@@ -675,5 +728,40 @@
 </p>
 
 </footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'subdigital';
+      
+        
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
 </body>
 </html>

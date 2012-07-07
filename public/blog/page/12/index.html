@@ -5,11 +5,12 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>
-    
-    Fickle Bits
-  </title>
+  <title>Fickle Bits</title>
   <meta name="author" content="Ben Scheirman">
+
+  
+  <meta name="description" content="Have you written code like this recently? &nbsp; <!--
+{\rtf1\ansi\ansicpg\lang1024\noproof1252\uc1 \deff0{\fonttbl{\f0\fnil\fcharset0\fprq1 Consolas &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -18,14 +19,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-
-  <link rel="canonical" href="http://benscheirman.com/blog/page/12/index.html"/>
-  <link href="/favicon.png" rel="shortcut icon" />
+  <link rel="canonical" href="http://benscheirman.com/blog/page/12/">
+  <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
-  <script src="http://s3.amazonaws.com/ender-js/jeesh.min.js"></script>
+  <script src="/javascripts/ender.js"></script>
   <script src="/javascripts/octopress.js" type="text/javascript"></script>
-  <link href="http://feeds.feedburner.com/ficklebits" rel="alternate" title="Fickle Bits" type="application/atom+xml"/>
+  <link href="http://feeds.feedburner.com/ficklebits" rel="alternate" title="Fickle Bits" type="application/atom+xml">
+  <!--Fonts from Google's Web font directory at http://google.com/webfonts -->
+<link href='http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic' rel='stylesheet' type='text/css'>
+
   
   <script type="text/javascript">
     var _gaq = _gaq || [];
@@ -40,36 +44,10 @@
   </script>
 
 
-  
-  <script type="text/javascript">
-    (function() {
-      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
-      script.src = 'https://apis.google.com/js/plusone.js';
-      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
-    })();
-  </script>
-
-
-  
-  <script type="text/javascript">
-    (function(){
-      var twitterWidgets = document.createElement('script');
-      twitterWidgets.type = 'text/javascript';
-      twitterWidgets.async = true;
-      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
-      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
-    })();
-  </script>
-
-
-  <!--Fonts from Google's Web font directory at http://google.com/webfonts -->
-<link href='http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic' rel='stylesheet' type='text/css'>
-<link href='http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic' rel='stylesheet' type='text/css'>
-
 </head>
 
-<body  >
-  <header><hgroup>
+<body   >
+  <header role="banner"><hgroup>
   <h1><a href="/">Fickle Bits</a></h1>
   
     <h2>You're doing it wrong.</h2>
@@ -77,24 +55,26 @@
 </hgroup>
 
 </header>
-  <nav role=navigation><ul role=subscription data-subscription="rss">
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
   <li><a href="http://feeds.feedburner.com/ficklebits" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
   
 </ul>
+  
 <form action="http://google.com/search" method="get">
-  <fieldset role="site-search">
+  <fieldset role="search">
     <input type="hidden" name="q" value="site:benscheirman.com" />
     <input class="search" type="text" name="q" results="0" placeholder="Search"/>
   </fieldset>
 </form>
+  
 <ul role=main-navigation>
   <li><a href="/">Blog</a></li>
   <li><a href="/about-me">About Me</a></li>
   <li><a href="/speaking">Speaking</a></li>
   <li><a href="/contact">Contact</a></li>
-  <li><a href="http://giggletouch.com">Giggle Touch for
-    iOS</a></li>
-  <li><a href="http://appkickstand.com">AppKickstand</a></li>
+  <li><a href="/projects">Projects</a></li>
+  <!-- <li><a href="http://giggletouch.com">Giggle Touch</a></li> -->
+  <!-- <li><a href="http://appkickstand.com">AppKickstand</a></li> -->
   <li><a href="/blog/archives">Archives</a></li>
 
 </ul>
@@ -103,25 +83,186 @@
   <div id="main">
     <div id="content">
       <div class="blog-index">
-
-
-
-  <article>
+  
+  
+  
+    <article>
+      
+  <header>
     
+      <h1 class="entry-title"><a href="/2008/11/fluent-route-testing-in-asp-net-mvc/">Fluent Route Testing in ASP.NET MVC</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2008-11-25T00:00:00-06:00" pubdate data-updated="true">Nov 25<span>th</span>, 2008</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Have you written code like this recently?</p>
+
+
+<p>&nbsp;</p>
+
+
+<!--
+{\rtf1\ansi\ansicpg\lang1024\noproof1252\uc1 \deff0{\fonttbl{\f0\fnil\fcharset0\fprq1 Consolas;}}{\colortbl;??\red238\green238\blue238;\red32\green32\blue32;\red255\green0\blue128;\red144\green238\blue144;\red242\green240\blue223;\red192\green192\blue192;\red0\green255\blue255;}??\fs26 \cf1\cb2\highlight2 [\cf3 Test\cf1 ]\par ??\cf4 public\cf1  \cf4 void\cf1  \cf5 tedious_route_test\cf1 ()\par ??\{\par ??    \cf3 Global\cf6 .\cf5 RegisterRoutes\cf1 (\cf3 RouteTable\cf6 .\cf5 Routes\cf1 );\par ??    \cf4 var\cf1  \cf5 httpContext\cf1  \cf6 =\cf1  \cf3 MockRepository\cf6 .\cf5 GenerateStub\cf6 &lt;\cf3 HttpContextBase\cf6 &gt;\cf1 ();\par ??    \cf5 httpContext\cf6 .\cf5 Stub\cf1 (\cf5 x\cf1  \cf6 =&gt;\cf1  \cf5 x\cf6 .\cf5 Request\cf1 )\cf6 .\cf5 Return\cf1 (\cf3 MockRepository\cf6 .\cf5 GenerateStub\cf6 &lt;\cf3 HttpRequestBase\cf6 &gt;\cf1 ());\par ??    \cf5 httpContext\cf6 .\cf5 Request\cf6 .\cf5 Stub\cf1 (\cf5 x\cf1  \cf6 =&gt;\cf1  \cf5 x\cf6 .\cf5 PathInfo\cf1 )\cf6 .\cf5 Return\cf1 (\cf7 {\b ""}\cf1 );\par ??    \cf5 httpContext\cf6 .\cf5 Request\cf6 .\cf5 Stub\cf1 (\cf5 x\cf1  \cf6 =&gt;\cf1  \cf5 x\cf6 .\cf5 AppRelativeCurrentExecutionFilePath\cf1 )\cf6 .\cf5 Return\cf1 (\cf7 {\b "~/foo/bar"}\cf1 );\par ??\par ??    \cf4 var\cf1  \cf5 routeData\cf1  \cf6 =\cf1  \cf3 RouteTable\cf6 .\cf5 Routes\cf6 .\cf5 GetRouteData\cf1 (\cf5 httpContext\cf1 );\par ??\par ??    \cf3 Assert\cf6 .\cf5 That\cf1 (\cf5 routeData\cf6 .\cf5 Values\cf1 [\cf7 {\b "controller"}\cf1 ], \cf3 Is\cf6 .\cf5 EqualTo\cf1 (\cf7 {\b "foo"}\cf1 ));\par ??    \cf3 Assert\cf6 .\cf5 That\cf1 (\cf5 routeData\cf6 .\cf5 Values\cf1 [\cf7 {\b "action"}\cf1 ], \cf3 Is\cf6 .\cf5 EqualTo\cf1 (\cf7 {\b "bar"}\cf1 ));\par ??\}\par ??}
+-->
+
+
+<div style="padding: 10px; background: rgb(32, 32, 32) none repeat scroll 0% 0%; font-size: 13pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial; color: rgb(238, 238, 238); font-family: consolas,courier new;">
+<p style="margin: 0px;">[<span style="color: rgb(255, 0, 128);">Test</span>]</p>
+<p style="margin: 0px;"><span style="color: rgb(144, 238, 144);">public</span> <span style="color: rgb(144, 238, 144);">void</span> <span style="color: rgb(242, 240, 223);">tedious_route_test</span>()</p>
+<p style="margin: 0px;">{</p>
+<p style="margin: 0px;">&nbsp;&nbsp;&nbsp; <span style="color: rgb(255, 0, 128);">Global</span><span style="color: silver;">.</span><span style="color: rgb(242, 240, 223);">RegisterRoutes</span>(<span style="color: rgb(255, 0, 128);">RouteTable</span><span style="color: silver;">.</span><span style="color: rgb(242, 240, 223);">Routes</span>);</p>
+<p style="margin: 0px;">&nbsp;&nbsp;&nbsp; <span style="color: rgb(144, 238, 144);">var</span> <span style="color: rgb(242, 240, 223);">httpContext</span> <span style="color: silver;">=</span> <span style="color: rgb(255, 0, 128);">MockRepository</span><span style="color: silver;">.</span><span style="color: rgb(242, 240, 223);">GenerateStub</span><span style="color: silver;">&lt;</span><span style="color: rgb(255, 0, 128);">HttpContextBase</span><span style="color: silver;">&gt;</span>();</p>
+<p style="margin: 0px;">&nbsp;&nbsp;&nbsp; <span style="color: rgb(242, 240, 223);">httpContext</span><span style="color: silver;">.</span><span style="color: rgb(242, 240, 223);">Stub</span>(<span style="color: rgb(242, 240, 223);">x</span> <span style="color: silver;">=&gt;</span> <span style="color: rgb(242, 240, 223);">x</span><span style="color: silver;">.</span><span style="color: rgb(242, 240, 223);">Request</span>)<span style="color: silver;">.</span><span style="color: rgb(242, 240, 223);">Return</span>(<span style="color: rgb(255, 0, 128);">MockRepository</span><span style="color: silver;">.</span><span style="color: rgb(242, 240, 223);">GenerateStub</span><span style="color: silver;">&lt;</span><span style="color: rgb(255, 0, 128);">HttpRequestBase</span><span style="color: silver;">&gt;</span>());</p>
+<p style="margin: 0px;">&nbsp;&nbsp;&nbsp; <span style="color: rgb(242, 240, 223);">httpContext</span><span style="color: silver;">.</span><span style="color: rgb(242, 240, 223);">Request</span><span style="color: silver;">.</span><span style="color: rgb(242, 240, 223);">Stub</span>(<span style="color: rgb(242, 240, 223);">x</span> <span style="color: silver;">=&gt;</span> <span style="color: rgb(242, 240, 223);">x</span><span style="color: silver;">.</span><span style="color: rgb(242, 240, 223);">PathInfo</span>)<span style="color: silver;">.</span><span style="color: rgb(242, 240, 223);">Return</span>(<span style="font-weight: bold; color: aqua;">&quot;&quot;</span>);</p>
+<p style="margin: 0px;">&nbsp;&nbsp;&nbsp; <span style="color: rgb(242, 240, 223);">httpContext</span><span style="color: silver;">.</span><span style="color: rgb(242, 240, 223);">Request</span><span style="color: silver;">.</span><span style="color: rgb(242, 240, 223);">Stub</span>(<span style="color: rgb(242, 240, 223);">x</span> <span style="color: silver;">=&gt;</span> <span style="color: rgb(242, 240, 223);">x</span><span style="color: silver;">.</span><span style="color: rgb(242, 240, 223);">AppRelativeCurrentExecutionFilePath</span>)<span style="color: silver;">.</span><span style="color: rgb(242, 240, 223);">Return</span>(<span style="font-weight: bold; color: aqua;">&quot;~/foo/bar&quot;</span>);</p>
+<p style="margin: 0px;">&nbsp;</p>
+<p style="margin: 0px;">&nbsp;&nbsp;&nbsp; <span style="color: rgb(144, 238, 144);">var</span> <span style="color: rgb(242, 240, 223);">routeData</span> <span style="color: silver;">=</span> <span style="color: rgb(255, 0, 128);">RouteTable</span><span style="color: silver;">.</span><span style="color: rgb(242, 240, 223);">Routes</span><span style="color: silver;">.</span><span style="color: rgb(242, 240, 223);">GetRouteData</span>(<span style="color: rgb(242, 240, 223);">httpContext</span>);</p>
+<p style="margin: 0px;">&nbsp;</p>
+<p style="margin: 0px;">&nbsp;&nbsp;&nbsp; <span style="color: rgb(255, 0, 128);">Assert</span><span style="color: silver;">.</span><span style="color: rgb(242, 240, 223);">That</span>(<span style="color: rgb(242, 240, 223);">routeData</span><span style="color: silver;">.</span><span style="color: rgb(242, 240, 223);">Values</span>[<span style="font-weight: bold; color: aqua;">&quot;controller&quot;</span>], <span style="color: rgb(255, 0, 128);">Is</span><span style="color: silver;">.</span><span style="color: rgb(242, 240, 223);">EqualTo</span>(<span style="font-weight: bold; color: aqua;">&quot;foo&quot;</span>));</p>
+<p style="margin: 0px;">&nbsp;&nbsp;&nbsp; <span style="color: rgb(255, 0, 128);">Assert</span><span style="color: silver;">.</span><span style="color: rgb(242, 240, 223);">That</span>(<span style="color: rgb(242, 240, 223);">routeData</span><span style="color: silver;">.</span><span style="color: rgb(242, 240, 223);">Values</span>[<span style="font-weight: bold; color: aqua;">&quot;action&quot;</span>], <span style="color: rgb(255, 0, 128);">Is</span><span style="color: silver;">.</span><span style="color: rgb(242, 240, 223);">EqualTo</span>(<span style="font-weight: bold; color: aqua;">&quot;bar&quot;</span>));</p>
+<p style="margin: 0px;">}</p>
+</div>
+
+
+<p>This mess of nastiness is what is required to test your routes in ASP.NET MVC.&nbsp; There are a number of things wrong with this.&nbsp; First and foremost, we&#8217;re doing magical-mocking here.&nbsp; That is - we somehow know exactly the two properties we need to mock for this to work.&nbsp; It turns out this isn&#8217;t such a magical process as it is looking at reflector and a lot of trial and error.&nbsp; The next thing wrong that I see is that our route values (and keys) are case-insensitive, so we&#8217;d need to include some more flexibility in our Asserts here.</p>
+
+
+<p>Who wants to deal with that mess?&nbsp; I sure don&#8217;t.&nbsp; Last night, my pal &amp; co-author <a href="http://www.lostechies.com/blogs/jimmy_bogard" target="_blank">Jimmy Bogard</a> banged together a fluent API for testing routes without needing all of this crap.</p>
+
+
+<p>Here is a test to verify our root route is working properly:</p>
+
+
+<!--
+{\rtf1\ansi\ansicpg\lang1024\noproof1252\uc1 \deff0{\fonttbl{\f0\fnil\fcharset0\fprq1 Consolas;}}{\colortbl;??\red0\green255\blue255;\red32\green32\blue32;\red192\green192\blue192;\red242\green240\blue223;\red238\green238\blue238;\red255\green0\blue128;}??\fs26 \cf1\cb2\highlight2 {\b "~/"}\cf3 .\cf4 Route\cf5 ()\cf3 .\cf4 ShouldMapTo\cf3 &lt;\cf6 FooController\cf3 &gt;\cf5 (); }
+-->
+
+
+<div style="padding: 10px; background: rgb(32, 32, 32) none repeat scroll 0% 0%; font-size: 13pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial; color: rgb(238, 238, 238); font-family: consolas,courier new;">
+<p style="margin: 0px;"><span style="font-weight: bold; color: aqua;">&quot;~/&quot;</span><span style="color: silver;">.</span><span style="color: rgb(242, 240, 223);">Route</span>()<span style="color: silver;">.</span><span style="color: rgb(242, 240, 223);">ShouldMapTo</span><span style="color: silver;">&lt;</span><span style="color: rgb(255, 0, 128);">FooController</span><span style="color: silver;">&gt;</span>();</p>
+</div>
+
+
+<p>And a more complex case where we have an action parameter:</p>
+
+
+<!--
+{\rtf1\ansi\ansicpg\lang1024\noproof1252\uc1 \deff0{\fonttbl{\f0\fnil\fcharset0\fprq1 Consolas;}}{\colortbl;??\red0\green255\blue255;\red32\green32\blue32;\red192\green192\blue192;\red242\green240\blue223;\red238\green238\blue238;\red255\green0\blue128;}??\fs26 \cf1\cb2\highlight2 {\b "~/foo/bar/widget"}\cf3 .\cf4 Route\cf5 ()\cf3 .\cf4 ShouldMapTo\cf3 &lt;\cf6 FooController\cf3 &gt;\cf5 (\cf4 x\cf5  \cf3 =&gt;\cf5  \cf4 x\cf3 .\cf4 Bar\cf5 (\cf1 {\b "widget"}\cf5 ));}
+-->
+
+
+<div style="padding: 10px; background: rgb(32, 32, 32) none repeat scroll 0% 0%; font-size: 13pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial; color: rgb(238, 238, 238); font-family: consolas,courier new;">
+<p style="margin: 0px;"><span style="font-weight: bold; color: aqua;">&quot;~/foo/bar/widget&quot;</span><span style="color: silver;">.</span><span style="color: rgb(242, 240, 223);">Route</span>()<span style="color: silver;">.</span><span style="color: rgb(242, 240, 223);">ShouldMapTo</span><span style="color: silver;">&lt;</span><span style="color: rgb(255, 0, 128);">FooController</span><span style="color: silver;">&gt;</span>(<span style="color: rgb(242, 240, 223);">x</span> <span style="color: silver;">=&gt;</span> <span style="color: rgb(242, 240, 223);">x</span><span style="color: silver;">.</span><span style="color: rgb(242, 240, 223);">Bar</span>(<span style="font-weight: bold; color: aqua;">&quot;widget&quot;</span>));</p>
+</div>
+
+
+<p>These are a lot nicer, as we are dealing with no unnecessary string here, the controller are now strongly-typed (we get intellisense and refactoring support), and we can easily test routes with a single line.</p>
+
+
+<p>This does have a couple caveats though:&nbsp; it assumes</p>
+
+
+<ul>
+<li>you&#8217;re using NUnit</li>
+<li>you&#8217;re using RhinoMocks</li>
+<li>you add your routes to the RouteTable.Routes collection</li>
+</ul>
+
+
+<p>So how did we do this?&nbsp; I have to admit, I tried to get this to work on the bus ride to work, but without an internet connection I was dead in the water.&nbsp; Jimmy helped me grasp the way that Expression&lt;T&gt; works.&nbsp; His wise words were: &quot;Here&#8217;s where you just set a breakpoint and fire up the debugger and look.&quot;&nbsp; He&#8217;s right - the API there is quite opaque.&nbsp; But once I got it to&nbsp; work it made a lot of sense.&nbsp; Expression&lt;T&gt; is awesome!</p>
+
+
+<p>Here&#8217;s the method with most of the goods:</p>
+
+
+<!--
+{\rtf1\ansi\ansicpg\lang1024\noproof65001\uc1 \deff0{\fonttbl{\f0\fnil\fcharset0\fprq1 Consolas;}}{\colortbl;??\red144\green238\blue144;\red32\green32\blue32;\red238\green238\blue238;\red255\green0\blue128;\red242\green240\blue223;\red192\green192\blue192;\red255\green255\blue0;\red0\green255\blue255;\red164\green164\blue164;}??\fs26 \cf1\cb2\highlight2 public\cf3  \cf1 static\cf3  \cf4 RouteData\cf3  \cf5 ShouldMapTo\cf6 &lt;\cf5 TController\cf6 &gt;\cf3 (\cf1 this\cf3  \cf4 RouteData\cf3  \cf5 routeData\cf3 , \cf4 Expression\cf6 &lt;\cf7 Func\cf6 &lt;\cf5 TController\cf3 , \cf4 ActionResult\cf6 &gt;&gt;\cf3  \cf5 action\cf3 )\par ??    \cf1 where\cf3  \cf5 TController\cf3  : \cf4 Controller\par ??\cf3 \{            \par ??    \cf4 Assert\cf6 .\cf5 That\cf3 (\cf5 routeData\cf3 , \cf4 Is\cf6 .\cf5 Not\cf6 .\cf5 Null\cf3 , \cf8 {\b "The URL did not match any route"}\cf3 );\par ??\par ??    \cf9 {\b //check controller}\par ??\cf3     \cf5 routeData\cf6 .\cf5 ShouldMapTo\cf6 &lt;\cf5 TController\cf6 &gt;\cf3 ();\par ??    \par ??    \cf9 {\b //check action}\par ??\cf3     \cf1 var\cf3  \cf5 methodCall\cf3  \cf6 =\cf3  (\cf4 MethodCallExpression\cf3 ) \cf5 action\cf6 .\cf5 Body\cf3 ;\par ??    \cf1 string\cf3  \cf5 actualAction\cf3  \cf6 =\cf3  \cf5 routeData\cf6 .\cf5 Values\cf6 .\cf5 GetValue\cf3 (\cf8 {\b "action"}\cf3 )\cf6 .\cf5 ToString\cf3 ();\par ??    \cf1 string\cf3  \cf5 expectedAction\cf3  \cf6 =\cf3  \cf5 methodCall\cf6 .\cf5 Method\cf6 .\cf5 Name\cf3 ;\par ??    \cf5 actualAction\cf6 .\cf5 AssertSameStringAs\cf3 (\cf5 expectedAction\cf3 );\par ??                \par ??    \cf9 {\b //check parameters}\par ??\cf3     \cf1 for\cf3  (\cf1 int\cf3  \cf5 i\cf3  \cf6 =\cf3  \cf8 0\cf3 ; \cf5 i\cf3  \cf6 &lt;\cf3  \cf5 methodCall\cf6 .\cf5 Arguments\cf6 .\cf5 Count\cf3 ; \cf5 i\cf6 ++\cf3 )\par ??    \{\par ??        \cf1 string\cf3  \cf5 name\cf3  \cf6 =\cf3  \cf5 methodCall\cf6 .\cf5 Method\cf6 .\cf5 GetParameters\cf3 ()[\cf5 i\cf3 ]\cf6 .\cf5 Name\cf3 ;\par ??        \cf1 object\cf3  \cf5 value\cf3  \cf6 =\cf3  ((\cf4 ConstantExpression\cf3 ) \cf5 methodCall\cf6 .\cf5 Arguments\cf3 [\cf5 i\cf3 ])\cf6 .\cf5 Value\cf3 ;\par ??\par ??        \cf4 Assert\cf6 .\cf5 That\cf3 (\cf5 routeData\cf6 .\cf5 Values\cf6 .\cf5 GetValue\cf3 (\cf5 name\cf3 ), \cf4 Is\cf6 .\cf5 EqualTo\cf3 (\cf5 value\cf6 .\cf5 ToString\cf3 ()));\par ??    \}\par ??\par ??    \cf1 return\cf3  \cf5 routeData\cf3 ;\par ??\}\par ??}
+-->
+
+
+<div style="padding: 10px; background: rgb(32, 32, 32) none repeat scroll 0% 0%; font-size: 13pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial; color: rgb(238, 238, 238); font-family: consolas,courier new;">
+<p style="margin: 0px;"><span style="color: rgb(144, 238, 144);">public</span> <span style="color: rgb(144, 238, 144);">static</span> <span style="color: rgb(255, 0, 128);">RouteData</span> <span style="color: rgb(242, 240, 223);">ShouldMapTo</span><span style="color: silver;">&lt;</span><span style="color: rgb(242, 240, 223);">TController</span><span style="color: silver;">&gt;</span>(<span style="color: rgb(144, 238, 144);">this</span> <span style="color: rgb(255, 0, 128);">RouteData</span> <span style="color: rgb(242, 240, 223);">routeData</span>, <span style="color: rgb(255, 0, 128);">Expression</span><span style="color: silver;">&lt;</span><span style="color: yellow;">Func</span><span style="color: silver;">&lt;</span><span style="color: rgb(242, 240, 223);">TController</span>, <span style="color: rgb(255, 0, 128);">ActionResult</span><span style="color: silver;">&gt;&gt;</span> <span style="color: rgb(242, 240, 223);">action</span>)</p>
+<p style="margin: 0px;">&nbsp;&nbsp;&nbsp; <span style="color: rgb(144, 238, 144);">where</span> <span style="color: rgb(242, 240, 223);">TController</span> : <span style="color: rgb(255, 0, 128);">Controller</span></p>
+<p style="margin: 0px;">{&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+<p style="margin: 0px;">&nbsp;&nbsp;&nbsp; <span style="color: rgb(255, 0, 128);">Assert</span><span style="color: silver;">.</span><span style="color: rgb(242, 240, 223);">That</span>(<span style="color: rgb(242, 240, 223);">routeData</span>, <span style="color: rgb(255, 0, 128);">Is</span><span style="color: silver;">.</span><span style="color: rgb(242, 240, 223);">Not</span><span style="color: silver;">.</span><span style="color: rgb(242, 240, 223);">Null</span>, <span style="font-weight: bold; color: aqua;">&quot;The URL did not match any route&quot;</span>);</p>
+<p style="margin: 0px;">&nbsp;</p>
+<p style="margin: 0px;">&nbsp;&nbsp;&nbsp; <span style="font-weight: bold; color: rgb(164, 164, 164);">//check controller</span></p>
+<p style="margin: 0px;">&nbsp;&nbsp;&nbsp; <span style="color: rgb(242, 240, 223);">routeData</span><span style="color: silver;">.</span><span style="color: rgb(242, 240, 223);">ShouldMapTo</span><span style="color: silver;">&lt;</span><span style="color: rgb(242, 240, 223);">TController</span><span style="color: silver;">&gt;</span>();</p>
+<p style="margin: 0px;">&nbsp;</p>
+<p style="margin: 0px;">&nbsp;&nbsp;&nbsp; <span style="font-weight: bold; color: rgb(164, 164, 164);">//check action</span></p>
+<p style="margin: 0px;">&nbsp;&nbsp;&nbsp; <span style="color: rgb(144, 238, 144);">var</span> <span style="color: rgb(242, 240, 223);">methodCall</span> <span style="color: silver;">=</span> (<span style="color: rgb(255, 0, 128);">MethodCallExpression</span>) <span style="color: rgb(242, 240, 223);">action</span><span style="color: silver;">.</span><span style="color: rgb(242, 240, 223);">Body</span>;</p>
+<p style="margin: 0px;">&nbsp;&nbsp;&nbsp; <span style="color: rgb(144, 238, 144);">string</span> <span style="color: rgb(242, 240, 223);">actualAction</span> <span style="color: silver;">=</span> <span style="color: rgb(242, 240, 223);">routeData</span><span style="color: silver;">.</span><span style="color: rgb(242, 240, 223);">Values</span><span style="color: silver;">.</span><span style="color: rgb(242, 240, 223);">GetValue</span>(<span style="font-weight: bold; color: aqua;">&quot;action&quot;</span>)<span style="color: silver;">.</span><span style="color: rgb(242, 240, 223);">ToString</span>();</p>
+<p style="margin: 0px;">&nbsp;&nbsp;&nbsp; <span style="color: rgb(144, 238, 144);">string</span> <span style="color: rgb(242, 240, 223);">expectedAction</span> <span style="color: silver;">=</span> <span style="color: rgb(242, 240, 223);">methodCall</span><span style="color: silver;">.</span><span style="color: rgb(242, 240, 223);">Method</span><span style="color: silver;">.</span><span style="color: rgb(242, 240, 223);">Name</span>;</p>
+<p style="margin: 0px;">&nbsp;&nbsp;&nbsp; <span style="color: rgb(242, 240, 223);">actualAction</span><span style="color: silver;">.</span><span style="color: rgb(242, 240, 223);">AssertSameStringAs</span>(<span style="color: rgb(242, 240, 223);">expectedAction</span>);</p>
+<p style="margin: 0px;">&nbsp;</p>
+<p style="margin: 0px;">&nbsp;&nbsp;&nbsp; <span style="font-weight: bold; color: rgb(164, 164, 164);">//check parameters</span></p>
+<p style="margin: 0px;">&nbsp;&nbsp;&nbsp; <span style="color: rgb(144, 238, 144);">for</span> (<span style="color: rgb(144, 238, 144);">int</span> <span style="color: rgb(242, 240, 223);">i</span> <span style="color: silver;">=</span> <span style="color: aqua;">0</span>; <span style="color: rgb(242, 240, 223);">i</span> <span style="color: silver;">&lt;</span> <span style="color: rgb(242, 240, 223);">methodCall</span><span style="color: silver;">.</span><span style="color: rgb(242, 240, 223);">Arguments</span><span style="color: silver;">.</span><span style="color: rgb(242, 240, 223);">Count</span>; <span style="color: rgb(242, 240, 223);">i</span><span style="color: silver;">++</span>)</p>
+<p style="margin: 0px;">&nbsp;&nbsp;&nbsp; {</p>
+<p style="margin: 0px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color: rgb(144, 238, 144);">string</span> <span style="color: rgb(242, 240, 223);">name</span> <span style="color: silver;">=</span> <span style="color: rgb(242, 240, 223);">methodCall</span><span style="color: silver;">.</span><span style="color: rgb(242, 240, 223);">Method</span><span style="color: silver;">.</span><span style="color: rgb(242, 240, 223);">GetParameters</span>()[<span style="color: rgb(242, 240, 223);">i</span>]<span style="color: silver;">.</span><span style="color: rgb(242, 240, 223);">Name</span>;</p>
+<p style="margin: 0px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color: rgb(144, 238, 144);">object</span> <span style="color: rgb(242, 240, 223);">value</span> <span style="color: silver;">=</span> ((<span style="color: rgb(255, 0, 128);">ConstantExpression</span>) <span style="color: rgb(242, 240, 223);">methodCall</span><span style="color: silver;">.</span><span style="color: rgb(242, 240, 223);">Arguments</span>[<span style="color: rgb(242, 240, 223);">i</span>])<span style="color: silver;">.</span><span style="color: rgb(242, 240, 223);">Value</span>;</p>
+<p style="margin: 0px;">&nbsp;</p>
+<p style="margin: 0px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color: rgb(255, 0, 128);">Assert</span><span style="color: silver;">.</span><span style="color: rgb(242, 240, 223);">That</span>(<span style="color: rgb(242, 240, 223);">routeData</span><span style="color: silver;">.</span><span style="color: rgb(242, 240, 223);">Values</span><span style="color: silver;">.</span><span style="color: rgb(242, 240, 223);">GetValue</span>(<span style="color: rgb(242, 240, 223);">name</span>), <span style="color: rgb(255, 0, 128);">Is</span><span style="color: silver;">.</span><span style="color: rgb(242, 240, 223);">EqualTo</span>(<span style="color: rgb(242, 240, 223);">value</span><span style="color: silver;">.</span><span style="color: rgb(242, 240, 223);">ToString</span>()));</p>
+<p style="margin: 0px;">&nbsp;&nbsp;&nbsp; }</p>
+<p style="margin: 0px;">&nbsp;</p>
+<p style="margin: 0px;">&nbsp;&nbsp;&nbsp; <span style="color: rgb(144, 238, 144);">return</span> <span style="color: rgb(242, 240, 223);">routeData</span>;</p>
+<p style="margin: 0px;">}</p>
+</div>
+
+
+<p>This might be a tad brittle, but in my preliminary testing it worked wonders.&nbsp; This code is now in <a href="http://mvccontrib.org" target="_blank">MvcContrib</a>&#8217;s TestHelper project.&nbsp;</p>
+
+
+<div class="wlWriterSmartContent" id="scid:0767317B-992E-4b12-91E0-4F059A8CECA8:b04a1ca3-9141-402a-955f-b9b27054f6ac" style="margin: 0px; padding: 0px; display: inline;">Technorati Tags: <a href="http://technorati.com/tags/asp.net%20mvc" rel="tag">asp.net mvc</a></div>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
   <header>
     
       <h1 class="entry-title"><a href="/2008/11/subsonic-and-projections/">SubSonic and Projections</a></h1>
     
     
       <p class="meta">
+        
 
 
 
 
-<time datetime="2008-11-11 00:00:00 -0600" pubdate  updated >Nov 11<span>th</span>, 2008</time>
 
 
-</p>
+
+
+  
+
+
+<time datetime="2008-11-11T00:00:00-06:00" pubdate data-updated="true">Nov 11<span>th</span>, 2008</time>
+        
+      </p>
     
   </header>
 
@@ -131,18 +272,18 @@
 
 <p>  <p>With the most recent release of the new query API in SubSonic, we were given a lot of flexibility.&#160; This was much needed in our project because getting single results and collections off of a single entity is rarely sufficient for complex applications.&#160; Often times the data needed to display on a page comes from multiple tables.</p>  <p>In the past, I was forced to do this sort of ugly nastiness:</p></p>
 
-<div><figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
-<span class='line'>2</span>
-<span class='line'>3</span>
-<span class='line'>4</span>
-<span class='line'>5</span>
-<span class='line'>6</span>
-</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>&lt;span class="rem">//get schedules (1 query)&lt;/span>
-</div><div class='line'>Schedule[] schedules = _repository.GetSchedulesInRange(start, end);
-</div><div class='line'>&lt;span class="rem">//get employee info (2 queries)&lt;/span>
-</div><div class='line'>Employee[] employees = _repository.GetEmployeesInSchedules(schedules);
-</div><div class='line'>ScheduleDisplayMapper mapper = &lt;span class="kwrd">new&lt;/span> ScheduleDisplayMapper();
-</div><div class='line'>&lt;span class="kwrd">return&lt;/span> mapper.Map(schedules, employees);</div></code></pre></td></tr></table></div></figure></div>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;span class="rem">//get schedules (1 query)&lt;/span>
+</span><span class='line'>Schedule[] schedules = _repository.GetSchedulesInRange(start, end);
+</span><span class='line'>&lt;span class="rem">//get employee info (2 queries)&lt;/span>
+</span><span class='line'>Employee[] employees = _repository.GetEmployeesInSchedules(schedules);
+</span><span class='line'>ScheduleDisplayMapper mapper = &lt;span class="kwrd">new&lt;/span> ScheduleDisplayMapper();
+</span><span class='line'>&lt;span class="kwrd">return&lt;/span> mapper.Map(schedules, employees);</span></code></pre></td></tr></table></div></figure>
 
 
 
@@ -160,28 +301,28 @@
 
 
 
-<div><figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
-<span class='line'>2</span>
-<span class='line'>3</span>
-<span class='line'>4</span>
-<span class='line'>5</span>
-<span class='line'>6</span>
-<span class='line'>7</span>
-<span class='line'>8</span>
-<span class='line'>9</span>
-<span class='line'>10</span>
-<span class='line'>11</span>
-</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>SqlQuery query = &lt;span class="kwrd">new&lt;/span> Select()
-</div><div class='line'>.From&lt;OnCallSchedule&gt;()
-</div><div class='line'>.InnerJoin(Area.AreaIdColumn, OnCallSchedule.AreaIdColumn)
-</div><div class='line'>.InnerJoin(EmployeeProfile.EmployeeProfileIdColumn, OnCallSchedule.EmployeeProfileIdColumn)
-</div><div class='line'>.Where(OnCallSchedule.StartDtColumn).IsLessThanOrEqualTo(date)
-</div><div class='line'>.And(OnCallSchedule.EndDtColumn).IsGreaterThanOrEqualTo(date)
-</div><div class='line'>.OpenExpression()
-</div><div class='line'>.And(Area.AreaIdColumn).IsNull()
-</div><div class='line'>.Or(Area.AreaIdColumn).IsEqualTo(areaId)
-</div><div class='line'>.CloseExpression()
-</div><div class='line'>.OrderAsc(OnCallSchedule.PriorityColumn.ColumnName);</div></code></pre></td></tr></table></div></figure></div>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>SqlQuery query = &lt;span class="kwrd">new&lt;/span> Select()
+</span><span class='line'>.From&lt;OnCallSchedule&gt;()
+</span><span class='line'>.InnerJoin(Area.AreaIdColumn, OnCallSchedule.AreaIdColumn)
+</span><span class='line'>.InnerJoin(EmployeeProfile.EmployeeProfileIdColumn, OnCallSchedule.EmployeeProfileIdColumn)
+</span><span class='line'>.Where(OnCallSchedule.StartDtColumn).IsLessThanOrEqualTo(date)
+</span><span class='line'>.And(OnCallSchedule.EndDtColumn).IsGreaterThanOrEqualTo(date)
+</span><span class='line'>.OpenExpression()
+</span><span class='line'>.And(Area.AreaIdColumn).IsNull()
+</span><span class='line'>.Or(Area.AreaIdColumn).IsEqualTo(areaId)
+</span><span class='line'>.CloseExpression()
+</span><span class='line'>.OrderAsc(OnCallSchedule.PriorityColumn.ColumnName);</span></code></pre></td></tr></table></div></figure>
 
 
 
@@ -194,36 +335,36 @@
 
 
 
-<div><figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
-<span class='line'>2</span>
-<span class='line'>3</span>
-<span class='line'>4</span>
-<span class='line'>5</span>
-<span class='line'>6</span>
-<span class='line'>7</span>
-<span class='line'>8</span>
-<span class='line'>9</span>
-<span class='line'>10</span>
-<span class='line'>11</span>
-<span class='line'>12</span>
-<span class='line'>13</span>
-<span class='line'>14</span>
-<span class='line'>15</span>
-</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>&lt;span class="kwrd">public&lt;/span> &lt;span class="kwrd">static&lt;/span> ScheduleDTO FetchFromRow(IDataReader dr)
-</div><div class='line'>{
-</div><div class='line'>&lt;span class="kwrd">int&lt;/span> i = 0;
-</div><div class='line'>ScheduleDTO schedule = &lt;span class="kwrd">new&lt;/span> ScheduleDTO();
-</div><div class='line'>schedule.OnCallScheduleId = dr.GetGuid(i++);
-</div><div class='line'>schedule.Start = dr.GetDateTime(i++);
-</div><div class='line'>schedule.End = dr.GetDateTime(i++);
-</div><div class='line'>schedule.Comments = dr[i++] &lt;span class="kwrd">as&lt;/span> &lt;span class="kwrd">string&lt;/span>;
-</div><div class='line'>schedule.Priority = dr.GetInt32(i++);
-</div><div class='line'>schedule.EmployeeProfileId = dr.GetGuid(i++);
-</div><div class='line'>&lt;span class="kwrd">string&lt;/span> firstName = dr.GetString(i++);
-</div><div class='line'>&lt;span class="kwrd">string&lt;/span> lastName = dr.GetString(i++);
-</div><div class='line'>schedule.EmployeeName = firstName + &lt;span class="str">&quot; &quot;&lt;/span> + lastName;
-</div><div class='line'>&lt;span class="kwrd">return&lt;/span> schedule;
-</div><div class='line'>}</div></code></pre></td></tr></table></div></figure></div>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;span class="kwrd">public&lt;/span> &lt;span class="kwrd">static&lt;/span> ScheduleDTO FetchFromRow(IDataReader dr)
+</span><span class='line'>{
+</span><span class='line'>&lt;span class="kwrd">int&lt;/span> i = 0;
+</span><span class='line'>ScheduleDTO schedule = &lt;span class="kwrd">new&lt;/span> ScheduleDTO();
+</span><span class='line'>schedule.OnCallScheduleId = dr.GetGuid(i++);
+</span><span class='line'>schedule.Start = dr.GetDateTime(i++);
+</span><span class='line'>schedule.End = dr.GetDateTime(i++);
+</span><span class='line'>schedule.Comments = dr[i++] &lt;span class="kwrd">as&lt;/span> &lt;span class="kwrd">string&lt;/span>;
+</span><span class='line'>schedule.Priority = dr.GetInt32(i++);
+</span><span class='line'>schedule.EmployeeProfileId = dr.GetGuid(i++);
+</span><span class='line'>&lt;span class="kwrd">string&lt;/span> firstName = dr.GetString(i++);
+</span><span class='line'>&lt;span class="kwrd">string&lt;/span> lastName = dr.GetString(i++);
+</span><span class='line'>schedule.EmployeeName = firstName + &lt;span class="str">&quot; &quot;&lt;/span> + lastName;
+</span><span class='line'>&lt;span class="kwrd">return&lt;/span> schedule;
+</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
 
 
 
@@ -242,32 +383,32 @@
 
 
 
-<div><figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
-<span class='line'>2</span>
-<span class='line'>3</span>
-<span class='line'>4</span>
-<span class='line'>5</span>
-<span class='line'>6</span>
-<span class='line'>7</span>
-<span class='line'>8</span>
-<span class='line'>9</span>
-<span class='line'>10</span>
-<span class='line'>11</span>
-<span class='line'>12</span>
-<span class='line'>13</span>
-</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>[AttributeUsage(AttributeTargets.Property)]
-</div><div class='line'>&lt;span class="kwrd">public&lt;/span> &lt;span class="kwrd">class&lt;/span> MapToColumnAttribute : Attribute
-</div><div class='line'>{
-</div><div class='line'>&lt;span class="kwrd">private&lt;/span> &lt;span class="kwrd">readonly&lt;/span> &lt;span class="kwrd">string&lt;/span> _columnName;
-</div><div class='line'>&lt;span class="kwrd">public&lt;/span> MapToColumnAttribute(&lt;span class="kwrd">string&lt;/span> columnName)
-</div><div class='line'>{
-</div><div class='line'>_columnName = columnName;
-</div><div class='line'>}
-</div><div class='line'>&lt;span class="kwrd">public&lt;/span> &lt;span class="kwrd">string&lt;/span> ColumnName
-</div><div class='line'>{
-</div><div class='line'>get { &lt;span class="kwrd">return&lt;/span> _columnName; }
-</div><div class='line'>}
-</div><div class='line'>}</div></code></pre></td></tr></table></div></figure></div>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>[AttributeUsage(AttributeTargets.Property)]
+</span><span class='line'>&lt;span class="kwrd">public&lt;/span> &lt;span class="kwrd">class&lt;/span> MapToColumnAttribute : Attribute
+</span><span class='line'>{
+</span><span class='line'>&lt;span class="kwrd">private&lt;/span> &lt;span class="kwrd">readonly&lt;/span> &lt;span class="kwrd">string&lt;/span> _columnName;
+</span><span class='line'>&lt;span class="kwrd">public&lt;/span> MapToColumnAttribute(&lt;span class="kwrd">string&lt;/span> columnName)
+</span><span class='line'>{
+</span><span class='line'>_columnName = columnName;
+</span><span class='line'>}
+</span><span class='line'>&lt;span class="kwrd">public&lt;/span> &lt;span class="kwrd">string&lt;/span> ColumnName
+</span><span class='line'>{
+</span><span class='line'>get { &lt;span class="kwrd">return&lt;/span> _columnName; }
+</span><span class='line'>}
+</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
 
 
 
@@ -283,36 +424,36 @@
 
 
 
-<div><figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
-<span class='line'>2</span>
-<span class='line'>3</span>
-<span class='line'>4</span>
-<span class='line'>5</span>
-<span class='line'>6</span>
-<span class='line'>7</span>
-<span class='line'>8</span>
-<span class='line'>9</span>
-<span class='line'>10</span>
-<span class='line'>11</span>
-<span class='line'>12</span>
-<span class='line'>13</span>
-<span class='line'>14</span>
-<span class='line'>15</span>
-</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>&lt;span class="kwrd">public&lt;/span> &lt;span class="kwrd">class&lt;/span> ScheduleDTO
-</div><div class='line'>{
-</div><div class='line'>[MapToColumn(OnCallSchedule.Columns.Priority)]
-</div><div class='line'>&lt;span class="kwrd">public&lt;/span> &lt;span class="kwrd">int&lt;/span> Priority
-</div><div class='line'>{
-</div><div class='line'>get { &lt;span class="kwrd">return&lt;/span> _priority; }
-</div><div class='line'>set { _priority = &lt;span class="kwrd">value&lt;/span>; }
-</div><div class='line'>}
-</div><div class='line'>[MapToColumn(EmployeeProfile.Columns.EmployeeProfileId)]
-</div><div class='line'>&lt;span class="kwrd">public&lt;/span> Guid ProfileId
-</div><div class='line'>{
-</div><div class='line'>get { &lt;span class="kwrd">return&lt;/span> _profileId; }
-</div><div class='line'>set { _profileId = &lt;span class="kwrd">value&lt;/span>; }
-</div><div class='line'>}
-</div><div class='line'>&lt;span class="rem">/* snip */&lt;/span></div></code></pre></td></tr></table></div></figure></div>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;span class="kwrd">public&lt;/span> &lt;span class="kwrd">class&lt;/span> ScheduleDTO
+</span><span class='line'>{
+</span><span class='line'>[MapToColumn(OnCallSchedule.Columns.Priority)]
+</span><span class='line'>&lt;span class="kwrd">public&lt;/span> &lt;span class="kwrd">int&lt;/span> Priority
+</span><span class='line'>{
+</span><span class='line'>get { &lt;span class="kwrd">return&lt;/span> _priority; }
+</span><span class='line'>set { _priority = &lt;span class="kwrd">value&lt;/span>; }
+</span><span class='line'>}
+</span><span class='line'>[MapToColumn(EmployeeProfile.Columns.EmployeeProfileId)]
+</span><span class='line'>&lt;span class="kwrd">public&lt;/span> Guid ProfileId
+</span><span class='line'>{
+</span><span class='line'>get { &lt;span class="kwrd">return&lt;/span> _profileId; }
+</span><span class='line'>set { _profileId = &lt;span class="kwrd">value&lt;/span>; }
+</span><span class='line'>}
+</span><span class='line'>&lt;span class="rem">/* snip */&lt;/span></span></code></pre></td></tr></table></div></figure>
 
 
 
@@ -331,34 +472,34 @@
 
 
 
-<div><figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
-<span class='line'>2</span>
-<span class='line'>3</span>
-<span class='line'>4</span>
-<span class='line'>5</span>
-<span class='line'>6</span>
-<span class='line'>7</span>
-<span class='line'>8</span>
-<span class='line'>9</span>
-<span class='line'>10</span>
-<span class='line'>11</span>
-<span class='line'>12</span>
-<span class='line'>13</span>
-<span class='line'>14</span>
-</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>&lt;span class="kwrd">public&lt;/span> T Map&lt;T&gt;(IDataReader dr) &lt;span class="kwrd">where&lt;/span> T : &lt;span class="kwrd">new&lt;/span>()
-</div><div class='line'>{
-</div><div class='line'>Type type = &lt;span class="kwrd">typeof&lt;/span>(T);
-</div><div class='line'>T target = &lt;span class="kwrd">new&lt;/span> T();
-</div><div class='line'>&lt;span class="kwrd">foreach&lt;/span>(PropertyInfo property &lt;span class="kwrd">in&lt;/span> type.GetProperties())
-</div><div class='line'>{
-</div><div class='line'>&lt;span class="kwrd">foreach&lt;/span>(MapToColumnAttribute attr &lt;span class="kwrd">in&lt;/span> ReflectionUtil.GetAttributes&lt;MapToColumnAttribute&gt;(property))
-</div><div class='line'>{
-</div><div class='line'>&lt;span class="kwrd">object&lt;/span> &lt;span class="kwrd">value&lt;/span> = dr[attr.ColumnName];
-</div><div class='line'>property.SetValue(target, &lt;span class="kwrd">value&lt;/span>, &lt;span class="kwrd">null&lt;/span>);
-</div><div class='line'>}
-</div><div class='line'>}
-</div><div class='line'>&lt;span class="kwrd">return&lt;/span> target;
-</div><div class='line'>}</div></code></pre></td></tr></table></div></figure></div>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;span class="kwrd">public&lt;/span> T Map&lt;T&gt;(IDataReader dr) &lt;span class="kwrd">where&lt;/span> T : &lt;span class="kwrd">new&lt;/span>()
+</span><span class='line'>{
+</span><span class='line'>Type type = &lt;span class="kwrd">typeof&lt;/span>(T);
+</span><span class='line'>T target = &lt;span class="kwrd">new&lt;/span> T();
+</span><span class='line'>&lt;span class="kwrd">foreach&lt;/span>(PropertyInfo property &lt;span class="kwrd">in&lt;/span> type.GetProperties())
+</span><span class='line'>{
+</span><span class='line'>&lt;span class="kwrd">foreach&lt;/span>(MapToColumnAttribute attr &lt;span class="kwrd">in&lt;/span> ReflectionUtil.GetAttributes&lt;MapToColumnAttribute&gt;(property))
+</span><span class='line'>{
+</span><span class='line'>&lt;span class="kwrd">object&lt;/span> &lt;span class="kwrd">value&lt;/span> = dr[attr.ColumnName];
+</span><span class='line'>property.SetValue(target, &lt;span class="kwrd">value&lt;/span>, &lt;span class="kwrd">null&lt;/span>);
+</span><span class='line'>}
+</span><span class='line'>}
+</span><span class='line'>&lt;span class="kwrd">return&lt;/span> target;
+</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
 
 
 
@@ -377,18 +518,18 @@
 
 
 
-<div><figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
-<span class='line'>2</span>
-<span class='line'>3</span>
-<span class='line'>4</span>
-<span class='line'>5</span>
-<span class='line'>6</span>
-</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>ProjectionMapper mapper = &lt;span class="kwrd">new&lt;/span> ProjectionMapper();
-</div><div class='line'>&lt;span class="kwrd">using&lt;/span>(IDataReader dr = query.ExecuteReader())
-</div><div class='line'>{
-</div><div class='line'>&lt;span class="kwrd">while&lt;/span>(dr.Read())
-</div><div class='line'>results.Add(mapper.Map&lt;ScheduleDTO&gt;(dr));
-</div><div class='line'>}</div></code></pre></td></tr></table></div></figure></div>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>ProjectionMapper mapper = &lt;span class="kwrd">new&lt;/span> ProjectionMapper();
+</span><span class='line'>&lt;span class="kwrd">using&lt;/span>(IDataReader dr = query.ExecuteReader())
+</span><span class='line'>{
+</span><span class='line'>&lt;span class="kwrd">while&lt;/span>(dr.Read())
+</span><span class='line'>results.Add(mapper.Map&lt;ScheduleDTO&gt;(dr));
+</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
 
 
 
@@ -411,30 +552,36 @@
 <div class="wlWriterSmartContent" id="scid:0767317B-992E-4b12-91E0-4F059A8CECA8:226b7435-322b-43b9-b942-f3fbbede0838" style="padding-right: 0px; display: inline; padding-left: 0px; padding-bottom: 0px; margin: 0px; padding-top: 0px">Technorati Tags: <a href="http://technorati.com/tags/SubSonic" rel="tag">SubSonic</a></div>
 
 </div>
-  <footer>
-    <a rel="full-article" href="/2008/11/subsonic-and-projections/">Read on &rarr;</a>
-  </footer>
+  
+  
 
 
-  </article>
-
-
-  <article>
-    
+    </article>
+  
+  
+    <article>
+      
   <header>
     
       <h1 class="entry-title"><a href="/2008/11/photos/">Photos</a></h1>
     
     
       <p class="meta">
+        
 
 
 
 
-<time datetime="2008-11-11 00:00:00 -0600" pubdate  updated >Nov 11<span>th</span>, 2008</time>
 
 
-</p>
+
+
+  
+
+
+<time datetime="2008-11-11T00:00:00-06:00" pubdate data-updated="true">Nov 11<span>th</span>, 2008</time>
+        
+      </p>
     
   </header>
 
@@ -442,30 +589,36 @@
   <div class="entry-content"><p><em>This album displays photos from my <a target="_blank" href="http://flickr.com/photos/bensilvia">Flickr</a> account.</em></p>
 
 </div>
-  <footer>
-    <a rel="full-article" href="/2008/11/photos/">Read on &rarr;</a>
-  </footer>
+  
+  
 
 
-  </article>
-
-
-  <article>
-    
+    </article>
+  
+  
+    <article>
+      
   <header>
     
       <h1 class="entry-title"><a href="/2008/11/new-blog-design-platform/">New Blog Design / Platform</a></h1>
     
     
       <p class="meta">
+        
 
 
 
 
-<time datetime="2008-11-10 00:00:00 -0600" pubdate  updated >Nov 10<span>th</span>, 2008</time>
 
 
-</p>
+
+
+  
+
+
+<time datetime="2008-11-10T00:00:00-06:00" pubdate data-updated="true">Nov 10<span>th</span>, 2008</time>
+        
+      </p>
     
   </header>
 
@@ -482,30 +635,36 @@
 <p>What do <em>you</em> think of the new blog?</p>
 
 </div>
-  <footer>
-    <a rel="full-article" href="/2008/11/new-blog-design-platform/">Read on &rarr;</a>
-  </footer>
+  
+  
 
 
-  </article>
-
-
-  <article>
-    
+    </article>
+  
+  
+    <article>
+      
   <header>
     
       <h1 class="entry-title"><a href="/2008/11/contact/">Contact</a></h1>
     
     
       <p class="meta">
+        
 
 
 
 
-<time datetime="2008-11-09 00:00:00 -0600" pubdate  updated >Nov 9<span>th</span>, 2008</time>
 
 
-</p>
+
+
+  
+
+
+<time datetime="2008-11-09T00:00:00-06:00" pubdate data-updated="true">Nov 9<span>th</span>, 2008</time>
+        
+      </p>
     
   </header>
 
@@ -513,30 +672,36 @@
   <div class="entry-content"><p>Fill out the form below to get in touch with me.</p>
 
 </div>
-  <footer>
-    <a rel="full-article" href="/2008/11/contact/">Read on &rarr;</a>
-  </footer>
+  
+  
 
 
-  </article>
-
-
-  <article>
-    
+    </article>
+  
+  
+    <article>
+      
   <header>
     
       <h1 class="entry-title"><a href="/2008/11/book/">Book</a></h1>
     
     
       <p class="meta">
+        
 
 
 
 
-<time datetime="2008-11-09 00:00:00 -0600" pubdate  updated >Nov 9<span>th</span>, 2008</time>
 
 
-</p>
+
+
+  
+
+
+<time datetime="2008-11-09T00:00:00-06:00" pubdate data-updated="true">Nov 9<span>th</span>, 2008</time>
+        
+      </p>
     
   </header>
 
@@ -553,30 +718,36 @@
 <p>You can take a look at our sample application for the book, <a target="_blank" href="http://codecampserver.org">Code Camp Server</a>.</p>
 
 </div>
-  <footer>
-    <a rel="full-article" href="/2008/11/book/">Read on &rarr;</a>
-  </footer>
+  
+  
 
 
-  </article>
-
-
-  <article>
-    
+    </article>
+  
+  
+    <article>
+      
   <header>
     
       <h1 class="entry-title"><a href="/2008/11/about-me/">About Me</a></h1>
     
     
       <p class="meta">
+        
 
 
 
 
-<time datetime="2008-11-01 00:00:00 -0500" pubdate  updated >Nov 1<span>st</span>, 2008</time>
 
 
-</p>
+
+
+  
+
+
+<time datetime="2008-11-01T00:00:00-05:00" pubdate data-updated="true">Nov 1<span>st</span>, 2008</time>
+        
+      </p>
     
   </header>
 
@@ -611,30 +782,36 @@
 <p>Thanks for looking!</p>
 
 </div>
-  <footer>
-    <a rel="full-article" href="/2008/11/about-me/">Read on &rarr;</a>
-  </footer>
+  
+  
 
 
-  </article>
-
-
-  <article>
-    
+    </article>
+  
+  
+    <article>
+      
   <header>
     
       <h1 class="entry-title"><a href="/2008/10/leveraging-existing-asp-net-features-in-asp-net-mvc/">Leveraging Existing ASP.NET Features in ASP.NET MVC</a></h1>
     
     
       <p class="meta">
+        
 
 
 
 
-<time datetime="2008-10-20 00:00:00 -0500" pubdate  updated >Oct 20<span>th</span>, 2008</time>
 
 
-</p>
+
+
+  
+
+
+<time datetime="2008-10-20T00:00:00-05:00" pubdate data-updated="true">Oct 20<span>th</span>, 2008</time>
+        
+      </p>
     
   </header>
 
@@ -711,15 +888,15 @@
 <p><strong>Listing 8.1 - Binding a GridView from the code-behind</strong></p>
 
 
-<div><figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
-</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>public partial class grid : ViewPage&lt;Customer[]&gt;{ protected override void OnLoad(System.EventArgs e) {base.OnLoad(e);grid1.DataSource = ViewData.Model;grid1.DataBind(); }}</div></code></pre></td></tr></table></div></figure></div>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>public partial class grid : ViewPage&lt;Customer[]&gt;{ protected override void OnLoad(System.EventArgs e) {base.OnLoad(e);grid1.DataSource = ViewData.Model;grid1.DataBind(); }}</span></code></pre></td></tr></table></div></figure>
 
 
 <p><strong>Listing 8.2 - Binding a GridView from the view itself</strong></p>
 
 
-<div><figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
-</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>&lt;% grid1.DataSource = ViewData.Model; grid1.DataBind();%&gt;</div></code></pre></td></tr></table></div></figure></div>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;% grid1.DataSource = ViewData.Model; grid1.DataBind();%&gt;</span></code></pre></td></tr></table></div></figure>
 
 
 <p>You also have the option of using the DataSource controls such as ObjectDataSource, SqlDataSource, and XmlDataSource. Of course, in doing this you&#8217;ve completely circumvented the MVC pattern and placed all of your data access directly in the view!</p>
@@ -759,30 +936,36 @@ ders properly</strong></p>
 <p>My co-authors may also be posting some excerpts, so pay attention to them:&#160; <a href="http://www.jeffreypalermo.com" target="_blank">Jeffrey Palermo</a> and <a href="http://www.lostechies.com/blogs/jimmy_bogard/" target="_blank">Jimmy Bogard</a>.</p>
 
 </div>
-  <footer>
-    <a rel="full-article" href="/2008/10/leveraging-existing-asp-net-features-in-asp-net-mvc/">Read on &rarr;</a>
-  </footer>
+  
+  
 
 
-  </article>
-
-
-  <article>
-    
+    </article>
+  
+  
+    <article>
+      
   <header>
     
       <h1 class="entry-title"><a href="/2008/10/vs-live-tulsa-techfest-material/">Vs Live / Tulsa TechFest Material</a></h1>
     
     
       <p class="meta">
+        
 
 
 
 
-<time datetime="2008-10-14 00:00:00 -0500" pubdate  updated >Oct 14<span>th</span>, 2008</time>
 
 
-</p>
+
+
+  
+
+
+<time datetime="2008-10-14T00:00:00-05:00" pubdate data-updated="true">Oct 14<span>th</span>, 2008</time>
+        
+      </p>
     
   </header>
 
@@ -792,30 +975,36 @@ ders properly</strong></p>
 
 <p> <p>I had a little hiccup during the demo, so I had to comment out my Windsor code &amp; just revert to poor man&#8217;s dependency injection!&nbsp; What&#8217;s weird is that this worked 20 minutes before the demo, but whatever.</p> <p>Another thing to note is that I&#8217;m now a BDD convert, so my tests changed a bit from the material that was delivered on DVD over a month ago.&nbsp; The example I did today, with BDD style tests &amp; some ShouldBe extension methods is available here:</p> <p><a href="http://benscheirman.googlecode.com/files/vslive%20las%20vegas%202008.zip" target="_blank">VS Live Presentation Material</a></p> <p>I also ended up winning a little bit of money yesterday, which was awesome!&nbsp; While playing nickel slots and talking on the phone to my wife, I accidentally pressed the cash out button when I only had $0.10 left :)&nbsp; Here&#8217;s a stellar picture showing my excitement:</p> <p><a href="http://flux88.com/uploads/VSLiveTulsaTechFestMaterial_9BAA/lasvegaswinnings.png"><img src="/images/lasvegaswinnings_thumb.png" alt="las-vegas-winnings"  border="0" /></a> </p> <h2>Tulsa TechFest</h2> <p>Also, last week I gave two presentations in Tulsa:</p> <ul> <li>Become a .NET Jedi with ReSharper</li> <li>Build a blog with ASP.NET MVC</li></ul> <p>The audiences for both talks were very engaged, and I think they both went really well.&nbsp; I did leave Tulsa wondering, however, <strong>what&#8217;s with all the VB developers!</strong>&nbsp; (I kid, I kid!)</p> <p>The material for the blog example is available here:</p> <p><a href="http://benscheirman.googlecode.com/files/vslive%20las%20vegas%202008.zip" target="_blank">Tulsa TechFest Presentation Material</a></p> <p>If you want to browse the source for either of these talks, check out <a href="http://code.google.com/p/benscheirman" target="_blank">my google code repository</a> (they&#8217;ll be posted soon).</p> <p>Thanks to those who attended my talks &amp; game me valuable feedback.&nbsp; I&#8217;m always looking to improve my presentation skills.</p> <p>&nbsp;</p> <p>What&#8217;s next for me?&nbsp; I&#8217;ll be speaking at the <a href="http://www.innotechok.com/" target="_blank">Innotech</a> in Oklahoma City on November 6th, on the same subject.</p></p>
 </div>
-  <footer>
-    <a rel="full-article" href="/2008/10/vs-live-tulsa-techfest-material/">Read on &rarr;</a>
-  </footer>
+  
+  
 
 
-  </article>
-
-
-  <article>
-    
+    </article>
+  
+  
+    <article>
+      
   <header>
     
       <h1 class="entry-title"><a href="/2008/10/the-transition-from-tdd-to-bdd/">The Transition From TDD to BDD</a></h1>
     
     
       <p class="meta">
+        
 
 
 
 
-<time datetime="2008-10-12 00:00:00 -0500" pubdate  updated >Oct 12<span>th</span>, 2008</time>
 
 
-</p>
+
+
+  
+
+
+<time datetime="2008-10-12T00:00:00-05:00" pubdate data-updated="true">Oct 12<span>th</span>, 2008</time>
+        
+      </p>
     
   </header>
 
@@ -825,21 +1014,21 @@ ders properly</strong></p>
 
 <p> <p>Things in the TDD world aren&#8217;t all peach schnapps and roses (or however the saying goes). Often times you still end up with messy tests that have tons of code duplication and very little solubility. TDD is still difficult for me, even though I&#8217;ve done it for 4 years.</p> <p>One thing I&#8217;ve noticed lately that I&#8217;ve been slowly losing in my tests is the executable documentation. It&#8217;s increasingly hard to tell how my system behaves just from reading my unit tests. As our system grew more complex, so did our unit tests and eventually they lost most of their grokability.</p> <p>Another thing I&#8217;ve noticed is that our tests have so much setup gunk that it clouds the meaning of each test method. By nature each test likely has some particular context in which it intends to run, and this code gets placed in the [Test] itself rather than the [SetUp]. Why?&nbsp; My mocks need to behave differently in each test method, so if I put them in the setup, things either don&#8217;t work for other tests or there are mocks being set up that are never used for other tests. I directly attribute this to having one [TestFixture] per system under test.</p> <p>I&#8217;d like to state that again, because it bears repeating. <strong>One TestFixture per system under test is an anti-pattern.</strong> It has taken me three (3!) presentations on Behavior-Driven Design for this fact to really sink in.&nbsp; Contexts are important, and a system that you want to test certainly has more than one context. By separating the fixtures into per-system-context rather than per-system, we can now leverage our [Setup] again to establish our context!</p> <p>Here is a test class that I might have written with a strict TDD mindset:</p></p>
 
-<div><figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
-</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>//PostControllerTester.cs</div></code></pre></td></tr></table></div></figure></div>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>//PostControllerTester.cs</span></code></pre></td></tr></table></div></figure>
 
 
 
 
-<div><figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
-</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>[Test]&lt;br>public void edit_action_gets_post_from_repository()&lt;br>{&lt;br>&nbsp;&nbsp;&nbsp; _authService.Stub(x=&gt;x.IsAuthorizedToEdit("bob"))&lt;br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; .IgnoreArguments()&lt;br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; .Return(true); &lt;p>&nbsp;&nbsp;&nbsp; var controller = CreatePostController();&lt;br>&nbsp;&nbsp;&nbsp; controller.Edit(5);&lt;br>&nbsp;&nbsp;&nbsp; _repository.AssertWasCalled(x=&gt;x.Find(5));&lt;br>}&lt;/p></div></code></pre></td></tr></table></div></figure></div>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>[Test]&lt;br>public void edit_action_gets_post_from_repository()&lt;br>{&lt;br>&nbsp;&nbsp;&nbsp; _authService.Stub(x=&gt;x.IsAuthorizedToEdit("bob"))&lt;br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; .IgnoreArguments()&lt;br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; .Return(true); &lt;p>&nbsp;&nbsp;&nbsp; var controller = CreatePostController();&lt;br>&nbsp;&nbsp;&nbsp; controller.Edit(5);&lt;br>&nbsp;&nbsp;&nbsp; _repository.AssertWasCalled(x=&gt;x.Find(5));&lt;br>}&lt;/p></span></code></pre></td></tr></table></div></figure>
 
 
 <p>Notice that this test actually has some setup, some sort of action (in this case we&#8217;re invoking the Edit action), and some verification.&nbsp; This test has 3 pieces to it!&nbsp; Applying a more BDD mindset, you&#8217;d likely have something like this:</p>
 
 
-<div><figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
-</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>public class when_invoking_edit_action_as_authorized_user()&lt;br>{&lt;br>&nbsp;&nbsp;&nbsp; ...&lt;br>&nbsp;&nbsp;&nbsp; [SetUp]&lt;br>&nbsp;&nbsp;&nbsp; public void Setup&lt;br>&nbsp;&nbsp;&nbsp; {&lt;br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; _controller = new PostsController(...);&lt;br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; _authService = MockRepository.GenerateMock&lt;IAuthService&gt;();&lt;br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; _repository = MockRepository.GenerateMock&lt;IPostRepository&gt;();&lt;br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; EstablishContext();&lt;br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; When();&lt;br>&nbsp;&nbsp;&nbsp; }&lt;br>&nbsp;&nbsp;&nbsp; public void EstablishContext()&lt;br>&nbsp;&nbsp;&nbsp; {&lt;br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; _authService.Stub(x=&gt;x.IsAuthorizedToEdit("bob"))&lt;br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; .IgnoreArguments().Return(true);&lt;br>&nbsp;&nbsp;&nbsp; }&lt;br>&nbsp;&nbsp;&nbsp; public void When()&lt;br>&nbsp;&nbsp;&nbsp; {&lt;br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; _controller.Edit(5);&nbsp;&nbsp;&nbsp; &lt;br>&nbsp;&nbsp;&nbsp; }&lt;br>&nbsp;&nbsp;&nbsp; [Test]&lt;br>&nbsp;&nbsp;&nbsp; public void it_should_fetch_post_from_repository()&lt;br>&nbsp;&nbsp;&nbsp; {&lt;br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; _repository.AssertWasCalled(x=&gt;x.Find(5));&lt;br>&nbsp;&nbsp;&nbsp; }&lt;br>}</div></code></pre></td></tr></table></div></figure></div>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>public class when_invoking_edit_action_as_authorized_user()&lt;br>{&lt;br>&nbsp;&nbsp;&nbsp; ...&lt;br>&nbsp;&nbsp;&nbsp; [SetUp]&lt;br>&nbsp;&nbsp;&nbsp; public void Setup&lt;br>&nbsp;&nbsp;&nbsp; {&lt;br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; _controller = new PostsController(...);&lt;br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; _authService = MockRepository.GenerateMock&lt;IAuthService&gt;();&lt;br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; _repository = MockRepository.GenerateMock&lt;IPostRepository&gt;();&lt;br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; EstablishContext();&lt;br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; When();&lt;br>&nbsp;&nbsp;&nbsp; }&lt;br>&nbsp;&nbsp;&nbsp; public void EstablishContext()&lt;br>&nbsp;&nbsp;&nbsp; {&lt;br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; _authService.Stub(x=&gt;x.IsAuthorizedToEdit("bob"))&lt;br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; .IgnoreArguments().Return(true);&lt;br>&nbsp;&nbsp;&nbsp; }&lt;br>&nbsp;&nbsp;&nbsp; public void When()&lt;br>&nbsp;&nbsp;&nbsp; {&lt;br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; _controller.Edit(5);&nbsp;&nbsp;&nbsp; &lt;br>&nbsp;&nbsp;&nbsp; }&lt;br>&nbsp;&nbsp;&nbsp; [Test]&lt;br>&nbsp;&nbsp;&nbsp; public void it_should_fetch_post_from_repository()&lt;br>&nbsp;&nbsp;&nbsp; {&lt;br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; _repository.AssertWasCalled(x=&gt;x.Find(5));&lt;br>&nbsp;&nbsp;&nbsp; }&lt;br>}</span></code></pre></td></tr></table></div></figure>
 
 
 <p>Notice the name of the class.&nbsp; It describes the context of what we&#8217;re trying to accomplish.&nbsp; Our [SetUp] now establishes the state of the environment in which we want to act on our system.&nbsp; The When() method is where we act on our system.&nbsp; The only thing remaining is the test which is now dead simple.&nbsp; The test simply verifies some aspect of the system.&nbsp; The name of the test is also only conveying the verification part of the test.</p>
@@ -872,8 +1061,8 @@ ders properly</strong></p>
 <p>Until you get BDD, stick to what you know.&nbsp; In my example I call EstablishContext() and When(), and I&#8217;ll do that for every fixture.&nbsp; Why not leverage a base class?&nbsp; Here&#8217;s mine:</p>
 
 
-<div><figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
-</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>public abstract class Specification&lt;br>{&lt;br>&nbsp;&nbsp;&nbsp; protected Exception ExceptionThrown { get; private set; } &lt;p>&nbsp;&nbsp;&nbsp; &lt;br>[SetUp]&lt;br>&nbsp;&nbsp;&nbsp; public void Setup()&lt;br>&nbsp;&nbsp;&nbsp; {&lt;br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; EstablishContext(); &lt;p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; try&lt;br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {&lt;br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; When();&lt;br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }&lt;br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; catch(Exception exc)&lt;br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {&lt;br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ExceptionThrown = exc;&lt;br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }&lt;br>&nbsp;&nbsp;&nbsp; } &lt;p>&nbsp;&nbsp;&nbsp; &lt;/p>&lt;p>protected T Mock&lt;T&gt;()&lt;br>&nbsp;&nbsp;&nbsp; {&lt;br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return MockRepository.GenerateMock&lt;T&gt;();&lt;br>&nbsp;&nbsp;&nbsp; } &lt;/p>&lt;p>&nbsp;&nbsp;&nbsp; protected abstract void EstablishContext();&lt;br>&nbsp;&nbsp;&nbsp; protected abstract void When(); &lt;p>&nbsp;&nbsp;&nbsp; &lt;/p>&lt;p>[TearDown]&lt;br>&nbsp;&nbsp;&nbsp; public virtual void TearDown()&lt;br>&nbsp;&nbsp;&nbsp; {&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;br>&nbsp;&nbsp;&nbsp; }&lt;br>}&lt;/p></div></code></pre></td></tr></table></div></figure></div>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>public abstract class Specification&lt;br>{&lt;br>&nbsp;&nbsp;&nbsp; protected Exception ExceptionThrown { get; private set; } &lt;p>&nbsp;&nbsp;&nbsp; &lt;br>[SetUp]&lt;br>&nbsp;&nbsp;&nbsp; public void Setup()&lt;br>&nbsp;&nbsp;&nbsp; {&lt;br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; EstablishContext(); &lt;p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; try&lt;br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {&lt;br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; When();&lt;br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }&lt;br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; catch(Exception exc)&lt;br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {&lt;br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ExceptionThrown = exc;&lt;br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }&lt;br>&nbsp;&nbsp;&nbsp; } &lt;p>&nbsp;&nbsp;&nbsp; &lt;/p>&lt;p>protected T Mock&lt;T&gt;()&lt;br>&nbsp;&nbsp;&nbsp; {&lt;br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return MockRepository.GenerateMock&lt;T&gt;();&lt;br>&nbsp;&nbsp;&nbsp; } &lt;/p>&lt;p>&nbsp;&nbsp;&nbsp; protected abstract void EstablishContext();&lt;br>&nbsp;&nbsp;&nbsp; protected abstract void When(); &lt;p>&nbsp;&nbsp;&nbsp; &lt;/p>&lt;p>[TearDown]&lt;br>&nbsp;&nbsp;&nbsp; public virtual void TearDown()&lt;br>&nbsp;&nbsp;&nbsp; {&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;br>&nbsp;&nbsp;&nbsp; }&lt;br>}&lt;/p></span></code></pre></td></tr></table></div></figure>
 
 
 <p>Now when you inherit from Specification, you are forced to provide implementations of EstablishContext() and When().&nbsp; I also wrap the When() in a try/catch so that you can do things like Assert.WasThrown(&#8230;);</p>
@@ -892,48 +1081,13 @@ new RhinoMocks AAA syntax, makes my tests much easier to read.</p>
 <p>While I cannot justify going back and changing 500 or so unit tests to this form, I will ensure that I start writing BDD style specifications for my new production code moving forward. </p>
 
 </div>
-  <footer>
-    <a rel="full-article" href="/2008/10/the-transition-from-tdd-to-bdd/">Read on &rarr;</a>
-  </footer>
+  
+  
 
 
-  </article>
-
-
-  <article>
-    
-  <header>
-    
-      <h1 class="entry-title"><a href="/2008/10/tulsa-tech-fest-vs-live/">Tulsa Tech Fest & vs Live</a></h1>
-    
-    
-      <p class="meta">
-
-
-
-
-<time datetime="2008-10-08 00:00:00 -0500" pubdate  updated >Oct 8<span>th</span>, 2008</time>
-
-
-</p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><a href="http://flux88.com/uploads/TulsaTechFestVSLive_148B3/tulsaskyline1_dusk.jpg"><img src="/images/tulsaskyline1_dusk_thumb.jpg" alt="tulsa-skyline1_dusk"  border="0" /></a> It&#8217;s going to be a busy two weeks!&nbsp; I leave tomorrow for Tulsa to speak at <a href="http://techfests.com/tulsa/2008" target="_blank">Tulsa TechFest</a>.&nbsp; If you haven&#8217;t been to one of these you should really try to make it next time.&nbsp; <a href="http://www.davidlwalker.com/" target="_blank">David Walker</a> truly knows how to put on a good event (as I saw first-hand in 2006) and this year looks even better!&nbsp; There&#8217; a veritable truckload of prizes to give away and of course two days FULL of sessions.</p>
-
-
-<p> <p>I&#8217;ll be giving two talks:</p> <ul> <li><a href="http://techfests.com/Tulsa/2008/Speakers/BenScheirman/default.aspx" target="_blank">Building a blog with ASP.NET MVC</a><br>This session will focus purely on app building, to give participants a glimpse of what it&#8217;s like to work with the framework.&nbsp; <br><br>I&#8217;m tempted to do this session with NVelocity (rather than the ASPX views that you usually see) &#8211; a twitter poll I did yielded a divided audience.&nbsp; 4 said &#8220;Yes! NVelocity!&#8221; and 4 others said &#8220;You&#8217;ll just confuse people.&#8221;&nbsp; If you have an opinion on the matter, chime in in the comments!<br></li> <li><a href="http://techfests.com/Tulsa/2008/Speakers/BenScheirman/default.aspx" target="_blank">Becoming a .NET Jedi with ReSharper</a><br>I was asked to fill in for a speaker, so I decided to just give an off-the-cuff praise-fest for ReSharper.&nbsp; This tool demos so well, and I&#8217;m happy to recommend it to eager developers looking to improve their craft.</li></ul> <p>&nbsp;</p> <p><a href="http://flux88.com/uploads/TulsaTechFestVSLive_148B3/lasvegas.jpg"><img src="/images/lasvegas_thumb.jpg" alt="las-vegas"  border="0" /></a></p> <p>The following week, I&#8217;ll be at <a href="http://vslive.com/2008/lasvegas/" target="_blank">VS Live in Las Vegas</a> (Vegas, baby, Vegas!)&nbsp; This is my first time going&nbsp; to Vegas, so I&#8217;m super-pumped.&nbsp; My session at VS Live is on Tuesday morning&#8230;</p> <ul> <li><a href="http://http://vslive.com/2008/lasvegas/webdevelopment.aspx#mvc" target="_blank">Test-Driven Development with ASP.NET MVC</a><br>I&#8217;m excited to give this sort of talk to a larger audience.&nbsp; There are a number of interesting points to talk about with respect to testability in software, and how you can cope with software that is not very testable.&nbsp; This talk will benefit people familiar with ASP.NET MVC where they&#8217;ll learn lots about unit testing, mocks, and test-first development.&nbsp; People experienced with TDD will be able to appreciate the ASP.NET MVC framework, seeing first-hand how testable it is out of the box.</li></ul> <p>If you&#8217;re going to either of these conferences, please come by and chat!</p></p>
-</div>
-  <footer>
-    <a rel="full-article" href="/2008/10/tulsa-tech-fest-vs-live/">Read on &rarr;</a>
-  </footer>
-
-
-  </article>
-
-<nav role="pagination">
-  <div>
+    </article>
+  
+  <div class="pagination">
     
       <a class="prev" href="/blog/page/13/">&larr; Older</a>
     
@@ -942,20 +1096,8 @@ new RhinoMocks AAA syntax, makes my tests much easier to read.</p>
     <a class="next" href="/blog/page/11/">Newer &rarr;</a>
     
   </div>
-</nav>
-
-<script type="text/javascript">
-    var disqus_shortname = 'subdigital';
-    (function () {
-      var s = document.createElement('script'); s.async = true;
-      s.type = 'text/javascript';
-      s.src = 'http://' + disqus_shortname + '.disqus.com/count.js';
-      (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
-    }());
-</script>
-
 </div>
-<aside role=sidebar>
+<aside class="sidebar">
   
     <section>
   <h1>Who am I?</h1>
@@ -964,6 +1106,10 @@ new RhinoMocks AAA syntax, makes my tests much easier to read.</p>
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/2012/07/serving-assets-from-s3-on-heroku/">Serving Assets from S3 on Heroku</a>
+      </li>
     
       <li class="post">
         <a href="/2012/02/hello/">Hello, NSScreencast</a>
@@ -981,10 +1127,6 @@ new RhinoMocks AAA syntax, makes my tests much easier to read.</p>
         <a href="/2011/12/formatting-json-from-terminal/">Formatting JSON From Terminal</a>
       </li>
     
-      <li class="post">
-        <a href="/2011/10/houston-tech-fest-2011-recap/">Houston Tech Fest 2011 Recap</a>
-      </li>
-    
   </ul>
 </section>
 
@@ -1000,16 +1142,19 @@ new RhinoMocks AAA syntax, makes my tests much easier to read.</p>
   </script>
   <script src="/javascripts/twitter.js" type="text/javascript"> </script>
   
-    <a href="http://twitter.com/subdigital" class="twitter-follow-button" data-width="208px" data-show-count="false">Follow @subdigital</a>
+    <a href="http://twitter.com/subdigital" class="twitter-follow-button" data-show-count="false">Follow @subdigital</a>
   
 </section>
 
 
 <section>
   <h1>On Delicious</h1>
-  <script type="text/javascript" src="http://feeds.delicious.com/v2/js/subdigital?title=&count=3&sort=date&extended"></script>
+  <div id="delicious"></div>
+  <script type="text/javascript" src="http://feeds.delicious.com/v2/json/subdigital?count=3&amp;sort=date&amp;callback=renderDeliciousLinks"></script>
   <p><a href="http://delicious.com/subdigital">My Delicious Bookmarks &raquo;</a></p>
 </section>
+
+
 
 
 
@@ -1018,7 +1163,7 @@ new RhinoMocks AAA syntax, makes my tests much easier to read.</p>
 
     </div>
   </div>
-  <footer>
+  <footer role="contentinfo">
 <a style="display:block; float: right" title="Real Time Analytics" href="http://getclicky.com/66470389"><img alt="Real Time Analytics" src="//static.getclicky.com/media/links/badge.gif" border="0" /></a>
 <script src="//static.getclicky.com/js" type="text/javascript"></script>
 <script type="text/javascript">try{ clicky.init(66470389); }catch(e){}</script>
@@ -1045,5 +1190,40 @@ new RhinoMocks AAA syntax, makes my tests much easier to read.</p>
 </p>
 
 </footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'subdigital';
+      
+        
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
 </body>
 </html>

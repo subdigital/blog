@@ -1,517 +1,822 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title>Fickle Bits</title>
+  <title><![CDATA[Fickle Bits]]></title>
   <link href="http://benscheirman.com/atom.xml" rel="self"/>
   <link href="http://benscheirman.com/"/>
-  <updated>2012-02-10T09:23:49-06:00</updated>
+  <updated>2012-07-07T16:09:13-05:00</updated>
   <id>http://benscheirman.com/</id>
   <author>
-    <name>Ben Scheirman</name>
+    <name><![CDATA[Ben Scheirman]]></name>
     
   </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
 
   
   <entry>
-    <title>Hello, NSScreencast</title>
+    <title type="html"><![CDATA[Serving Assets from S3 on Heroku]]></title>
+    <link href="http://benscheirman.com/2012/07/serving-assets-from-s3-on-heroku/"/>
+    <updated>2012-07-07T11:17:00-05:00</updated>
+    <id>http://benscheirman.com/2012/07/serving-assets-from-s3-on-heroku</id>
+    <content type="html"><![CDATA[<p>Recently I changed <a href="http://nsscreencast.com">NSScreencast</a> to use a <a href="http://en.wikipedia.org/wiki/Content_delivery_network">CDN</a>
+to serve up assets from a different, faster server.</p>
+
+<h2>Why use a CDN?</h2>
+
+<p>Using a CDN has numerous benefits.  First, and foremost, this alleviates a bunch of secondary requests that
+would normally hit your webserver.  Loading the home page of NSScreencast loads more than a dozen images, stylesheets, and
+javascript files.  When deploying to Heroku this can be especially problematic as each asset request will occupy one of your
+dynos for a short time.  In the spirit of maximizing your free dyno on Heroku, not sending these requests to your app is definitely
+a big win.</p>
+
+<p>In addition, most browsers have a setting that limits the number of connections (usually 2) that it will open
+in parallel to a given domain.  By using a CDN, you can increase the number of parallel requests
+because these assets are not served up by your application&#8217;s domain.</p>
+
+<p>It&#8217;s also a common practice to use dns to &#8220;alter&#8221; the domain so that you can maximize this parallelization.</p>
+
+<h2>Using the asset sync gem</h2>
+
+<p>Following the instructions on <a href="https://devcenter.heroku.com/articles/cdn-asset-host-rails31">Heroku&#8217;s Devcenter article</a> I
+decided to use the <code>asset_sync</code> gem.  This gem will upload your compiled assets to your preferred CDN (any file storage server that
+<a href="https://github.com/fog/fog/">fog</a> supports).  In my case, I wanted to use S3.</p>
+
+<p>The first step is adding this gem to your <code>Gemfile</code>:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">group</span> <span class="ss">:assets</span> <span class="k">do</span>
+</span><span class='line'>  <span class="c1"># other asset gems</span>
+</span><span class='line'>  <span class="n">gem</span> <span class="s1">&#39;asset_sync&#39;</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>It&#8217;s important to put this in your asset group, as your running app doesn&#8217;t need to load this into memory.</p>
+
+<p>Then you need to configure the gem.  I found Heroku&#8217;s instructions to be lacking here, as I had to dig into
+the <a href="https://github.com/rumblelabs/asset_sync"><code>asset_sync</code> github page</a> to make this work.</p>
+
+<p>Add a file called <code>config/initializers/asset_sync.rb</code> to your app:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="c1"># Since this gem is only loaded with the assets group, we have to check to </span>
+</span><span class='line'><span class="c1"># see if it&#39;s defined before configuring it.</span>
+</span><span class='line'><span class="k">if</span> <span class="n">defined?</span><span class="p">(</span><span class="no">AssetSync</span><span class="p">)</span>
+</span><span class='line'>  <span class="no">AssetSync</span><span class="o">.</span><span class="n">configure</span> <span class="k">do</span> <span class="o">|</span><span class="n">config</span><span class="o">|</span>
+</span><span class='line'>    <span class="n">config</span><span class="o">.</span><span class="n">fog_provider</span> <span class="o">=</span> <span class="s1">&#39;AWS&#39;</span>
+</span><span class='line'>    <span class="n">config</span><span class="o">.</span><span class="n">aws_access_key_id</span> <span class="o">=</span> <span class="no">ENV</span><span class="o">[</span><span class="s1">&#39;AWS_ACCESS_KEY_ID&#39;</span><span class="o">]</span>
+</span><span class='line'>    <span class="n">config</span><span class="o">.</span><span class="n">aws_secret_access_key</span> <span class="o">=</span> <span class="no">ENV</span><span class="o">[</span><span class="s1">&#39;AWS_SECRET_ACCESS_KEY&#39;</span><span class="o">]</span>
+</span><span class='line'>    <span class="n">config</span><span class="o">.</span><span class="n">fog_directory</span> <span class="o">=</span> <span class="no">ENV</span><span class="o">[</span><span class="s1">&#39;FOG_DIRECTORY&#39;</span><span class="o">]</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c1"># Fail silently.  Useful for environments such as Heroku</span>
+</span><span class='line'>    <span class="n">config</span><span class="o">.</span><span class="n">fail_silently</span> <span class="o">=</span> <span class="kp">true</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>That last config line is important.  When you deploy to Heroku, your app&#8217;s assets will get precompiled.  But because Heroku
+doesn&#8217;t initialize your app on precompile, none of your settings will be available.  Instead we&#8217;ll have to run the precompile again,
+manually, to get AssetSync to kick in.</p>
+
+<h2>Setting up the configuration with Heroku San</h2>
+
+<p>Since I like to have multiple environments, I use <a href="https://github.com/fastestforward/heroku_san"><code>heroku_san</code></a> to manage them, including
+the environment variables.</p>
+
+<p>Inside of <code>config/heroku.yml</code>, set up the following for each environment:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="no">FOG_PROVIDER</span><span class="p">:</span> <span class="s2">&quot;AWS&quot;</span>
+</span><span class='line'><span class="no">FOG_DIRECTORY</span><span class="p">:</span> <span class="s2">&quot;nsscreencast-assets&quot;</span>
+</span><span class='line'><span class="no">AWS_ACCESS_KEY_ID</span><span class="p">:</span> <span class="s2">&quot;&lt;your access key&gt;&quot;</span>
+</span><span class='line'><span class="no">AWS_SECRET_ACCESS_KEY</span><span class="p">:</span> <span class="s2">&quot;...&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Configuring Your Rails app to use S3 as an Asset Host</h2>
+
+<p>In your <code>config/production.rb</code> (and <code>staging.rb</code> if you have one), make sure to add the
+following line to allow Rails to generate the appropriate links for your assets:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'>  <span class="n">config</span><span class="o">.</span><span class="n">action_controller</span><span class="o">.</span><span class="n">asset_host</span> <span class="o">=</span> <span class="no">Proc</span><span class="o">.</span><span class="n">new</span> <span class="k">do</span> <span class="o">|</span><span class="n">source</span><span class="p">,</span> <span class="n">request</span><span class="o">|</span>
+</span><span class='line'>    <span class="n">scheme</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">ssl?</span> <span class="p">?</span> <span class="s2">&quot;https&quot;</span> <span class="p">:</span> <span class="s2">&quot;http&quot;</span>
+</span><span class='line'>    <span class="s2">&quot;https://</span><span class="si">#{</span><span class="no">ENV</span><span class="o">[</span><span class="s1">&#39;FOG_DIRECTORY&#39;</span><span class="o">]</span><span class="si">}</span><span class="s2">.s3.amazonaws.com&quot;</span>
+</span><span class='line'>  <span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This will allow your app to serve up the URLs using SSL if the request is coming via SSL.  Doing
+this can avoid warnings in the browser that your app contains secure and unsecure content.</p>
+
+<h2>Testing it all out</h2>
+
+<p>If all of this is configured correctly, you can test it out by doing a push&#8230;</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">git</span> <span class="n">push</span> <span class="n">heroku</span> <span class="n">master</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>You&#8217;ll see the asset precompile going on in the logs, and likely an error related to AssetSync.  This is fine (and
+in fact, this tripped me up at first).  Once
+the deploy has completed, you&#8217;ll have to run this command to upload your assets:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">heroku</span> <span class="n">run</span> <span class="n">rake</span> <span class="n">assets</span><span class="ss">:precompile</span> <span class="o">--</span><span class="n">app</span> <span class="o">&lt;</span><span class="n">yourapp</span><span class="o">&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Doing this, you should see something like the following output:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="no">Precompiling</span> <span class="n">assets</span><span class="o">.</span><span class="n">.</span><span class="o">.</span>
+</span><span class='line'><span class="no">Uploading</span><span class="p">:</span> <span class="n">application</span><span class="o">.</span><span class="n">css</span>
+</span><span class='line'><span class="no">Uploading</span><span class="p">:</span> <span class="n">application</span><span class="o">.</span><span class="n">css</span><span class="o">.</span><span class="n">gz</span>
+</span><span class='line'><span class="no">Uploading</span><span class="p">:</span> <span class="n">image1</span><span class="o">.</span><span class="n">png</span>
+</span><span class='line'><span class="no">Uploading</span><span class="p">:</span> <span class="n">image2</span><span class="o">.</span><span class="n">png</span>
+</span><span class='line'><span class="o">.</span><span class="n">.</span><span class="o">.</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Set up Heroku San to do this on every deploy</h2>
+
+<p>I&#8217;d likely forget to run this command every once in a while, so I set up Heroku San to run this command
+after every deploy.</p>
+
+<p>To do this, add a new rake task in your app (<code>lib/tasks/deploy.rake</code>):</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">task</span> <span class="ss">:after_deploy</span> <span class="k">do</span>
+</span><span class='line'>  <span class="no">HerokuSan</span><span class="o">.</span><span class="n">project</span><span class="o">.</span><span class="n">each_app</span> <span class="k">do</span> <span class="o">|</span><span class="n">stage</span><span class="o">|</span>
+</span><span class='line'>    <span class="nb">puts</span> <span class="s2">&quot;---&gt; Precompiling asssets &amp; uploading to the CDN&quot;</span>
+</span><span class='line'>    <span class="nb">system</span><span class="p">(</span><span class="s2">&quot;heroku run rake assets:precompile --app </span><span class="si">#{</span><span class="n">stage</span><span class="o">.</span><span class="n">app</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Now when you run your deploy via <code>rake production deploy</code> this will happen automatically.</p>
+
+<h2>So what&#8217;s the net result?</h2>
+
+<p>Doing this alleviated nearly 30 secondary requests to my application for each page load.  That alone is pretty huge.  Also, S3 is
+much faster at serving these assets than nginx is (at least via a Heroku app on 1 dyno).</p>
+
+<p>I tested this before and after by clearing the cache and doing a fresh page load.  Using the Chrome Inspector, I looked at the time to load the page and all assets.
+Here are my findings:</p>
+
+<table style="margin: 25px;">
+  <tr>
+    <td style="border: solid 1px #ddd; padding: 3px 7px;">
+      <strong>Before</strong> (<em>serving assets with no CDN</em>)
+    </td>
+    <td style="border: solid 1px #ddd; padding: 3px 7px;">3.27 seconds</td>
+  </tr>
+  <tr>
+    <td style="border: solid 1px #ddd; padding: 3px 7px;"><strong>After</strong>
+    (<em>using S3 as a CDN</em>)
+    </td>
+    <td style="border: solid 1px #ddd; padding: 3px 7px;">1.07 seconds</td>
+  </tr>
+</table>
+
+
+<p>That&#8217;s a huge gain for a minor change in your application &amp; deployment process.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Hello, NSScreencast]]></title>
     <link href="http://benscheirman.com/2012/02/hello/"/>
     <updated>2012-02-10T06:27:00-06:00</updated>
     <id>http://benscheirman.com/2012/02/hello</id>
-    <content type="html">&lt;p&gt;&lt;a href=&quot;http://nsscreencast.com&quot;&gt;NSScreencast&lt;/a&gt; is now live. The first 2 videos have been posted:&lt;/p&gt;
+    <content type="html"><![CDATA[<p><a href="http://nsscreencast.com">NSScreencast</a> is now live. The first 2 videos have been posted:</p>
 
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;http://nsscreencast.com/episodes/1-objective-c-basics&quot;&gt;Objective-C Basics&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;http://nsscreencast.com/episodes/2-diagnosing-memory-problems&quot;&gt;Diagnosing Memory Problems&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
+<ul>
+<li><a href="http://nsscreencast.com/episodes/1-objective-c-basics">Objective-C Basics</a></li>
+<li><a href="http://nsscreencast.com/episodes/2-diagnosing-memory-problems">Diagnosing Memory Problems</a></li>
+</ul>
 
 
-&lt;p&gt;Now that the site has launched, I can share more details with you about it.&lt;/p&gt;
+<p>Now that the site has launched, I can share more details with you about it.</p>
 
-&lt;h3&gt;A new video each week&lt;/h3&gt;
+<h3>A new video each week</h3>
 
-&lt;p&gt;Each week, a new video will be posted covering a single, focused topic related to iOS development.&lt;/p&gt;
+<p>Each week, a new video will be posted covering a single, focused topic related to iOS development.</p>
 
-&lt;h3&gt;Don't waste the listener's time&lt;/h3&gt;
+<h3>Don&#8217;t waste the listener&#8217;s time</h3>
 
-&lt;p&gt;Each video will be short and to the point. It boils down to this: a 20 minute video is an easy thing to watch.  A 60-minute video is a serious time commitment.&lt;/p&gt;
+<p>Each video will be short and to the point. It boils down to this: a 20 minute video is an easy thing to watch.  A 60-minute video is a serious time commitment.</p>
 
-&lt;h3&gt;Some Free, Some Paid&lt;/h3&gt;
+<h3>Some Free, Some Paid</h3>
 
-&lt;p&gt;Eventually, NSScreencast will be a subscription service.  I'll announce details once they are nailed down, but for now, enjoy the videos!
-If you'd like to be notified when an episode is released, you can &lt;a href=&quot;http://feeds.feedburner.com/NSScreencast&quot;&gt;subscribe to the RSS feed&lt;/a&gt;,
-or follow &lt;a href=&quot;http://twitter.com/nsscreencast&quot;&gt;@nsscreencast&lt;/a&gt; on twitter.  (&lt;em&gt;Subscribing in iTunes is coming soon&lt;/em&gt;)&lt;/p&gt;
+<p>Eventually, NSScreencast will be a subscription service.  I&#8217;ll announce details once they are nailed down, but for now, enjoy the videos!
+If you&#8217;d like to be notified when an episode is released, you can <a href="http://feeds.feedburner.com/NSScreencast">subscribe to the RSS feed</a>,
+or follow <a href="http://twitter.com/nsscreencast">@nsscreencast</a> on twitter.  (<em>Subscribing in iTunes is coming soon</em>)</p>
 
-&lt;p&gt;If you have any video topic suggestions, feel free to share them at the &lt;a href=&quot;http://nsscreencast.uservoice.com&quot;&gt;User Voice Forum&lt;/a&gt;.
-Seriously, I'd love to hear your feedback!&lt;/p&gt;
-</content>
+<p>If you have any video topic suggestions, feel free to share them at the <a href="http://nsscreencast.uservoice.com">User Voice Forum</a>.
+Seriously, I&#8217;d love to hear your feedback!</p>
+]]></content>
   </entry>
   
   <entry>
-    <title>NSScreencasts, Coming Soon</title>
+    <title type="html"><![CDATA[NSScreencasts, Coming Soon]]></title>
     <link href="http://benscheirman.com/2012/01/nsscreencasts/"/>
     <updated>2012-01-19T22:47:00-06:00</updated>
     <id>http://benscheirman.com/2012/01/nsscreencasts</id>
-    <content type="html">&lt;h2&gt;Bite-Sized Learning&lt;/h2&gt;
+    <content type="html"><![CDATA[<h2>Bite-Sized Learning</h2>
 
-&lt;p&gt;Video training is becoming a very common way to learn these days.  With &lt;a href=&quot;http://tekpub.com&quot;&gt;Tekpub&lt;/a&gt;, &lt;a href=&quot;http://peepcode.com/&quot;&gt;Peepcode&lt;/a&gt;, &lt;a href=&quot;http://pluralsight.com&quot;&gt;Pluralsight&lt;/a&gt;,
-&lt;a href=&quot;http://codeschool.com&quot;&gt;Code School&lt;/a&gt;, and many others, there are usually great productions to teach you any development topic that you'd want to learn about.&lt;/p&gt;
+<p>Video training is becoming a very common way to learn these days.  With <a href="http://tekpub.com">Tekpub</a>, <a href="http://peepcode.com/">Peepcode</a>, <a href="http://pluralsight.com">Pluralsight</a>,
+<a href="http://codeschool.com">Code School</a>, and many others, there are usually great productions to teach you any development topic that you&#8217;d want to learn about.</p>
 
-&lt;p&gt;All of these services are great, however I'm becoming a fan of the smaller, more focused screencasts.  &lt;a href=&quot;http://railscasts.com&quot;&gt;Railscasts&lt;/a&gt;, for instance, has
-been &lt;em&gt;instrumental&lt;/em&gt; to my Rails learning development.  &lt;a href=&quot;http://destroyallsoftware.com/&quot;&gt;Destroy all Software&lt;/a&gt; teaches me new things every week.&lt;/p&gt;
+<p>All of these services are great, however I&#8217;m becoming a fan of the smaller, more focused screencasts.  <a href="http://railscasts.com">Railscasts</a>, for instance, has
+been <em>instrumental</em> to my Rails learning development.  <a href="http://destroyallsoftware.com/">Destroy all Software</a> teaches me new things every week.</p>
 
-&lt;p&gt;Smaller videos like this are easier to digest, and are more focused on a single topic.  Like the &lt;a href=&quot;http://en.wikipedia.org/wiki/Boiling_frog&quot;&gt;boiled frog&lt;/a&gt;
-you eventually realize how far you've come on a topic, simply by watching regular videos.&lt;/p&gt;
+<p>Smaller videos like this are easier to digest, and are more focused on a single topic.  Like the <a href="http://en.wikipedia.org/wiki/Boiling_frog">boiled frog</a>
+you eventually realize how far you&#8217;ve come on a topic, simply by watching regular videos.</p>
 
-&lt;p&gt;iOS Development is an ever-changing landscape, with so many topic areas to cover, that a single training class or screencast series just
-can't teach you all of it.  Instead of trying to cover everything in depth (increasing the length of videos). I find it valuable to
-have smaller, focused tutorials that teach you one thing, and do it quickly and effectively.&lt;/p&gt;
+<p>iOS Development is an ever-changing landscape, with so many topic areas to cover, that a single training class or screencast series just
+can&#8217;t teach you all of it.  Instead of trying to cover everything in depth (increasing the length of videos). I find it valuable to
+have smaller, focused tutorials that teach you one thing, and do it quickly and effectively.</p>
 
-&lt;h2&gt;Introducing NSScreencast&lt;/h2&gt;
+<h2>Introducing NSScreencast</h2>
 
-&lt;p&gt;&lt;a href=&quot;http://nsscreencast.com&quot;&gt;NSScreencast&lt;/a&gt; will be launching soon and will feature regular bite-sized videos
-focused on a single topic related to Objective-C and building iOS applications.&lt;/p&gt;
+<p><a href="http://nsscreencast.com">NSScreencast</a> will be launching soon and will feature regular bite-sized videos
+focused on a single topic related to Objective-C and building iOS applications.</p>
 
-&lt;p&gt;NSScreencast &lt;em&gt;will&lt;/em&gt; include free videos. Down the road, a nominal paid subsribtion will unlock access to more content.&lt;/p&gt;
+<p>NSScreencast <em>will</em> include free videos. Down the road, a nominal paid subsribtion will unlock access to more content.</p>
 
-&lt;p&gt;I still have lots to do before I release the first video, but if you like the idea, please sign up on
-the site to be notified when it launches. Thanks!&lt;/p&gt;
-</content>
+<p>I still have lots to do before I release the first video, but if you like the idea, please sign up on
+the site to be notified when it launches. Thanks!</p>
+]]></content>
   </entry>
   
   <entry>
-    <title>Careful With Block-Based Notification Handlers</title>
+    <title type="html"><![CDATA[Careful With Block-Based Notification Handlers]]></title>
     <link href="http://benscheirman.com/2012/01/careful-with-block-based-notification-handlers/"/>
     <updated>2012-01-11T16:27:00-06:00</updated>
     <id>http://benscheirman.com/2012/01/careful-with-block-based-notification-handlers</id>
-    <content type="html">&lt;p&gt;In general, I prefer using block-based APIs over those that accept selectors.&lt;/p&gt;
+    <content type="html"><![CDATA[<p>In general, I prefer using block-based APIs over those that accept selectors.</p>
 
-&lt;p&gt;The block based APIs are generally easier to read &amp;amp; follow, and don't clutter up your class with methods that are
-out of context with the code that might potentially invoke them.&lt;/p&gt;
+<p>The block based APIs are generally easier to read &amp; follow, and don&#8217;t clutter up your class with methods that are
+out of context with the code that might potentially invoke them.</p>
 
-&lt;h2&gt;An Example&lt;/h2&gt;
+<h2>An Example</h2>
 
-&lt;p&gt;One good example is view animations.  Here we're fading out a view and removing it from the hierarchy once
-the view has been completely faded out.  It's concise, easy to read, and you don't need to go anywhere else in the
-class to get a complete picture of how this works.&lt;/p&gt;
+<p>One good example is view animations.  Here we&#8217;re fading out a view and removing it from the hierarchy once
+the view has been completely faded out.  It&#8217;s concise, easy to read, and you don&#8217;t need to go anywhere else in the
+class to get a complete picture of how this works.</p>
 
-&lt;p&gt;Also, since you can have multiple animations going on, having a block-based completion handler means
-you don't have to distinguish between what the animations were in some generic completion method.&lt;/p&gt;
+<p>Also, since you can have multiple animations going on, having a block-based completion handler means
+you don&#8217;t have to distinguish between what the animations were in some generic completion method.</p>
 
-&lt;p&gt;``` objc&lt;/p&gt;
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="p">[</span><span class="n">UIView</span> <span class="nl">animateWithDuration:</span><span class="mf">0.5</span> <span class="nl">animations:</span><span class="o">^</span><span class="p">{</span>
+</span><span class='line'>  <span class="n">someView</span><span class="p">.</span><span class="n">alpha</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span> <span class="nl">completion:</span><span class="o">^</span> <span class="p">(</span><span class="kt">BOOL</span> <span class="n">finished</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="p">[</span><span class="n">someView</span> <span class="n">removeFromSuperView</span><span class="p">];</span>
+</span><span class='line'><span class="p">}];</span>
+</span></code></pre></td></tr></table></div></figure>
 
-&lt;pre&gt;&lt;code&gt;[UIView animateWithDuration:0.5 animations:^{
-  someView.alpha = 0;
-} completion:^ (BOOL finished) {
-  [someView removeFromSuperView];
-}];
-&lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;```&lt;/p&gt;
+<p>Contrast this with the non-block version:</p>
 
-&lt;p&gt;Contrast this with the non-block version:&lt;/p&gt;
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">fadeOutView</span> <span class="p">{</span>
+</span><span class='line'>  <span class="p">[</span><span class="n">UIView</span> <span class="n">beginAnimations</span><span class="p">];</span>
+</span><span class='line'>  <span class="p">[</span><span class="n">UIView</span> <span class="nl">setAnimationDuration:</span><span class="mf">0.5</span><span class="p">];</span>
+</span><span class='line'>  <span class="p">[</span><span class="n">UIView</span> <span class="nl">setAnimationDelegate:</span><span class="n">self</span><span class="p">];</span>
+</span><span class='line'>  <span class="p">[</span><span class="n">UIView</span> <span class="nl">setAnimationDidStopSelector:</span><span class="k">@selector</span><span class="p">(</span><span class="nl">animationDidStop:finished:context:</span><span class="p">)];</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">someView</span><span class="p">.</span><span class="n">alpha</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="p">[</span><span class="n">UIView</span> <span class="n">commitAnimations</span><span class="p">];</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">animationDidStop:</span><span class="p">(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="nv">animationID</span> <span class="nf">finished:</span><span class="p">(</span><span class="n">NSNumber</span> <span class="o">*</span><span class="p">)</span><span class="nv">finished</span> <span class="nf">context:</span><span class="p">(</span><span class="kt">void</span> <span class="o">*</span><span class="p">)</span><span class="nv">context</span> <span class="p">{</span>
+</span><span class='line'>  <span class="p">[</span><span class="n">someView</span> <span class="n">removeFromSuperView</span><span class="p">];</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
 
-&lt;p&gt;``` objc&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;- (void)fadeOutView {
-  [UIView beginAnimations];
-  [UIView setAnimationDuration:0.5];
-  [UIView setAnimationDelegate:self];
-  [UIView setAnimationDidStopSelector:@selector(animationDidStop:finished:context:)];
+<h2>Block-Based Notification Handlers</h2>
 
-  someView.alpha = 0;
+<p><code>NSNotificationCenter</code> also got some block love when iOS SDK 4.0 came around.  The old form looked like this:</p>
 
-  [UIView commitAnimations];
-}
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">setupNotifications</span> <span class="p">{</span>
+</span><span class='line'>  <span class="p">[[</span><span class="n">NSNotificationCenter</span> <span class="n">defaultCenter</span><span class="p">]</span> <span class="nl">addObserver:</span><span class="n">self</span>
+</span><span class='line'>                                           <span class="nl">selector:</span><span class="k">@selector</span><span class="p">(</span><span class="nl">onWhizBang:</span><span class="p">)</span>
+</span><span class='line'>                                               <span class="nl">name:</span><span class="n">MyWhizBangnotification</span>
+</span><span class='line'>                                             <span class="nl">object:</span><span class="nb">nil</span><span class="p">];</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">onWhizBang:</span><span class="p">(</span><span class="n">NSNotification</span> <span class="o">*</span><span class="p">)</span><span class="nv">notification</span> <span class="p">{</span>
+</span><span class='line'>  <span class="c1">// reload the table to show the new whiz bangs</span>
+</span><span class='line'>  <span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">tableView</span> <span class="n">reloadData</span><span class="p">];</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">dealloc</span> <span class="p">{</span>
+</span><span class='line'>  <span class="p">[[</span><span class="n">NSNotificationCenter</span> <span class="n">defaultCenter</span><span class="p">]</span> <span class="nl">removeObserver:</span><span class="n">self</span><span class="p">];</span>
+</span><span class='line'>  <span class="p">[</span><span class="n">super</span> <span class="n">dealloc</span><span class="p">];</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
 
-- (void)animationDidStop:(NSString *)animationID finished:(NSNumber *)finished context:(void *)context {
-  [someView removeFromSuperView];
-}
-&lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;```&lt;/p&gt;
+<p>This isn&#8217;t a lot of code (and it is easy to remember, unlike the previous UIView animation block code), however
+the action and the notification handler are separated from each other.</p>
 
-&lt;h2&gt;Block-Based Notification Handlers&lt;/h2&gt;
+<p>The block-based API looks like this:</p>
 
-&lt;p&gt;&lt;code&gt;NSNotificationCenter&lt;/code&gt; also got some block love when iOS SDK 4.0 came around.  The old form looked like this:&lt;/p&gt;
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">setupNotifications</span> <span class="p">{</span>
+</span><span class='line'>  <span class="p">[[</span><span class="n">NSNotificationCenter</span> <span class="n">defaultCenter</span><span class="p">]</span>
+</span><span class='line'>      <span class="nl">addObserverForNotificationName:</span><span class="n">MyWhizBangNotification</span>
+</span><span class='line'>                              <span class="nl">object:</span><span class="nb">nil</span>
+</span><span class='line'>                               <span class="nl">queue:</span><span class="p">[</span><span class="n">NSOperationQueue</span> <span class="n">mainQueue</span><span class="p">]</span>
+</span><span class='line'>                               <span class="nl">block:</span><span class="o">^</span><span class="p">(</span><span class="n">NSNotification</span> <span class="o">*</span><span class="n">notification</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>                                 <span class="c1">//reload the table to show the new whiz bangs</span>
+</span><span class='line'>                                 <span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">tableView</span> <span class="n">reloadData</span><span class="p">];</span>
+</span><span class='line'>                               <span class="p">}];</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">dealloc</span> <span class="p">{</span>
+</span><span class='line'>  <span class="p">[[</span><span class="n">NSNotificationCenter</span> <span class="n">defaultCenter</span><span class="p">]</span> <span class="nl">removeObserver:</span><span class="n">self</span><span class="p">];</span>
+</span><span class='line'>  <span class="p">[</span><span class="n">super</span> <span class="n">dealloc</span><span class="p">];</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
 
-&lt;p&gt;``` objc&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;- (void)setupNotifications {
-  [[NSNotificationCenter defaultCenter] addObserver:self
-                                           selector:@selector(onWhizBang:)
-                                               name:MyWhizBangnotification
-                                             object:nil];
-}
+<p>Aside from some funky indentation, this is preferable in some cases, especially when the action to
+be completed is as simple as reloading the table.</p>
 
-- (void)onWhizBang:(NSNotification *)notification {
-  // reload the table to show the new whiz bangs
-  [self.tableView reloadData];
-}
+<p>But there&#8217;s a bug.  Can you spot it?</p>
 
-- (void)dealloc {
-  [[NSNotificationCenter defaultCenter] removeObserver:self];
-  [super dealloc];
-}
-&lt;/code&gt;&lt;/pre&gt;
+<h2>Blocks Are Closures</h2>
 
-&lt;p&gt;```&lt;/p&gt;
+<p>There&#8217;s a subtle bug here that you might not notice at first.  I didn&#8217;t realize this until it was littered all
+over my code base.</p>
 
-&lt;p&gt;This isn't a lot of code (and it is easy to remember, unlike the previous UIView animation block code), however
-the action and the notification handler are separated from each other.&lt;/p&gt;
-
-&lt;p&gt;The block-based API looks like this:&lt;/p&gt;
-
-&lt;p&gt;``` objc&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;- (void)setupNotifications {
-  [[NSNotificationCenter defaultCenter] 
-      addObserverForNotificationName:MyWhizBangNotification
-                              object:nil
-                               queue:[NSOperationQueue mainQueue]
-                               block:^(NSNotification *notification) {
-                                 //reload the table to show the new whiz bangs
-                                 [self.tableView reloadData];
-                               }];
-}
-
-- (void)dealloc {
-  [[NSNotificationCenter defaultCenter] removeObserver:self];
-  [super dealloc];
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;```&lt;/p&gt;
-
-&lt;p&gt;Aside from some funky indentation, this is preferable in some cases, especially when the action to
-be completed is as simple as reloading the table.&lt;/p&gt;
-
-&lt;p&gt;But there's a bug.  Can you spot it?&lt;/p&gt;
-
-&lt;h2&gt;Blocks Are Closures&lt;/h2&gt;
-
-&lt;p&gt;There's a subtle bug here that you might not notice at first.  I didn't realize this until it was littered all
-over my code base.&lt;/p&gt;
-
-&lt;p&gt;Blocks are &lt;a href=&quot;http://simple.wikipedia.org/wiki/Closure_(computer_science)&quot;&gt;closures&lt;/a&gt;, and they will capture any values declared outside the scope of the block (and retained) so that
+<p>Blocks are <a href="http://simple.wikipedia.org/wiki/Closure_(computer_science)">closures</a>, and they will capture any values declared outside the scope of the block (and retained) so that
 they can be used when the block executes.  This includes variables declared in the enclosing method or any ivars
-that you reference from inside the block.&lt;/p&gt;
+that you reference from inside the block.</p>
 
-&lt;p&gt;Here, we used &lt;code&gt;self.tableView&lt;/code&gt;.  &lt;code&gt;self&lt;/code&gt; gets retained by the block, which is also retained by self.  We have a &lt;em&gt;retain-cycle&lt;/em&gt;
-which is generally a bad thing.  It's especially bad here, because we don't clear out the block until &lt;code&gt;dealloc&lt;/code&gt;,
-but &lt;em&gt;dealloc won't ever be called because the block is retaining the instance&lt;/em&gt;!&lt;/p&gt;
+<p>Here, we used <code>self.tableView</code>.  <code>self</code> gets retained by the block, which is also retained by self.  We have a <em>retain-cycle</em>
+which is generally a bad thing.  It&#8217;s especially bad here, because we don&#8217;t clear out the block until <code>dealloc</code>,
+but <em>dealloc won&#8217;t ever be called because the block is retaining the instance</em>!</p>
 
-&lt;h2&gt;Weak Pointers Save the Day&lt;/h2&gt;
+<h2>Weak Pointers Save the Day</h2>
 
-&lt;p&gt;If you've read up on blocks, you've probably seen the &lt;code&gt;__block&lt;/code&gt; keyword.  This specifier tells blocks not to retain the pointer.
-So all we need is a new pointer, like so:&lt;/p&gt;
+<p>If you&#8217;ve read up on blocks, you&#8217;ve probably seen the <code>__block</code> keyword.  This specifier tells blocks not to retain the pointer.
+So all we need is a new pointer, like so:</p>
 
-&lt;p&gt;``` objc&lt;/p&gt;
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">__block</span> <span class="n">MyViewController</span> <span class="o">*</span><span class="n">weakSelf</span> <span class="o">=</span> <span class="n">self</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">// use weakSelf in the blocks, instead of self</span>
+</span></code></pre></td></tr></table></div></figure>
 
-&lt;pre&gt;&lt;code&gt;__block MyViewController *weakSelf = self;
 
-// use weakSelf in the blocks, instead of self
-&lt;/code&gt;&lt;/pre&gt;
+<p>This sort of code drives me nuts.  It won&#8217;t be apparent to the next developer why it&#8217;s there, and it&#8217;s
+pretty ugly.</p>
 
-&lt;p&gt;```&lt;/p&gt;
+<h2>Retain Cycles are Elsewhere, Too</h2>
 
-&lt;p&gt;This sort of code drives me nuts.  It won't be apparent to the next developer why it's there, and it's
-pretty ugly.&lt;/p&gt;
+<p>You might also run into this if you have a parent-child view controller relationship, or perhaps a
+an parent->object->delegate chain, where the parent <em>is</em> the delegate.  This is why you typically mark
+your delegate property signatures with <code>assign</code> instead of <code>retain</code> semantics.</p>
 
-&lt;h2&gt;Retain Cycles are Elsewhere, Too&lt;/h2&gt;
+<p>Not all retain-cycles are terrible though.  If you have a way of breaking the cycle, then you just need
+to weigh how long these objects will remain active for to decide if you need to fix it.</p>
 
-&lt;p&gt;You might also run into this if you have a parent-child view controller relationship, or perhaps a
-an parent-&gt;object-&gt;delegate chain, where the parent &lt;em&gt;is&lt;/em&gt; the delegate.  This is why you typically mark
-your delegate property signatures with &lt;code&gt;assign&lt;/code&gt; instead of &lt;code&gt;retain&lt;/code&gt; semantics.&lt;/p&gt;
-
-&lt;p&gt;Not all retain-cycles are terrible though.  If you have a way of breaking the cycle, then you just need
-to weigh how long these objects will remain active for to decide if you need to fix it.&lt;/p&gt;
-
-&lt;p&gt;Hopefully this will save you a few headaches down the line.&lt;/p&gt;
-</content>
+<p>Hopefully this will save you a few headaches down the line.</p>
+]]></content>
   </entry>
   
   <entry>
-    <title>Formatting JSON From Terminal</title>
+    <title type="html"><![CDATA[Formatting JSON From Terminal]]></title>
     <link href="http://benscheirman.com/2011/12/formatting-json-from-terminal/"/>
     <updated>2011-12-12T15:08:00-06:00</updated>
     <id>http://benscheirman.com/2011/12/formatting-json-from-terminal</id>
-    <content type="html">&lt;p&gt;I work with JSON APIs a lot. On a current API I work on, there is an OAuth-esque request
+    <content type="html"><![CDATA[<p>I work with JSON APIs a lot. On a current API I work on, there is an OAuth-esque request
 signing process that is required to make sure that others cannot forge requests simply
-by changing parameters arround.&lt;/p&gt;
+by changing parameters arround.</p>
 
-&lt;p&gt;A typical request might look like this:&lt;/p&gt;
+<p>A typical request might look like this:</p>
 
-&lt;p&gt;```&lt;/p&gt;
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>HTTP 1.1
+</span><span class='line'>GET /foo/bars.json
+</span><span class='line'>
+</span><span class='line'>Headers:
+</span><span class='line'>    Accept-Encoding = gzip;
+</span><span class='line'>    Accept = application/json
+</span><span class='line'>    Authorization = "cHOLIOb7bAeqFEmsz3io%2Bxg4sQA%3D";
+</span><span class='line'>    Account-Id = 201;
+</span><span class='line'>    User-Agent = "...";</span></code></pre></td></tr></table></div></figure>
 
-&lt;pre&gt;&lt;code&gt;HTTP 1.1
-GET /foo/bars.json
 
-Headers:
-    Accept-Encoding = gzip;
-    Accept = application/json
-    Authorization = &quot;cHOLIOb7bAeqFEmsz3io%2Bxg4sQA%3D&quot;;
-    Account-Id = 201;
-    User-Agent = &quot;...&quot;;
-&lt;/code&gt;&lt;/pre&gt;
+<p>The <code>Authorization</code> header is generated by concatenating the HTTP Method, URL, any parameters, and then signed with a key.</p>
 
-&lt;p&gt;```&lt;/p&gt;
+<p>Because of this security, it is very difficult to create adhoc requests just to try them out. So instead, we have our iPhone app
+<code>NSLog</code> the proper curl command for us.  Now it&#8217;s as simple as copy &amp; paste from the Xcode Console, which gives me a
+less-than-readable output of the JSON.</p>
 
-&lt;p&gt;The &lt;code&gt;Authorization&lt;/code&gt; header is generated by concatenating the HTTP Method, URL, any parameters, and then signed with a key.&lt;/p&gt;
+<p>Usually for this I just pipe the command into <code>pbcopy</code> to get it on my clipboard, then I visit <a href="http://jsonlint.com">JSON Lint</a> to
+make it easy to read.</p>
 
-&lt;p&gt;Because of this security, it is very difficult to create adhoc requests just to try them out. So instead, we have our iPhone app
-&lt;code&gt;NSLog&lt;/code&gt; the proper curl command for us.  Now it's as simple as copy &amp;amp; paste from the Xcode Console, which gives me a
-less-than-readable output of the JSON.&lt;/p&gt;
+<h2>Doin&#8217; it all from Terminal</h2>
 
-&lt;p&gt;Usually for this I just pipe the command into &lt;code&gt;pbcopy&lt;/code&gt; to get it on my clipboard, then I visit &lt;a href=&quot;http://jsonlint.com&quot;&gt;JSON Lint&lt;/a&gt; to
-make it easy to read.&lt;/p&gt;
+<p>I looked at ways of doing this all from the Terminal, and came across this python command:</p>
 
-&lt;h2&gt;Doin' it all from Terminal&lt;/h2&gt;
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>python -mjson.tool</span></code></pre></td></tr></table></div></figure>
 
-&lt;p&gt;I looked at ways of doing this all from the Terminal, and came across this python command:&lt;/p&gt;
 
-&lt;p&gt;&lt;code&gt;
-python -mjson.tool
-&lt;/code&gt;&lt;/p&gt;
+<p>It takes input from stdin and outputs it formatted nicely.  Sweet!  Now all that&#8217;s needed is to make this a bit more easy to remember,
+so I made a script to do this for me called <code>format_json</code> and put it in my path.</p>
 
-&lt;p&gt;It takes input from stdin and outputs it formatted nicely.  Sweet!  Now all that's needed is to make this a bit more easy to remember,
-so I made a script to do this for me called &lt;code&gt;format_json&lt;/code&gt; and put it in my path.&lt;/p&gt;
+<p>Now, any time I want to see the JSON output of an API, I can simply type:</p>
 
-&lt;p&gt;Now, any time I want to see the JSON output of an API, I can simply type:&lt;/p&gt;
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>curl some.server.com/api/devices.json?key<span class="o">=</span>124512312 -H Authorization:<span class="s2">&quot;124151231231123123&quot;</span> |
+</span><span class='line'>    format_json
+</span></code></pre></td></tr></table></div></figure>
 
-&lt;p&gt;``` sh&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;$ curl some.server.com/api/devices.json?key=124512312 -H Authorization:&quot;124151231231123123&quot; | 
-    format_json
-&lt;/code&gt;&lt;/pre&gt;
+<p>And here is the output:</p>
 
-&lt;p&gt;```&lt;/p&gt;
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="p">{</span>
+</span><span class='line'>  <span class="s2">&quot;devices&quot;</span><span class="o">:</span> <span class="p">[</span>
+</span><span class='line'>      <span class="p">{</span>
+</span><span class='line'>          <span class="s2">&quot;device_id&quot;</span><span class="o">:</span> <span class="s2">&quot;40f4fc8a5818608dbb9a6c981179222b6f&quot;</span><span class="p">,</span>
+</span><span class='line'>          <span class="s2">&quot;device_type&quot;</span><span class="o">:</span> <span class="s2">&quot;iPhone&quot;</span><span class="p">,</span>
+</span><span class='line'>          <span class="s2">&quot;id&quot;</span><span class="o">:</span> <span class="mi">24</span><span class="p">,</span>
+</span><span class='line'>          <span class="s2">&quot;name&quot;</span><span class="o">:</span> <span class="s2">&quot;Ben&#39;s iPhone&quot;</span><span class="p">,</span>
+</span><span class='line'>          <span class="s2">&quot;push_enabled&quot;</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
+</span><span class='line'>          <span class="s2">&quot;push_token&quot;</span><span class="o">:</span> <span class="s2">&quot;a3a36......480c25fdf&quot;</span>
+</span><span class='line'>      <span class="p">}</span>
+</span><span class='line'>  <span class="p">]</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
 
-&lt;p&gt;And here is the output:&lt;/p&gt;
 
-&lt;p&gt;``` javascript&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;{
-  &quot;devices&quot;: [
-      {
-          &quot;device_id&quot;: &quot;40f4fc8a5818608dbb9a6c981179222b6f&quot;, 
-          &quot;device_type&quot;: &quot;iPhone&quot;, 
-          &quot;id&quot;: 24, 
-          &quot;name&quot;: &quot;Ben's iPhone&quot;, 
-          &quot;push_enabled&quot;: true, 
-          &quot;push_token&quot;: &quot;a3a36......480c25fdf&quot;
-      }
-  ]
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;```&lt;/p&gt;
-
-&lt;p&gt;Very handy, indeed.&lt;/p&gt;
-</content>
+<p>Very handy, indeed.</p>
+]]></content>
   </entry>
   
   <entry>
-    <title>Houston Tech Fest 2011 Recap</title>
+    <title type="html"><![CDATA[Houston Tech Fest 2011 Recap]]></title>
     <link href="http://benscheirman.com/2011/10/houston-tech-fest-2011-recap/"/>
     <updated>2011-10-17T10:27:00-05:00</updated>
     <id>http://benscheirman.com/2011/10/houston-tech-fest-2011-recap</id>
-    <content type="html">&lt;p&gt;Houston Tech Fest 2011 came and went, and yet again was a great success.
-I believe it was the biggest one ever, with over 1,300 registrants.&lt;/p&gt;
+    <content type="html"><![CDATA[<p>Houston Tech Fest 2011 came and went, and yet again was a great success.
+I believe it was the biggest one ever, with over 1,300 registrants.</p>
 
-&lt;p&gt;I gave three talks:&lt;/p&gt;
+<p>I gave three talks:</p>
 
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;http://speakerrate.com/talks/8761-rails-intrigue&quot;&gt;Rails Intrigue&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;http://speakerrate.com/talks/8744-introducing-a-new-feature-to-a-rails-app-from-beginning-to-end&quot;&gt;Introducing a new feature to a Rails app using Cucumber&lt;/a&gt; (with Claudio Lasalla)&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;http://speakerrate.com/talks/8760-wrangle-your-source-like-a-boss-with-git&quot;&gt;Wrangle your source like a boss with git&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
+<ul>
+<li><a href="http://speakerrate.com/talks/8761-rails-intrigue">Rails Intrigue</a></li>
+<li><a href="http://speakerrate.com/talks/8744-introducing-a-new-feature-to-a-rails-app-from-beginning-to-end">Introducing a new feature to a Rails app using Cucumber</a> (with Claudio Lasalla)</li>
+<li><a href="http://speakerrate.com/talks/8760-wrangle-your-source-like-a-boss-with-git">Wrangle your source like a boss with git</a></li>
+</ul>
 
 
-&lt;p&gt;You can find the slides &amp;amp; code used in the presentations &lt;a href=&quot;http://github.com/subdigital/houston-tech-fest-2011&quot;&gt;here on github&lt;/a&gt;.&lt;/p&gt;
+<p>You can find the slides &amp; code used in the presentations <a href="http://github.com/subdigital/houston-tech-fest-2011">here on github</a>.</p>
 
-&lt;p&gt;If you attended any of these sessions, I'd really appreciate if you
-rate them using the links above.&lt;/p&gt;
+<p>If you attended any of these sessions, I&#8217;d really appreciate if you
+rate them using the links above.</p>
 
-&lt;p&gt;See you next year, Houston Tech Fest!&lt;/p&gt;
-</content>
+<p>See you next year, Houston Tech Fest!</p>
+]]></content>
   </entry>
   
   <entry>
-    <title>Appsites Is Now AppKickstand</title>
+    <title type="html"><![CDATA[Appsites Is Now AppKickstand]]></title>
     <link href="http://benscheirman.com/2011/10/appsites-is-now-appkickstand/"/>
     <updated>2011-10-13T21:50:00-05:00</updated>
     <id>http://benscheirman.com/2011/10/appsites-is-now-appkickstand</id>
-    <content type="html">&lt;p&gt;A few weeks ago I launched Appsites, a free way to quickly host an
-attractive splash page for iPhone applications.&lt;/p&gt;
+    <content type="html"><![CDATA[<p>A few weeks ago I launched Appsites, a free way to quickly host an
+attractive splash page for iPhone applications.</p>
 
-&lt;p&gt;Instead of competing with another site with the same name for traffic
-when we could be sharing it, I decided a new name was in order.&lt;/p&gt;
+<p>Instead of competing with another site with the same name for traffic
+when we could be sharing it, I decided a new name was in order.</p>
 
-&lt;p&gt;&lt;strong&gt;I now present to you:  &lt;a href=&quot;http://appkickstand.com&quot;&gt;AppKickstand&lt;/a&gt;.&lt;/strong&gt;&lt;/p&gt;
+<p><strong>I now present to you:  <a href="http://appkickstand.com">AppKickstand</a>.</strong></p>
 
-&lt;p&gt;&lt;a href=&quot;http://appkickstand.com&quot;&gt;&lt;img src=&quot;http://benscheirman.com/images/appkickstand.png&quot;
-alt=&quot;AppKickstand&quot; border=&quot;0&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
+<p><a href="http://appkickstand.com"><img src="http://benscheirman.com/images/appkickstand.png"
+alt="AppKickstand" border="0" /></a></p>
 
-&lt;p&gt;For an example of what it looks like with real apps, check out
-&lt;a href=&quot;http://appkickstand.com/giggletouch&quot;&gt;Giggle Touch&lt;/a&gt; or
-&lt;a href=&quot;http://appkickstand.com/tallythings&quot;&gt;Tally Things&lt;/a&gt;.&lt;/p&gt;
+<p>For an example of what it looks like with real apps, check out
+<a href="http://appkickstand.com/giggletouch">Giggle Touch</a> or
+<a href="http://appkickstand.com/tallythings">Tally Things</a>.</p>
 
-&lt;p&gt;If you have an iPhone app, what are you waiting for?  It's &lt;strong&gt;FREE&lt;/strong&gt;!&lt;/p&gt;
-</content>
+<p>If you have an iPhone app, what are you waiting for?  It&#8217;s <strong>FREE</strong>!</p>
+]]></content>
   </entry>
   
   <entry>
-    <title>Sharing Vim Configuration Between Machines</title>
+    <title type="html"><![CDATA[Sharing Vim Configuration Between Machines]]></title>
     <link href="http://benscheirman.com/2011/10/sharing-vim-configuration-between-machines/"/>
     <updated>2011-10-06T09:29:00-05:00</updated>
     <id>http://benscheirman.com/2011/10/sharing-vim-configuration-between-machines</id>
-    <content type="html">&lt;p&gt;I do most of my development on my MacBook Pro, however I have a nice 27&quot;
+    <content type="html"><![CDATA[<p>I do most of my development on my MacBook Pro, however I have a nice 27&#8221;
 iMac at home, and it is refreshing to use it for development when I can.
-It's fast and has a huge screen.  The only downside is all my custom
-development configurations are on my MacBook Pro!&lt;/p&gt;
+It&#8217;s fast and has a huge screen.  The only downside is all my custom
+development configurations are on my MacBook Pro!</p>
 
-&lt;p&gt;There are a number of options you can use to share settings between
-machines, but I'm a fan of using &lt;a href=&quot;http://dropbox.com&quot;&gt;Dropbox&lt;/a&gt; (&lt;a href=&quot;http://db.tt/sYjPEQl&quot;&gt;referral link&lt;/a&gt;). Any change I make, on either machine, will get automatically
-synchronized for me.&lt;/p&gt;
+<p>There are a number of options you can use to share settings between
+machines, but I&#8217;m a fan of using <a href="http://dropbox.com">Dropbox</a> (<a href="http://db.tt/sYjPEQl">referral link</a>). Any change I make, on either machine, will get automatically
+synchronized for me.</p>
 
-&lt;p&gt;Since my Vim configurations were already present on my MacBook Pro, the
-first step was to copy them over to a Dropbox folder:&lt;/p&gt;
+<p>Since my Vim configurations were already present on my MacBook Pro, the
+first step was to copy them over to a Dropbox folder:</p>
 
-&lt;p&gt;```&lt;/p&gt;
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>mkdir ~/Dropbox/vim
+</span><span class='line'>cp -R ~/.vim ~/Dropbox/vim
+</span><span class='line'>cp ~/.vimrc ~/Dropbox/vim
+</span><span class='line'>cp ~/.vimrc.local ~/Dropbox/vim
+</span><span class='line'>cp ~/.gvimrc ~/Dropbox/vim</span></code></pre></td></tr></table></div></figure>
 
-&lt;pre&gt;&lt;code&gt;mkdir ~/Dropbox/vim
-cp -R ~/.vim ~/Dropbox/vim
-cp ~/.vimrc ~/Dropbox/vim
-cp ~/.vimrc.local ~/Dropbox/vim
-cp ~/.gvimrc ~/Dropbox/vim
-&lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;```&lt;/p&gt;
-
-&lt;p&gt;The next step was to come up with an installer script that would symlink
+<p>The next step was to come up with an installer script that would symlink
 these files on a new machine.  I made sure to move existing vim files to
-a temporary filename so that I wouldn't lose anything accidentally.&lt;/p&gt;
+a temporary filename so that I wouldn&#8217;t lose anything accidentally.</p>
 
-&lt;p&gt;```&lt;/p&gt;
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>set -o errexit
+</span><span class='line'>
+</span><span class='line'>function confirm()
+</span><span class='line'>{
+</span><span class='line'>    echo -n "$@ "
+</span><span class='line'>    read -e answer
+</span><span class='line'>    for response in y Y yes YES Yes Sure sure SURE OK ok Ok
+</span><span class='line'>    do
+</span><span class='line'>        if [ "_$answer" == "_$response" ]
+</span><span class='line'>        then
+</span><span class='line'>            return 0
+</span><span class='line'>        fi
+</span><span class='line'>    done
+</span><span class='line'>
+</span><span class='line'>    # Any answer other than the list above is considerred a "no" answer
+</span><span class='line'>    return 1
+</span><span class='line'>}
+</span><span class='line'>
+</span><span class='line'>function link_file() 
+</span><span class='line'>{
+</span><span class='line'>  echo "symlinking $1"
+</span><span class='line'>  ln -s "$PWD/$1" "$HOME/$1"
+</span><span class='line'>}
+</span><span class='line'>
+</span><span class='line'>echo "This will remove any existing vim configuration files and simlink them with the files here."
+</span><span class='line'>confirm "Are you sure?"
+</span><span class='line'>if [ $? -eq 0 ]
+</span><span class='line'>then
+</span><span class='line'>  for file in ~/.vimrc ~/.vimrc.local ~/.gvimrc
+</span><span class='line'>  do
+</span><span class='line'>    if [[ -f $file ]]; then
+</span><span class='line'>      echo "Moving $file to $file.bak"
+</span><span class='line'>      mv $file $file.bak
+</span><span class='line'>    fi
+</span><span class='line'>  done
+</span><span class='line'>
+</span><span class='line'>  for dir in ~/.vim
+</span><span class='line'>  do
+</span><span class='line'>    if [[ -d $dir ]]; then
+</span><span class='line'>      echo "Moving $dir directory to $dir.bak"
+</span><span class='line'>      mv $dir $dir.bak
+</span><span class='line'>    fi
+</span><span class='line'>  done
+</span><span class='line'>fi
+</span><span class='line'>
+</span><span class='line'>echo "symlinking"
+</span><span class='line'>
+</span><span class='line'>for file in .vim .vimrc .vimrc.local .gvimrc
+</span><span class='line'>do
+</span><span class='line'>  link_file $file
+</span><span class='line'>done
+</span><span class='line'>
+</span><span class='line'>echo "Done.  Check that it works.  If so, you can remove the .bak files, if any"
+</span></code></pre></td></tr></table></div></figure>
 
-&lt;pre&gt;&lt;code&gt;set -o errexit
 
-function confirm()
-{
-    echo -n &quot;$@ &quot;
-    read -e answer
-    for response in y Y yes YES Yes Sure sure SURE OK ok Ok
-    do
-        if [ &quot;_$answer&quot; == &quot;_$response&quot; ]
-        then
-            return 0
-        fi
-    done
+<p>Make sure the script is executable by running:</p>
 
-    # Any answer other than the list above is considerred a &quot;no&quot; answer
-    return 1
-}
-
-function link_file() 
-{
-  echo &quot;symlinking $1&quot;
-  ln -s &quot;$PWD/$1&quot; &quot;$HOME/$1&quot;
-}
-
-echo &quot;This will remove any existing vim configuration files and simlink them with the files here.&quot;
-confirm &quot;Are you sure?&quot;
-if [ $? -eq 0 ]
-then
-  for file in ~/.vimrc ~/.vimrc.local ~/.gvimrc
-  do
-    if [[ -f $file ]]; then
-      echo &quot;Moving $file to $file.bak&quot;
-      mv $file $file.bak
-    fi
-  done
-
-  for dir in ~/.vim
-  do
-    if [[ -d $dir ]]; then
-      echo &quot;Moving $dir directory to $dir.bak&quot;
-      mv $dir $dir.bak
-    fi
-  done
-fi
-
-echo &quot;symlinking&quot;
-
-for file in .vim .vimrc .vimrc.local .gvimrc
-do
-  link_file $file
-done
-
-echo &quot;Done.  Check that it works.  If so, you can remove the .bak files, if any&quot;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;```&lt;/p&gt;
-
-&lt;p&gt;Make sure the script is executable by running:&lt;/p&gt;
-
-&lt;p&gt;```&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;chmod +x setup.sh
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;```&lt;/p&gt;
-
-&lt;p&gt;Then run this script on any new machine that you want to use Vim on. It will symlink these files from your Dropbox folder to your home
-folder:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;.vim/&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;.vimrc&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;.vimrc.local&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;.gvimrc&lt;/code&gt;&lt;/li&gt;
-&lt;/ul&gt;
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>chmod +x setup.sh</span></code></pre></td></tr></table></div></figure>
 
 
-&lt;p&gt;After it's done, check that it is working.  Remove any .bak files that
-you don't need anymore.&lt;/p&gt;
+<p>Then run this script on any new machine that you want to use Vim on. It will symlink these files from your Dropbox folder to your home
+folder:</p>
 
-&lt;p&gt;And that's it. You have an automatic Vim configuration synching system
-between machines.  It works great for your shell configuration as well!&lt;/p&gt;
-</content>
+<ul>
+<li><code>.vim/</code></li>
+<li><code>.vimrc</code></li>
+<li><code>.vimrc.local</code></li>
+<li><code>.gvimrc</code></li>
+</ul>
+
+
+<p>After it&#8217;s done, check that it is working.  Remove any .bak files that
+you don&#8217;t need anymore.</p>
+
+<p>And that&#8217;s it. You have an automatic Vim configuration synching system
+between machines.  It works great for your shell configuration as well!</p>
+]]></content>
   </entry>
   
   <entry>
-    <title>Making a UIButton Flip Over</title>
+    <title type="html"><![CDATA[Making a UIButton Flip Over]]></title>
     <link href="http://benscheirman.com/2011/10/making-a-uibutton-flip-over/"/>
     <updated>2011-10-04T08:44:00-05:00</updated>
     <id>http://benscheirman.com/2011/10/making-a-uibutton-flip-over</id>
-    <content type="html">&lt;p&gt;If you've used the iPod app on the iPhone, you've probably seen an
+    <content type="html"><![CDATA[<p>If you&#8217;ve used the iPod app on the iPhone, you&#8217;ve probably seen an
 interesting trick when switching from album art to the track listing:
 the button in the top right corner flips over synchronized with the flip
-animation of the main view.&lt;/p&gt;
+animation of the main view.</p>
 
-&lt;p&gt;I wanted to achieve a similar effect for the iPhone app that I'm
-building, Deli Radio (&lt;a href=&quot;http://itunes.com/apps/deliradio&quot;&gt;app store link&lt;/a&gt;).&lt;/p&gt;
+<p>I wanted to achieve a similar effect for the iPhone app that I&#8217;m
+building, Deli Radio (<a href="http://itunes.com/apps/deliradio">app store link</a>).</p>
 
-&lt;p&gt;If you've ever struggled with the flip transitions before, you probably
+<p>If you&#8217;ve ever struggled with the flip transitions before, you probably
 know how finicky it can be to get it all working. The best way to set it
 up is to have a parent view contain both views that you want to swap,
-and set the animation transition type on &lt;em&gt;that&lt;/em&gt; view.&lt;/p&gt;
+and set the animation transition type on <em>that</em> view.</p>
 
-&lt;p&gt;For a button (either in the navigation bar or elsewhere) we'd need to
+<p>For a button (either in the navigation bar or elsewhere) we&#8217;d need to
 introduce a parent view to achieve this effect.  This is how I achieved
-the effect.&lt;/p&gt;
+the effect.</p>
 
-&lt;p&gt;&lt;img class='right ' src='http://benscheirman.com/images/btn-info-border@2x.png' width='' height='' alt='' title=''&gt;
-&lt;img class='right ' src='http://benscheirman.com/images/btn-images@2x.png' width='' height='' alt='' title=''&gt;&lt;/p&gt;
+<p><img class="right" src="http://benscheirman.com/images/btn-info-border@2x.png">
+<img class="right" src="http://benscheirman.com/images/btn-images@2x.png"></p>
 
-&lt;p&gt;First, I had two images I wanted to use for my &lt;code&gt;UIBarButtonItem&lt;/code&gt;.&lt;/p&gt;
+<p>First, I had two images I wanted to use for my <code>UIBarButtonItem</code>.</p>
 
-&lt;p&gt;I wanted this to be easily reusable (since I need to do this in more
+<p>I wanted this to be easily reusable (since I need to do this in more
 than one place in this application), so I created a category method on
-&lt;code&gt;UIButton&lt;/code&gt;.&lt;/p&gt;
+<code>UIButton</code>.</p>
 
-&lt;div&gt;&lt;script src='https://gist.github.com/1261810.js?file=UIButtonCHButtonFlip.h'&gt;&lt;/script&gt;
-&lt;noscript&gt;&lt;pre&gt;&lt;code&gt;@interface UIButton (CHFlipButton)
+<div><script src='https://gist.github.com/1261810.js?file=UIButtonCHButtonFlip.h'></script>
+<noscript><pre><code>@interface UIButton (CHFlipButton)
 
 + (UIView *)flipButtonWithFirstImage:(UIImage *)firstImage 
                          secondImage:(UIImage *)secondImage
@@ -524,19 +829,19 @@ than one place in this application), so I created a category method on
 
 
 @end
-&lt;/code&gt;&lt;/pre&gt;&lt;/noscript&gt;&lt;/div&gt;
+</code></pre></noscript></div>
 
 
-&lt;p&gt;It may look strange that a &lt;code&gt;UIButton&lt;/code&gt; class method returns a &lt;code&gt;UIView&lt;/code&gt;
+<p>It may look strange that a <code>UIButton</code> class method returns a <code>UIView</code>
 instance, but we need to have a container view to base the animations
-off of.&lt;/p&gt;
+off of.</p>
 
-&lt;p&gt;Here is the implementation:&lt;/p&gt;
+<p>Here is the implementation:</p>
 
-&lt;div&gt;&lt;script src='https://gist.github.com/1261810.js?file=UIButtonCHButtonFlip.m'&gt;&lt;/script&gt;
-&lt;noscript&gt;&lt;pre&gt;&lt;code&gt;#import &amp;lt;objc/runtime.h&amp;gt;
+<div><script src='https://gist.github.com/1261810.js?file=UIButtonCHButtonFlip.m'></script>
+<noscript><pre><code>#import &lt;objc/runtime.h&gt;
 
-#import &amp;quot;UIButton+CHFlipButton.h&amp;quot;
+#import &quot;UIButton+CHFlipButton.h&quot;
 
 // keys used for assigning associated objects
 static char UIButtonFlipBlockKey;
@@ -551,14 +856,14 @@ typedef void (^UIButtonFlipActionBlock)(id sender);
 // associate the block with the button instance, then set the default button handler
 
 - (void)chFlipButton_handleControlEvent:(UIControlEvents)event withBlock:(UIButtonFlipActionBlock)block {
-    objc_setAssociatedObject(self, &amp;amp;UIButtonFlipBlockKey, block, OBJC_ASSOCIATION_COPY);
+    objc_setAssociatedObject(self, &amp;UIButtonFlipBlockKey, block, OBJC_ASSOCIATION_COPY);
     [self addTarget:self action:@selector(chFlipButton_callFlipBlock:) forControlEvents:UIControlEventTouchUpInside];
 }
 
 // the default button handler just calls the block
 
 - (void)chFlipButton_callFlipBlock:(id)sender {
-    UIButtonFlipActionBlock block = objc_getAssociatedObject(self, &amp;amp;UIButtonFlipBlockKey);
+    UIButtonFlipActionBlock block = objc_getAssociatedObject(self, &amp;UIButtonFlipBlockKey);
     if (block) {
         block(sender);
     }
@@ -592,40 +897,40 @@ typedef void (^UIButtonFlipActionBlock)(id sender);
     [container addSubview:button1];
     
     //record state so we can access it later (in the block)
-    objc_setAssociatedObject(button1, &amp;amp;UIButtonFlipAltButtonKey, button2, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-    objc_setAssociatedObject(button1, &amp;amp;UIButtonFlipTransitionKey, [NSNumber numberWithInt:firstTransition], OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-    objc_setAssociatedObject(button1, &amp;amp;UIButtonFlipContainerViewKey, container, OBJC_ASSOCIATION_ASSIGN);
+    objc_setAssociatedObject(button1, &amp;UIButtonFlipAltButtonKey, button2, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    objc_setAssociatedObject(button1, &amp;UIButtonFlipTransitionKey, [NSNumber numberWithInt:firstTransition], OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    objc_setAssociatedObject(button1, &amp;UIButtonFlipContainerViewKey, container, OBJC_ASSOCIATION_ASSIGN);
     
-    objc_setAssociatedObject(button2, &amp;amp;UIButtonFlipAltButtonKey, button1, OBJC_ASSOCIATION_ASSIGN);
-    objc_setAssociatedObject(button2, &amp;amp;UIButtonFlipTransitionKey, [NSNumber numberWithInt:secondTransition], OBJC_ASSOCIATION_ASSIGN);  //button1 is in charge of the retains initially
-    objc_setAssociatedObject(button2, &amp;amp;UIButtonFlipContainerViewKey, container, OBJC_ASSOCIATION_ASSIGN);
+    objc_setAssociatedObject(button2, &amp;UIButtonFlipAltButtonKey, button1, OBJC_ASSOCIATION_ASSIGN);
+    objc_setAssociatedObject(button2, &amp;UIButtonFlipTransitionKey, [NSNumber numberWithInt:secondTransition], OBJC_ASSOCIATION_ASSIGN);  //button1 is in charge of the retains initially
+    objc_setAssociatedObject(button2, &amp;UIButtonFlipContainerViewKey, container, OBJC_ASSOCIATION_ASSIGN);
     
     //returns the container, because this is what needs to be added to your view
     return container;
 }
 
 @end
-&lt;/code&gt;&lt;/pre&gt;&lt;/noscript&gt;&lt;/div&gt;
+</code></pre></noscript></div>
 
 
-&lt;p&gt;I am using a little-known technique of setting associated objects
-using &lt;code&gt;objc_setAssociatedObject(...)&lt;/code&gt;.  This uses the runtime to attach
-state to an existing class without needing to subclass.&lt;/p&gt;
+<p>I am using a little-known technique of setting associated objects
+using <code>objc_setAssociatedObject(...)</code>.  This uses the runtime to attach
+state to an existing class without needing to subclass.</p>
 
-&lt;p&gt;Now that you understand how it is all setup, the block body will now
-make sense:&lt;/p&gt;
+<p>Now that you understand how it is all setup, the block body will now
+make sense:</p>
 
-&lt;div&gt;&lt;script src='https://gist.github.com/1261810.js?file=UIButtonCHButtonFlipBlock.m'&gt;&lt;/script&gt;
-&lt;noscript&gt;&lt;pre&gt;&lt;code&gt;/* Here is that block definition from above */
+<div><script src='https://gist.github.com/1261810.js?file=UIButtonCHButtonFlipBlock.m'></script>
+<noscript><pre><code>/* Here is that block definition from above */
 
     UIButtonFlipActionBlock flipButtonAction = ^(id sender) {
 
-        //get the alternate button &amp;amp; container
-        UIButton *otherButton = (UIButton *)objc_getAssociatedObject(sender, &amp;amp;UIButtonFlipAltButtonKey);
-        UIView *container = (UIView *)objc_getAssociatedObject(sender, &amp;amp;UIButtonFlipContainerViewKey);
+        //get the alternate button &amp; container
+        UIButton *otherButton = (UIButton *)objc_getAssociatedObject(sender, &amp;UIButtonFlipAltButtonKey);
+        UIView *container = (UIView *)objc_getAssociatedObject(sender, &amp;UIButtonFlipContainerViewKey);
         
         //figure out our transition
-        NSNumber *transitionNumber = (NSNumber *)objc_getAssociatedObject(sender, &amp;amp;UIButtonFlipTransitionKey);
+        NSNumber *transitionNumber = (NSNumber *)objc_getAssociatedObject(sender, &amp;UIButtonFlipTransitionKey);
         UIViewAnimationTransition transition = (UIViewAnimationTransition)[transitionNumber intValue];
                 
         [UIView animateWithDuration:duration animations:^ {
@@ -634,978 +939,966 @@ make sense:&lt;/p&gt;
             [UIView setAnimationCurve:curve];
             
             //the view has the last retain count on the sender button, so we need to retain it first
-            objc_setAssociatedObject(otherButton, &amp;amp;UIButtonFlipAltButtonKey, sender, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+            objc_setAssociatedObject(otherButton, &amp;UIButtonFlipAltButtonKey, sender, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
             
             [sender removeFromSuperview];
             [container addSubview:otherButton];
             
             //sender no longer needs to retain the other button, because the view now is...
-            objc_setAssociatedObject(sender, &amp;amp;UIButtonFlipAltButtonKey, otherButton, OBJC_ASSOCIATION_ASSIGN);
+            objc_setAssociatedObject(sender, &amp;UIButtonFlipAltButtonKey, otherButton, OBJC_ASSOCIATION_ASSIGN);
             
         }];
         
         //call the original button handler
         [target performSelector:selector withObject:self];
     };
-&lt;/code&gt;&lt;/pre&gt;&lt;/noscript&gt;&lt;/div&gt;
+</code></pre></noscript></div>
 
 
-&lt;p&gt;Usage is really easy.  I just created a bar button item with a custom
-view, and was done.&lt;/p&gt;
+<p>Usage is really easy.  I just created a bar button item with a custom
+view, and was done.</p>
 
-&lt;p&gt;```objc&lt;/p&gt;
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">UIImage</span> <span class="o">*</span><span class="n">firstImage</span>  <span class="o">=</span> <span class="p">[</span><span class="n">UIImage</span> <span class="nl">imageNamed:</span><span class="s">@&quot;btn-info.png&quot;</span><span class="p">];</span>
+</span><span class='line'><span class="n">UIImage</span> <span class="o">*</span><span class="n">secondImage</span> <span class="o">=</span> <span class="p">[</span><span class="n">UIImage</span> <span class="nl">imageNamed:</span><span class="s">@&quot;btn-images.png&quot;</span><span class="p">];</span>
+</span><span class='line'><span class="n">UIView</span> <span class="o">*</span><span class="n">container</span>    <span class="o">=</span> <span class="p">[</span><span class="n">UIButton</span> <span class="nl">flipButtonWithFirstImage:</span><span class="n">firstImage</span>
+</span><span class='line'>                                              <span class="nl">secondImage:</span><span class="n">secondImage</span>
+</span><span class='line'>                                          <span class="nl">firstTransition:</span><span class="n">UIViewAnimationTransitionFlipFromRight</span>
+</span><span class='line'>                                         <span class="nl">secondTransition:</span><span class="n">UIViewAnimationTransitionFlipFromLeft</span>
+</span><span class='line'>                                           <span class="nl">animationCurve:</span><span class="n">UIViewAnimationCurveEaseInOut</span>
+</span><span class='line'>                                                 <span class="nl">duration:</span><span class="mf">0.8</span>
+</span><span class='line'>                                                   <span class="nl">target:</span><span class="n">self</span>
+</span><span class='line'>                                                 <span class="nl">selector:</span><span class="k">@selector</span><span class="p">(</span><span class="n">flipContent</span><span class="p">)];</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">self</span><span class="p">.</span><span class="n">navigationItem</span><span class="p">.</span><span class="n">rightBarButtonItem</span> <span class="o">=</span> <span class="p">[[[</span><span class="n">UIBarButtonItem</span> <span class="n">alloc</span><span class="p">]</span>
+</span><span class='line'>  <span class="nl">initWithCustomView:</span><span class="n">container</span><span class="p">]</span> <span class="n">autorelease</span><span class="p">];</span>
+</span></code></pre></td></tr></table></div></figure>
 
-&lt;pre&gt;&lt;code&gt;UIImage *firstImage  = [UIImage imageNamed:@&quot;btn-info.png&quot;];
-UIImage *secondImage = [UIImage imageNamed:@&quot;btn-images.png&quot;];
-UIView *container    = [UIButton flipButtonWithFirstImage:firstImage
-                                              secondImage:secondImage
-                                          firstTransition:UIViewAnimationTransitionFlipFromRight
-                                         secondTransition:UIViewAnimationTransitionFlipFromLeft
-                                           animationCurve:UIViewAnimationCurveEaseInOut
-                                                 duration:0.8
-                                                   target:self
-                                                 selector:@selector(flipContent)];
 
-self.navigationItem.rightBarButtonItem = [[[UIBarButtonItem alloc] 
-  initWithCustomView:container] autorelease];
-&lt;/code&gt;&lt;/pre&gt;
+<p>The effect can be seen below.</p>
 
-&lt;p&gt;```&lt;/p&gt;
+<p><video width='389' height='336' preload='none' controls poster=' https://flux88.s3.amazonaws.com/videos/button_flip1.jpeg'><source src='https://flux88.s3.amazonaws.com/videos/button_flip.m4v' type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"'/></video></p>
 
-&lt;p&gt;The effect can be seen below.&lt;/p&gt;
-
-&lt;p&gt;&lt;video width='389' height='336' preload='none' controls poster=' https://flux88.s3.amazonaws.com/videos/button_flip1.jpeg'&gt;&lt;source src='https://flux88.s3.amazonaws.com/videos/button_flip.m4v' type='video/mp4; codecs=&quot;avc1.42E01E, mp4a.40.2&quot;'/&gt;&lt;/video&gt;&lt;/p&gt;
-
-&lt;p&gt;Note that the flip effect on the main view is achieved separately, but
+<p>Note that the flip effect on the main view is achieved separately, but
 the 2 strategies share identical values for the animation, so the flip
-transition types match, as well as the duration &amp;amp; animation curve.&lt;/p&gt;
+transition types match, as well as the duration &amp; animation curve.</p>
 
-&lt;p&gt;The code for this can be seen in the &lt;a href=&quot;https://github.com/chaione/chaioneui&quot;&gt;ChaiOneUI project on Github&lt;/a&gt;.&lt;/p&gt;
-</content>
+<p>The code for this can be seen in the <a href="https://github.com/chaione/chaioneui">ChaiOneUI project on Github</a>.</p>
+]]></content>
   </entry>
   
   <entry>
-    <title>Creating a Glow Effect for UILabel and UIButton</title>
+    <title type="html"><![CDATA[Creating a Glow Effect for UILabel and UIButton]]></title>
     <link href="http://benscheirman.com/2011/09/creating-a-glow-effect-for-uilabel-and-uibutton/"/>
     <updated>2011-09-27T19:57:00-05:00</updated>
     <id>http://benscheirman.com/2011/09/creating-a-glow-effect-for-uilabel-and-uibutton</id>
-    <content type="html">&lt;p&gt;One recent iPhone design mockup called for a glowing effect for a
-&lt;code&gt;UIButton&lt;/code&gt;.&lt;/p&gt;
+    <content type="html"><![CDATA[<p>One recent iPhone design mockup called for a glowing effect for a
+<code>UIButton</code>.</p>
 
-&lt;p&gt;This can be accomplished with images, however I needed a series of
+<p>This can be accomplished with images, however I needed a series of
 buttons to have the same glow effect, and it can easily be accomplished
-with Core Graphics.&lt;/p&gt;
+with Core Graphics.</p>
 
-&lt;p&gt;The first step is to include the Core Graphics headers:&lt;/p&gt;
+<p>The first step is to include the Core Graphics headers:</p>
 
-&lt;p&gt;```objc&lt;/p&gt;
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="cp">#import &lt;QuartzCore/QuartzCore.h&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
 
-&lt;pre&gt;&lt;code&gt;#import &amp;lt;QuartzCore/QuartzCore.h&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;```&lt;/p&gt;
-
-&lt;p&gt;Next, the effect is achieved by using a shadow with no offset (meaning
+<p>Next, the effect is achieved by using a shadow with no offset (meaning
 the shadow will be directly underneath the text, not shifted down or to
-the right).  The layer is then given a shadow radius &amp;amp; opacity to allow
-the shadow to bleed outward.  Unsetting &lt;code&gt;masksToBounds&lt;/code&gt; will allow the
-glow to be drawn even outside of the label's frame. Finally the shadow color is set to either the
-foreground color or something a bit lighter.&lt;/p&gt;
+the right).  The layer is then given a shadow radius &amp; opacity to allow
+the shadow to bleed outward.  Unsetting <code>masksToBounds</code> will allow the
+glow to be drawn even outside of the label&#8217;s frame. Finally the shadow color is set to either the
+foreground color or something a bit lighter.</p>
 
-&lt;p&gt;```objc&lt;/p&gt;
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">UIColor</span> <span class="o">*</span><span class="n">color</span> <span class="o">=</span> <span class="n">button</span><span class="p">.</span><span class="n">currentTitleColor</span><span class="p">;</span>
+</span><span class='line'><span class="n">button</span><span class="p">.</span><span class="n">titleLabel</span><span class="p">.</span><span class="n">layer</span><span class="p">.</span><span class="n">shadowColor</span> <span class="o">=</span> <span class="p">[</span><span class="n">color</span> <span class="n">CGColor</span><span class="p">];</span>
+</span><span class='line'><span class="n">button</span><span class="p">.</span><span class="n">titleLabel</span><span class="p">.</span><span class="n">layer</span><span class="p">.</span><span class="n">shadowRadius</span> <span class="o">=</span> <span class="mf">4.0f</span><span class="p">;</span>
+</span><span class='line'><span class="n">button</span><span class="p">.</span><span class="n">titleLabel</span><span class="p">.</span><span class="n">layer</span><span class="p">.</span><span class="n">shadowOpacity</span> <span class="o">=</span> <span class="mf">.9</span><span class="p">;</span>
+</span><span class='line'><span class="n">button</span><span class="p">.</span><span class="n">titleLabel</span><span class="p">.</span><span class="n">layer</span><span class="p">.</span><span class="n">shadowOffset</span> <span class="o">=</span> <span class="n">CGSizeZero</span><span class="p">;</span>
+</span><span class='line'><span class="n">button</span><span class="p">.</span><span class="n">titleLabel</span><span class="p">.</span><span class="n">layer</span><span class="p">.</span><span class="n">masksToBounds</span> <span class="o">=</span> <span class="n">NO</span><span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure>
 
-&lt;pre&gt;&lt;code&gt;UIColor *color = button.currentTitleColor;
-button.titleLabel.layer.shadowColor = [color CGColor];
-button.titleLabel.layer.shadowRadius = 4.0f;
-button.titleLabel.layer.shadowOpacity = .9;
-button.titleLabel.layer.shadowOffset = CGSizeZero;
-button.titleLabel.layer.masksToBounds = NO;
-&lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;```&lt;/p&gt;
+<p>This effect works on plain <code>UILabel</code> or the <code>titleLabel</code> property of a
+<code>UIButton</code>.  You can see the results of the effect here:</p>
 
-&lt;p&gt;This effect works on plain &lt;code&gt;UILabel&lt;/code&gt; or the &lt;code&gt;titleLabel&lt;/code&gt; property of a
-&lt;code&gt;UIButton&lt;/code&gt;.  You can see the results of the effect here:&lt;/p&gt;
+<p><img class="image" src="http://benscheirman.com/images/uibutton-gloweffect.png"></p>
 
-&lt;p&gt;&lt;img class='image ' src='http://benscheirman.com/images/uibutton-gloweffect.png' width='' height='' alt='' title=''&gt;&lt;/p&gt;
-
-&lt;p&gt;Don't go overboard with this.  It's a subtle effect, but looks great
-when used effectively.&lt;/p&gt;
-</content>
+<p>Don&#8217;t go overboard with this.  It&#8217;s a subtle effect, but looks great
+when used effectively.</p>
+]]></content>
   </entry>
   
   <entry>
-    <title>Introducing App Sites</title>
+    <title type="html"><![CDATA[Introducing App Sites]]></title>
     <link href="http://benscheirman.com/2011/09/introducing-appsites/"/>
     <updated>2011-09-20T08:46:00-05:00</updated>
     <id>http://benscheirman.com/2011/09/introducing-appsites</id>
-    <content type="html">&lt;p&gt;I've not been that great about marketing Giggle Touch.  It's a cool app,
-kids like it, but most people don't know about it.&lt;/p&gt;
+    <content type="html"><![CDATA[<p>I&#8217;ve not been that great about marketing Giggle Touch.  It&#8217;s a cool app,
+kids like it, but most people don&#8217;t know about it.</p>
 
-&lt;p&gt;The biggest reason was probably that I never set up a proper website for
+<p>The biggest reason was probably that I never set up a proper website for
 it.  Doing a search would only yield a blog post that said it was
-&quot;coming soon.&quot;&lt;/p&gt;
+&#8220;coming soon.&#8221;</p>
 
-&lt;p&gt;That's all changed now.  I'd like to introduce &lt;em&gt;App Sites&lt;/em&gt;.&lt;/p&gt;
+<p>That&#8217;s all changed now.  I&#8217;d like to introduce <em>App Sites</em>.</p>
 
-&lt;h2&gt;&lt;a href=&quot;http://appsites.heroku.com&quot;&gt;App Sites&lt;/a&gt;&lt;/h2&gt;
+<h2><a href="http://appsites.heroku.com">App Sites</a></h2>
 
-&lt;p&gt;&lt;img class='right ' src='http://benscheirman.com/images/yourapphere.png' width='' height='' alt='' title=''&gt;&lt;/p&gt;
+<p><img class="right" src="http://benscheirman.com/images/yourapphere.png"></p>
 
-&lt;p&gt;The premise is simple: &lt;em&gt;standup a website for an iPhone
-app in minutes&lt;/em&gt;.&lt;/p&gt;
+<p>The premise is simple: <em>standup a website for an iPhone
+app in minutes</em>.</p>
 
-&lt;p&gt;Check it out here:
-&lt;a href=&quot;http://appsites.heroku.com&quot;&gt;http://appsites.heroku.com&lt;/a&gt;.&lt;/p&gt;
+<p>Check it out here:
+<a href="http://appsites.heroku.com">http://appsites.heroku.com</a>.</p>
 
-&lt;p&gt;You can see the site in action by visiting the
-&lt;a href=&quot;http://appsites.heroku.com/giggletouch&quot;&gt;Giggle Touch&lt;/a&gt; page.&lt;/p&gt;
+<p>You can see the site in action by visiting the
+<a href="http://appsites.heroku.com/giggletouch">Giggle Touch</a> page.</p>
 
-&lt;p&gt;It's free (for now) and gives you the ability to add features, a
-description, a link back to the app, and a screenshot.&lt;/p&gt;
+<p>It&#8217;s free (for now) and gives you the ability to add features, a
+description, a link back to the app, and a screenshot.</p>
 
-&lt;p&gt;Planned upcoming features include:&lt;/p&gt;
+<p>Planned upcoming features include:</p>
 
-&lt;ul&gt;
-&lt;li&gt;Custom domains&lt;/li&gt;
-&lt;li&gt;Multiple screenshots&lt;/li&gt;
-&lt;li&gt;Videos&lt;/li&gt;
-&lt;li&gt;Coming soon (if the app hasn't launched yet)&lt;/li&gt;
-&lt;li&gt;More analytics&lt;/li&gt;
-&lt;/ul&gt;
+<ul>
+<li>Custom domains</li>
+<li>Multiple screenshots</li>
+<li>Videos</li>
+<li>Coming soon (if the app hasn&#8217;t launched yet)</li>
+<li>More analytics</li>
+</ul>
 
 
-&lt;p&gt;If you have an iPhone app, I encourage you to create a page.  Let me
-know what you think!&lt;/p&gt;
-</content>
+<p>If you have an iPhone app, I encourage you to create a page.  Let me
+know what you think!</p>
+]]></content>
   </entry>
   
   <entry>
-    <title>Firebug-Style Visual Debugging for iOS</title>
+    <title type="html"><![CDATA[Firebug-Style Visual Debugging for iOS]]></title>
     <link href="http://benscheirman.com/2011/09/firebug-style-debugging-for-ios/"/>
     <updated>2011-09-16T10:56:00-05:00</updated>
     <id>http://benscheirman.com/2011/09/firebug-style-debugging-for-ios</id>
-    <content type="html">&lt;p&gt;Using a crazy helpful library called &lt;a href=&quot;https://github.com/domesticcatsoftware/DCIntrospect&quot;&gt;DC Introspect&lt;/a&gt; you're able to easily take an app running in the Simulator:&lt;/p&gt;
+    <content type="html"><![CDATA[<p>Using a crazy helpful library called <a href="https://github.com/domesticcatsoftware/DCIntrospect">DC Introspect</a> you&#8217;re able to easily take an app running in the Simulator:</p>
 
-&lt;p&gt;&lt;img class='image ' src='http://benscheirman.com/images/simulator-before-introspection.png' width='' height='' alt='' title=''&gt;&lt;/p&gt;
+<p><img class="image" src="http://benscheirman.com/images/simulator-before-introspection.png"></p>
 
-&lt;p&gt;And get visual frame debugging information like this:&lt;/p&gt;
+<p>And get visual frame debugging information like this:</p>
 
-&lt;p&gt;&lt;img class='image ' src='http://benscheirman.com/images/simulator-after-introspection.png' width='' height='' alt='' title=''&gt;&lt;/p&gt;
+<p><img class="image" src="http://benscheirman.com/images/simulator-after-introspection.png"></p>
 
-&lt;p&gt;You can also click &amp;amp; drag your mouse to get pixel information,
+<p>You can also click &amp; drag your mouse to get pixel information,
 surrounding frames, print out detailed frame information in the console,
-and even move frames around all while the app is running.&lt;/p&gt;
+and even move frames around all while the app is running.</p>
 
-&lt;p&gt;Using it is incredibly simple:&lt;/p&gt;
+<p>Using it is incredibly simple:</p>
 
-&lt;ul&gt;
-&lt;li&gt;Make sure you have &lt;code&gt;DEBUG&lt;/code&gt; defined in your Preprocessor Macros:&lt;/li&gt;
-&lt;/ul&gt;
-
-
-&lt;p&gt;&lt;img class='image ' src='http://benscheirman.com/images/debug-preprocessor-macro.png' width='' height='' alt='' title=''&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;Download the code from https://github.com/domesticcatsoftware/DCIntrospect and drag the DCIntrospect/DCIntrospect folder into your project&lt;/p&gt;&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;In your Application Delegate class, make the following changes:&lt;/p&gt;&lt;/li&gt;
-&lt;/ul&gt;
+<ul>
+<li>Make sure you have <code>DEBUG</code> defined in your Preprocessor Macros:</li>
+</ul>
 
 
-&lt;p&gt;```objc&lt;/p&gt;
+<p><img class="image" src="http://benscheirman.com/images/debug-preprocessor-macro.png"></p>
 
-&lt;pre&gt;&lt;code&gt;#import &quot;DCIntrospect.h&quot;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;```&lt;/p&gt;
-
-&lt;p&gt;```objc&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;// in applicationDidFinishLaunching:
-
-[self.window makeKeyAndVisible];
-
-#ifdef TARGET_IPHONE_SIMULATOR
-    [[DCIntrospect sharedIntrospector] start];
-#endif
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;```&lt;/p&gt;
-
-&lt;p&gt;Once that is done, the library will be loaded and you can use it.  When
-the simulator launches, just press Spacebar to activate the tool.&lt;/p&gt;
-
-&lt;p&gt;Here are some keyboard shortcuts:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;o&lt;/code&gt; - Outline all views&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;?&lt;/code&gt; - Prints out a help view&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;f&lt;/code&gt; - Flash on &lt;code&gt;drawRect:&lt;/code&gt; calls&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;c&lt;/code&gt; - Toggle showing coordinates&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;4 6 8 2&lt;/code&gt; - Nudge the selected view left, right, up, down&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;0&lt;/code&gt; - Recenter view where it was originally&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;9 7 3 1&lt;/code&gt; - Modify Width &amp;amp; Height of selected view&lt;/li&gt;
-&lt;/ul&gt;
+<ul>
+<li><p>Download the code from https://github.com/domesticcatsoftware/DCIntrospect and drag the DCIntrospect/DCIntrospect folder into your project</p></li>
+<li><p>In your Application Delegate class, make the following changes:</p></li>
+</ul>
 
 
-&lt;p&gt;You can also click &amp;amp; drag with the mouse to get detailed information
-about frames &amp;amp; mouse position.&lt;/p&gt;
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="cp">    #import &quot;DCIntrospect.h&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
 
-&lt;p&gt;I am amazed at how awesome this library is. I'll be using it in my
-default toolbox from now on.&lt;/p&gt;
-</content>
+
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="c1">// in applicationDidFinishLaunching:</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">window</span> <span class="n">makeKeyAndVisible</span><span class="p">];</span>
+</span><span class='line'>
+</span><span class='line'><span class="cp">#ifdef TARGET_IPHONE_SIMULATOR</span>
+</span><span class='line'>    <span class="p">[[</span><span class="n">DCIntrospect</span> <span class="n">sharedIntrospector</span><span class="p">]</span> <span class="n">start</span><span class="p">];</span>
+</span><span class='line'><span class="cp">#endif</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Once that is done, the library will be loaded and you can use it.  When
+the simulator launches, just press Spacebar to activate the tool.</p>
+
+<p>Here are some keyboard shortcuts:</p>
+
+<ul>
+<li><code>o</code> - Outline all views</li>
+<li><code>?</code> - Prints out a help view</li>
+<li><code>f</code> - Flash on <code>drawRect:</code> calls</li>
+<li><code>c</code> - Toggle showing coordinates</li>
+<li><code>4 6 8 2</code> - Nudge the selected view left, right, up, down</li>
+<li><code>0</code> - Recenter view where it was originally</li>
+<li><code>9 7 3 1</code> - Modify Width &amp; Height of selected view</li>
+</ul>
+
+
+<p>You can also click &amp; drag with the mouse to get detailed information
+about frames &amp; mouse position.</p>
+
+<p>I am amazed at how awesome this library is. I&#8217;ll be using it in my
+default toolbox from now on.</p>
+]]></content>
   </entry>
   
   <entry>
-    <title>Vim - Could Not Invoke JSLint</title>
+    <title type="html"><![CDATA[Vim - Could Not Invoke JSLint]]></title>
     <link href="http://benscheirman.com/2011/08/vim---could-not-invoke-jslint/"/>
     <updated>2011-08-26T08:59:00-05:00</updated>
-    <id>http://benscheirman.com/2011/08/vim---could-not-invoke-jslint</id>
-    <content type="html">&lt;p&gt;If you're running MacVim with Janus and have upgraded to Lion, you may
-have noticed a little error when you open JavaScript files:&lt;/p&gt;
+    <id>http://benscheirman.com/2011/08/vim&#8212;could-not-invoke-jslint</id>
+    <content type="html"><![CDATA[<p>If you&#8217;re running MacVim with Janus and have upgraded to Lion, you may
+have noticed a little error when you open JavaScript files:</p>
 
-&lt;blockquote&gt;&lt;p&gt;Error detected while processing function 87_JSLint:
+<blockquote><p>Error detected while processing function 87_JSLint:
 Line 33:
-could not invoke JSLint!&lt;/p&gt;&lt;/blockquote&gt;
+could not invoke JSLint!</p></blockquote>
 
-&lt;p&gt;It seems many are having &lt;a href=&quot;https://github.com/hallettj/jslint.vim/issues/13&quot;&gt;this issue&lt;/a&gt;.  There are 2 things to check:&lt;/p&gt;
+<p>It seems many are having <a href="https://github.com/hallettj/jslint.vim/issues/13">this issue</a>.  There are 2 things to check:</p>
 
-&lt;ol&gt;
-&lt;li&gt;Make sure you have Node in your path.  Confirm this by typing &lt;code&gt;which
-node&lt;/code&gt; and make sure it resolves a binary somewhere on your system.&lt;/li&gt;
-&lt;li&gt;Open up your &lt;code&gt;~/.vimrc.local&lt;/code&gt; and add this command:&lt;/li&gt;
-&lt;/ol&gt;
+<ol>
+<li>Make sure you have Node in your path.  Confirm this by typing <code>which
+node</code> and make sure it resolves a binary somewhere on your system.</li>
+<li>Open up your <code>~/.vimrc.local</code> and add this command:</li>
+</ol>
 
 
-&lt;p&gt;```vim&lt;/p&gt;
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='vim'><span class='line'><span class="c">&quot; Use Node.js for JavaScript interpretation</span>
+</span><span class='line'><span class="k">let</span> $JS_CMD<span class="p">=</span><span class="s1">&#39;node&#39;</span>
+</span></code></pre></td></tr></table></div></figure>
 
-&lt;pre&gt;&lt;code&gt;&quot; Use Node.js for JavaScript interpretation
-let $JS_CMD='node'
-&lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;```&lt;/p&gt;
-
-&lt;p&gt;Kudos to &lt;a href=&quot;http://github.com/eventualbuddha&quot;&gt;eventualbuddha&lt;/a&gt; for
-figuring this out.&lt;/p&gt;
-</content>
+<p>Kudos to <a href="http://github.com/eventualbuddha">eventualbuddha</a> for
+figuring this out.</p>
+]]></content>
   </entry>
   
   <entry>
-    <title>Is Rails Exempt?</title>
+    <title type="html"><![CDATA[Is Rails Exempt?]]></title>
     <link href="http://benscheirman.com/2011/08/is-rails-exempt-from-software-principles/"/>
     <updated>2011-08-26T07:58:00-05:00</updated>
     <id>http://benscheirman.com/2011/08/is-rails-exempt-from-software-principles</id>
-    <content type="html">&lt;p&gt;If you've been following the Ruby community recently, you'd notice that
-there's are people calling our Rails (and Rails developers) for treating
-Rails as if it is somehow &lt;em&gt;exempt&lt;/em&gt; from long-standing software
-principles.&lt;/p&gt;
+    <content type="html"><![CDATA[<p>If you&#8217;ve been following the Ruby community recently, you&#8217;d notice that
+there&#8217;s are people calling our Rails (and Rails developers) for treating
+Rails as if it is somehow <em>exempt</em> from long-standing software
+principles.</p>
 
-&lt;p&gt;&lt;a href=&quot;http://osherove.com/&quot;&gt;Roy Osherove&lt;/a&gt;, a fairly well-known .NET developer and author of The &lt;a href=&quot;http://artofunittesting.com/&quot;&gt;Art of Unit Testing&lt;/a&gt;, ventured into Ruby-land
-recently and commented on twitter about how Rails's
-definition of unit &amp;amp; integration is quite different from his.&lt;/p&gt;
+<p><a href="http://osherove.com/">Roy Osherove</a>, a fairly well-known .NET developer and author of The <a href="http://artofunittesting.com/">Art of Unit Testing</a>, ventured into Ruby-land
+recently and commented on twitter about how Rails&#8217;s
+definition of unit &amp; integration is quite different from his.</p>
 
-&lt;p&gt;&lt;img class='tweet ' src='http://benscheirman.com/images/rails-unit-integration-tweet.png' width='' height='' alt='' title=''&gt;&lt;/p&gt;
+<p><img class="tweet" src="http://benscheirman.com/images/rails-unit-integration-tweet.png"></p>
 
-&lt;p&gt;I have to agree with Roy. Those in the TDD camp in .NET understood the
+<p>I have to agree with Roy. Those in the TDD camp in .NET understood the
 difference and were (from my experience) fairly cognizent of isolating
 concerns and not mixing the 2 concepts. Some even go as far as to
 isolate integration tests into their own assembly, providing a physical
-separation further guaranteeing that a unit test project won't touch
-web services or the database.&lt;/p&gt;
+separation further guaranteeing that a unit test project won&#8217;t touch
+web services or the database.</p>
 
-&lt;p&gt;It's easy to assume from the outside that the Rails is just testing
-nirvana and that &lt;em&gt;everyone&lt;/em&gt; does it and it's so easy.  Unfortunately it's
+<p>It&#8217;s easy to assume from the outside that the Rails is just testing
+nirvana and that <em>everyone</em> does it and it&#8217;s so easy.  Unfortunately it&#8217;s
 just not the truth.  Rails (and Ruby) make testing really easy but that
-means it's even easier to do the wrong thing as well.&lt;/p&gt;
+means it&#8217;s even easier to do the wrong thing as well.</p>
 
-&lt;h2&gt;Legacy Rails Apps&lt;/h2&gt;
+<h2>Legacy Rails Apps</h2>
 
-&lt;p&gt;Now that Rails is (gasp) over 7 years old you're starting to see some
-real legacy Rails applications out in the wild.&lt;/p&gt;
+<p>Now that Rails is (gasp) over 7 years old you&#8217;re starting to see some
+real legacy Rails applications out in the wild.</p>
 
-&lt;p&gt;&lt;a href=&quot;http://twitter.com/avdi&quot;&gt;Avdi Grimm&lt;/a&gt; has a &lt;a href=&quot;http://avdi.org/devblog/2011/08/22/your-code-is-my-hell/&quot;&gt;good post&lt;/a&gt; on the topic of how many of the Rails apps he comes to work on are in poor shape, technically.&lt;/p&gt;
+<p><a href="http://twitter.com/avdi">Avdi Grimm</a> has a <a href="http://avdi.org/devblog/2011/08/22/your-code-is-my-hell/">good post</a> on the topic of how many of the Rails apps he comes to work on are in poor shape, technically.</p>
 
-&lt;blockquote&gt;&lt;p&gt;Here are a few examples, just to give you an idea of what I’m talking about:&lt;/p&gt;
+<blockquote><p>Here are a few examples, just to give you an idea of what I’m talking about:</p>
 
-&lt;p&gt;“Design Patterns are a Java thing. In Ruby you just write code.”&lt;/p&gt;
+<p>“Design Patterns are a Java thing. In Ruby you just write code.”</p>
 
-&lt;p&gt;“The warnings Ruby produces are dumb; just disable them.”&lt;/p&gt;
+<p>“The warnings Ruby produces are dumb; just disable them.”</p>
 
-&lt;p&gt;“Sure they aren’t technically Unit Tests, but isolating objects turned out to be kind of hard and besides nobody else is doing it.”&lt;/p&gt;
+<p>“Sure they aren’t technically Unit Tests, but isolating objects turned out to be kind of hard and besides nobody else is doing it.”</p>
 
-&lt;p&gt;“Stuff like the Law of Demeter isn’t really as important in Ruby code”&lt;/p&gt;
+<p>“Stuff like the Law of Demeter isn’t really as important in Ruby code”</p>
 
-&lt;p&gt;“That’s only a problem in large projects” (implying that this project will never become large).&lt;/p&gt;&lt;/blockquote&gt;
+<p>“That’s only a problem in large projects” (implying that this project will never become large).</p></blockquote>
 
-&lt;p&gt;I've certainly been guilty of some of this. Rails makes it easy to do
+<p>I&#8217;ve certainly been guilty of some of this. Rails makes it easy to do
 things that can turn out to be problematic. As with anything, you have
-to be disciplined to notice the warning signs and act accordingly.&lt;/p&gt;
+to be disciplined to notice the warning signs and act accordingly.</p>
 
-&lt;p&gt;When testing is painful, you're likely making mistakes. Some common
-pain-points that I've experienced are:&lt;/p&gt;
+<p>When testing is painful, you&#8217;re likely making mistakes. Some common
+pain-points that I&#8217;ve experienced are:</p>
 
-&lt;ul&gt;
-&lt;li&gt;No tests - the app is hard to test because the design is poor. Classes
-are too tightly coupled and don't have clear delineation of
-responsibilities.&lt;/li&gt;
-&lt;li&gt;Tests break for unrelated reasons - the tests are covering too much
-behavior, so when a single behavior changes, many tests break.&lt;/li&gt;
-&lt;li&gt;Tests break when implementation changes - the tests are probably
-utilizing too much mocking &amp;amp; stubbing. The tests are coupled heavily
-to a particular implementation.&lt;/li&gt;
-&lt;li&gt;Unclear what the problem is when a test breaks - Tests are probably
-too coarse-grained and may contain too many assertions per test.&lt;/li&gt;
-&lt;/ul&gt;
+<ul>
+<li>No tests - the app is hard to test because the design is poor. Classes
+are too tightly coupled and don&#8217;t have clear delineation of
+responsibilities.</li>
+<li>Tests break for unrelated reasons - the tests are covering too much
+behavior, so when a single behavior changes, many tests break.</li>
+<li>Tests break when implementation changes - the tests are probably
+utilizing too much mocking &amp; stubbing. The tests are coupled heavily
+to a particular implementation.</li>
+<li>Unclear what the problem is when a test breaks - Tests are probably
+too coarse-grained and may contain too many assertions per test.</li>
+</ul>
 
 
-&lt;p&gt;These are just a sampling of what I've personally observed.&lt;/p&gt;
+<p>These are just a sampling of what I&#8217;ve personally observed.</p>
 
-&lt;p&gt;So why do many Rails developers ignore these concepts?&lt;/p&gt;
+<p>So why do many Rails developers ignore these concepts?</p>
 
-&lt;h2&gt;Pragmatism at work&lt;/h2&gt;
+<h2>Pragmatism at work</h2>
 
-&lt;p&gt;Many rails tutorials (and the default Rails template) treats model tests
-as &lt;em&gt;unit&lt;/em&gt; tests. Since Rails models are by default based on Active
+<p>Many rails tutorials (and the default Rails template) treats model tests
+as <em>unit</em> tests. Since Rails models are by default based on Active
 Record, they have data access baked into their core.  Doing proper unit
-testing means you're testing a logical unit.  If your test involves a
-model operation that requires a database round-trip, that's technically
-an &lt;em&gt;integration&lt;/em&gt; test.  But does it really matter?&lt;/p&gt;
+testing means you&#8217;re testing a logical unit.  If your test involves a
+model operation that requires a database round-trip, that&#8217;s technically
+an <em>integration</em> test.  But does it really matter?</p>
 
-&lt;p&gt;Most Rails developers will tell you no. Consider this spec:&lt;/p&gt;
+<p>Most Rails developers will tell you no. Consider this spec:</p>
 
-&lt;p&gt;```ruby&lt;/p&gt;
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">describe</span> <span class="no">Post</span> <span class="k">do</span>
+</span><span class='line'>  <span class="n">it</span> <span class="s2">&quot;should be initially unpublished&quot;</span> <span class="k">do</span>
+</span><span class='line'>    <span class="no">Post</span><span class="o">.</span><span class="n">new</span><span class="o">.</span><span class="n">published</span><span class="o">.</span><span class="n">should</span> <span class="o">==</span> <span class="kp">false</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
 
-&lt;pre&gt;&lt;code&gt;describe Post do
-  it &quot;should be initially unpublished&quot; do
-    Post.new.published.should == false
-  end
-end
-&lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;```&lt;/p&gt;
+<p>This is a unit test. It tests a single piece of functionality and will
+fail for just one reason.</p>
 
-&lt;p&gt;This is a unit test. It tests a single piece of functionality and will
-fail for just one reason.&lt;/p&gt;
+<p>Now, here&#8217;s another example:</p>
 
-&lt;p&gt;Now, here's another example:&lt;/p&gt;
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">it</span> <span class="s2">&quot;should fetch published articles&quot;</span> <span class="k">do</span>
+</span><span class='line'>  <span class="c1"># ?</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
 
-&lt;p&gt;```ruby&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;it &quot;should fetch published articles&quot; do
-  # ?
-end
-&lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;```&lt;/p&gt;
 
-&lt;p&gt;```ruby&lt;/p&gt;
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="c1"># post.rb</span>
+</span><span class='line'><span class="k">class</span> <span class="nc">Post</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span>
+</span><span class='line'>  <span class="k">def</span> <span class="nc">self</span><span class="o">.</span><span class="nf">published</span>
+</span><span class='line'>    <span class="n">where</span><span class="p">(</span><span class="s2">&quot;published_at &lt;= ?&quot;</span><span class="p">,</span> <span class="no">Time</span><span class="o">.</span><span class="n">now</span><span class="p">)</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
 
-&lt;pre&gt;&lt;code&gt;# post.rb
-class Post &amp;lt; ActiveRecord::Base
-  def self.published
-    where(&quot;published_at &amp;lt;= ?&quot;, Time.now)
-  end
-end
-&lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;```&lt;/p&gt;
+<p>How should you implement this spec?</p>
 
-&lt;p&gt;How should you implement this spec?&lt;/p&gt;
+<p>If you were trying to avoid hitting the database you might intercept the
+<code>where</code> call and assert the parameters passed to it. But surely this
+isn&#8217;t the only way you could implement this method giving the same
+behavior.  You might use <code>scopes</code> or another <code>where</code> call might actually
+be added later that doesn&#8217;t affect the outcome of this method in any way
+that this test is concerned about.</p>
 
-&lt;p&gt;If you were trying to avoid hitting the database you might intercept the
-&lt;code&gt;where&lt;/code&gt; call and assert the parameters passed to it. But surely this
-isn't the only way you could implement this method giving the same
-behavior.  You might use &lt;code&gt;scopes&lt;/code&gt; or another &lt;code&gt;where&lt;/code&gt; call might actually
-be added later that doesn't affect the outcome of this method in any way
-that this test is concerned about.&lt;/p&gt;
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">it</span> <span class="s2">&quot;should fetch published articles&quot;</span> <span class="k">do</span>
+</span><span class='line'>  <span class="mi">3</span><span class="o">.</span><span class="n">times</span> <span class="p">{</span> <span class="no">Factory</span><span class="o">.</span><span class="n">create</span> <span class="ss">:article</span> <span class="p">}</span>
+</span><span class='line'>  <span class="n">future_post</span> <span class="o">=</span> <span class="no">Factory</span><span class="o">.</span><span class="n">create</span> <span class="ss">:article</span><span class="p">,</span> <span class="ss">:published_at</span> <span class="o">=&gt;</span> <span class="mi">2</span><span class="o">.</span><span class="n">days</span><span class="o">.</span><span class="n">from_now</span>
+</span><span class='line'>  <span class="n">posts</span> <span class="o">=</span> <span class="no">Post</span><span class="o">.</span><span class="n">published</span>
+</span><span class='line'>  <span class="n">posts</span><span class="o">.</span><span class="n">size</span><span class="o">.</span><span class="n">should</span> <span class="o">==</span> <span class="mi">3</span>
+</span><span class='line'>  <span class="n">post</span><span class="o">.</span><span class="n">should_not</span> <span class="kp">include</span> <span class="n">future_post</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
 
-&lt;p&gt;```ruby&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;it &quot;should fetch published articles&quot; do
-  3.times { Factory.create :article }
-  future_post = Factory.create :article, :published_at =&amp;gt; 2.days.from_now
-  posts = Post.published
-  posts.size.should == 3
-  post.should_not include future_post
-end
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;```&lt;/p&gt;
-
-&lt;p&gt;This test hits the database (numerous times, in fact) but it's testing
-&lt;em&gt;exactly&lt;/em&gt; the behavior we need.  We aren't testing implementation, we're
+<p>This test hits the database (numerous times, in fact) but it&#8217;s testing
+<em>exactly</em> the behavior we need.  We aren&#8217;t testing implementation, we&#8217;re
 testing that the behavior works as intended.  If we somehow muck with
 the query, breaking it, this test will fail.  If we change the
 implementation to use some other query means (scopes or whatever) this
-test will still pass.&lt;/p&gt;
+test will still pass.</p>
 
-&lt;p&gt;Is it so bad that the test hits the database?&lt;/p&gt;
+<p>Is it so bad that the test hits the database?</p>
 
-&lt;p&gt;There are drawbacks of course:&lt;/p&gt;
+<p>There are drawbacks of course:</p>
 
-&lt;ul&gt;
-&lt;li&gt;The test requires a database, thus you have to migrate&lt;/li&gt;
-&lt;li&gt;The &lt;code&gt;database_cleaner&lt;/code&gt; gem will have to be present to clean out the
-database before each run&lt;/li&gt;
-&lt;li&gt;These database statements make the test suite a LOT slower, so large
-test suites will eventually suffer.&lt;/li&gt;
-&lt;li&gt;The tests could fail if the database isn't present (or migrated), or
-if the query is incorrect.  But this isn't likely to happen since
-we're using a tested framework (ActiveRecord).&lt;/li&gt;
-&lt;/ul&gt;
+<ul>
+<li>The test requires a database, thus you have to migrate</li>
+<li>The <code>database_cleaner</code> gem will have to be present to clean out the
+database before each run</li>
+<li>These database statements make the test suite a LOT slower, so large
+test suites will eventually suffer.</li>
+<li>The tests could fail if the database isn&#8217;t present (or migrated), or
+if the query is incorrect.  But this isn&#8217;t likely to happen since
+we&#8217;re using a tested framework (ActiveRecord).</li>
+</ul>
 
 
-&lt;p&gt;Ultimately this isn't really a unit test at all.  It's an integration
-test.  So is &lt;code&gt;spec/models/post_spec.rb&lt;/code&gt; the wrong place for this stuff?&lt;/p&gt;
+<p>Ultimately this isn&#8217;t really a unit test at all.  It&#8217;s an integration
+test.  So is <code>spec/models/post_spec.rb</code> the wrong place for this stuff?</p>
 
-&lt;p&gt;The question eventually comes down to this: &lt;em&gt;What is more valuable?  A
+<p>The question eventually comes down to this: <em>What is more valuable?  A
 fast, isolated test suite?  Or a test suite that breaks for the right
-reasons?&lt;/em&gt;&lt;/p&gt;
+reasons?</em></p>
 
-&lt;h2&gt;Don't throw out good practices just because it's Ruby&lt;/h2&gt;
+<h2>Don&#8217;t throw out good practices just because it&#8217;s Ruby</h2>
 
-&lt;p&gt;I think it's important to be cognizant of software paradigms and use
-them where they make sense. It's also important to recognize when
-practices are being ignored because &quot;celebrities&quot; aren't touting them.&lt;/p&gt;
+<p>I think it&#8217;s important to be cognizant of software paradigms and use
+them where they make sense. It&#8217;s also important to recognize when
+practices are being ignored because &#8220;celebrities&#8221; aren&#8217;t touting them.</p>
 
-&lt;p&gt;It is still valuable, however, to keep a fresh eye on old assumptions. Don't
-always take things as gospel just because that's the way they have
+<p>It is still valuable, however, to keep a fresh eye on old assumptions. Don&#8217;t
+always take things as gospel just because that&#8217;s the way they have
 always been. One
 of the things I love about the Ruby community is how willing people are
-to rock the boat &amp;amp; try something new.&lt;/p&gt;
-</content>
+to rock the boat &amp; try something new.</p>
+]]></content>
   </entry>
   
   <entry>
-    <title>When viewWillAppear: Isn't Called</title>
+    <title type="html"><![CDATA[When viewWillAppear: Isn't Called]]></title>
     <link href="http://benscheirman.com/2011/08/when-viewwillappear-isnt-called/"/>
     <updated>2011-08-24T10:11:00-05:00</updated>
     <id>http://benscheirman.com/2011/08/when-viewwillappear-isnt-called</id>
-    <content type="html">&lt;p&gt;The &lt;code&gt;UIViewController&lt;/code&gt; lifecycle is pretty simple.  &lt;code&gt;viewDidLoad&lt;/code&gt; is
+    <content type="html"><![CDATA[<p>The <code>UIViewController</code> lifecycle is pretty simple.  <code>viewDidLoad</code> is
 called when the view is loaded (usually from a XIB) and when the view
-controller's view is about to be displayed &lt;code&gt;viewWillAppear:&lt;/code&gt; gets called
-(and &lt;code&gt;viewWillDisappear:&lt;/code&gt; when it goes away).&lt;/p&gt;
+controller&#8217;s view is about to be displayed <code>viewWillAppear:</code> gets called
+(and <code>viewWillDisappear:</code> when it goes away).</p>
 
-&lt;p&gt;The problem is, when you have a non-standard view hierarchy (like my
-current app) these methods don't get called. The Apple docs have this to
-say about the problem:&lt;/p&gt;
+<p>The problem is, when you have a non-standard view hierarchy (like my
+current app) these methods don&#8217;t get called. The Apple docs have this to
+say about the problem:</p>
 
-&lt;blockquote&gt;&lt;p&gt;Warning: If the view belonging to a view controller is added to a view hierarchy directly, the view controller will not receive this message. If you insert or add a view to the view hierarchy, and it has a view controller, you should send the associated view controller this message directly. Failing to send the view controller this message will prevent any associated animation from being displayed.&lt;/p&gt;&lt;/blockquote&gt;
+<blockquote><p>Warning: If the view belonging to a view controller is added to a view hierarchy directly, the view controller will not receive this message. If you insert or add a view to the view hierarchy, and it has a view controller, you should send the associated view controller this message directly. Failing to send the view controller this message will prevent any associated animation from being displayed.</p></blockquote>
 
-&lt;p&gt;In my application I have a persistent bar at the bottom of the screen,
-so my &lt;code&gt;UINavigationController&lt;/code&gt; only owns a portion of the screen.  Thus, my
-&lt;code&gt;RootViewController&lt;/code&gt; (which owns these 2 portions) is always &lt;em&gt;active&lt;/em&gt;.&lt;/p&gt;
+<p>In my application I have a persistent bar at the bottom of the screen,
+so my <code>UINavigationController</code> only owns a portion of the screen.  Thus, my
+<code>RootViewController</code> (which owns these 2 portions) is always <em>active</em>.</p>
 
-&lt;p&gt;&lt;img class='screenshot ' src='http://benscheirman.com/images/non-standard-nav-frame.png' width='' height='' alt='' title=''&gt;&lt;/p&gt;
+<p><img class="screenshot" src="http://benscheirman.com/images/non-standard-nav-frame.png"></p>
 
-&lt;p&gt;I recently came upon a requirement that needed to leverage
-&lt;code&gt;viewWillAppear:&lt;/code&gt; and &lt;code&gt;viewWillDisappear:&lt;/code&gt; in order to decorate the
+<p>I recently came upon a requirement that needed to leverage
+<code>viewWillAppear:</code> and <code>viewWillDisappear:</code> in order to decorate the
 bottom bar with some additional information. Since this is a view
-controller a few layers deep in the hierarchy, the methods weren't being
-called.&lt;/p&gt;
+controller a few layers deep in the hierarchy, the methods weren&#8217;t being
+called.</p>
 
-&lt;p&gt;Luckly, there is a fix to this. The navigation controller can notify
-its &lt;code&gt;delegate&lt;/code&gt; when it changes view controllers.&lt;/p&gt;
+<p>Luckly, there is a fix to this. The navigation controller can notify
+its <code>delegate</code> when it changes view controllers.</p>
 
-&lt;p&gt;Start off in the view controller that is the root of the navigation
+<p>Start off in the view controller that is the root of the navigation
 controller hierarchy.  Make it conform to the
-&lt;code&gt;UINavigationControllerDelegate&lt;/code&gt; protocol.  We'll also need an ivar to
-store the last view controller that &lt;em&gt;appeared&lt;/em&gt; so that we can notify
-when it &lt;em&gt;disappears&lt;/em&gt;.&lt;/p&gt;
+<code>UINavigationControllerDelegate</code> protocol.  We&#8217;ll also need an ivar to
+store the last view controller that <em>appeared</em> so that we can notify
+when it <em>disappears</em>.</p>
 
-&lt;p&gt;```objc&lt;/p&gt;
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="k">@interface</span> <span class="nc">MyRootViewController</span> : <span class="nc">UIViewController</span>
+</span><span class='line'>    <span class="o">&lt;</span><span class="n">UINavigationControllerDelegate</span><span class="o">&gt;</span> <span class="p">{</span>
+</span><span class='line'>      <span class="n">UIViewController</span> <span class="o">*</span><span class="n">_lastViewController</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'><span class="c1">// methods</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">@end</span>
+</span></code></pre></td></tr></table></div></figure>
 
-&lt;pre&gt;&lt;code&gt;@interface MyRootViewController : UIViewController
-    &amp;lt;UINavigationControllerDelegate&amp;gt; {
-      UIViewController *_lastViewController;
-}
-// methods
 
-@end
-&lt;/code&gt;&lt;/pre&gt;
+<p>In the implementation, in do the following:</p>
 
-&lt;p&gt;```&lt;/p&gt;
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'>    <span class="k">@implementation</span> <span class="nc">MyRootViewController</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c1">// other stuff</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="o">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">viewDidLoad</span> <span class="p">{</span>
+</span><span class='line'>        <span class="p">[</span><span class="n">super</span> <span class="n">viewDidLoad</span><span class="p">];</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="n">self</span><span class="p">.</span><span class="n">navigationController</span><span class="p">.</span><span class="n">delegate</span> <span class="o">=</span> <span class="n">self</span><span class="p">;</span>
+</span><span class='line'>        <span class="c1">// ...</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="o">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nl">navigationController:</span><span class="p">(</span><span class="n">UINavigationController</span> <span class="o">*</span><span class="p">)</span><span class="n">navigationController</span>
+</span><span class='line'>          <span class="nl">willShowViewController:</span><span class="p">(</span><span class="n">UIViewController</span> <span class="o">*</span><span class="p">)</span><span class="n">viewController</span> <span class="nl">animated:</span><span class="p">(</span><span class="kt">BOOL</span><span class="p">)</span><span class="n">animated</span> <span class="p">{</span>
+</span><span class='line'>        <span class="k">if</span> <span class="p">(</span><span class="n">_lastViewController</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>            <span class="p">[</span><span class="n">_lastViewController</span> <span class="nl">viewWillDisappear:</span><span class="n">animated</span><span class="p">];</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="p">[</span><span class="n">viewController</span> <span class="nl">viewWillAppear:</span><span class="n">animated</span><span class="p">];</span>
+</span><span class='line'>        <span class="n">_lastViewController</span> <span class="o">=</span> <span class="n">viewController</span><span class="p">;</span>
+</span><span class='line'>    <span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
 
-&lt;p&gt;In the implementation, in do the following:&lt;/p&gt;
 
-&lt;p&gt;```objc&lt;/p&gt;
+<p>If you need support for <code>viewDidAppear</code> and <code>viewDidDisappear</code> then
+you&#8217;d have to implement this method as well:</p>
 
-&lt;pre&gt;&lt;code&gt;@implementation MyRootViewController
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">navigationController:</span><span class="p">(</span><span class="n">UINavigationController</span> <span class="o">*</span><span class="p">)</span><span class="nv">navigationController</span>
+</span><span class='line'>       <span class="nf">didShowViewController:</span><span class="p">(</span><span class="n">UIViewController</span> <span class="o">*</span><span class="p">)</span><span class="nv">viewController</span>
+</span><span class='line'>                    <span class="nf">animated:</span><span class="p">(</span><span class="kt">BOOL</span><span class="p">)</span><span class="nv">animated</span><span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure>
 
-// other stuff
 
-- (void)viewDidLoad {
-    [super viewDidLoad];
-
-    self.navigationController.delegate = self;
-    // ...
-}
-
-- (void)navigationController:(UINavigationController *)navigationController 
-      willShowViewController:(UIViewController *)viewController animated:(BOOL)animated {
-    if (_lastViewController) {
-        [_lastViewController viewWillDisappear:animated];
-    }
-
-    [viewController viewWillAppear:animated];
-    _lastViewController = viewController;
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;```&lt;/p&gt;
-
-&lt;p&gt;If you need support for &lt;code&gt;viewDidAppear&lt;/code&gt; and &lt;code&gt;viewDidDisappear&lt;/code&gt; then
-you'd have to implement this method as well:&lt;/p&gt;
-
-&lt;p&gt;```objc&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;- (void)navigationController:(UINavigationController *)navigationController 
-       didShowViewController:(UIViewController *)viewController 
-                    animated:(BOOL)animated;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;```&lt;/p&gt;
-
-&lt;p&gt;After doing this, your view controllers should start receiving the
-&lt;code&gt;viewWillAppear:&lt;/code&gt; and &lt;code&gt;viewWillDisappear:&lt;/code&gt; methods successfully.&lt;/p&gt;
-</content>
+<p>After doing this, your view controllers should start receiving the
+<code>viewWillAppear:</code> and <code>viewWillDisappear:</code> methods successfully.</p>
+]]></content>
   </entry>
   
   <entry>
-    <title>Moving My Blog</title>
+    <title type="html"><![CDATA[Moving My Blog]]></title>
     <link href="http://benscheirman.com/2011/08/moving-my-blog/"/>
     <updated>2011-08-21T00:00:00-05:00</updated>
     <id>http://benscheirman.com/2011/08/moving-my-blog</id>
-    <content type="html">&lt;p&gt;I've decided to transition over to a new blog.&lt;/p&gt;
+    <content type="html"><![CDATA[<p>I&#8217;ve decided to transition over to a new blog.</p>
 
 
-&lt;p&gt;The reasons? Mostly because I'm questioning more &amp;amp; more the need to have a dynamic blog that I need to maintain. Static HTML blog generators are very interesting and I thought I'd give one a try.&lt;/p&gt;
+<p>The reasons? Mostly because I&#8217;m questioning more &amp; more the need to have a dynamic blog that I need to maintain. Static HTML blog generators are very interesting and I thought I&#8217;d give one a try.</p>
 
 
-&lt;p&gt;I'll leave this one around for historical reasons. It gets a decent amount of traffic and has content going back to 2004.&lt;br /&gt;&lt;/p&gt;
+<p>I&#8217;ll leave this one around for historical reasons. It gets a decent amount of traffic and has content going back to 2004.<br /></p>
 
 
-&lt;p&gt;So without further ado I present my new blog, &lt;a href=&quot;http://benscheirman.com&quot;&gt;Fickle Bits&lt;/a&gt;.&lt;br /&gt;&lt;/p&gt;
+<p>So without further ado I present my new blog, <a href="http://benscheirman.com">Fickle Bits</a>.<br /></p>
 
 
-&lt;p&gt;(Note to RSS readers, your feeds will not auto-update. Subscribe to the new blog here: &lt;a href=&quot;http://feeds.feedburner.com/ficklebits&quot; target=&quot;_blank&quot;&gt;Subscribe&lt;/a&gt; )&lt;br /&gt;&lt;/p&gt;
+<p>(Note to RSS readers, your feeds will not auto-update. Subscribe to the new blog here: <a href="http://feeds.feedburner.com/ficklebits" target="_blank">Subscribe</a> )<br /></p>
 
-</content>
+]]></content>
   </entry>
   
   <entry>
-    <title>My Vim Journey</title>
+    <title type="html"><![CDATA[My Vim Journey]]></title>
     <link href="http://benscheirman.com/2011/08/my-vim-journey/"/>
     <updated>2011-08-17T23:53:00-05:00</updated>
     <id>http://benscheirman.com/2011/08/my-vim-journey</id>
-    <content type="html">&lt;p&gt;For my Rails work, I've largely leaned on &lt;a href=&quot;http://macromates.org&quot;&gt;TextMate&lt;/a&gt;.  It's used by many Rubyists, looks sexy,
-and is easily extended.&lt;/p&gt;
+    <content type="html"><![CDATA[<p>For my Rails work, I&#8217;ve largely leaned on <a href="http://macromates.org">TextMate</a>.  It&#8217;s used by many Rubyists, looks sexy,
+and is easily extended.</p>
 
-&lt;p&gt;I still use TextMate frequently, but I've been ramping up on my Vim
-skills and I've recently come to a point where I think I'm pretty
-productive in it.&lt;/p&gt;
+<p>I still use TextMate frequently, but I&#8217;ve been ramping up on my Vim
+skills and I&#8217;ve recently come to a point where I think I&#8217;m pretty
+productive in it.</p>
 
-&lt;p&gt;My initial frustrations with Vim were that it was too configurable.
-Talk to any Vim power-user and you'll find a completely different set of
-plugins &amp;amp; keyboard shortcuts.  If you snag a friend's set of Vim
+<p>My initial frustrations with Vim were that it was too configurable.
+Talk to any Vim power-user and you&#8217;ll find a completely different set of
+plugins &amp; keyboard shortcuts.  If you snag a friend&#8217;s set of Vim
 configuration files (like I did) you might find yourself frustrated that
-there's too much to learn and it's difficult to know where various
-behaviors are coming from.&lt;/p&gt;
+there&#8217;s too much to learn and it&#8217;s difficult to know where various
+behaviors are coming from.</p>
 
-&lt;p&gt;In this post, I'll attempt to demonstrate a very sane Vim setup that
-newcomers can use to get started and not be too overwhelmed.&lt;/p&gt;
+<p>In this post, I&#8217;ll attempt to demonstrate a very sane Vim setup that
+newcomers can use to get started and not be too overwhelmed.</p>
 
-&lt;h2&gt;Why Vim?&lt;/h2&gt;
+<h2>Why Vim?</h2>
 
-&lt;p&gt;Before I get started with the basics of Vim, why would you use it in the
-first place?&lt;/p&gt;
+<p>Before I get started with the basics of Vim, why would you use it in the
+first place?</p>
 
-&lt;p&gt;For me it boils down to this:  &lt;em&gt;I love staying on the keyboard&lt;/em&gt;.
-Vim may not make you faster (&lt;em&gt;in fact initially you'll be a lot slower&lt;/em&gt;) but it can fit your workflow better.&lt;/p&gt;
+<p>For me it boils down to this:  <em>I love staying on the keyboard</em>.
+Vim may not make you faster (<em>in fact initially you&#8217;ll be a lot slower</em>) but it can fit your workflow better.</p>
 
-&lt;p&gt;Another big differentiator of Vim is &lt;em&gt;Command Mode&lt;/em&gt;.  The notion
+<p>Another big differentiator of Vim is <em>Command Mode</em>.  The notion
 here is that you spend more time wrangling text rather than creating it
-from scratch.  That's certainly true of my code.&lt;/p&gt;
+from scratch.  That&#8217;s certainly true of my code.</p>
 
-&lt;p&gt;It is important, however, that in the larger software ecosystem,
-&lt;em&gt;typing is not the bottleneck&lt;/em&gt;.  Don't expect Vim to make you build
-the right software faster.&lt;/p&gt;
+<p>It is important, however, that in the larger software ecosystem,
+<em>typing is not the bottleneck</em>.  Don&#8217;t expect Vim to make you build
+the right software faster.</p>
 
-&lt;p&gt;Vim enables a keyboard-optimized workflow that &lt;em&gt;may&lt;/em&gt; make you faster.
-YMMV.  If you're fast with TextMate or Emacs or don't want to spend the
-time to learn something new, then Vim may very well not be for you.&lt;/p&gt;
+<p>Vim enables a keyboard-optimized workflow that <em>may</em> make you faster.
+YMMV.  If you&#8217;re fast with TextMate or Emacs or don&#8217;t want to spend the
+time to learn something new, then Vim may very well not be for you.</p>
 
-&lt;p&gt;Lastly, Vim is ubiquitous.  It's on every platform and
+<p>Lastly, Vim is ubiquitous.  It&#8217;s on every platform and
 you can carry your configuration (or a very large set of it) everywhere.
 People frequently put their vim configurations on Github for themselves
-and others to utilize.&lt;/p&gt;
+and others to utilize.</p>
 
-&lt;h2&gt;Getting MacVim&lt;/h2&gt;
+<h2>Getting MacVim</h2>
 
-&lt;p&gt;Almost all Unix-based systems (like Mac) include a terminal version of
-Vim.  The version included on OS X isn't compiled with Ruby support, so
-some plugins won't work.  In addition, it doesn't have OS-level
-integration like Copy &amp;amp; Paste in the same buffer.&lt;/p&gt;
+<p>Almost all Unix-based systems (like Mac) include a terminal version of
+Vim.  The version included on OS X isn&#8217;t compiled with Ruby support, so
+some plugins won&#8217;t work.  In addition, it doesn&#8217;t have OS-level
+integration like Copy &amp; Paste in the same buffer.</p>
 
-&lt;p&gt;Most Vim users I know use MacVim, which comes pre-compiled with Ruby
-support, has tabs, and more.&lt;/p&gt;
+<p>Most Vim users I know use MacVim, which comes pre-compiled with Ruby
+support, has tabs, and more.</p>
 
-&lt;p&gt;If you have &lt;a href=&quot;http://mxcl.github.com/homebrew/&quot;&gt;homebrew&lt;/a&gt; installed, just
-type:&lt;/p&gt;
+<p>If you have <a href="http://mxcl.github.com/homebrew/">homebrew</a> installed, just
+type:</p>
 
-&lt;p&gt;&lt;code&gt;
-brew install  macvim
-&lt;/code&gt;&lt;/p&gt;
-
-&lt;p&gt;If you'd rather grab a pre-built binary, then head on over &lt;a href=&quot;https://github.com/b4winckler/macvim&quot;&gt;here&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;You'll also want to make sure that the &lt;code&gt;mvim&lt;/code&gt; binary is in your path.&lt;/p&gt;
-
-&lt;h2&gt;Basic Vim Navigation&lt;/h2&gt;
-
-&lt;p&gt;I won't cover everything you can do in Vim here, but here's just enough
-to get you started:&lt;/p&gt;
-
-&lt;p&gt;In Command Mode:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;Press &lt;code&gt;h&lt;/code&gt;, &lt;code&gt;j&lt;/code&gt;, &lt;code&gt;k&lt;/code&gt;, &lt;code&gt;l&lt;/code&gt; to move the cursor around.  It will feel weird, but you start to appreciate not
-lifting your hand off of the home row to reach for the arrow keys.&lt;/li&gt;
-&lt;li&gt;Press &lt;code&gt;G&lt;/code&gt; to go to the end of a document, &lt;code&gt;gg&lt;/code&gt; to go to the top of
-the document.&lt;/li&gt;
-&lt;li&gt;Press &lt;code&gt;i&lt;/code&gt; to go to insert mode at the current position&lt;/li&gt;
-&lt;li&gt;Press &lt;code&gt;I&lt;/code&gt; to insert at the beginning of the line&lt;/li&gt;
-&lt;li&gt;Press &lt;code&gt;a&lt;/code&gt; to &quot;append&quot; content after the cursor&lt;/li&gt;
-&lt;li&gt;Press &lt;code&gt;A&lt;/code&gt; to &quot;append&quot; content at the end of a line&lt;/li&gt;
-&lt;li&gt;Type &lt;code&gt;cw&lt;/code&gt; (&quot;change word&quot;) to replace the current word and go into insert mode&lt;/li&gt;
-&lt;li&gt;Type &lt;code&gt;dta&lt;/code&gt; to (&quot;delete 'til the letter a&quot;) in a line&lt;/li&gt;
-&lt;/ul&gt;
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>brew install  macvim</span></code></pre></td></tr></table></div></figure>
 
 
-&lt;p&gt;In Insert Mode:&lt;/p&gt;
+<p>If you&#8217;d rather grab a pre-built binary, then head on over <a href="https://github.com/b4winckler/macvim">here</a>.</p>
 
-&lt;ul&gt;
-&lt;li&gt;Press &lt;code&gt;esc&lt;/code&gt; to go back to command mode.&lt;/li&gt;
-&lt;/ul&gt;
+<p>You&#8217;ll also want to make sure that the <code>mvim</code> binary is in your path.</p>
+
+<h2>Basic Vim Navigation</h2>
+
+<p>I won&#8217;t cover everything you can do in Vim here, but here&#8217;s just enough
+to get you started:</p>
+
+<p>In Command Mode:</p>
+
+<ul>
+<li>Press <code>h</code>, <code>j</code>, <code>k</code>, <code>l</code> to move the cursor around.  It will feel weird, but you start to appreciate not
+lifting your hand off of the home row to reach for the arrow keys.</li>
+<li>Press <code>G</code> to go to the end of a document, <code>gg</code> to go to the top of
+the document.</li>
+<li>Press <code>i</code> to go to insert mode at the current position</li>
+<li>Press <code>I</code> to insert at the beginning of the line</li>
+<li>Press <code>a</code> to &#8220;append&#8221; content after the cursor</li>
+<li>Press <code>A</code> to &#8220;append&#8221; content at the end of a line</li>
+<li>Type <code>cw</code> (&#8220;change word&#8221;) to replace the current word and go into insert mode</li>
+<li>Type <code>dta</code> to (&#8220;delete &#8216;til the letter a&#8221;) in a line</li>
+</ul>
 
 
-&lt;p&gt;Commands:&lt;/p&gt;
+<p>In Insert Mode:</p>
 
-&lt;ul&gt;
-&lt;li&gt;In Command Mode, you can type commands by prefixing them with &lt;code&gt;:&lt;/code&gt;.&lt;/li&gt;
-&lt;li&gt;To write the changes to the current buffer (save) type &lt;code&gt;:w&lt;/code&gt; and hit
-&lt;code&gt;enter&lt;/code&gt;.  Often times you'll write &amp;amp; quit in one command, with &lt;code&gt;:wq&lt;/code&gt;.&lt;/li&gt;
-&lt;/ul&gt;
+<ul>
+<li>Press <code>esc</code> to go back to command mode.</li>
+</ul>
 
 
-&lt;p&gt;Feel free to use the mouse &amp;amp; arrow-keys while you're getting used to everything.  It
-will feel weird.&lt;/p&gt;
+<p>Commands:</p>
 
-&lt;p&gt;For more Vim-fu, definitely check out this &lt;a href=&quot;http://peepcode.com/products/smash-into-vim-i&quot;&gt;PeepCode
-screencast&lt;/a&gt;.&lt;/p&gt;
+<ul>
+<li>In Command Mode, you can type commands by prefixing them with <code>:</code>.</li>
+<li>To write the changes to the current buffer (save) type <code>:w</code> and hit
+<code>enter</code>.  Often times you&#8217;ll write &amp; quit in one command, with <code>:wq</code>.</li>
+</ul>
 
-&lt;h2&gt;Installing a Base Set of Plugins with Janus&lt;/h2&gt;
 
-&lt;p&gt;The real power of Vim is in the plugins, and fortunately Yehuda Katz &amp;amp;
+<p>Feel free to use the mouse &amp; arrow-keys while you&#8217;re getting used to everything.  It
+will feel weird.</p>
+
+<p>For more Vim-fu, definitely check out this <a href="http://peepcode.com/products/smash-into-vim-i">PeepCode
+screencast</a>.</p>
+
+<h2>Installing a Base Set of Plugins with Janus</h2>
+
+<p>The real power of Vim is in the plugins, and fortunately Yehuda Katz &amp;
 Carl Lerche have put together an opinionated and useful set of plugins
 that are pre-configured and work well together.  Take a look at the plugins it includes
-&lt;a href=&quot;https://github.com/carlhuda/janus&quot;&gt;here&lt;/a&gt;.&lt;/p&gt;
+<a href="https://github.com/carlhuda/janus">here</a>.</p>
 
-&lt;p&gt;Getting Janus installed is easy.  If you are super trust-worthy and
-don't mind running a script blindly (I don't recommend it) you can
-simply run:&lt;/p&gt;
+<p>Getting Janus installed is easy.  If you are super trust-worthy and
+don&#8217;t mind running a script blindly (I don&#8217;t recommend it) you can
+simply run:</p>
 
-&lt;p&gt;```&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;curl https://raw.github.com/carlhuda/janus/master/bootstrap.sh -o - | sh
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;```&lt;/p&gt;
-
-&lt;p&gt;More explicit instructions for the paranoid can be found on &lt;a href=&quot;http://github.com/carlhuda/janus&quot;&gt;the github
-page&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;Once you have Janus installed, your Vim will be on steroids. Don't worry
-though, I'll try to cover the most important things you'll be using.&lt;/p&gt;
-
-&lt;h2&gt;Getting a Decent Theme installed&lt;/h2&gt;
-
-&lt;p&gt;MacVim installs a hundred nasty looking themes, but a few of them are
-worth taking a look at.  Here are some that I like:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;molokai&lt;/li&gt;
-&lt;li&gt;railscasts&lt;/li&gt;
-&lt;li&gt;vividchalk&lt;/li&gt;
-&lt;li&gt;vibrantink&lt;/li&gt;
-&lt;/ul&gt;
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>curl https://raw.github.com/carlhuda/janus/master/bootstrap.sh -o - | sh</span></code></pre></td></tr></table></div></figure>
 
 
-&lt;p&gt;If you want to install other themes (like this nice &lt;a href=&quot;http://www.vim.org/scripts/script.php?script_id=2855&quot;&gt;github&lt;/a&gt; one) then you
-simply download it &amp;amp; copy the &lt;code&gt;theme.vim&lt;/code&gt; (or whatever the theme is
-called) to &lt;code&gt;~/.vim/colors&lt;/code&gt;.&lt;/p&gt;
+<p>More explicit instructions for the paranoid can be found on <a href="http://github.com/carlhuda/janus">the github
+page</a>.</p>
 
-&lt;p&gt;To switch between the themes that are installed, you can use the menu,
-or you can type &lt;code&gt;:colorscheme &amp;lt;scheme&amp;gt;&lt;/code&gt;.&lt;/p&gt;
+<p>Once you have Janus installed, your Vim will be on steroids. Don&#8217;t worry
+though, I&#8217;ll try to cover the most important things you&#8217;ll be using.</p>
 
-&lt;p&gt;To set defaults for your installation, you'd normally add commands to
-&lt;code&gt;~/.vimrc&lt;/code&gt; however Janus has taken that file over.  It instead reads
-your settings from &lt;code&gt;~/.vimrc.local&lt;/code&gt;.  In order to provide settings for
-graphical Vim installations (like MacVim) there's also a &lt;code&gt;~/.gvimrc&lt;/code&gt;
-file.&lt;/p&gt;
+<h2>Getting a Decent Theme installed</h2>
 
-&lt;p&gt;Open up that file (&lt;code&gt;:edit ~/.gvimrc&lt;/code&gt;) and add the following commands:&lt;/p&gt;
+<p>MacVim installs a hundred nasty looking themes, but a few of them are
+worth taking a look at.  Here are some that I like:</p>
 
-&lt;p&gt;``` vim&lt;/p&gt;
+<ul>
+<li>molokai</li>
+<li>railscasts</li>
+<li>vividchalk</li>
+<li>vibrantink</li>
+</ul>
 
-&lt;pre&gt;&lt;code&gt;colorscheme github
-set guifont=Menlo:h14
-&lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;```&lt;/p&gt;
+<p>If you want to install other themes (like this nice <a href="http://www.vim.org/scripts/script.php?script_id=2855">github</a> one) then you
+simply download it &amp; copy the <code>theme.vim</code> (or whatever the theme is
+called) to <code>~/.vim/colors</code>.</p>
 
-&lt;p&gt;Feel free to tweak this to contain your favorite color scheme &amp;amp; font.
-In order to see these changes you have to &quot;source&quot; the file:&lt;/p&gt;
+<p>To switch between the themes that are installed, you can use the menu,
+or you can type <code>:colorscheme &lt;scheme&gt;</code>.</p>
 
-&lt;p&gt;```&lt;/p&gt;
+<p>To set defaults for your installation, you&#8217;d normally add commands to
+<code>~/.vimrc</code> however Janus has taken that file over.  It instead reads
+your settings from <code>~/.vimrc.local</code>.  In order to provide settings for
+graphical Vim installations (like MacVim) there&#8217;s also a <code>~/.gvimrc</code>
+file.</p>
 
-&lt;pre&gt;&lt;code&gt;:source %
-&lt;/code&gt;&lt;/pre&gt;
+<p>Open up that file (<code>:edit ~/.gvimrc</code>) and add the following commands:</p>
 
-&lt;p&gt;```&lt;/p&gt;
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='vim'><span class='line'><span class="k">colorscheme</span> github
+</span><span class='line'><span class="k">set</span> <span class="nb">guifont</span><span class="p">=</span>Menlo:h14
+</span></code></pre></td></tr></table></div></figure>
 
-&lt;p&gt;(&lt;code&gt;%&lt;/code&gt; here means &quot;current file&quot;)&lt;/p&gt;
 
-&lt;p&gt;You should see the changes take effect immediately.&lt;/p&gt;
+<p>Feel free to tweak this to contain your favorite color scheme &amp; font.
+In order to see these changes you have to &#8220;source&#8221; the file:</p>
 
-&lt;h2&gt;Opening MacVim with a &quot;Project&quot;&lt;/h2&gt;
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='vim'><span class='line'><span class="p">:</span>source %
+</span></code></pre></td></tr></table></div></figure>
 
-&lt;p&gt;One common thing in TextMate is to &lt;code&gt;cd&lt;/code&gt; into a project and then type
-&lt;code&gt;mate .&lt;/code&gt; which will open TextMate's project drawer with all of the files
-in that directory loaded up.&lt;/p&gt;
 
-&lt;p&gt;In MacVim, you can do the same.  Navigate to a folder with some content
-(like a Rails app) and type: &lt;code&gt;mvim .&lt;/code&gt;&lt;/p&gt;
+<p>(<code>%</code> here means &#8220;current file&#8221;)</p>
 
-&lt;p&gt;You should see something resembling a file navigator.  You can navigate
-these with the same movement commands from above.&lt;/p&gt;
+<p>You should see the changes take effect immediately.</p>
 
-&lt;p&gt;Once you've chosen a file, press &lt;code&gt;enter&lt;/code&gt; to open it in the buffer.&lt;/p&gt;
+<h2>Opening MacVim with a &#8220;Project&#8221;</h2>
 
-&lt;p&gt;&lt;span class='has-pullquote' data-pullquote='The leader key is a special, configurable key used to create quick shortcut combinations.'&gt;
-Janus comes with NERDTree, which has similar behavior to TextMate's
-Project Drawer.  Open up the NERDTree pane by typing &lt;code&gt;&amp;lt;leader&amp;gt;-n&lt;/code&gt; or &lt;code&gt;\n&lt;/code&gt;. By default the leader key is set to backslash.
+<p>One common thing in TextMate is to <code>cd</code> into a project and then type
+<code>mate .</code> which will open TextMate&#8217;s project drawer with all of the files
+in that directory loaded up.</p>
+
+<p>In MacVim, you can do the same.  Navigate to a folder with some content
+(like a Rails app) and type: <code>mvim .</code></p>
+
+<p>You should see something resembling a file navigator.  You can navigate
+these with the same movement commands from above.</p>
+
+<p>Once you&#8217;ve chosen a file, press <code>enter</code> to open it in the buffer.</p>
+
+<p><span class='pullquote-right' data-pullquote='The leader key is a special, configurable key used to create quick shortcut combinations.'>
+Janus comes with NERDTree, which has similar behavior to TextMate&#8217;s
+Project Drawer.  Open up the NERDTree pane by typing <code>&lt;leader&gt;-n</code> or <code>\n</code>. By default the leader key is set to backslash.
 The leader key is a special, configurable key used to create quick shortcut combinations.
-&lt;/span&gt;&lt;/p&gt;
+</span></p>
 
-&lt;p&gt;The NERDTree window can be collapsed by typing &lt;code&gt;&amp;lt;leader&amp;gt;-n&lt;/code&gt; again.&lt;/p&gt;
+<p>The NERDTree window can be collapsed by typing <code>&lt;leader&gt;-n</code> again.</p>
 
-&lt;p&gt;You might want to instead find the file by searching for it by name.
-For that, the aptly-named Command-T plugin can be hepful.&lt;/p&gt;
+<p>You might want to instead find the file by searching for it by name.
+For that, the aptly-named Command-T plugin can be hepful.</p>
 
-&lt;p&gt;Command-T can be activated (by default) with &lt;code&gt;&amp;lt;leader&amp;gt;-t&lt;/code&gt;.  Start typing
-and it will auto complete the results.&lt;/p&gt;
+<p>Command-T can be activated (by default) with <code>&lt;leader&gt;-t</code>.  Start typing
+and it will auto complete the results.</p>
 
-&lt;h2&gt;Scared Yet?&lt;/h2&gt;
+<h2>Scared Yet?</h2>
 
-&lt;p&gt;Writing this reminds me of how hard it was to get started.  I can only
+<p>Writing this reminds me of how hard it was to get started.  I can only
 offer some encouragement that with practice, Vim does start to feel like
- you can leverage your fast typing skills to really.&lt;/p&gt;
+ you can leverage your fast typing skills to really.</p>
 
-&lt;p&gt;Practice only a couple of commands at a time.  Really learn what they
+<p>Practice only a couple of commands at a time.  Really learn what they
 are doing and then move one to the next command.  Print out a cheet
-sheet.  Pair with someone else who uses Vim.&lt;/p&gt;
+sheet.  Pair with someone else who uses Vim.</p>
 
-&lt;p&gt;I hope you found this intro useful. I'll cover some more Vim tricks as time goes on.&lt;/p&gt;
-</content>
+<p>I hope you found this intro useful. I&#8217;ll cover some more Vim tricks as time goes on.</p>
+]]></content>
   </entry>
   
   <entry>
-    <title>A Fresh Start?</title>
+    <title type="html"><![CDATA[A Fresh Start?]]></title>
     <link href="http://benscheirman.com/2011/08/a-fresh-start/"/>
     <updated>2011-08-17T23:37:00-05:00</updated>
     <id>http://benscheirman.com/2011/08/a-fresh-start</id>
-    <content type="html">&lt;p&gt;So I've been thinking of ditching the traditional blog for a while now.  My &lt;a href=&quot;http://flux88.com&quot;&gt;current blog&lt;/a&gt; is powered by WordPress, which
+    <content type="html"><![CDATA[<p>So I&#8217;ve been thinking of ditching the traditional blog for a while now.  My <a href="http://flux88.com">current blog</a> is powered by WordPress, which
 is powerful enough, however it always seems like a hassle to maintain.
-There are also no fantastic blog editors for the Mac (still).&lt;/p&gt;
+There are also no fantastic blog editors for the Mac (still).</p>
 
-&lt;p&gt;This time I'm going in a completely new direction.  This blog is powered
-by &lt;a href=&quot;http://octopress.org&quot;&gt;Octopress&lt;/a&gt; (which uses
-&lt;a href=&quot;https://github.com/mojombo/jekyll&quot;&gt;Jekyll&lt;/a&gt; as the engine.  I'm not
-going to import old posts and I'm not going to worry about integrating a lot
-of features. Just epic content, that's it!&lt;/p&gt;
+<p>This time I&#8217;m going in a completely new direction.  This blog is powered
+by <a href="http://octopress.org">Octopress</a> (which uses
+<a href="https://github.com/mojombo/jekyll">Jekyll</a> as the engine.  I&#8217;m not
+going to import old posts and I&#8217;m not going to worry about integrating a lot
+of features. Just epic content, that&#8217;s it!</p>
 
-&lt;p&gt;Posts are composed in Markdown (I'm using vim to write this), static HTML is generated and the blog is then deployed to a git repository.&lt;/p&gt;
+<p>Posts are composed in Markdown (I&#8217;m using vim to write this), static HTML is generated and the blog is then deployed to a git repository.</p>
 
-&lt;p&gt;Will it make me blog more? I hope so, but only time will tell!&lt;/p&gt;
-</content>
+<p>Will it make me blog more? I hope so, but only time will tell!</p>
+]]></content>
   </entry>
   
   <entry>
-    <title>Houston Code Camp Registration is Now Open</title>
+    <title type="html"><![CDATA[Houston Code Camp Registration is Now Open]]></title>
     <link href="http://benscheirman.com/2011/06/houston-code-camp-registration-is-now-open/"/>
     <updated>2011-06-17T00:00:00-05:00</updated>
     <id>http://benscheirman.com/2011/06/houston-code-camp-registration-is-now-open</id>
-    <content type="html">&lt;h2&gt;Houston Code Camp 2011&lt;/h2&gt;
+    <content type="html"><![CDATA[<h2>Houston Code Camp 2011</h2>
 
 
-&lt;h3&gt;August 20th, 2011&lt;/h3&gt;
+<h3>August 20th, 2011</h3>
 
 
-&lt;p&gt;&lt;img src=&quot;http://benscheirman.com/images/logo__.jpg&quot; style=&quot;float:right; margin: 25px;&quot;   /&gt;&lt;/p&gt;
+<p><img src="http://benscheirman.com/images/logo__.jpg" style="float:right; margin: 25px;"   /></p>
 
-&lt;p&gt;Houston Code Camp is a free day of sessions relating to software development. The event is free to attend, but registration is required.&lt;/p&gt;
-
-
-&lt;p&gt;A Code Camp follows these rules:&lt;/p&gt;
+<p>Houston Code Camp is a free day of sessions relating to software development. The event is free to attend, but registration is required.</p>
 
 
-&lt;ul&gt;
-  &lt;li&gt;They are a organized by developers and for developers to come and learn from their peers. Topics are always based on community interest and never determined by anyone other than the community.&lt;/li&gt;
-
-  &lt;li&gt;Code Camps are always FREE for attendees&lt;/li&gt;
-
-  &lt;li&gt;The success of the Code Camp is determined by the community. All content that is delivered is original and voted for by you! Make sure your vote counts, and vote for the sessions you'd like to see at our &lt;a href=&quot;http://houstoncodecamp.uservoice.com/forums/116507-speaker-submissions&quot; target=&quot;_blank&quot;&gt;speaker submission site&lt;/a&gt;.&lt;/li&gt;
-
-  &lt;li&gt;No Fluff - Code Camps are about Code, not slides. You won't find any marketing heavy powerpoint decks here&lt;/li&gt;
-
-  &lt;li&gt;All are welcome to attend and speak and do so without expectation of payment. Learn more about speaking on our &lt;a href=&quot;http://houstoncodecamp.uservoice.com/forums/116507-speaker-submissions&quot; target=&quot;_blank&quot;&gt;speaking&lt;/a&gt; page.&lt;/li&gt;
-
-  &lt;li&gt;The beauty of the Code Camp is that they always occur on weekends.&lt;/li&gt;
-&lt;/ul&gt;
+<p>A Code Camp follows these rules:</p>
 
 
-&lt;p&gt;The schedule is still being formed. Take a look at the list of submissions &lt;a href=&quot;http://houstoncodecamp.uservoice.com/forums/116507-speaker-submissions&quot; target=&quot;_blank&quot;&gt;here&lt;/a&gt;. You can still get your session proposal in if you're interested in speaking!&lt;/p&gt;
+<ul>
+  <li>They are a organized by developers and for developers to come and learn from their peers. Topics are always based on community interest and never determined by anyone other than the community.</li>
+
+  <li>Code Camps are always FREE for attendees</li>
+
+  <li>The success of the Code Camp is determined by the community. All content that is delivered is original and voted for by you! Make sure your vote counts, and vote for the sessions you&#8217;d like to see at our <a href="http://houstoncodecamp.uservoice.com/forums/116507-speaker-submissions" target="_blank">speaker submission site</a>.</li>
+
+  <li>No Fluff - Code Camps are about Code, not slides. You won&#8217;t find any marketing heavy powerpoint decks here</li>
+
+  <li>All are welcome to attend and speak and do so without expectation of payment. Learn more about speaking on our <a href="http://houstoncodecamp.uservoice.com/forums/116507-speaker-submissions" target="_blank">speaking</a> page.</li>
+
+  <li>The beauty of the Code Camp is that they always occur on weekends.</li>
+</ul>
 
 
-&lt;p&gt;Space is limited, so make sure and snag your ticket today. It's FREE!.&lt;/p&gt;
+<p>The schedule is still being formed. Take a look at the list of submissions <a href="http://houstoncodecamp.uservoice.com/forums/116507-speaker-submissions" target="_blank">here</a>. You can still get your session proposal in if you&#8217;re interested in speaking!</p>
+
+
+<p>Space is limited, so make sure and snag your ticket today. It&#8217;s FREE!.</p>
 
 
 
 
-&lt;p&gt;What are you waiting for? &lt;strong&gt;&lt;a href=&quot;http://houstoncodecamp.com/registration&quot; target=&quot;_blank&quot;&gt;Go register&lt;/a&gt;&lt;/strong&gt;!&lt;/p&gt;
+<p>What are you waiting for? <strong><a href="http://houstoncodecamp.com/registration" target="_blank">Go register</a></strong>!</p>
 
-</content>
+]]></content>
   </entry>
   
   <entry>
-    <title>Fixing Xcode 4's Broken Code Completion</title>
+    <title type="html"><![CDATA[Fixing Xcode 4's Broken Code Completion]]></title>
     <link href="http://benscheirman.com/2011/06/fixing-xcode-4s-broken-code-completion/"/>
     <updated>2011-06-08T00:00:00-05:00</updated>
     <id>http://benscheirman.com/2011/06/fixing-xcode-4s-broken-code-completion</id>
-    <content type="html">&lt;p&gt;In my continued quest to actually use Xcode 4 full time, I've run into yet another major issue: Xcode 4's code index sometimes gets borked and syntax highlighting &amp;amp; code completion stop working.&lt;/p&gt;
+    <content type="html"><![CDATA[<p>In my continued quest to actually use Xcode 4 full time, I&#8217;ve run into yet another major issue: Xcode 4&#8217;s code index sometimes gets borked and syntax highlighting &amp; code completion stop working.</p>
 
-&lt;p&gt;In the past, this has been fixed (temporarily) by deleting the Derived Data folder in Organizer, restarting Xcode, changing the compiler from LLVM to GCC &amp;amp; back again or some random combination of the 3. This doesn't always work, and today I sat down to figure out what the cause was and how to fix it.&lt;/p&gt;
+<p>In the past, this has been fixed (temporarily) by deleting the Derived Data folder in Organizer, restarting Xcode, changing the compiler from LLVM to GCC &amp; back again or some random combination of the 3. This doesn&#8217;t always work, and today I sat down to figure out what the cause was and how to fix it.</p>
 
-&lt;p&gt;In searching stackoverflow and the developer forums, I found that Xcode's code index can hang on recursive and/or relative search paths.&lt;/p&gt;
+<p>In searching stackoverflow and the developer forums, I found that Xcode&#8217;s code index can hang on recursive and/or relative search paths.</p>
 
-&lt;p&gt;My project utilizes 2 static libraries, so I must provide proper header search paths, otherwise the compiler doesn't recognize any of the symbols.&lt;/p&gt;
+<p>My project utilizes 2 static libraries, so I must provide proper header search paths, otherwise the compiler doesn&#8217;t recognize any of the symbols.</p>
 
-&lt;p&gt;So if you have a Header Search Path setting of &lt;code&gt;../lib/MyAwesomeLib&lt;/code&gt; or &lt;code&gt;../lib/MyAwesomeLib/**&lt;/code&gt; then you might be having this problem too.&lt;/p&gt;
+<p>So if you have a Header Search Path setting of <code>../lib/MyAwesomeLib</code> or <code>../lib/MyAwesomeLib/**</code> then you might be having this problem too.</p>
 
-&lt;h2&gt;Step 1: Correcting relative paths&lt;/h2&gt;
+<h2>Step 1: Correcting relative paths</h2>
 
-&lt;p&gt;You might be tempted to hard code the path to the file. Don't! This will break on somebody else's machine, and most of the time you're not working on this stuff alone.
-You can utilize the &lt;code&gt;$(SOURCE_ROOT)&lt;/code&gt; build variable to construct a dynamic path relative to the Xcode project directory.&lt;/p&gt;
+<p>You might be tempted to hard code the path to the file. Don&#8217;t! This will break on somebody else&#8217;s machine, and most of the time you&#8217;re not working on this stuff alone.
+You can utilize the <code>$(SOURCE_ROOT)</code> build variable to construct a dynamic path relative to the Xcode project directory.</p>
 
-&lt;p&gt;This step might be all you need, but in my case I needed to follow the next step as well...&lt;/p&gt;
+<p>This step might be all you need, but in my case I needed to follow the next step as well&#8230;</p>
 
-&lt;h2&gt;Step 2: Remove the need for recursive searches&lt;/h2&gt;
+<h2>Step 2: Remove the need for recursive searches</h2>
 
-&lt;p&gt;I have two subprojects, each of which symlink their build output to a build/current folder. This makes it easy to add a non-recursive library search path reference for similar reasons. I also want to copy headers into this folder so there's always a deterministic location to find the headers, regardless of the platform &amp;amp; configuration we're building for.&lt;br /&gt;
-So I added a Run Script build phase to do this work for me:&lt;br /&gt;&lt;/p&gt;
+<p>I have two subprojects, each of which symlink their build output to a build/current folder. This makes it easy to add a non-recursive library search path reference for similar reasons. I also want to copy headers into this folder so there&#8217;s always a deterministic location to find the headers, regardless of the platform &amp; configuration we&#8217;re building for.<br />
+So I added a Run Script build phase to do this work for me:<br /></p>
 
-&lt;div&gt;&lt;figure role=code&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;table cellpadding=&quot;0&quot; cellspacing=&quot;0&quot;&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre class=&quot;line-numbers&quot;&gt;&lt;span class='line'&gt;1&lt;/span&gt;
-&lt;span class='line'&gt;2&lt;/span&gt;
-&lt;span class='line'&gt;3&lt;/span&gt;
-&lt;span class='line'&gt;4&lt;/span&gt;
-&lt;span class='line'&gt;5&lt;/span&gt;
-&lt;span class='line'&gt;6&lt;/span&gt;
-&lt;span class='line'&gt;7&lt;/span&gt;
-&lt;/pre&gt;&lt;/td&gt;&lt;td class='code' width='100%'&gt;&lt;pre&gt;&lt;code class=''&gt;&lt;div class='line'&gt;# Symlink build output to a common directory for easy referencing in other projects
-&lt;/div&gt;&lt;div class='line'&gt;rm -rf &quot;$BUILD_DIR/current&quot;
-&lt;/div&gt;&lt;div class='line'&gt;ln -s &quot;$BUILT_PRODUCTS_DIR&quot; &quot;$BUILD_DIR/current&quot;
-&lt;/div&gt;&lt;div class='line'&gt;
-&lt;/div&gt;&lt;div class='line'&gt;# Copy headers to a shared location
-&lt;/div&gt;&lt;div class='line'&gt;mkdir -p &quot;$BUILD_DIR/current/headers&quot;
-&lt;/div&gt;&lt;div class='line'&gt;for file in `find . -name &quot;*.h&quot;`; do cp $file &quot;$BUILD_DIR/current/headers/&quot;; done;&lt;/div&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;&lt;/figure&gt;&lt;/div&gt;
-
-
-&lt;p&gt;The line is a bash for loop that copies all the header files in any subfolder &amp;amp; flattens it out for a single headers folder reference.&lt;br /&gt;&lt;/p&gt;
-
-&lt;h2&gt;Step 3: Add the new common header search paths&lt;/h2&gt;
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'># Symlink build output to a common directory for easy referencing in other projects
+</span><span class='line'>rm -rf "$BUILD_DIR/current"
+</span><span class='line'>ln -s "$BUILT_PRODUCTS_DIR" "$BUILD_DIR/current"
+</span><span class='line'>
+</span><span class='line'># Copy headers to a shared location
+</span><span class='line'>mkdir -p "$BUILD_DIR/current/headers"
+</span><span class='line'>for file in `find . -name "*.h"`; do cp $file "$BUILD_DIR/current/headers/"; done;</span></code></pre></td></tr></table></div></figure>
 
 
-&lt;p&gt;In my case I exchanged a relative, recursive search path of:&lt;br /&gt;&lt;/p&gt;
+<p>The line is a bash for loop that copies all the header files in any subfolder &amp; flattens it out for a single headers folder reference.<br /></p>
 
-&lt;div&gt;&lt;figure role=code&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;table cellpadding=&quot;0&quot; cellspacing=&quot;0&quot;&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre class=&quot;line-numbers&quot;&gt;&lt;span class='line'&gt;1&lt;/span&gt;
-&lt;/pre&gt;&lt;/td&gt;&lt;td class='code' width='100%'&gt;&lt;pre&gt;&lt;code class=''&gt;&lt;div class='line'&gt;../lib/**&lt;/div&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;&lt;/figure&gt;&lt;/div&gt;
-
-
-&lt;br /&gt;
+<h2>Step 3: Add the new common header search paths</h2>
 
 
-&lt;p&gt;to the more explicit, and more Xcode 4 friendly:&lt;br /&gt;&lt;/p&gt;
+<p>In my case I exchanged a relative, recursive search path of:<br /></p>
 
-&lt;br /&gt;
-
-
-&lt;p&gt;&lt;img src=&quot;http://benscheirman.com/images/Xcode4.png&quot;  alt=&quot;Xcode.png&quot;  /&gt;&lt;br /&gt;
-As soon as I did that, my code lit up like a Christmas tree! Symbols were recognized, code was highlighted, and best of all... code completion resumed.&lt;br /&gt;
-Here's to hoping the Xcode 4 continues to be improved. In the meantime, hope this fix saves you the headache I've been having.&lt;/p&gt;
-</content>
-  </entry>
-  
-  <entry>
-    <title>Creating Proper IPA Files in Xcode 4</title>
-    <link href="http://benscheirman.com/2011/06/creating-proper-ipa-files-in-xcode-4/"/>
-    <updated>2011-06-02T00:00:00-05:00</updated>
-    <id>http://benscheirman.com/2011/06/creating-proper-ipa-files-in-xcode-4</id>
-    <content type="html">&lt;p&gt;Xcode 4 has changed a lot of things. Most of those things are ok, but occasionally I find that I just cannot do something any other way than to use Xcode 3.&lt;/p&gt;
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>../lib/**</span></code></pre></td></tr></table></div></figure>
 
 
-&lt;p&gt;Until today, I was creating Ad-hoc builds for my current project with Xcode 3, then selecting Share &amp;amp; saving the resulting IPA file to disk.&lt;/p&gt;
+<br />
 
 
-&lt;p&gt;Xcode 4 has the new &quot;Build -&amp;gt; Archive&quot; menu option, but every time I'd try to share this file, I'd presented with this lovely restricted dialog box:&lt;/p&gt;
+<p>to the more explicit, and more Xcode 4 friendly:<br /></p>
+
+<br />
 
 
-&lt;p&gt;&lt;br /&gt;
-&lt;img src=&quot;http://benscheirman.com/images/Xcode3.png&quot;  alt=&quot;Xcode.png&quot;  /&gt;&lt;/p&gt;
-
-
-&lt;p&gt;With the errors &lt;i&gt;&lt;b&gt;No Packager exists for the type of archive&lt;/b&gt;&lt;/i&gt; and &lt;i&gt;&lt;b&gt;This kind of archive cannot be signed&lt;/b&gt;&lt;/i&gt;.&lt;/p&gt;
-
-
-&lt;p&gt;As it turns out, if you have static libraries that you're linking in, your Archive step actually outputs those as well. Xcode doesn't know how to create an IPA out of 1 .app file and a handful of .a files, so it gives up.&lt;/p&gt;
-
-
-&lt;p&gt;You can tell that Xcode 4 is doing this if your Organizer -&amp;gt; Applications list shows an icon like this:&lt;/p&gt;
-
-
-&lt;p&gt;&lt;br /&gt;
-&lt;img src=&quot;http://benscheirman.com/images/Xcode2.png&quot;  alt=&quot;Xcode.png&quot;  /&gt;&lt;/p&gt;
-
-
-&lt;p&gt;If you right-click on this build, and select &quot;Reveal in Finder&quot; you'll see the files are .xcarchive files. Right click on that and select &quot;Show Package Contents&quot; to see what I'm talking about. If you see a usr/lib/mystaticlibary.a file, then read on for the fix.&lt;/p&gt;
-
-
-&lt;p&gt;You need to tell Xcode 4 &lt;b&gt;not&lt;/b&gt; to &quot;install&quot; the static libraries. For each of the static library targets, select them in Xcode 4, and under Build Settings, search for &quot;Skip Install&quot;. Set that flag to YES. I had to do this to both of the static libraries I include in my project.&lt;/p&gt;
-
-
-&lt;p&gt;&lt;img src=&quot;http://benscheirman.com/images/Xcode1.png&quot;  alt=&quot;Xcode1.png&quot;  /&gt;&lt;/p&gt;
-
-
-&lt;p&gt;Once that's done, your app should show a normal icon again &amp;amp; have the ability to export to IPA just like before. Yay!&lt;/p&gt;
-
-
-&lt;p&gt;&lt;br /&gt;
-&lt;img src=&quot;http://benscheirman.com/images/Xcode.png&quot;  alt=&quot;Xcode.png&quot;  /&gt;&lt;/p&gt;
-
-
-&lt;p&gt;Huge thanks to &lt;a href=&quot;http://stackoverflow.com/questions/5265292/xcode-4-create-ipa-file-instead-of-xcarchive&quot;&gt;this stackoverflow question&lt;/a&gt; for pointing me in the right direction.&lt;/p&gt;
-
-</content>
+<p><img src="http://benscheirman.com/images/Xcode4.png"  alt="Xcode.png"  /><br />
+As soon as I did that, my code lit up like a Christmas tree! Symbols were recognized, code was highlighted, and best of all&#8230; code completion resumed.<br />
+Here&#8217;s to hoping the Xcode 4 continues to be improved. In the meantime, hope this fix saves you the headache I&#8217;ve been having.</p>
+]]></content>
   </entry>
   
 </feed>
