@@ -87,7 +87,7 @@ following line to allow Rails to generate the appropriate links for your assets:
 ```ruby
   config.action_controller.asset_host = Proc.new do |source, request|
     scheme = request.ssl? ? "https" : "http"
-    "https://#{ENV['FOG_DIRECTORY']}.s3.amazonaws.com"
+    "#{scheme}://#{ENV['FOG_DIRECTORY']}.s3.amazonaws.com"
   end
 ```
 
