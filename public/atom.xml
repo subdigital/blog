@@ -4,7 +4,7 @@
   <title><![CDATA[Fickle Bits]]></title>
   <link href="http://benscheirman.com/atom.xml" rel="self"/>
   <link href="http://benscheirman.com/"/>
-  <updated>2012-07-07T16:09:13-05:00</updated>
+  <updated>2012-07-10T17:31:26-05:00</updated>
   <id>http://benscheirman.com/</id>
   <author>
     <name><![CDATA[Ben Scheirman]]></name>
@@ -123,7 +123,7 @@ following line to allow Rails to generate the appropriate links for your assets:
 <span class='line-number'>4</span>
 </pre></td><td class='code'><pre><code class='ruby'><span class='line'>  <span class="n">config</span><span class="o">.</span><span class="n">action_controller</span><span class="o">.</span><span class="n">asset_host</span> <span class="o">=</span> <span class="no">Proc</span><span class="o">.</span><span class="n">new</span> <span class="k">do</span> <span class="o">|</span><span class="n">source</span><span class="p">,</span> <span class="n">request</span><span class="o">|</span>
 </span><span class='line'>    <span class="n">scheme</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">ssl?</span> <span class="p">?</span> <span class="s2">&quot;https&quot;</span> <span class="p">:</span> <span class="s2">&quot;http&quot;</span>
-</span><span class='line'>    <span class="s2">&quot;https://</span><span class="si">#{</span><span class="no">ENV</span><span class="o">[</span><span class="s1">&#39;FOG_DIRECTORY&#39;</span><span class="o">]</span><span class="si">}</span><span class="s2">.s3.amazonaws.com&quot;</span>
+</span><span class='line'>    <span class="s2">&quot;</span><span class="si">#{</span><span class="n">scheme</span><span class="si">}</span><span class="s2">://</span><span class="si">#{</span><span class="no">ENV</span><span class="o">[</span><span class="s1">&#39;FOG_DIRECTORY&#39;</span><span class="o">]</span><span class="si">}</span><span class="s2">.s3.amazonaws.com&quot;</span>
 </span><span class='line'>  <span class="k">end</span>
 </span></code></pre></td></tr></table></div></figure>
 

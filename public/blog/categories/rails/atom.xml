@@ -4,7 +4,7 @@
   <title><![CDATA[Category: rails | Fickle Bits]]></title>
   <link href="http://benscheirman.com/blog/categories/rails/atom.xml" rel="self"/>
   <link href="http://benscheirman.com/"/>
-  <updated>2012-07-07T16:09:13-05:00</updated>
+  <updated>2012-07-10T17:31:26-05:00</updated>
   <id>http://benscheirman.com/</id>
   <author>
     <name><![CDATA[Ben Scheirman]]></name>
@@ -109,7 +109,7 @@ following line to allow Rails to generate the appropriate links for your assets:
   config.action_controller.asset_host = Proc.new do |source, request|</p>
 
 <pre><code>scheme = request.ssl? ? "https" : "http"
-"https://#{ENV['FOG_DIRECTORY']}.s3.amazonaws.com"
+"#{scheme}://#{ENV['FOG_DIRECTORY']}.s3.amazonaws.com"
 </code></pre>
 
 <p>  end
