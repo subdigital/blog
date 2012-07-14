@@ -8,7 +8,6 @@ sass.old
 source.old
 source/_stash
 source/stylesheets/screen.css
-vendor
 tmp
 vendor
 node_modules
