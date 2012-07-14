@@ -9,7 +9,7 @@
   <meta name="author" content="Ben Scheirman">
 
   
-  <meta name="description" content="When the ASP.NET MVC framework was first released, two open source projects sprung up immediately:&nbsp; MVCContrib and Code Camp Server.&nbsp; I &hellip;">
+  <meta name="description" content="Are you ready for the Dojo? (picture source) Whew!&nbsp; I’ve been busy lately!&nbsp; I’ve been wrapping up the content for the .NET Dojo class this &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -83,6 +83,76 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2008/08/net-dojo-augusts-alt-net-geek-dinner/">.NET Dojo & August&#8217;s ALT.NET Geek Dinner</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2008-08-26T00:00:00-05:00" pubdate data-updated="true">Aug 26<span>th</span>, 2008</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><em>Are you ready for the Dojo?</em></p>
+
+
+<p><img src="/images/flyingsidekick.jpg" alt="photo by kaibara87 "  border="0" /><br><em>(</em><a href="http://www.flickr.com/photos/kaibara/247465109/" target="_blank"><em>picture source</em></a><em>)</em></p>
+
+
+<p>Whew!&nbsp; I’ve been busy lately!&nbsp; I’ve been wrapping up the content for the .NET Dojo class this Thursday (cutting it close, I know!).&nbsp; If you’re going to the class, you can get a jump start by grabbing all of the lab material at the google code site here:&nbsp; <a href="http://code.google.com/p/dojoblog">http://code.google.com/p/dojoblog</a>.</p>
+
+
+<p>I created this site, called DojoBlog to reflect the sample project it contains, to allow attendees and anyone else interested to download the code and play with it.&nbsp; Keep in mind that the code may change last minute, so do a fresh update just before coming to class.</p>
+
+
+<p>To download it you’ll need a subversion client, such as <a href="http://tortoisesvn.net/" target="_blank">TortoiseSVN</a>.&nbsp; The direct link to the repository is <a href="about:svn%20checkout%20http://dojoblog.googlecode.com/svn/trunk/" target="_blank">here</a>.</p>
+
+
+<p>If you don’t have/want a subversion client, don’t worry.&nbsp; We’ll have the material ready on some USB sticks to circle around.&nbsp; Looking forward to seeing some of you there?&nbsp; <strong>Remember, it’s this Thursday, from 1pm to 4pm.</strong></p>
+
+
+<p><b>UPDATE: I zipped up the material and <a href="http://code.google.com/p/dojoblog/downloads/list">released it</a> on the google code site.</b><br><strong></strong></p>
+
+
+<p><img src="/images/pizza.jpg" alt="Photo by fooey"  border="0" /><br><em>(</em><a href="http://www.flickr.com/photos/fooey/414244292/" target="_blank"><em>picture source</em></a><em>)</em><font color="#0000ff"></font></p>
+
+
+<p><font color="#0000ff"></font>And after that, why not attend our August ALT.NET Geek Dinner?&nbsp; We’re holding it immediately after the .NET Dojo, so feel free to drop by, eat some good pizza, drink some good beer, and geek out on random topics.</p>
+
+
+<p>Our venue is still <a href="http://www.starpizza.net/" target="_blank">Star Pizza</a>, located at 2111 Norfolk (<a href="http://maps.google.com/maps?f=q&amp;hl=en&amp;geocode=&amp;q=2111+Norfolk+St,+Houston,+TX+77098&amp;sll=37.0625,-95.677068&amp;sspn=42.987658,59.853516&amp;ie=UTF8&amp;ll=29.733079,-95.411196&amp;spn=0.011552,0.014613&amp;z=16&amp;iwloc=addr" target="_blank">map</a>).&nbsp; <strong>The dinner starts at 6pm and ends around 8:30pm.</strong>&nbsp; This month, we’ll discuss:</p>
+
+
+<ul><li>Code Clarity / Fluent Interfaces / Code without comments</li><li>Model View Presenter pattern</li><li>Continuous Integration</li></ul>
+
+
+<p>Will you be there?&nbsp; Let us know in the comments!</p>
+
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -666,131 +736,6 @@
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/2008/07/prototype-protips-2-preventing-memory-leaks-creating-objects/">Prototype Protips #2 - Preventing Memory Leaks & Creating Objects</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2008-07-04T00:00:00-05:00" pubdate data-updated="true">Jul 4<span>th</span>, 2008</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>It&rsquo;s been almost a year since I posted <a href="http://www.flux88.com/PrototypeScriptaculousProtips1.aspx" target="_blank">Prototype Protips #1</a> (and since then I have grown quite fond of <a href="http://jquery.com/" target="_blank">jQuery</a>), but <a href="http://prototypejs.org/" target="_blank">prototype</a> remains an excellent, choice for elegant javascript development still today.</p>
-
-
-<p>If you aren&rsquo;t taking advantage of an advanced javascript library, then you are not only missing out on cleaner code, but you are quite possibly likely introducing memory leaks through unfreed event handlers!&nbsp; IE6 is notoriously bad at this, and you have to take extra caution in EVERY event handler to make sure you aren&rsquo;t leaking memory.</p>
-
-
-<p>Douglas Crockford, describes memory leaks in IE&nbsp;like this:</p>
-
-
-<blockquote><p>When a DOM object contains a reference to a <a href="http://www.crockford.com/javascript/">JavaScript</a> object (such an event handling function), and when that JavaScript object contains a reference to that DOM object, then a cyclic structure is formed. This is not in itself a problem. At such time as there are no other references to the DOM object and the event handler, then the garbage collector (an automatic memory resource manager) will reclaim them both, allowing their space to be reallocated. The JavaScript garbage collector understands about cycles and is not confused by them. Unfortunately, IE&#8217;s DOM is not managed by JScript. It has its own memory manager that does not understand about cycles and so gets very confused. As a result, when cycles occur, memory reclamation does not occur. The memory that is not reclaimed is said to have leaked. Over time, this can result in memory starvation.</p></blockquote>
-
-
-<p>It takes a seriously smart person to understand closures in javascript and why they cause memory leaks.&nbsp; Personally I&rsquo;m glad someone else has figured it out!&nbsp; But it doesn&rsquo;t mean we can&rsquo;t protect ourselves and just do things the safe way.</p>
-
-
-<p>That&rsquo;s why using a good javascript library is such a no-brainer.&nbsp; In prototype, you wire up events like this:</p>
-
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>Event.observe(window, 'load', function() {//do something when the DOM is loaded});</span></code></pre></td></tr></table></div></figure>
-
-
-<p>This is a safe way of adding a load event to the page without erasing any previous load events that were wired up.&nbsp; (<em>Anyone ever had ASP.NET erase one of your button click handlers?&nbsp; I have&hellip;)</em></p>
-
-
-<p>`$()` extended elements also get this ability.&nbsp; Say you have a button on the page like this:</p>
-
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;span class="kwrd">&lt;&lt;/span>&lt;span class="html">input&lt;/span> &lt;span class="attr">type&lt;/span>&lt;span class="kwrd">="button"&lt;/span> &lt;span class="attr">id&lt;/span>&lt;span class="kwrd">="activate"&lt;/span> &lt;span class="attr">value&lt;/span>&lt;span class="kwrd">="Activate the Reactor!"&lt;/span> &lt;span class="kwrd">/&gt;&lt;/span></span></code></pre></td></tr></table></div></figure>
-
-
-<p>You can wire up a click even to this button by simply&hellip;</p>
-
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>$(&lt;span class="str">'activate'&lt;/span>).observe(&lt;span class="str">'click'&lt;/span>, function() { alert(&lt;span class="str">'RUN!'&lt;/span>);});</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Wiring up events&nbsp;in this manner will help keep&nbsp;you from leaking memory and generally provides better syntax.</p>
-
-
-<p><strong>Objects</strong></p>
-
-
-<p>Sometimes when you are writing code that has complex javascript, the functions seem to relate, however they are just placed in file in global scope.&nbsp; This breaks down when you have lots of scripts from various components on a page and sooner or later things will start to conflict.&nbsp; I mean, how many `init()` methods can you have on a page?&nbsp; Would you write a C# program with nothing but 1 class?</p>
-
-
-<p>Grouping this functionality into javascript classes can really help streamline and encapsulate your javascript code.&nbsp; This is incredibly useful when you have a script for a control on a page but you need to support having multiple instances of that control on the same page.&nbsp; On top of that, with ASP.NET you have to deal with the id munging, so things become even harder.</p>
-
-
-<p>In prototype (as of 1.6), you create a class like this:</p>
-
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>var Person = Class.create({initialize: function(name, ) {&lt;span class="kwrd">this&lt;/span>.name = name;},greet: function() {alert(&lt;span class="str">"Hello, "&lt;/span> + &lt;span class="kwrd">this&lt;/span>.name + &lt;span class="str">"!"&lt;/span>);}});&lt;span class="rem">//create a person instance like this:&lt;/span>var joe = &lt;span class="kwrd">new&lt;/span> Person(&lt;span class="str">"Joe"&lt;/span>);joe.greet(); // --&gt;&lt;span class="str">"Hello, Joe!"&lt;/span></span></code></pre></td></tr></table></div></figure>
-
-
-<p>The initialize() method is like a&nbsp;constructor.&nbsp; It will&nbsp;get called when you&nbsp;&ldquo;new&rdquo; up your&nbsp;javascript class.&nbsp; You can extend this&nbsp;object and add more functionality to it pretty easily.</p>
-
-
-<p><strong>Using Javascript Classes for your Components</strong></p>
-
-
-<p>Let&rsquo;s say you want to create a type-ahead auto-complete textbox using ASP.NET.&nbsp; Ignoring some of the canned-solutions for the sake of discussion, let&rsquo;s also say we have to write it from scratch.&nbsp; We&rsquo;ll need some script to monitor the value of the textbox, and to send an ajax request with the current value, and to handle the response &amp; fill in a list of values.</p>
-
-
-<p>Here&rsquo;s an example of how (a very crude) implementation might look:</p>
-
-
-<p>&nbsp;</p>
-
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;span class="rem">//referenced (or rendered) only once&lt;/span>var TypeAheadTextbox = Class.create({initialize: function(textbox_id, indicator_id, results_id) {&lt;span class="kwrd">this&lt;/span>.textbox = $(textbox_id);&lt;span class="kwrd">this&lt;/span>.indicator = $(indicator_id);&lt;span class="kwrd">this&lt;/span>.results = $(results_id);&lt;span class="rem">//use .bindAsEventListener to preserve the 'this' pointer&lt;/span>&lt;span class="kwrd">this&lt;/span>.textbox.observe(&lt;span class="str">'keyup'&lt;/span>, &lt;span class="kwrd">this&lt;/span>.processKey.bindAsEventListener(&lt;span class="kwrd">this&lt;/span>));},processKey: function() {&lt;span class="rem">//ignoring the interval, we'll just fire an ajax request for every letter&lt;/span>var &lt;span class="kwrd">value&lt;/span> = $F(&lt;span class="kwrd">this&lt;/span>.textbox);&lt;span class="kwrd">this&lt;/span>.indicator.show();&lt;span class="kwrd">new&lt;/span> Ajax.Request(&lt;span class="str">'/pirate_ships/find'&lt;/span>, {method: &lt;span class="str">'get'&lt;/span>,&lt;span class="kwrd">params&lt;/span>: &lt;span class="str">'filter='&lt;/span> + &lt;span class="kwrd">value&lt;/span>,onComplete: function() { &lt;span class="kwrd">this&lt;/span>.indicator.hide(); },onFailure: function(e) { alert(&lt;span class="str">"Error with ajax request: "&lt;/span> + e); },onSuccess: function(response) {&lt;span class="kwrd">this&lt;/span>.results.innerHTML = response.responseText;}})}});&lt;span class="rem">//initializing multiple controls&lt;/span>Event.observe(window, &lt;span class="str">'load'&lt;/span>, function(){var textbox1_autocomplete = &lt;span class="kwrd">new&lt;/span> TypeAheadTextbox(&lt;span class="str">'&lt;%= txtbox1.ClientID %&gt;'&lt;/span>, &lt;span class="str">'&lt;%= indicator1.ClientID %&gt;'&lt;/span>,&lt;span class="str">'&lt;%= results1.ClientID %&gt;'&lt;/span>);var textbox2_autocomplete = &lt;span class="kwrd">new&lt;/span> TypeAheadTextbox(&lt;span class="str">'&lt;%= txtbox2.ClientID %&gt;'&lt;/span>, &lt;span class="str">'&lt;%= indicator2.ClientID %&gt;'&lt;/span>,&lt;span class="str">'&lt;%= results2.ClientID %&gt;'&lt;/span>);});</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Of course this code is incomplete, but it&rsquo;s definitely a start, and it amazes me at how simple it is.&nbsp; One hiccup that I ran across doing something similar was the .bindAsEventListener noise.&nbsp; You can read about that here, but&nbsp;the short of it&nbsp;is that&nbsp;javascript will lose &lsquo;this&rsquo; in those types of&nbsp;event handlers.&nbsp; Using .bindAsEventListener will fix this for you.Another trick is to use something like:</p>
-
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>initialize: function(msg) {var self = &lt;span class="kwrd">this&lt;/span>; &lt;span class="rem">//for use later&lt;/span>&lt;span class="kwrd">this&lt;/span>.msg = msg;},foo: function() {alert(self.msg);}</span></code></pre></td></tr></table></div></figure>
-
-
-<p>We&rsquo;ve al
-so isolated the area where we need to pass in the generated ClientID of the controls we want to interact with.&nbsp; This snippet of code can reside on the page, whereas the rest of the code reside ina separate file.</p>
-
-
-<p>I&rsquo;m no javascript ninja, but I have a vast appreciation for all that these libraries give us.&nbsp; Yet it still amazes me that a lot of people don&rsquo;t use them!&nbsp; So go tell a friend or co-worker about the benefits of a good javascript libary.</p>
-
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/15/">&larr; Older</a>
@@ -812,6 +757,10 @@ so isolated the area where we need to pass in the generated ClientID of the cont
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2012/07/houston-code-camp-call-for-speakers/">Houston Code Camp - Call for Speakers</a>
+      </li>
+    
+      <li class="post">
         <a href="/2012/07/serving-assets-from-s3-on-heroku/">Serving Assets from S3 on Heroku</a>
       </li>
     
@@ -825,10 +774,6 @@ so isolated the area where we need to pass in the generated ClientID of the cont
     
       <li class="post">
         <a href="/2012/01/careful-with-block-based-notification-handlers/">Careful With Block-Based Notification Handlers</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2011/12/formatting-json-from-terminal/">Formatting JSON From Terminal</a>
       </li>
     
   </ul>

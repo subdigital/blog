@@ -4,7 +4,7 @@
   <title><![CDATA[Fickle Bits]]></title>
   <link href="http://benscheirman.com/atom.xml" rel="self"/>
   <link href="http://benscheirman.com/"/>
-  <updated>2012-07-10T17:31:26-05:00</updated>
+  <updated>2012-07-14T08:29:48-05:00</updated>
   <id>http://benscheirman.com/</id>
   <author>
     <name><![CDATA[Ben Scheirman]]></name>
@@ -12,6 +12,24 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Houston Code Camp - Call for Speakers]]></title>
+    <link href="http://benscheirman.com/2012/07/houston-code-camp-call-for-speakers/"/>
+    <updated>2012-07-14T08:03:00-05:00</updated>
+    <id>http://benscheirman.com/2012/07/houston-code-camp-call-for-speakers</id>
+    <content type="html"><![CDATA[<p><a href="http://houstoncodecamp.com">Houston Code Camp 2012</a> is happening on August 25th
+at the Microsoft offices in Houston, TX.</p>
+
+<p>This is going to be a great event!  Last year we had sessions on Ruby, C#, JavaScript, iOS, and lots more.  It&#8217;s definitely a polyglot event
+where there is something for everyone.</p>
+
+<p>We&#8217;re looking for speakers, so if you&#8217;re interested in speaking, please
+<a href="http://houstoncodecamp.com/session_suggestions/new">submit a topic</a>. I hope you&#8217;ll consider being a part of it.</p>
+
+<p>Registration is not yet open, but keep a look out on <a href="http://twitter.com/houstoncodecamp">twitter</a> or this blog for more details.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Serving Assets from S3 on Heroku]]></title>
@@ -1830,74 +1848,6 @@ of features. Just epic content, that&#8217;s it!</p>
 
 <p>What are you waiting for? <strong><a href="http://houstoncodecamp.com/registration" target="_blank">Go register</a></strong>!</p>
 
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Fixing Xcode 4's Broken Code Completion]]></title>
-    <link href="http://benscheirman.com/2011/06/fixing-xcode-4s-broken-code-completion/"/>
-    <updated>2011-06-08T00:00:00-05:00</updated>
-    <id>http://benscheirman.com/2011/06/fixing-xcode-4s-broken-code-completion</id>
-    <content type="html"><![CDATA[<p>In my continued quest to actually use Xcode 4 full time, I&#8217;ve run into yet another major issue: Xcode 4&#8217;s code index sometimes gets borked and syntax highlighting &amp; code completion stop working.</p>
-
-<p>In the past, this has been fixed (temporarily) by deleting the Derived Data folder in Organizer, restarting Xcode, changing the compiler from LLVM to GCC &amp; back again or some random combination of the 3. This doesn&#8217;t always work, and today I sat down to figure out what the cause was and how to fix it.</p>
-
-<p>In searching stackoverflow and the developer forums, I found that Xcode&#8217;s code index can hang on recursive and/or relative search paths.</p>
-
-<p>My project utilizes 2 static libraries, so I must provide proper header search paths, otherwise the compiler doesn&#8217;t recognize any of the symbols.</p>
-
-<p>So if you have a Header Search Path setting of <code>../lib/MyAwesomeLib</code> or <code>../lib/MyAwesomeLib/**</code> then you might be having this problem too.</p>
-
-<h2>Step 1: Correcting relative paths</h2>
-
-<p>You might be tempted to hard code the path to the file. Don&#8217;t! This will break on somebody else&#8217;s machine, and most of the time you&#8217;re not working on this stuff alone.
-You can utilize the <code>$(SOURCE_ROOT)</code> build variable to construct a dynamic path relative to the Xcode project directory.</p>
-
-<p>This step might be all you need, but in my case I needed to follow the next step as well&#8230;</p>
-
-<h2>Step 2: Remove the need for recursive searches</h2>
-
-<p>I have two subprojects, each of which symlink their build output to a build/current folder. This makes it easy to add a non-recursive library search path reference for similar reasons. I also want to copy headers into this folder so there&#8217;s always a deterministic location to find the headers, regardless of the platform &amp; configuration we&#8217;re building for.<br />
-So I added a Run Script build phase to do this work for me:<br /></p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'># Symlink build output to a common directory for easy referencing in other projects
-</span><span class='line'>rm -rf "$BUILD_DIR/current"
-</span><span class='line'>ln -s "$BUILT_PRODUCTS_DIR" "$BUILD_DIR/current"
-</span><span class='line'>
-</span><span class='line'># Copy headers to a shared location
-</span><span class='line'>mkdir -p "$BUILD_DIR/current/headers"
-</span><span class='line'>for file in `find . -name "*.h"`; do cp $file "$BUILD_DIR/current/headers/"; done;</span></code></pre></td></tr></table></div></figure>
-
-
-<p>The line is a bash for loop that copies all the header files in any subfolder &amp; flattens it out for a single headers folder reference.<br /></p>
-
-<h2>Step 3: Add the new common header search paths</h2>
-
-
-<p>In my case I exchanged a relative, recursive search path of:<br /></p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>../lib/**</span></code></pre></td></tr></table></div></figure>
-
-
-<br />
-
-
-<p>to the more explicit, and more Xcode 4 friendly:<br /></p>
-
-<br />
-
-
-<p><img src="http://benscheirman.com/images/Xcode4.png"  alt="Xcode.png"  /><br />
-As soon as I did that, my code lit up like a Christmas tree! Symbols were recognized, code was highlighted, and best of all&#8230; code completion resumed.<br />
-Here&#8217;s to hoping the Xcode 4 continues to be improved. In the meantime, hope this fix saves you the headache I&#8217;ve been having.</p>
 ]]></content>
   </entry>
   

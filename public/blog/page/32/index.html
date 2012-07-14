@@ -9,7 +9,7 @@
   <meta name="author" content="Ben Scheirman">
 
   
-  <meta name="description" content="Welcome back!&nbsp; I’ve gone and switched the title of these articles all together to reflect the content more adequately!&nbsp; (Maybe I should &hellip;">
+  <meta name="description" content="A colleague came to me with a very simple issue yesterday.&nbsp; He had a table surrounding the area he was working on, and he wanted to have 2 DIVs &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -83,6 +83,85 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2006/08/making-divs-stay-next-to-each-other/">Making DIVs Stay Next to Each Other</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2006-08-17T00:00:00-05:00" pubdate data-updated="true">Aug 17<span>th</span>, 2006</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>A colleague came to me with a very simple issue yesterday.&nbsp; He had a table surrounding the area he was working on, and he wanted to have 2 DIVs side-by-side, one of them containing a table.</p>
+
+
+<p>Here&rsquo;s what he had:</p>
+
+
+<p><font face="Courier" color="#0080c0" size="2">&lt;table&gt;<br />&nbsp;&lt;tr&gt;<br />&nbsp;&nbsp;&lt;td&gt;<br />&nbsp;&nbsp;<br />&nbsp;&nbsp;&nbsp;&lt;div style=&#8221;padding: 2px; margin: 2px; border: #ccc; background-color:#eee;&#8221;&gt;<br />&nbsp;&nbsp;&nbsp;&nbsp;here&#8217;s the first div<br />&nbsp;&nbsp;&nbsp;&lt;/div&gt;</font></p>
+
+
+<p><font face="Courier" color="#0080c0" size="2">&nbsp;&nbsp;&nbsp;&lt;div style=&#8221;padding: 2px; margin: 2px; border: #ccc; background-color:#eee;&#8221;&gt;<br />&nbsp;&nbsp;&nbsp;&nbsp;..and here&#8217;s the 2nd<br />&nbsp;&nbsp;&nbsp;&nbsp;&lt;table border=1&gt;<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;tr&gt;<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;td&gt;with a table&lt;/td&gt;<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/td&gt;<br />&nbsp;&nbsp;&nbsp;&nbsp;&lt;/table&gt;<br />&nbsp;&nbsp;&nbsp;&lt;/div&gt;<br />&nbsp;&nbsp;&lt;/td&gt;<br />&nbsp;&lt;/tr&gt;<br />&lt;/table&gt;</font></p>
+
+
+<p>&#8230;which looks like: </p>
+
+
+<table><tbody><tr><td><div style="BORDER-RIGHT: #ccc; PADDING-RIGHT: 2px; BORDER-TOP: #ccc; PADDING-LEFT: 2px; PADDING-BOTTOM: 2px; MARGIN: 2px; BORDER-LEFT: #ccc; PADDING-TOP: 2px; BORDER-BOTTOM: #ccc; BACKGROUND-COLOR: #eee">here&#8217;s the first div </div><div style="BORDER-RIGHT: #ccc; PADDING-RIGHT: 2px; BORDER-TOP: #ccc; PADDING-LEFT: 2px; PADDING-BOTTOM: 2px; MARGIN: 2px; BORDER-LEFT: #ccc; PADDING-TOP: 2px; BORDER-BOTTOM: #ccc; BACKGROUND-COLOR: #eee">..and here&#8217;s the 2nd <table border="1"><tbody><tr><td>with a table</td></td></tr></tbody></table></div><p>&nbsp;</p></td></tr></tbody></table>
+
+
+<p>He tried a number of things that didn&rsquo;t work.&nbsp; Here&rsquo;s the solution:</p>
+
+
+<p>DIVs are block level elements that stretch to 100% of the width of the parent container.&nbsp; So to get them to sit next to each other you first need to give them some room to do so.&nbsp; Set the width so that they will both fit (be sure to account for border + margin as well).</p>
+
+
+<p>The next thing to do is set the DIVs to float:left;&nbsp; This will make them push up next to each other until there is no more room, then they will wrap.</p>
+
+
+<p>Here it is in action:</p>
+
+
+<p>&nbsp;<font face="Courier" color="#0080c0" size="2">&lt;table&gt;<br />&nbsp;&lt;tr&gt;<br />&nbsp;&nbsp;&lt;td width=&#8221;300&#8221;&gt;<br />&nbsp;&nbsp;&nbsp;<br />&nbsp;&nbsp;&nbsp;&lt;div style=&#8221;margin:2px; padding:2px; border: solid 1px #bbb; background-color: #eee; float: left; width: 75px;&#8221;&gt;<br />&nbsp;&nbsp;&nbsp;&nbsp;here&#8217;s the 1st div<br />&nbsp;&nbsp;&nbsp;&lt;/div&gt;</font></p>
+
+
+<p><font face="Courier" color="#0080c0" size="2">&nbsp;&nbsp;&nbsp;&lt;div style=&#8221;margin:2px; padding:2px; border: solid 1px #bbb; background-color: #eee; float: left; width: 75px;&#8221;&gt;<br />&nbsp;&nbsp;&nbsp;&nbsp;..and here&#8217;s the 2nd<br />&nbsp;&nbsp;&nbsp;&nbsp;&lt;table border=1&gt;<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;tr&gt;&lt;td&gt;with a table&lt;/td&gt;&lt;/tr&gt;<br />&nbsp;&nbsp;&nbsp;&nbsp;&lt;/table&gt;<br />&nbsp;&nbsp;&nbsp;&lt;/div&gt;<br />&nbsp;&nbsp;&lt;/td&gt;<br />&nbsp;&lt;/tr&gt;<br />&lt;/table&gt;</font></p>
+
+
+<table><tbody><tr><td width="300"><div style="BORDER-RIGHT: #bbb 1px solid; PADDING-RIGHT: 2px; BORDER-TOP: #bbb 1px solid; PADDING-LEFT: 2px; FLOAT: left; PADDING-BOTTOM: 2px; MARGIN: 2px; BORDER-LEFT: #bbb 1px solid; WIDTH: 75px; PADDING-TOP: 2px; BORDER-BOTTOM: #bbb 1px solid; BACKGROUND-COLOR: #eee">here&#8217;s the 1st div </div><div style="BORDER-RIGHT: #bbb 1px solid; PADDING-RIGHT: 2px; BORDER-TOP: #bbb 1px solid; PADDING-LEFT: 2px; FLOAT: left; PADDING-BOTTOM: 2px; MARGIN: 2px; BORDER-LEFT: #bbb 1px solid; WIDTH: 75px; PADDING-TOP: 2px; BORDER-BOTTOM: #bbb 1px solid; BACKGROUND-COLOR: #eee">..and here&#8217;s the 2nd <table border="1"><tbody><tr><td>with a table</td></tr></tbody></table></div></td></tr></tbody></table>
+
+
+<p>&nbsp;</p>
+
+
+<p>Understanding how floating works is an important part of effective CSS web design.&nbsp; I may consider some more of these simple examples if they are of help to my readers.</p>
+
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -827,58 +906,6 @@ pan>.AreEqual(2001, superTroopers.Year, <span style="color: maroon;">&#8220;Year
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/2006/06/review-of-domain-driven-design/">Review of Domain Driven Design</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2006-06-12T00:00:00-05:00" pubdate data-updated="true">Jun 12<span>th</span>, 2006</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><strong>Domain Driven Design &ndash; </strong>by Eric Evans</p>
-
-
-<p><a href="http://www.amazon.com/gp/product/0321125215/sr=8-1/qid=1150164149/ref=pd_bbs_1/102-4563797-5996947?%5Fencoding=UTF8"><img alt="" src="http://images.amazon.com/images/P/0321125215.01._BO2,204,203,200_PIlitb-dp-500-arrow,TopRight,32,-59_AA240_SH20_SCLZZZZZZZ_V66387483_.jpg" align="left" border="0" /></a></p>
-
-
-<p>I just finished reading this book by Eric Evans on &ldquo;Tackling Complexity in the Heart of Software.&rdquo;&nbsp; Domain Driven Design should really be required reading in college, in my opinion.&nbsp; Eric Evans has a way of describing benefits of rich modeling techniques and how to develop them.&nbsp; He guides you through&nbsp;learning to develop the&nbsp;<em>ubiquitous language</em> of the domain, an important concept for effective modeling.&nbsp; He also&nbsp;addresses many common concerns&nbsp;such as scalability with the techniques in the book.</p>
-
-
-<p>This isn&rsquo;t your typical software book, chock full of simple examples to help make the author&rsquo;s point.&nbsp; Evans goes into enourmous detail on the examples and builds on them throughout the course of the book.&nbsp; The quality of the examples are what pushes the reader&rsquo;s understanding of the topic to a level that words cannot do alone.</p>
-
-
-<p>Evans tends to be a bit wordy in this book, and you&rsquo;ll often find that he seems to be repeating himself, frequently with the same verbage.&nbsp; The message is important though, worth visiting more than once.&nbsp; </p>
-
-
-<p>Domain Driven Design is among the most profound, impacting, and inspiring software books I have ever read.&nbsp; I give it a 5/5.</p>
-
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/33/">&larr; Older</a>
@@ -900,6 +927,10 @@ pan>.AreEqual(2001, superTroopers.Year, <span style="color: maroon;">&#8220;Year
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2012/07/houston-code-camp-call-for-speakers/">Houston Code Camp - Call for Speakers</a>
+      </li>
+    
+      <li class="post">
         <a href="/2012/07/serving-assets-from-s3-on-heroku/">Serving Assets from S3 on Heroku</a>
       </li>
     
@@ -913,10 +944,6 @@ pan>.AreEqual(2001, superTroopers.Year, <span style="color: maroon;">&#8220;Year
     
       <li class="post">
         <a href="/2012/01/careful-with-block-based-notification-handlers/">Careful With Block-Based Notification Handlers</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2011/12/formatting-json-from-terminal/">Formatting JSON From Terminal</a>
       </li>
     
   </ul>

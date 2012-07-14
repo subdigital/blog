@@ -9,8 +9,8 @@
   <meta name="author" content="Ben Scheirman">
 
   
-  <meta name="description" content="Recently I changed NSScreencast to use a CDN
-to serve up assets from a different, faster server. Why use a CDN? Using a CDN has numerous benefits. &hellip;">
+  <meta name="description" content="Houston Code Camp 2012 is happening on August 25th
+at the Microsoft offices in Houston, TX. This is going to be a great event! Last year we had &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -84,6 +84,51 @@ to serve up assets from a different, faster server. Why use a CDN? Using a CDN h
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2012/07/houston-code-camp-call-for-speakers/">Houston Code Camp - Call for Speakers</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-07-14T08:03:00-05:00" pubdate data-updated="true">Jul 14<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><a href="http://houstoncodecamp.com">Houston Code Camp 2012</a> is happening on August 25th
+at the Microsoft offices in Houston, TX.</p>
+
+<p>This is going to be a great event!  Last year we had sessions on Ruby, C#, JavaScript, iOS, and lots more.  It&#8217;s definitely a polyglot event
+where there is something for everyone.</p>
+
+<p>We&#8217;re looking for speakers, so if you&#8217;re interested in speaking, please
+<a href="http://houstoncodecamp.com/session_suggestions/new">submit a topic</a>. I hope you&#8217;ll consider being a part of it.</p>
+
+<p>Registration is not yet open, but keep a look out on <a href="http://twitter.com/houstoncodecamp">twitter</a> or this blog for more details.</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -1314,84 +1359,6 @@ transition types match, as well as the duration &amp; animation curve.</p>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/2011/09/creating-a-glow-effect-for-uilabel-and-uibutton/">Creating a Glow Effect for UILabel and UIButton</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2011-09-27T19:57:00-05:00" pubdate data-updated="true">Sep 27<span>th</span>, 2011</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>One recent iPhone design mockup called for a glowing effect for a
-<code>UIButton</code>.</p>
-
-<p>This can be accomplished with images, however I needed a series of
-buttons to have the same glow effect, and it can easily be accomplished
-with Core Graphics.</p>
-
-<p>The first step is to include the Core Graphics headers:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="cp">#import &lt;QuartzCore/QuartzCore.h&gt;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Next, the effect is achieved by using a shadow with no offset (meaning
-the shadow will be directly underneath the text, not shifted down or to
-the right).  The layer is then given a shadow radius &amp; opacity to allow
-the shadow to bleed outward.  Unsetting <code>masksToBounds</code> will allow the
-glow to be drawn even outside of the label&#8217;s frame. Finally the shadow color is set to either the
-foreground color or something a bit lighter.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">UIColor</span> <span class="o">*</span><span class="n">color</span> <span class="o">=</span> <span class="n">button</span><span class="p">.</span><span class="n">currentTitleColor</span><span class="p">;</span>
-</span><span class='line'><span class="n">button</span><span class="p">.</span><span class="n">titleLabel</span><span class="p">.</span><span class="n">layer</span><span class="p">.</span><span class="n">shadowColor</span> <span class="o">=</span> <span class="p">[</span><span class="n">color</span> <span class="n">CGColor</span><span class="p">];</span>
-</span><span class='line'><span class="n">button</span><span class="p">.</span><span class="n">titleLabel</span><span class="p">.</span><span class="n">layer</span><span class="p">.</span><span class="n">shadowRadius</span> <span class="o">=</span> <span class="mf">4.0f</span><span class="p">;</span>
-</span><span class='line'><span class="n">button</span><span class="p">.</span><span class="n">titleLabel</span><span class="p">.</span><span class="n">layer</span><span class="p">.</span><span class="n">shadowOpacity</span> <span class="o">=</span> <span class="mf">.9</span><span class="p">;</span>
-</span><span class='line'><span class="n">button</span><span class="p">.</span><span class="n">titleLabel</span><span class="p">.</span><span class="n">layer</span><span class="p">.</span><span class="n">shadowOffset</span> <span class="o">=</span> <span class="n">CGSizeZero</span><span class="p">;</span>
-</span><span class='line'><span class="n">button</span><span class="p">.</span><span class="n">titleLabel</span><span class="p">.</span><span class="n">layer</span><span class="p">.</span><span class="n">masksToBounds</span> <span class="o">=</span> <span class="n">NO</span><span class="p">;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>This effect works on plain <code>UILabel</code> or the <code>titleLabel</code> property of a
-<code>UIButton</code>.  You can see the results of the effect here:</p>
-
-<p><img class="image" src="/images/uibutton-gloweffect.png"></p>
-
-<p>Don&#8217;t go overboard with this.  It&#8217;s a subtle effect, but looks great
-when used effectively.</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/2/">&larr; Older</a>
@@ -1411,6 +1378,10 @@ when used effectively.</p>
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2012/07/houston-code-camp-call-for-speakers/">Houston Code Camp - Call for Speakers</a>
+      </li>
+    
+      <li class="post">
         <a href="/2012/07/serving-assets-from-s3-on-heroku/">Serving Assets from S3 on Heroku</a>
       </li>
     
@@ -1424,10 +1395,6 @@ when used effectively.</p>
     
       <li class="post">
         <a href="/2012/01/careful-with-block-based-notification-handlers/">Careful With Block-Based Notification Handlers</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2011/12/formatting-json-from-terminal/">Formatting JSON From Terminal</a>
       </li>
     
   </ul>

@@ -9,7 +9,8 @@
   <meta name="author" content="Ben Scheirman">
 
   
-  <meta name="description" content="Leave it to Rory Blyth to stir up some well-bottled memories of my youth.But anyway, reading that post got me thinking.I think I have 2 of the &# &hellip;">
+  <meta name="description" content="Why does the following code generate a null reference exception? &nbsp; 1
+&lt;br />&lt;br />public class MyServerControl : WebControl, &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -83,6 +84,59 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2005/06/server-control-page-reference/">Server Control Page Reference</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2005-06-27T00:00:00-05:00" pubdate data-updated="true">Jun 27<span>th</span>, 2005</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><div style="clear:both;"></div>
+
+
+<p>Why does the following code generate a null reference exception?</p>
+
+
+<p>&nbsp;</p>
+
+
+<br /><br /><div id="code"><br />
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;br />&lt;br />public class MyServerControl : WebControl, INamingContainer&lt;br />{&lt;br /> private TextBox textbox1; &lt;br />&lt;br /> protected override CreateChildControls()&lt;br /> {&lt;br /> if(! Page.IsPostBack) &lt;br /> {&lt;br /> &lt;span class="comments">//do stuff&lt;/span>&lt;br /> }&lt;br /> }&lt;br />}</span></code></pre></td></tr></table></div></figure>
+
+
+<br /></div><br />The page reference is not set. I see this sort of example all the time on the web regarding server controls. Why is it that I can not get this to work?<div style="clear:both; padding-bottom: 0.25em;"></div>
+
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -435,45 +489,6 @@
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/2005/05/vs-2005-beta-2-has-arrived/">Vs 2005 Beta 2 Has Arrived!</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2005-05-17T00:00:00-05:00" pubdate data-updated="true">May 17<span>th</span>, 2005</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><div style="clear:both;"></div>
-
-
-<p>I walked in my office today and opened the yellow envelope on the floor by the door to find:<br /><br /><ul> <li><span style="font-weight: bold;">Visual Studio 2005 Beta 2</span> - Team Suite CD</li> <li><span style="font-weight: bold;">Visual Studio 2005 Beta 2</span> - Team Foundation Server</li> <li><span style="font-weight: bold;">SQL Server 2005 </span>Developer Edition - 365 day trial</li> </ul> Now I have to find the time to reformat my machine because there is no way I am installing anything heavy on it right now&#8230; it&#8217;s running too slow.<br /><br />Why in the world does VS2003 start moving like molasses after a couple months of use?When I add a new item to my solution I have to wait 3 full minutes before I regain control of the computer&#8230;how <span style="font-style: italic;">ghey</span>.<div style="clear:both; padding-bottom: 0.25em;"></div></p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/39/">&larr; Older</a>
@@ -495,6 +510,10 @@
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2012/07/houston-code-camp-call-for-speakers/">Houston Code Camp - Call for Speakers</a>
+      </li>
+    
+      <li class="post">
         <a href="/2012/07/serving-assets-from-s3-on-heroku/">Serving Assets from S3 on Heroku</a>
       </li>
     
@@ -508,10 +527,6 @@
     
       <li class="post">
         <a href="/2012/01/careful-with-block-based-notification-handlers/">Careful With Block-Based Notification Handlers</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2011/12/formatting-json-from-terminal/">Formatting JSON From Terminal</a>
       </li>
     
   </ul>

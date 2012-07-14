@@ -9,7 +9,7 @@
   <meta name="author" content="Ben Scheirman">
 
   
-  <meta name="description" content="I spoke at iPhone Dev Con in Boston last week and I attended Mike Lee&#8217;s excellent keynote presentation: &#8220;Mariachi Product Engineering&# &hellip;">
+  <meta name="description" content="I just finished with Crafting Rails Applications by José Valim. The book claims to teach Expert Practices for Everyday Rails Development. I didn&# &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -83,6 +83,67 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2011/04/book-review-crafting-rails-applications/">Book Review: Crafting Rails Applications</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-04-13T00:00:00-05:00" pubdate data-updated="true">Apr 13<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><img src="/images/capa_crafting.png"  style="float:left; margin-right:10px; margin-bottom:10px;"  /></p>
+
+<p>I just finished with <a href="http://www.amazon.com/gp/product/1934356735/ref=as_li_ss_tl?ie=UTF8&amp;tag=flux88com-20&amp;linkCode=as2&amp;camp=1789&amp;creative=390957&amp;creativeASIN=1934356735">Crafting Rails Applications</a><img src="http://www.assoc-amazon.com/e/ir?t=&amp;l=as2&amp;o=1&amp;a=1934356735" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" /> by <a href="http://blog.plataformatec.com.br/author/josevalim/">José Valim</a>. The book claims to teach Expert Practices for Everyday Rails Development. I didn&#8217;t find it to be exactly that, however I did enjoy it and I learned a ton.</p>
+
+
+<h2>The Good</h2>
+
+
+<p>The book flows pretty well. Each chapter contains a challenge or set of related challenges and it&#8217;s pretty easy to follow along with the code. Each example contains automated tests, and he creates a gem for almost each solution, so that it is easy to see how to modularize things.<br />
+The coverage of Rails internals is really enlightening. Sometimes it can be a bit dry, but you&#8217;ll learn quite a few things about Renderers, Responders, Engines, Railties, Routing, Rack, Instruments, and more.<br />
+The book also contains a wide range of technology topics. José doesn&#8217;t just utilize Rails &amp; ActiveRecord. Other examples include MongoMapper, Redis, and Sinatra.<br /></p>
+
+<h2>The Bad</h2>
+
+
+<p>Even though each of the examples contains unit tests, they are written in a style that I find to be problematic in real systems. The concise nature of the tests is probably an artifact of being printed, but most of the testing examples utilize few test classes with many assertions per test method.<br />
+In addition, though he &#8220;writes&#8221; the tests before implementation, this actually hurts understandability in some cases. The reason is most of the tests read as if he already knew the implementation and knew exactly how to test it. But it isn&#8217;t apparent to the reader.<br />
+I tend to prefer RSpec with 1 assertion per test method and many fine-grained methods that test various behaviors in each context my system is in. The book&#8217;s Test::Unit style wasn&#8217;t something I&#8217;d suggest as a good way to test real applications.<br /></p>
+
+<h2>The Bottom Line</h2>
+
+
+<p>Ultimately I think the book is excellent, and certainly gives plenty of information about Rails 3 internals. I think newcomers would probably be lost, but if you&#8217;re past the newbie stage with Rails then this book is recommended.<br /></p>
+
+<br />
+
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -1146,161 +1207,6 @@ Gotta love tools that make investigation like this easy. Props to Heroku &amp; N
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/2010/07/using-carrierwave-with-mongoid/">Using CarrierWave With Mongoid</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2010-07-18T00:00:00-05:00" pubdate data-updated="true">Jul 18<span>th</span>, 2010</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>I&#8217;m moving a side project over to Rails 3, and I purposely chose a set of technologies that I hadn&#8217;t used yet.</p>
-
-<ul>
-<li><a target="_blank" href="http://github.com/rails/rails">Rails 3</a></li>
-<li><a target="_blank" href="http://mongoid.org/">Mongoid</a> (hosted on MongoHQ)</li>
-<li><a target="_blank" href="http://haml-lang.com/">Haml</a></li>
-<li><a target="_blank" href="http://github.com/jnicklas/carrierwave">CarrierWave</a> (for file uploads)</li>
-</ul>
-
-
-<p>I&#8217;ll post about the general experience of this project later, but suffice it to say I&#8217;m liking this stack a lot. But this post is specifically about using CarrierWave to handle file uploads.</p>
-
-<p>CarrierWave is similar to Paperclip, however it already supported Rails 3 &amp; Mongoid, so I decided to check it out. It creates the notion of <em>uploaders</em> and places them in a folder next to your models, controllers, views. Each uploader class defines the settings post-processing options for these uploads. I like keeping these separate from the model (instead of how Paperclip does it).</p>
-
-<p>Here is a sample PicUploader that I&#8217;m using:</p>
-
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">PicUploader</span> <span class="o">&lt;</span> <span class="no">CarrierWave</span><span class="o">::</span><span class="no">Uploader</span><span class="o">::</span><span class="no">Base</span>
-</span><span class='line'>  <span class="kp">include</span> <span class="no">CarrierWave</span><span class="o">::</span><span class="no">RMagick</span>
-</span><span class='line'>  <span class="n">storage</span> <span class="ss">:s3</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="c1"># Use Heroku&#39;s temp folder for uploads</span>
-</span><span class='line'>  <span class="k">def</span> <span class="nf">cache_dir</span>
-</span><span class='line'>    <span class="s2">&quot;</span><span class="si">#{</span><span class="no">Rails</span><span class="o">.</span><span class="n">root</span><span class="si">}</span><span class="s2">/tmp/uploads&quot;</span>
-</span><span class='line'>  <span class="k">end</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="n">process</span> <span class="ss">:resize_to_fit</span> <span class="o">=&gt;</span> <span class="o">[</span><span class="mi">600</span><span class="p">,</span> <span class="mi">600</span><span class="o">]</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="n">version</span> <span class="ss">:tiny_thumb</span> <span class="k">do</span>
-</span><span class='line'>    <span class="n">process</span> <span class="ss">:resize_to_fill</span> <span class="o">=&gt;</span> <span class="o">[</span><span class="mi">50</span><span class="p">,</span> <span class="mi">50</span><span class="o">]</span>
-</span><span class='line'>  <span class="k">end</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="n">version</span> <span class="ss">:thumb</span> <span class="k">do</span>
-</span><span class='line'>    <span class="n">process</span> <span class="ss">:resize_to_fill</span> <span class="o">=&gt;</span> <span class="o">[</span><span class="mi">200</span><span class="p">,</span> <span class="mi">200</span><span class="o">]</span>
-</span><span class='line'>  <span class="k">end</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="k">def</span> <span class="nf">extension_white_list</span>
-</span><span class='line'>    <span class="sx">%w(jpg jpeg gif png)</span>
-</span><span class='line'>  <span class="k">end</span>
-</span><span class='line'><span class="k">end</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>I&#8217;m storing these images in S3, but in order to process the file upload &amp; do post-processing on an image,
-it has to first be uploaded to a temp folder. I had to change this <code>cache_dir</code> to reflect heroku&#8217;s temp folder.</p>
-
-<p>Note also that it has support for RMagick (or MiniMagick) in order to do post-processing on the file to resize
-it to your needs. Here I&#8217;m resizing the file to best-fit a 600x600 square (maintaining aspect ratio). I also
-have 2 thumbnail sizes that clip the image in order to fill an exact square. All of this happens for me when I
-upload an image.</p>
-
-<p>In order to utilize these files in your model, you have to import the necessary ORM adapter file so that when
-you save your model the filename gets saved with it. Here is an example model using the mongoid adapter.</p>
-
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="nb">require</span> <span class="s1">&#39;app/uploaders/pic&#39;</span>
-</span><span class='line'><span class="nb">require</span> <span class="s1">&#39;carrierwave/orm/mongoid&#39;</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">class</span> <span class="nc">Category</span>
-</span><span class='line'>  <span class="kp">include</span> <span class="no">Mongoid</span><span class="o">::</span><span class="no">Document</span>
-</span><span class='line'>  <span class="n">field</span> <span class="ss">:name</span><span class="p">,</span> <span class="ss">:type</span> <span class="o">=&gt;</span> <span class="nb">String</span>
-</span><span class='line'>  <span class="n">field</span> <span class="ss">:description</span><span class="p">,</span> <span class="ss">:type</span> <span class="o">=&gt;</span> <span class="nb">String</span>
-</span><span class='line'>  <span class="n">mount_uploader</span> <span class="ss">:photo</span><span class="p">,</span> <span class="no">PicUploader</span>
-</span><span class='line'>  <span class="n">references_many</span> <span class="ss">:items</span>
-</span><span class='line'>  <span class="n">validates_presence_of</span> <span class="ss">:name</span><span class="p">,</span> <span class="ss">:description</span>
-</span><span class='line'><span class="k">end</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>When a category is saved, the uploader processes all of the sizes we need &amp; stores them all in S3. The category can then access these image URLS simply by doing this:</p>
-
-<ul>
-<li><code>category.photo.url</code> (Full size)</li>
-<li><code>category.photo.thumb.url</code> (200x200)</li>
-<li><code>category.photo.tiny_thumb.url</code> (50x50)</li>
-</ul>
-
-
-<p>If you need to handle images in your site, you can&#8217;t really beat the simplicity of this.</p>
-
-<p>It hasn&#8217;t all been sunshine &amp; roses, however. I have another model that accepts multiple images, so I made a
-<code>Photo</code> model in order to capture the file &amp; an associated caption. My Item model <code>embeds_many :photos</code>.
-It also is set up to <code>accept_nested_attributes_for :photos</code>, so that I can post multiple photos along with
-an item form.</p>
-
-<p>Unfortunately, the mongoid adapter which gives you the <code>mount_uploader</code> behavior, only works when you call
-<code>save</code> directly on that object. Since my photos were being saved by it&#8217;s parent document, the upload never
-happened. It <a target="_blank" href="http://github.com/jnicklas/carrierwave/issues#issue/81">looks like this is a bug with CarrierWave</a>, and I&#8217;m looking at potential ways of contributing a fix. Right now, I&#8217;m manually pulling out the photos &amp; saving them one-by-one after an item is saved, but that isn&#8217;t a great solution.</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/5/">&larr; Older</a>
@@ -1322,6 +1228,10 @@ happened. It <a target="_blank" href="http://github.com/jnicklas/carrierwave/iss
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2012/07/houston-code-camp-call-for-speakers/">Houston Code Camp - Call for Speakers</a>
+      </li>
+    
+      <li class="post">
         <a href="/2012/07/serving-assets-from-s3-on-heroku/">Serving Assets from S3 on Heroku</a>
       </li>
     
@@ -1335,10 +1245,6 @@ happened. It <a target="_blank" href="http://github.com/jnicklas/carrierwave/iss
     
       <li class="post">
         <a href="/2012/01/careful-with-block-based-notification-handlers/">Careful With Block-Based Notification Handlers</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2011/12/formatting-json-from-terminal/">Formatting JSON From Terminal</a>
       </li>
     
   </ul>

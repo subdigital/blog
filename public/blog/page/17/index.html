@@ -9,7 +9,7 @@
   <meta name="author" content="Ben Scheirman">
 
   
-  <meta name="description" content="I normally don&#8217;t do this sort of announcement, but this one excites me.Download the ASP.NET MVC Preview 2 here:http://www.microsoft.com/ &hellip;">
+  <meta name="description" content="I said previously that I was excited for this release.&nbsp; Ultimately I didn&rsquo;t see much worth blogging about.&nbsp; Some features are a step &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -83,6 +83,58 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2008/03/asp-net-mvc-preview-2-thoughts/">ASP.NET MVC - Preview 2 Thoughts</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2008-03-10T00:00:00-05:00" pubdate data-updated="true">Mar 10<span>th</span>, 2008</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I said previously that I was excited for this release.&nbsp; Ultimately I didn&rsquo;t see much worth blogging about.&nbsp; Some features are a step in the right direction, some (I think) were a step back.</p>
+
+
+<p>I&rsquo;m currently upgrade <a href="http://codecampserver.org/" target="_blank">Code Camp Server</a> to Preview 2 and hit about 80 errors which I had to go in and resolve.&nbsp; My initial thoughts:</p>
+
+
+<ul><li>I think the HttpContextBase is a bad idea.&nbsp; Yes I understand the desire to not introduce breaking changes.&nbsp; But I think that the people that will be using ASP.NET MVC will be congnizant of this and code appropriately.&nbsp; Interfaces are much easier to depend work with while testing, and I&rsquo;d rather just use those.&nbsp; Hey, couldn&rsquo;t they give us both, and framework providers could choose?<br /></li><li>what&rsquo;s up with the <strong>OnActionExecuting</strong>, <strong>OnActionExecuted</strong> events?&nbsp; These used to be <strong>OnPreAction</strong>, <strong>OnPostAction</strong>, which was much more readable (in my opinion) &mdash; seriously, put these back!&nbsp; The new naming is not nearly as obvious to the glance.<br /></li><li>Testing is still too cumbersome.&nbsp; I think some good mocking-fu can mitigate this, but it&rsquo;s a tough sell to people new to unit testing (and to mocking).&nbsp; TempData should be implemented as an IDictionary on the controller, only to have a real TempData that depends on session state at runtime.&nbsp; This would allow me to test that TempData works without having to mock session (which is not intuitive at all).<br /></li><li>The Action filters are going to be where the goo lives.&nbsp; This is how we will see some really productive &amp; handy filters for performing actions such as requiring SSL, protecting an action from unauthenticated access, loading common data, etc.&nbsp; Think of them as HttpModules for individual actions.</li></ul>
+
+
+<p>More to come, I&rsquo;m sure&hellip;</p>
+
+
+<p>&nbsp;</p>
+
+
+<p>&nbsp;</p>
+
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -582,42 +634,6 @@
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/2008/02/instilling-quality-in-your-teams/">Instilling Quality in Your Teams</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2008-02-14T00:00:00-06:00" pubdate data-updated="true">Feb 14<span>th</span>, 2008</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Quality is important.&nbsp; I think that deserves repeating.&nbsp; <b>Quality is important</b>.&nbsp; Quality of code, quality of process, quality of requirements, quality of communcation, quality of behavior, quality of teams, quality of customers.&nbsp; I tend to focus on the code side of things, but it is always important to remember that quality matters.<br><br>Often times (due to lack of quality in some of the other areas), quality can get pushed aside in the interest of getting things done.&nbsp; This is a balance that all of us must deal with.&nbsp; Ensuring good communication can put out fires long before they blow up in your face.&nbsp; Quality of code can ensure that future maintenance and development goes on without slowing to a crawl in productivity.&nbsp; Quality in process can guide you automate the tedious repeatable tasks to streamline your work.&nbsp; Any breakdown in these areas can be catastrophic to a team.<br><br>We had a meeting last night at Sogeti, and quality kept coming up as a topic.&nbsp; I was very proud to see the end result of the meeting:<br><br><p></p><img src="http://flux88.com/content/binary/quality.jpg" border="0"><br><br></p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/18/">&larr; Older</a>
@@ -639,6 +655,10 @@
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2012/07/houston-code-camp-call-for-speakers/">Houston Code Camp - Call for Speakers</a>
+      </li>
+    
+      <li class="post">
         <a href="/2012/07/serving-assets-from-s3-on-heroku/">Serving Assets from S3 on Heroku</a>
       </li>
     
@@ -652,10 +672,6 @@
     
       <li class="post">
         <a href="/2012/01/careful-with-block-based-notification-handlers/">Careful With Block-Based Notification Handlers</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2011/12/formatting-json-from-terminal/">Formatting JSON From Terminal</a>
       </li>
     
   </ul>

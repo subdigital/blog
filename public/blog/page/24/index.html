@@ -9,7 +9,7 @@
   <meta name="author" content="Ben Scheirman">
 
   
-  <meta name="description" content="Every once and a while I come across a new feature that just makes me stop and think &ldquo;ReSharper, I love you MAN!&rdquo; If you have your cursor &hellip;">
+  <meta name="description" content="I cannot even count the ways that VSTS Test is inferior to NUnit (or MbUnit). I&rsquo;ve been running my tests via TestDriven.NET (right-click, Run &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -83,6 +83,82 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2007/08/dear-vsts-testi-hate-you/">Dear VSTS Test:I Hate You</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2007-08-06T00:00:00-05:00" pubdate data-updated="true">Aug 6<span>th</span>, 2007</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I cannot even count the ways that VSTS Test is inferior to NUnit (or MbUnit).</p>
+
+
+<p>I&rsquo;ve been running my tests via TestDriven.NET (right-click, Run Test) and it has been working just fine.&nbsp; The tests run, I get my results.&nbsp; The reason I do this is because the built-in test runner <strike>sucks</strike> leaves something to be desired.</p>
+
+
+<p>I went to a teammates machine the other day and he ran the test suite and most of the tests failed.&nbsp; In fact, any test that hit the database failed.&nbsp; All of them had the same error message:&nbsp; </p>
+
+
+<p><em><strong>ConfigurationException:&nbsp; Could not load the&nbsp;configSource &lsquo;local-connectionStrings.config&rsquo;</strong>.</em></p>
+
+
+<p>This file is copied (via pre-build event) from a root location, to the output directory.&nbsp; This file is, by nature, different for each developer.&nbsp; It contains connection strings that are specific to the machine.</p>
+
+
+<p>Using FileMon I was able to see that the VSTS Test Runner was looking in the <strong>..&#46;.\TestResults\{TIMESTAMP FOLDER HERE}\Out\</strong> directory.&nbsp; The VSTS product team claims that this is for remote running of tests, but I suspect that it is just a poor solution to the problem.&nbsp; Anyway, there is no way that I can (via a batch file) copy the config file to this folder.&nbsp; So Pre-Build events are out.</p>
+
+
+<p>I read up on the issue and find that it is possible to have items copied to the Test Results folder.&nbsp; You have to add this attribute to a test method:</p>
+
+
+<p><strong>[DeployItem(&ldquo;local-connectionStrings.config&rdquo;)]</strong></p>
+
+
+<p>&hellip;and yes, I said to a <em>test method</em>.&nbsp; It will not work on a [TestInitialize] or [TestClass].&nbsp; So basically if I want to use this feature, I have to retro fit around 80 tests to include this attribute, then tell my whole team to do it as well.&nbsp; No thank you.</p>
+
+
+<p>You can also add the Deployment Item to the localtestrun.testrunconfig file (under Solution Items).&nbsp; This file says &ldquo;local&rdquo; but it is checked into source control, so it is not clear if this change will be applied to everyone&rsquo;s working copy or my own.</p>
+
+
+<p>This is a stupid, hacky solution to a problem that doesn&rsquo;t even exist with the other unit test frameworks.&nbsp; Since we aren&rsquo;t really using any TFS test features yet (Web Tests will come) &mdash;I&rsquo;m tempted to just rewrite them all for NUnit.&nbsp; Of course I will get pushback from management, but these little issues are becoming a hinderance.&nbsp; </p>
+
+
+<p><strong>If it is cumbersome to test, developers won&rsquo;t write unit tests.</strong></p>
+
+
+<p>(Oh, and <a href="http://www.jetbrains.com/">JetBrains</a>:&nbsp; when will you release support for the VSTS Tests?&nbsp; I&rsquo;m dying over here!)</p>
+
+
+<div class="bjtags">Tags:<a rel="tag" href="http://technorati.com/tag/VSTS">VSTS</a>, <a rel="tag" href="http://technorati.com/tag/Unit+Test">Unit+Test</a></div>
+
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -617,42 +693,6 @@ N: 0px">}</p></div>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/2007/07/speaking-on-nhibernate-in-okc/">Speaking on NHibernate in OKC</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2007-07-19T00:00:00-05:00" pubdate data-updated="true">Jul 19<span>th</span>, 2007</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><font style="BACKGROUND-COLOR: #f4f4f4"><div id="mb_0"><div lang="EN-US" vlink="purple" link="blue"><div><p><font face="Arial" size="2"><span style="FONT-SIZE: 10pt; FONT-FAMILY: Arial">I turns out that <a onclick="return top.js.OpenExtLink(window,event,this)" href="http://codebetter.com/blogs/jeremy.miller/default.aspx" target="_blank">Jeremy Miller</a> can&rsquo;t make it to the code camp.&nbsp; I will be taking his slot and giving a talk on NHibernate.&nbsp; Specifically I will be talking about how to apply Domain Driven Design principles and address persistence with NHibernate.</span></font></p><p><font face="Arial" size="2"><span style="FONT-SIZE: 10pt; FONT-FAMILY: Arial"></span></font></p><p><font face="Arial" size="2"><span style="FONT-SIZE: 10pt; FONT-FAMILY: Arial">I am bummed I don&rsquo;t get to meet Jeremy, however I am glad to have the opportunity to speak.</span></font></p></div></div></div></font></p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/25/">&larr; Older</a>
@@ -674,6 +714,10 @@ N: 0px">}</p></div>
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2012/07/houston-code-camp-call-for-speakers/">Houston Code Camp - Call for Speakers</a>
+      </li>
+    
+      <li class="post">
         <a href="/2012/07/serving-assets-from-s3-on-heroku/">Serving Assets from S3 on Heroku</a>
       </li>
     
@@ -687,10 +731,6 @@ N: 0px">}</p></div>
     
       <li class="post">
         <a href="/2012/01/careful-with-block-based-notification-handlers/">Careful With Block-Based Notification Handlers</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2011/12/formatting-json-from-terminal/">Formatting JSON From Terminal</a>
       </li>
     
   </ul>

@@ -9,7 +9,7 @@
   <meta name="author" content="Ben Scheirman">
 
   
-  <meta name="description" content="It&#8217;s going to be a busy two weeks!&nbsp; I leave tomorrow for Tulsa to speak at Tulsa TechFest.&nbsp; If you haven&#8217;t been to one of &hellip;">
+  <meta name="description" content="I&#8217;ve been a long practitioner of test-driven development (TDD). I first started unit testing back in 2004, and it made a profound effect on me &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -83,6 +83,112 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2008/10/the-transition-from-tdd-to-bdd/">The Transition From TDD to BDD</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2008-10-12T00:00:00-05:00" pubdate data-updated="true">Oct 12<span>th</span>, 2008</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><a href="http://flux88.com/uploads/TheTransitionfromTDDtoBDD_13B13/butterfly.jpg"><img src="/images/butterfly_thumb.jpg" alt="butterfly"  border="0" /></a> I&#8217;ve been a long practitioner of test-driven development (TDD). I first started unit testing back in 2004, and it made a profound effect on me.&nbsp; It was incredibly difficult, however and I began to look for ways to make my code more testable. This brought me to TDD, which guided me towards looser-coupled systems that were testable from the get-go (since we started out testing it!)</p>
+
+
+<p> <p>Things in the TDD world aren&#8217;t all peach schnapps and roses (or however the saying goes). Often times you still end up with messy tests that have tons of code duplication and very little solubility. TDD is still difficult for me, even though I&#8217;ve done it for 4 years.</p> <p>One thing I&#8217;ve noticed lately that I&#8217;ve been slowly losing in my tests is the executable documentation. It&#8217;s increasingly hard to tell how my system behaves just from reading my unit tests. As our system grew more complex, so did our unit tests and eventually they lost most of their grokability.</p> <p>Another thing I&#8217;ve noticed is that our tests have so much setup gunk that it clouds the meaning of each test method. By nature each test likely has some particular context in which it intends to run, and this code gets placed in the [Test] itself rather than the [SetUp]. Why?&nbsp; My mocks need to behave differently in each test method, so if I put them in the setup, things either don&#8217;t work for other tests or there are mocks being set up that are never used for other tests. I directly attribute this to having one [TestFixture] per system under test.</p> <p>I&#8217;d like to state that again, because it bears repeating. <strong>One TestFixture per system under test is an anti-pattern.</strong> It has taken me three (3!) presentations on Behavior-Driven Design for this fact to really sink in.&nbsp; Contexts are important, and a system that you want to test certainly has more than one context. By separating the fixtures into per-system-context rather than per-system, we can now leverage our [Setup] again to establish our context!</p> <p>Here is a test class that I might have written with a strict TDD mindset:</p></p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>//PostControllerTester.cs</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>[Test]&lt;br>public void edit_action_gets_post_from_repository()&lt;br>{&lt;br>&nbsp;&nbsp;&nbsp; _authService.Stub(x=&gt;x.IsAuthorizedToEdit("bob"))&lt;br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; .IgnoreArguments()&lt;br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; .Return(true); &lt;p>&nbsp;&nbsp;&nbsp; var controller = CreatePostController();&lt;br>&nbsp;&nbsp;&nbsp; controller.Edit(5);&lt;br>&nbsp;&nbsp;&nbsp; _repository.AssertWasCalled(x=&gt;x.Find(5));&lt;br>}&lt;/p></span></code></pre></td></tr></table></div></figure>
+
+
+<p>Notice that this test actually has some setup, some sort of action (in this case we&#8217;re invoking the Edit action), and some verification.&nbsp; This test has 3 pieces to it!&nbsp; Applying a more BDD mindset, you&#8217;d likely have something like this:</p>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>public class when_invoking_edit_action_as_authorized_user()&lt;br>{&lt;br>&nbsp;&nbsp;&nbsp; ...&lt;br>&nbsp;&nbsp;&nbsp; [SetUp]&lt;br>&nbsp;&nbsp;&nbsp; public void Setup&lt;br>&nbsp;&nbsp;&nbsp; {&lt;br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; _controller = new PostsController(...);&lt;br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; _authService = MockRepository.GenerateMock&lt;IAuthService&gt;();&lt;br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; _repository = MockRepository.GenerateMock&lt;IPostRepository&gt;();&lt;br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; EstablishContext();&lt;br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; When();&lt;br>&nbsp;&nbsp;&nbsp; }&lt;br>&nbsp;&nbsp;&nbsp; public void EstablishContext()&lt;br>&nbsp;&nbsp;&nbsp; {&lt;br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; _authService.Stub(x=&gt;x.IsAuthorizedToEdit("bob"))&lt;br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; .IgnoreArguments().Return(true);&lt;br>&nbsp;&nbsp;&nbsp; }&lt;br>&nbsp;&nbsp;&nbsp; public void When()&lt;br>&nbsp;&nbsp;&nbsp; {&lt;br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; _controller.Edit(5);&nbsp;&nbsp;&nbsp; &lt;br>&nbsp;&nbsp;&nbsp; }&lt;br>&nbsp;&nbsp;&nbsp; [Test]&lt;br>&nbsp;&nbsp;&nbsp; public void it_should_fetch_post_from_repository()&lt;br>&nbsp;&nbsp;&nbsp; {&lt;br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; _repository.AssertWasCalled(x=&gt;x.Find(5));&lt;br>&nbsp;&nbsp;&nbsp; }&lt;br>}</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Notice the name of the class.&nbsp; It describes the context of what we&#8217;re trying to accomplish.&nbsp; Our [SetUp] now establishes the state of the environment in which we want to act on our system.&nbsp; The When() method is where we act on our system.&nbsp; The only thing remaining is the test which is now dead simple.&nbsp; The test simply verifies some aspect of the system.&nbsp; The name of the test is also only conveying the verification part of the test.</p>
+
+
+<p>We can now easily glance at this test (or spec, which it is sometimes called) and read it like english:</p>
+
+
+<blockquote><p>When invoking the edit action as an authorized user, it should should fetch the post from the repository.</p></blockquote>
+
+
+<p>This looks awfully close to acceptance criteria that we write for our user stories.&nbsp; </p>
+
+
+<p>Any acceptance tests that share the same context can reside in the same fixture.&nbsp; It&#8217;s perfectly normal to have 1 test per fixture, but at times you&#8217;ll find that you can have 2 or 3 that indeed share the same context, and those can reside in the same fixture class.</p>
+
+
+<p>&nbsp;</p>
+
+
+<h3>BDD Frameworks</h3>
+
+
+<p>There are plenty of BDD frameworks out there that will do their best to impose their view of BDD on you, and this can seriously hinder your ability to naturally understand the why/how of BDD.&nbsp; Later on, once you have your own opinions, you can leverage a framework (such as MSpec) to have a more terse syntax for describing behaviors in your system.</p>
+
+
+<h3>BDD Base Class</h3>
+
+
+<p>Until you get BDD, stick to what you know.&nbsp; In my example I call EstablishContext() and When(), and I&#8217;ll do that for every fixture.&nbsp; Why not leverage a base class?&nbsp; Here&#8217;s mine:</p>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>public abstract class Specification&lt;br>{&lt;br>&nbsp;&nbsp;&nbsp; protected Exception ExceptionThrown { get; private set; } &lt;p>&nbsp;&nbsp;&nbsp; &lt;br>[SetUp]&lt;br>&nbsp;&nbsp;&nbsp; public void Setup()&lt;br>&nbsp;&nbsp;&nbsp; {&lt;br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; EstablishContext(); &lt;p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; try&lt;br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {&lt;br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; When();&lt;br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }&lt;br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; catch(Exception exc)&lt;br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {&lt;br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ExceptionThrown = exc;&lt;br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }&lt;br>&nbsp;&nbsp;&nbsp; } &lt;p>&nbsp;&nbsp;&nbsp; &lt;/p>&lt;p>protected T Mock&lt;T&gt;()&lt;br>&nbsp;&nbsp;&nbsp; {&lt;br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return MockRepository.GenerateMock&lt;T&gt;();&lt;br>&nbsp;&nbsp;&nbsp; } &lt;/p>&lt;p>&nbsp;&nbsp;&nbsp; protected abstract void EstablishContext();&lt;br>&nbsp;&nbsp;&nbsp; protected abstract void When(); &lt;p>&nbsp;&nbsp;&nbsp; &lt;/p>&lt;p>[TearDown]&lt;br>&nbsp;&nbsp;&nbsp; public virtual void TearDown()&lt;br>&nbsp;&nbsp;&nbsp; {&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;br>&nbsp;&nbsp;&nbsp; }&lt;br>}&lt;/p></span></code></pre></td></tr></table></div></figure>
+
+
+<p>Now when you inherit from Specification, you are forced to provide implementations of EstablishContext() and When().&nbsp; I also wrap the When() in a try/catch so that you can do things like Assert.WasThrown(&#8230;);</p>
+
+
+<h3>The BDD Journey</h3>
+
+
+<p>I&#8217;m still a BDD newbie, but I&#8217;m now sold on it&#8217;s organizational structure and it&#8217;s ability to connect tests back to actual requirements of the system.&nbsp; It provides a clear picture of how to group tests &amp; setup behaviors and combined with the
+new RhinoMocks AAA syntax, makes my tests much easier to read.</p>
+
+
+<p>The tipping point for me was attending <a href="http://codebetter.com/blogs/raymond.lewallen/" target="_blank">Raymond Lewallen</a>&#8217;s BDD talk at <a href="http://techfests.com/tulsa/2008" target="_blank">Tulsa TechFest</a>.&nbsp; I recorded the first hour of it, and <a href="http://www.viddler.com/explore/PhatBoyG/videos/1/" target="_blank">it&#8217;s available up on Viddler</a>.&nbsp; I hope this helps more people understand BDD.&nbsp; I&#8217;ve seen presentations like this before, but it took some practice (and failure!) on my own time to start to see some speed bumps.&nbsp; With this knowledge I was able to ask some direct questions and get (gasp!) direct answers.</p>
+
+
+<p>While I cannot justify going back and changing 500 or so unit tests to this form, I will ensure that I start writing BDD style specifications for my new production code moving forward. </p>
+
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -531,76 +637,6 @@ error at runtime.</p></li>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/2008/08/net-dojo-augusts-alt-net-geek-dinner/">.NET Dojo & August&#8217;s ALT.NET Geek Dinner</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2008-08-26T00:00:00-05:00" pubdate data-updated="true">Aug 26<span>th</span>, 2008</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><em>Are you ready for the Dojo?</em></p>
-
-
-<p><img src="/images/flyingsidekick.jpg" alt="photo by kaibara87 "  border="0" /><br><em>(</em><a href="http://www.flickr.com/photos/kaibara/247465109/" target="_blank"><em>picture source</em></a><em>)</em></p>
-
-
-<p>Whew!&nbsp; I’ve been busy lately!&nbsp; I’ve been wrapping up the content for the .NET Dojo class this Thursday (cutting it close, I know!).&nbsp; If you’re going to the class, you can get a jump start by grabbing all of the lab material at the google code site here:&nbsp; <a href="http://code.google.com/p/dojoblog">http://code.google.com/p/dojoblog</a>.</p>
-
-
-<p>I created this site, called DojoBlog to reflect the sample project it contains, to allow attendees and anyone else interested to download the code and play with it.&nbsp; Keep in mind that the code may change last minute, so do a fresh update just before coming to class.</p>
-
-
-<p>To download it you’ll need a subversion client, such as <a href="http://tortoisesvn.net/" target="_blank">TortoiseSVN</a>.&nbsp; The direct link to the repository is <a href="about:svn%20checkout%20http://dojoblog.googlecode.com/svn/trunk/" target="_blank">here</a>.</p>
-
-
-<p>If you don’t have/want a subversion client, don’t worry.&nbsp; We’ll have the material ready on some USB sticks to circle around.&nbsp; Looking forward to seeing some of you there?&nbsp; <strong>Remember, it’s this Thursday, from 1pm to 4pm.</strong></p>
-
-
-<p><b>UPDATE: I zipped up the material and <a href="http://code.google.com/p/dojoblog/downloads/list">released it</a> on the google code site.</b><br><strong></strong></p>
-
-
-<p><img src="/images/pizza.jpg" alt="Photo by fooey"  border="0" /><br><em>(</em><a href="http://www.flickr.com/photos/fooey/414244292/" target="_blank"><em>picture source</em></a><em>)</em><font color="#0000ff"></font></p>
-
-
-<p><font color="#0000ff"></font>And after that, why not attend our August ALT.NET Geek Dinner?&nbsp; We’re holding it immediately after the .NET Dojo, so feel free to drop by, eat some good pizza, drink some good beer, and geek out on random topics.</p>
-
-
-<p>Our venue is still <a href="http://www.starpizza.net/" target="_blank">Star Pizza</a>, located at 2111 Norfolk (<a href="http://maps.google.com/maps?f=q&amp;hl=en&amp;geocode=&amp;q=2111+Norfolk+St,+Houston,+TX+77098&amp;sll=37.0625,-95.677068&amp;sspn=42.987658,59.853516&amp;ie=UTF8&amp;ll=29.733079,-95.411196&amp;spn=0.011552,0.014613&amp;z=16&amp;iwloc=addr" target="_blank">map</a>).&nbsp; <strong>The dinner starts at 6pm and ends around 8:30pm.</strong>&nbsp; This month, we’ll discuss:</p>
-
-
-<ul><li>Code Clarity / Fluent Interfaces / Code without comments</li><li>Model View Presenter pattern</li><li>Continuous Integration</li></ul>
-
-
-<p>Will you be there?&nbsp; Let us know in the comments!</p>
-
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/14/">&larr; Older</a>
@@ -622,6 +658,10 @@ error at runtime.</p></li>
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2012/07/houston-code-camp-call-for-speakers/">Houston Code Camp - Call for Speakers</a>
+      </li>
+    
+      <li class="post">
         <a href="/2012/07/serving-assets-from-s3-on-heroku/">Serving Assets from S3 on Heroku</a>
       </li>
     
@@ -635,10 +675,6 @@ error at runtime.</p></li>
     
       <li class="post">
         <a href="/2012/01/careful-with-block-based-notification-handlers/">Careful With Block-Based Notification Handlers</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2011/12/formatting-json-from-terminal/">Formatting JSON From Terminal</a>
       </li>
     
   </ul>
