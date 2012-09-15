@@ -5,29 +5,29 @@ require 'rack/rewrite'
 # The project root directory
 $root = ::File.dirname(__FILE__)
 
-use Rack::Rewrite do
- r301 %r{.*}, 'http://benscheirman.com$&', :if => Proc.new {|rack_env|
-   rack_env['SERVER_NAME'] != 'benscheirman.com' && ENV['RACK_ENV'] == 'production'
- }
-
-  # redirect /blog/2004/10/* to just /2004/10/*
-  r301 %r{^/blog/(\d{4}/\d{2}/.*)$}, '/$1'
-
-  # redirect /blog/2004/10/15/* to just /2004/10/*
-  r301 %r{^/(\d{4}/\d{2}/)\d{2}/(.*)$}, '/$1$2'
-
-  # redirect wordpress feed request to the new url
-  r301 '/feed', '/atom.xml'
-
-  r301 '/about', '/about-me'
-
-  # redirect giggle touch url
-  r301 /^\/giggle-?touch$/, 'http://appsites.heroku.com/giggletouch'
-
-  # remove trailing slashes
-  r301 %r{^(.+)/$}, '$1'
-
-end
+# use Rack::Rewrite do
+#  r301 %r{.*}, 'http://benscheirman.com$&', :if => Proc.new {|rack_env|
+#    rack_env['SERVER_NAME'] != 'benscheirman.com' && ENV['RACK_ENV'] == 'production'
+#  }
+# 
+#   # redirect /blog/2004/10/* to just /2004/10/*
+#   r301 %r{^/blog/(\d{4}/\d{2}/.*)$}, '/$1'
+# 
+#   # redirect /blog/2004/10/15/* to just /2004/10/*
+#   r301 %r{^/(\d{4}/\d{2}/)\d{2}/(.*)$}, '/$1$2'
+# 
+#   # redirect wordpress feed request to the new url
+#   r301 '/feed', '/atom.xml'
+# 
+#   r301 '/about', '/about-me'
+# 
+#   # redirect giggle touch url
+#   r301 /^\/giggle-?touch$/, 'http://appsites.heroku.com/giggletouch'
+# 
+#   # remove trailing slashes
+#   r301 %r{^(.+)/$}, '$1'
+# 
+# end
 
 class SinatraStaticServer < Sinatra::Base
 
