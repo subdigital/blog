@@ -8,6 +8,7 @@ end
 gem 'sinatra', '~> 1.3.3'
 gem 'rake'
 gem 'rack', '~> 1.4.1'
+gem 'rack-rewrite'
 gem 'jekyll', '~> 0.12'
 gem 'rdiscount', '~> 1.6.8'
 gem 'pygments.rb', '~> 0.3.4'
