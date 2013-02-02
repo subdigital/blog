@@ -14,6 +14,8 @@ A typical 20 minute screencast of mine will eat up nearly 8 gigabytes before enc
 On my previous MacBook Pro I opted to remove the superdrive and install a 2nd 7200 RPM drive for larger storage.  This worked well, but the retina MacBook Pro has no such capability,
 so I went on the lookout for an external drive to store NSScreencast videos.
 
+<!--more-->
+
 ## Requirement #1: Speed
 
 The first requirement was that the drive had to be fast.  Ideally I'd record directly to the drive and then I'd be free to move it over to the iMac and just plug it in.
