@@ -61,7 +61,7 @@ I used the freely available [AJA Disk Test](http://www.aja.com/en/products/softw
 
 ### Western Digital Raptor 320GB 7200 RPM drive via USB 2.0
 
-This was obviously the slowest of the bunch, but for comparison, this is my baseline.  The drive boasted a write speed of **38 MB/s** and a write speed of **41 MB/s**.
+This was obviously the slowest of the bunch, but for comparison, this is my baseline.  The drive boasted a write speed of **38 MB/s** and a read speed of **41 MB/s**.
 
 ![WD 7200 RPM drive results](/images/raptor-aja-disk-test.png)
 
