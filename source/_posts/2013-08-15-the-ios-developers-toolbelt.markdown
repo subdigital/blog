@@ -12,6 +12,8 @@ In software it is the same. You can measure a software developer by how they use
 
 With that in mind, I present to you a _gigantic_ list of tools.  Some of these I use daily, others I see potential in.  If you have more tools you'd like to see here, just make sure to add a comment.
 
+<!--more-->
+
 I tried to categorize these the best I can.  Some of the entries are websites, some are back-end services, but most are apps that you install.  Not all of the apps are free, so I'll make a note with a _$_ to denote that an app costs money.
 
 And without further ado, we'll start from the beginning of any project, and that 
