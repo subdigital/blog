@@ -1,10 +1,13 @@
 ---
 layout: post
-title: "The iOS Developer's Toolbelt"
+title: "75 Essential Tools for iOS Developers"
+permalink: /2013/08/the-ios-developers-toolbelt
 date: 2013-08-15 13:56
 comments: true
 categories: iOS
+
 ---
+
 
 If you were to go to a master woodworker's shop, you'd invariably find a plethora of tools that he or she uses to accomplish various tasks.
 
@@ -169,13 +172,18 @@ Of course you want to be able to see how much money you're making on your app, r
 - [App Viz 2](http://www.ideaswarm.com/AppViz2.html) ($) - a really useful Mac app for tracking sales of your apps.  You run it locally and it logs in and downloads your sales reports.
 - [App Annie](http://www.appannie.com/) - an online sales reporting tool.  I'm less comfortable giving my credentials to iTunes to a 3rd party, but it does keep the reports up to date for you so you don't have to run an app locally.
 
-And there you have it.  A gigantic *wall of tools*.  Hopefully you learned about a few new ones you can add to your arsenal.  If you have suggestions of tools I'm missing here, make your pitch in the comments!
-
 ## Grab Bag
 
 These tools don't have a defined category above, but deserve a mention nonetheless.
 
 - [Quick Radar](http://www.quickradar.com/) - Submitting bug reports to Apple is our only way of making their tools better.  If you're frustrated by the lack of a feature, *you should be submitting a bug report*.  If you come across a bug, *you should be submitting a bug report*.  One has no right to complain if they have not yet filed a radar :).  With that in mind, submitting bug reports via [bugreporter](http://bugreporter.apple.com) feels like a trip back to 1995.  Quick Radar is an awesome little app that makes submitting bug reports super easy.  Sports automatic posting to open radar so others can see it, in addition to tweeting, and posting to App.net.  I use this app several times per week.
+
+And there you have it.  A gigantic *wall of tools*.  Hopefully you learned about a few new ones you can add to your arsenal.  If you enjoyed this post, please check out my iOS screencasts over at [NSScreencast](http://nsscreencast.com).
+
+[![NSScreencast - Weekly bite-sized videos on iOS development.](/images/nsscreencast-footer.png)](http://nsscreencast.com)
+
+
+
 
 
 
