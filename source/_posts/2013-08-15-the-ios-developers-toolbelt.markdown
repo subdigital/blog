@@ -51,6 +51,7 @@ something quickly.
 - [PaintCode](http://paintcodeapp.com) ($) - A vector-based drawing tool that exports your artwork as the equivalent Core Graphics source code.  Awesome for learning how Core Graphics drawing works, but also incredibly handy if you want your drawing to be dynamic.  See my [screencast on PaintCode](http://nsscreencast.com/episodes/80-paintcode) for a live demo.
 - [Edge Insets](https://itunes.apple.com/us/app/edge-insets/id622650418?mt=12) ($) - A simple tool that helps you define your edge insets for repeatable images.  Available on the Mac App Store.
 - [LiveView](http://www.zambetti.com/projects/liveview/) - A remote screen viewer for iOS, making it easy to immediately see your designs on a device.  *Thanks, [@_funkyboy](http://twitter.com/_funkyboy)*!
+- [Skala Preview](http://bjango.com/mac/skalapreview/) ($) - Another excellent tool for quickly showing your designs off on a real device.  The guys at Bjango are awesome and this app is deserving of the price.  *Thanks, jn40*!
 
 ## Source Control
 
@@ -170,6 +171,11 @@ Of course you want to be able to see how much money you're making on your app, r
 
 And there you have it.  A gigantic *wall of tools*.  Hopefully you learned about a few new ones you can add to your arsenal.  If you have suggestions of tools I'm missing here, make your pitch in the comments!
 
+## Grab Bag
+
+These tools don't have a defined category above, but deserve a mention nonetheless.
+
+- [Quick Radar](http://www.quickradar.com/) - Submitting bug reports to Apple is our only way of making their tools better.  If you're frustrated by the lack of a feature, *you should be submitting a bug report*.  If you come across a bug, *you should be submitting a bug report*.  One has no right to complain if they have not yet filed a radar :).  With that in mind, submitting bug reports via [bugreporter](http://bugreporter.apple.com) feels like a trip back to 1995.  Quick Radar is an awesome little app that makes submitting bug reports super easy.  Sports automatic posting to open radar so others can see it, in addition to tweeting, and posting to App.net.  I use this app several times per week.
 
 
 
