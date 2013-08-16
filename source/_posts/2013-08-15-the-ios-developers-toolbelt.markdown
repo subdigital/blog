@@ -36,7 +36,7 @@ features.  Subscribe to their weekly newsletter; all signal, little noise.
 copy.
 - [Dribbble](http://www.dribbble.com/search?q=ios) - Some of the best digital designers post up
 their work for all to see. A treasure-trove of designs to look at.
-- [Capptivate](http://benscheirman.com/2013/08/the-ios-developers-toolbelt/) - a gallery of inspirational designs.  Some contain animations.  *Thanks, [@joaopmaia](http://twitter.com/joaopmaia)*!
+- [Capptivate](http://capptivate.co/) - a gallery of inspirational designs.  Some contain animations.  *Thanks, [@joaopmaia](http://twitter.com/joaopmaia)*!
 
 ## Design
 
