@@ -33,6 +33,7 @@ features.  Subscribe to their weekly newsletter; all signal, little noise.
 copy.
 - [Dribbble](http://www.dribbble.com/search?q=ios) - Some of the best digital designers post up
 their work for all to see. A treasure-trove of designs to look at.
+- [Capptivate](http://benscheirman.com/2013/08/the-ios-developers-toolbelt/) - a gallery of inspirational designs.  Some contain animations.  *Thanks, [@joaopmaia](http://twitter.com/joaopmaia)*!
 
 ## Design
 
@@ -49,6 +50,7 @@ something quickly.
 - [Fontastic Icons for iOS](https://github.com/AlexDenisov/FontasticIcons) - An open source set of classes for utilizing icon fonts, such as [Font Awesome](http://fortawesome.github.io/Font-Awesome/) in your iOS app.  Quickly and easily have an icon in whatever pixel dimensions you require.  Since fonts by nature can be scaled up and down with ease, this makes a really nice way to ship & use your icons without having to export multiple versions for the sizes you require.
 - [PaintCode](http://paintcodeapp.com) ($) - A vector-based drawing tool that exports your artwork as the equivalent Core Graphics source code.  Awesome for learning how Core Graphics drawing works, but also incredibly handy if you want your drawing to be dynamic.  See my [screencast on PaintCode](http://nsscreencast.com/episodes/80-paintcode) for a live demo.
 - [Edge Insets](https://itunes.apple.com/us/app/edge-insets/id622650418?mt=12) ($) - A simple tool that helps you define your edge insets for repeatable images.  Available on the Mac App Store.
+- [LiveView](http://www.zambetti.com/projects/liveview/) - A remote screen viewer for iOS, making it easy to immediately see your designs on a device.  *Thanks, [@_funkyboy](http://twitter.com/_funkyboy)*!
 
 ## Source Control
 
@@ -88,7 +90,7 @@ Ahhh, documentation, everyone's favorite topic.  Even still, documentation is re
 
 Yes, there's only one tool listed here.  I didn't want to include actual 3rd party libraries, as that would be a different list entirely.  When it comes to dependency management, there's only one game in town:
 
-- [CocoaPods](http://cococapods.org) - The essential tool for Objective-C projects.  Allows you to quickly & easily integrate 3rd party libraries into your application.  It does so by creating a second static library project and automatically links this with your projects.  There are thousands of pods available, and it's easy to add support for libraries that you don't own (or perhaps are private).  I use CocoaPods in every single project I work on.
+- [CocoaPods](http://cocoapods.org/) - The essential tool for Objective-C projects.  Allows you to quickly & easily integrate 3rd party libraries into your application.  It does so by creating a second static library project and automatically links this with your projects.  There are thousands of pods available, and it's easy to add support for libraries that you don't own (or perhaps are private).  I use CocoaPods in every single project I work on.
 
 ## Diagnostics & Debugging
 
