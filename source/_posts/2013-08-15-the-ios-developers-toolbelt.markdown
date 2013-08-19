@@ -112,13 +112,13 @@ At some point our app is in the field and we need to understand better what's go
 - [ImageAlpha](http://pngmini.com/) - A Mac app that allows you to convert a 24-bit PNG with transparency to an 8-bit PNG with an alpha channel.  Typically 8-bit PNGs don't have an alpha channel, so if your image can be represented in 8-bits (say, a solid color button) you can save a lot on storage by converting the 24-bit PNG to 8-bit using ImageAlpha.
 - [ImageOptim](http://imageoptim.com/) - Another Mac app that compresses PNGs in order to save space.  Most PNG files can shave off a few % of the size, and sometimes you'll shrink the files by 30% or more.  Smaller images mean smaller app sizes and less memory used to load them at runtime.
 - [Prepo](http://wearemothership.com/work/prepo) - A little Mac app that can quickly resize artwork in all the various sizes you might need.  Just drag a large icon file (say, 1024x1024) onto Prepo and watch it spit out 512x512 iTunesArtwork, 114x114 Icon@2x.png, and all the other sizes & filenames you'd expect.
-- [Slender](http://dragonforged.com/slender/) - an awesome app that analyzes your app and finds all sorts of problems, such as missing retina artwork, unused images, image that could benefit from compression and more.  Shave kilobytes off of your iPhone app by shedding unused images with Slender.
+- [Slender](http://dragonforged.com/slender/) ($) - an awesome app that analyzes your app and finds all sorts of problems, such as missing retina artwork, unused images, image that could benefit from compression and more.  Shave kilobytes off of your iPhone app by shedding unused images with Slender.
 
 ## Core Data
 
 - [Mogenerator](http://rentzsch.github.com/mogenerator/) - still a super useful tool for generating smart subclasses of your `NSManagedObject`s in your Core Data model.  Some use Xcode for this, and resort to manually subclassing or creating categories in order to add logic to the models.  Mogenerator runs as a quick pre-compile script to generate subclasses for you to use.  It does this by creating an underscored version (`_User`) and a regular one for you to modify (`User`).
-- [Base](http://menial.co.uk/software/base/) - there will come a time when you need to inspect your actual Core Data sqlite database to see what's going on.  You can use the `sqlite3` command line tool, but Base offers a nice looking GUI browser.  Just don't vomit when you see the database schema that Core Data created for you.
-- [Core Data Editor](http://christian-kienle.de/CoreDataEditor) - for more advanced data anlysis, exploration, and modification you can use Core Data Editor.  This app understands Core Data, so you're working directly with the entities instead of database rows.
+- [Base](http://menial.co.uk/software/base/) ($) - there will come a time when you need to inspect your actual Core Data sqlite database to see what's going on.  You can use the `sqlite3` command line tool, but Base offers a nice looking GUI browser.  Just don't vomit when you see the database schema that Core Data created for you.
+- [Core Data Editor](http://christian-kienle.de/CoreDataEditor) ($) - for more advanced data anlysis, exploration, and modification you can use Core Data Editor.  This app understands Core Data, so you're working directly with the entities instead of database rows.
 
 ## Back-end Services
 
