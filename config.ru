@@ -5,6 +5,11 @@ require 'rack/rewrite'
 # The project root directory
 $root = ::File.dirname(__FILE__)
 
+
+use Rack::Rewrite do
+  r301 '/feed', '/atom.xml'
+end
+
 # use Rack::Rewrite do
 #  r301 %r{.*}, 'http://benscheirman.com$&', :if => Proc.new {|rack_env|
 #    rack_env['SERVER_NAME'] != 'benscheirman.com' && ENV['RACK_ENV'] == 'production'
