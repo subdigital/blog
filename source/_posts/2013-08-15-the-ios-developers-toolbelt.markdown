@@ -170,7 +170,7 @@ The following are all various ways of performing end-to-end acceptance tests.  T
 Of course you want to be able to see how much money you're making on your app, right?  There are a few solutions for this, but here are a couple that work well:
 
 - [App Viz 2](http://www.ideaswarm.com/AppViz2.html) ($) - a really useful Mac app for tracking sales of your apps.  You run it locally and it logs in and downloads your sales reports.
-- [App Annie](http://www.appannie.com/) - an online sales reporting tool.  I'm less comfortable giving my credentials to iTunes to a 3rd party, but it does keep the reports up to date for you so you don't have to run an app locally.
+- [App Annie](http://www.appannie.com/) - an online sales reporting tool.  I'm less comfortable giving my credentials to iTunes to a 3rd party, but it does keep the reports up to date for you so you don't have to run an app locally.  *In the comments, Josh Brown suggests creating a different user for analytics in iTunes Connect, which is a really good idea.*
 
 ## Grab Bag
 
