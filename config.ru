@@ -8,6 +8,8 @@ $root = ::File.dirname(__FILE__)
 
 use Rack::Rewrite do
   r301 '/feed', '/atom.xml'
+  r301 '/about', '/about-me'
+  r301 %r{^(.+)/$}, '$1' # remove trailing slashes
 end
 
 # use Rack::Rewrite do
