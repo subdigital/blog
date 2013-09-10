@@ -4,6 +4,8 @@
 @import 'code';
 
 $dateColor: #A4ADB6;
+$bodyTextColor: rgb(40, 40, 35);
+$quoteTextColor: lighten($bodyTextColor, 20%);
 $lineColor: lighten($dateColor, 25%);
 $metaColor: $dateColor;
 $navLinkColor: rgb(89, 95, 121);
@@ -11,15 +13,15 @@ $bodyBgColor: #fdfdfe;
 $bannerTextColor: #f44;
 $linkColor: blue;
 $linkHighlight: $bannerTextColor;
-$sidebarColor: darken(#fff, 4%);
+$sidebarColor: darken(#fff, 2%);
 
 body {
   background-color: $bodyBgColor;
-  color: rgb(40, 40, 35);
+  color: $bodyTextColor;
   font-size: 18px;
-  font-family: 'Rosario', sans-serif;
+  font-family: 'Avenir', 'Rosario', sans-serif;
   margin: 0em 3em;
-  line-height: 2em;
+  line-height: 1.8em;
   max-width: 960px;
 }
 
@@ -122,8 +124,59 @@ a {
   text-decoration: none;
 
   &:hover, &:active {
-    text-decoration: underline;
     color: $linkHighlight;
+  }
+}
+
+blockquote {
+  margin: 1em 2em;
+  font-style: italic;
+  border-left: solid 1px #eee;
+  background-color: darken(#fff, 2%);
+  line-height: 1.4em;
+  padding: 1em;
+  font-size: 0.9em;
+  color: $quoteTextColor;
+}
+
+#blog-archives {
+  h1 {
+    clear: both;
+    font-size: 1.1em;
+    margin: 10px 0;
+    a {
+      color: darken($navLinkColor, 20%);
+      &:hover, &:active {
+        color: $linkHighlight;
+      }
+    }
+  }
+
+  h2 {
+    clear: both;
+    float: left;
+    background-color: #eee;
+    padding: 6px 14px;
+    margin-top: 20px;
+    margin-bottom: 12px;
+    color: #aaa;
+    @include border-radius(20px);
+  }
+
+  article {
+    margin: 0;
+    time {
+      color: $metaColor;
+      float: left;
+      padding-right: 8px;
+    }
+  }
+
+  footer {
+    padding: 0;
+    margin-bottom: 12px;
+    color: $metaColor;
+    font-size: 0.8em;
   }
 }
 
@@ -140,6 +193,7 @@ article {
     color: $dateColor;
     font-size: 0.8em;
   }
+
   ul {
     margin-left: 10px;
     list-style-type: disc;
