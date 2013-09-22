@@ -7,6 +7,8 @@ sharing: false
 footer: true
 ---
 
+{% img "Me with Matz" /images/ben_with_matz.jpeg %}
+
 My name is Ben Scheirman.  I am the Director of Development at ChaiONE in Houston, TX.
 
 I enjoy writing great software using Ruby and Objective-C.  I’m a [regular speaker](/speaking) at developer conferences all over the world.
@@ -23,7 +25,7 @@ I enjoyed the process of writing iPhone apps, and my part time interest with Rub
 I live in Houston with my wife and five beautiful children.  When I’m not working, I’m usually hanging out with my family, programming for fun, or playing guitar.
 Thanks for looking!
 
-{% img foo /images/family.png %}
+{% img family /images/family.png %}
 
 <table cellspacing="10">
   <tr>
