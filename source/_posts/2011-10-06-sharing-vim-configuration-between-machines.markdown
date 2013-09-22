@@ -30,7 +30,7 @@ The next step was to come up with an installer script that would symlink
 these files on a new machine.  I made sure to move existing vim files to
 a temporary filename so that I wouldn't lose anything accidentally.
 
-```
+```bash
     set -o errexit
 
     function confirm()

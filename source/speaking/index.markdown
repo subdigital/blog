@@ -22,12 +22,12 @@ footer: true
 * Mdevcon (March 2013, Amsterdam)
 * DevTeach Vancouver (May 2011)
 * Houston Tech Fest (October 15th, 2011)
-  Introducing a new Rails Feature from Beginning to End
-  Rails Intrigue
-  Stop Using Git Like Subversion
+  * Introducing a new Rails Feature from Beginning to End
+  * Rails Intrigue
+  * Stop Using Git Like Subversion
 * Houston Code Camp 2011 (August 20th, 2011)
-  Stop Using Git Like Subversion
-  CoffeeScript & Sass - Rails' New Best Friends
+  * Stop Using Git Like Subversion
+  * CoffeeScript & Sass - Rails' New Best Friends
 * Lone Star Ruby Conference (August 16th, 2011)
   * Rails 3.1 Whirlwind Tour
 * Houston iPhone Developer’s Meetup (July 2011)
