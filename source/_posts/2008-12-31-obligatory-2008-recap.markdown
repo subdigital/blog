@@ -6,7 +6,9 @@ comments: false
 link: false
 ---
 
-What kind of blogger would I be if I didn't do a recap of the year?  <em>Well I guess since I've never done this before, not a very good one.</em>  2008 was a phenomenal year. <h2></h2> <h2>Me</h2> 
+What kind of blogger would I be if I didn't do a recap of the year?  <em>Well I guess since I've never done this before, not a very good one.</em>  2008 was a phenomenal year. 
+
+## Me
 
 I started out the year doing my <a href="/2007/12/asp-net-mvc-tour-of-texas/">ASP.NET MVC Tour of Texas</a>, where I visited San Antonio, Austin, Fort Worth, and Houston talking about ASP.NET MVC.  It must have gotten some notice, because shortly after I was invited to be a co-author for <a href="http://manning.com/palermo" target="_blank">ASP.NET MVC in Action</a>.  The book is getting close to being completed, so expect to see it on store shelves in the coming months. 
 
@@ -20,11 +22,15 @@ In October <a href="/2008/10/recent-developments/">I was given the Microsoft MVP
 
 I attended <a href="http://kaizenconf.com/" target="_blank">KaizenConf</a> in November, which was really great.  Every time I go to one of these conferences I feel energized to go out and do good in the world.  It sounds cheesy, but it's really great.  I hope that others find their way out of the mainstream marketing jungle of conferences and attend one of these open spaces. 
 
-In December, my wife and I found out that <a href="/2008/12/hello-world-x-2/">we are having twins</a>!  For those counting, we'll now have a full basketball team :).  Needless to say 2009 will be a busy year. <h2>The blog</h2> 
+In December, my wife and I found out that <a href="/2008/12/hello-world-x-2/">we are having twins</a>!  For those counting, we'll now have a full basketball team :).  Needless to say 2009 will be a busy year. 
+
+## The blog
 
 This blog has gone under some transition too.  Originally I was using <a href="http://dasblog.info" target="_blank">dasBlog</a> hosted at <a href="http://webhost4life.com" target="_blank">WebHost4Life</a> and things worked pretty well.  I wanted to have some more control over what I could do with my server, so I ordered a VPS plan with VPS Land.  That turned out to be a big mistake.   
 
-I quickly moved over to a VPS over at <a href="http://godaddy.com" target="_blank">GoDaddy</a> which worked out okay for most of the year.  It turns out their domain service is better than their hosting service.  My blog kept making it run out of memory, so I moved my blog over to <a href="http://www.orcsweb.com" target="_blank">Orcsweb</a>.  I also ported the content over to Graffiti, and so far it has been smooth sailing ever since.  I still host my <a href="http://silvia.flux88.com" target="_blank">wife's</a> and <a href="http://heather.flux88.com" target="_blank">sister's</a> blogs on GoDaddy, as well as my <a href="http://www.cripplecreekwoodworks.com" target="_blank">uncle's furniture business</a>. <h2>What's in store for 2009?</h2> 
+I quickly moved over to a VPS over at <a href="http://godaddy.com" target="_blank">GoDaddy</a> which worked out okay for most of the year.  It turns out their domain service is better than their hosting service.  My blog kept making it run out of memory, so I moved my blog over to <a href="http://www.orcsweb.com" target="_blank">Orcsweb</a>.  I also ported the content over to Graffiti, and so far it has been smooth sailing ever since.  I still host my <a href="http://silvia.flux88.com" target="_blank">wife's</a> and <a href="http://heather.flux88.com" target="_blank">sister's</a> blogs on GoDaddy, as well as my <a href="http://www.cripplecreekwoodworks.com" target="_blank">uncle's furniture business</a>. 
+
+## What's in store for 2009?
 
 I have a few goals for 2009 that I'd like to publicly share, if for no other reason than to really commit to it.  I'd like to wrap up the book.  It is time consuming like you wouldn't believe, and I'll be glad when it's over.   
 
