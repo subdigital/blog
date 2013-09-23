@@ -2,8 +2,6 @@
   Add content to be output at the bottom of each page. (You might use this for analytics scripts, for example)
 {% endcomment %}
 
-<script>document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1"></' + 'script>')</script>
-
 <script type="text/javascript">
   var _gauges = _gauges || [];
   (function() {
@@ -18,3 +16,17 @@
   })();
 </script>
 
+<script type="text/javascript">
+  $("a.nav-toggle").click(function(e) {
+      e.preventDefault();
+      //$("nav").css({display: "block;"});
+      console.log("Click!");
+      if ( $("nav").attr("class").indexOf("nav-open") == -1 ) {
+        $("nav").css({display: "block"});
+        $("nav").addClass("nav-open");
+      } else {
+        $("nav").css({display: "none"});
+        $("nav").removeClass("nav-open");
+      }
+  });
+</script>

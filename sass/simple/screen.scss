@@ -1,20 +1,9 @@
-@import "compass";
+@import 'compass';
 @include global-reset;
 @include reset-html5;
+@import 'includes';
 @import 'code';
-
-$dateColor: #A4ADB6;
-$bodyTextColor: rgb(45, 45, 40);
-$quoteTextColor: lighten($bodyTextColor, 20%);
-$lineColor: lighten($dateColor, 25%);
-$metaColor: $dateColor;
-$navLinkColor: lighten(rgb(89, 95, 121), 15%);
-$bodyBgColor: #fdfdfe;
-$bannerTextColor: #f44;
-$linkColor: blue;
-$linkHighlight: $bannerTextColor;
-$sidebarColor: darken(#fff, 4%);
-$sidebarWidth: 200px;
+@import 'mobile';
 
 @mixin roundGreyLink {
   display: inline-block;
@@ -40,7 +29,7 @@ body {
   color: $bodyTextColor;
   font-size: 20px;
   font-family: 'Avenir', 'Helvetica Nueue', 'Helvetica', 'Arial', sans-serif;
-  margin: 0em 3em;
+  margin: 0em 3em 3em 0;
   line-height: 32px;
   max-width: 960px;
 }
@@ -126,6 +115,10 @@ nav {
   }
 }
 
+.nav-toggle {
+  display: none;
+}
+
 #content {
   padding-top: 2em;
 }
@@ -151,7 +144,7 @@ div.pagination {
 }
 
 #main {
-  margin-left: 200px;
+  margin-left: 240px;
 }
 
 h1 {
