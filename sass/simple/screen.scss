@@ -1,0 +1,324 @@
+@import 'compass';
+@include global-reset;
+@include reset-html5;
+@import 'includes';
+@import 'code';
+@import 'mobile';
+
+@mixin roundGreyLink {
+  display: inline-block;
+  background-color: #eee;
+  padding: 0px 14px;
+  font-size: 0.8em;
+  text-decoration: none;
+  text-align: center;
+  @include border-radius(14px);
+  color: #aaa;
+
+  transition: .25s;
+  -webkit-transition: .25s;
+
+  &:hover {
+    background-color: $bannerTextColor;
+    color: #fff;
+  }
+}
+
+body {
+  background-color: $bodyBgColor;
+  color: $bodyTextColor;
+  font-size: 20px;
+  font-family: 'Avenir', 'Helvetica Nueue', 'Helvetica', 'Arial', sans-serif;
+  margin: 0em 3em 3em 0;
+  line-height: 32px;
+  max-width: 960px;
+}
+
+p {
+  margin-bottom: 0.8em;
+}
+
+h1 {
+  font-family: 'Helvetica Nueue', sans-serif;
+}
+
+h2 {
+  font-weight: bold;
+  line-height: 1.5em;
+  font-size: 1.2em;
+  margin: .4em 0;
+}
+
+h3 {
+  font-weight: bold;
+}
+
+header {
+  &[role="banner"] {
+    margin:0;
+    left: 0;
+    top: 0;
+    position: fixed;
+    z-index: 999;
+    background-color: $sidebarColor;
+    padding-top: 48px;
+    padding-left: 20px;
+    padding-bottom: 20px;
+    width: $sidebarWidth - 20px;
+    h1 {
+      margin-bottom: 0em;
+      font-size: 1em;
+      line-height: 1.4em;
+    }
+    h1 a {
+      text-decoration: none;
+      color: $navLinkColor; //darken($sidebarColor, 25%); //$bannerTextColor;
+      &:hover, &:active {
+        color: $linkHighlight;
+      }
+    }
+    h2 {
+      margin: 0;
+      line-height: 1.0em;
+      font-size: 0.8em;
+      color: #ccc;
+    }
+  }
+}
+
+nav {
+  float: left;
+  width: $sidebarWidth - 60px;
+  left: 0;
+  top: 0;
+  margin-top: 90px;
+  height: 5000em;
+  position: fixed;
+  padding: 30px;
+  background-color: $sidebarColor;
+
+  a {
+    &:link, &:visited {
+      font-size: .7em;
+      text-decoration: none;
+      color: $navLinkColor;
+    }
+
+    &:hover, &:active {
+      text-decoration: underline;
+      color: $linkHighlight;
+    }
+  }
+
+  fieldset.mobile-nav {
+    display: none;
+  }
+}
+
+.nav-toggle {
+  display: none;
+}
+
+#content {
+  padding-top: 2em;
+}
+
+footer.site-footer {
+  margin-top: 3em;
+  text-align: center;
+  padding: 5em 0 1em 0;
+  font-size: 0.8em;
+  position: absolute;
+  left: 0;
+  right: 0;
+  color: #ddd;
+  a {
+    color: #aaa;
+  }
+}
+
+div.pagination {
+  a {
+    @include roundGreyLink;
+  }
+}
+
+#main {
+  margin-left: 240px;
+}
+
+h1 {
+  font-size: 2em;
+  font-weight: bold;
+  margin: .5em 0;
+}
+
+a {
+  color: $linkColor;
+  text-decoration: none;
+
+  &:hover, &:active {
+    color: $linkHighlight;
+  }
+}
+
+blockquote {
+  margin: 1em 2em;
+  font-style: italic;
+  border-left: solid 1px #eee;
+  background-color: darken(#fff, 2%);
+  line-height: 1.4em;
+  padding: 1em;
+  font-size: 0.9em;
+  color: $quoteTextColor;
+}
+
+#blog-archives {
+  h1 {
+    clear: both;
+    font-size: 0.8em;
+    line-height: 1em;
+    margin: 10px 0 0 0;
+    a {
+      color: darken($navLinkColor, 20%);
+      &:hover, &:active {
+        color: $linkHighlight;
+      }
+    }
+  }
+
+  h2 {
+    clear: both;
+    float: left;
+    font-size: 0.8em;
+    background-color: #eee;
+    padding: 4px 10px;
+    margin-top: 30px;
+    margin-bottom: 12px;
+    color: #aaa;
+    @include border-radius(16px);
+  }
+
+  article {
+    margin: 0;
+    margin-left: 30px;
+    padding: 0;
+    time {
+      color: $metaColor;
+      font-size: 0.6em;
+      float: left;
+      padding-right: 8px;
+    }
+    border: none;
+  }
+
+  footer {
+    padding: 0;
+    margin-bottom: 12px;
+    color: $metaColor;
+    font-size: 0.6em;
+    font-style: italic;
+    a {
+      color: $navLinkColor;
+    }
+  }
+}
+
+article {
+  margin-bottom: 4em;
+  padding-bottom: 2em;
+  border-bottom: solid 1px $lineColor;
+
+  header {
+    margin-bottom: 1em;
+    h1 a {
+      line-height: 36px;
+      transition: .25s;
+      color: darken($navLinkColor, 20%);
+    }
+  }
+  header p.meta {
+    color: $dateColor;
+    font-size: 0.8em;
+  }
+
+  ul {
+    margin: 18px 22px;
+    list-style-type: disc;
+  }
+
+  footer {
+    padding: 2em 0;
+    p.meta {
+      padding: 10px 0;
+      color: $metaColor;
+      font-size: 0.8em;
+
+      a.basic-alignment {
+        font-size: 0.8em;
+        display: inline-block;
+        float: left;
+        color: $navLinkColor;
+        &:hover {
+          color: $linkHighlight;
+        }
+      }
+
+      a.left {
+        float: left;
+      }
+
+      a.right {
+        float: right;
+      }
+    }
+
+    a[rel="full-article"] {
+      @include roundGreyLink;
+    }
+  }
+}
+
+
+#disqus_thread {
+  background-color: $sidebarColor;
+  padding: 2em;
+
+  ul.post-list {
+    li.post {
+      color: #eee;
+    }
+  }
+}
+
+#upcoming-presentations {
+  font-weight: bold;
+}
+
+#past-presentations {
+  border-top: solid 1px $lineColor;
+  margin-top: 2em;
+  padding-top: 2em;
+  font-weight: bold;
+  & + ul {
+    color: #777;
+    font-size: 0.7em;
+    li ul {
+      color: #999;
+      font-style: italic;
+      margin: 0;
+      margin-left: 30px;
+      list-style-type: circle;
+    }
+  }
+}
+
+table.contact {
+  border: none !important;
+  @include single-box-shadow(#999, 0px, 0px, 2px);
+  td {
+    background-color: $sidebarColor;
+    font-size: .8em;
+    padding: 8px 10px;
+  }
+}

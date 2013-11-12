@@ -1,0 +1,77 @@
+@import "compass";
+@import "github";
+
+$codeColor: darken(#f77, 40%);
+
+code {
+  font-family: Monaco, 'Consolas', monospace;
+  font-size: 0.8em;
+  color: $codeColor;
+}
+
+div.highlight {
+  background-color: #fff;
+  position: relative;
+  font-size: 0.8em;
+  line-height: 1.7em;
+  border: solid 1px #ddd;
+  padding: 10px 12px;
+  padding-left: 40px;
+  overflow: auto;
+  margin: 2em 0;
+
+  @include box-shadow(#ddd 0px 0px 8px);
+
+  table {
+  }
+
+  .gutter {
+    text-align: right;
+    color: #999;
+    font-family: Monaco, monospace;
+    font-size: 0.8em;
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    background-color: #eee;
+    padding: 10px 6px;
+  }
+
+
+  .line {
+    color: #000;
+  }
+}
+
+  // .javascript {
+  //   .line {
+  //     .p { color: #000; }
+  //     .s2 { color: #2e7d35; }
+  //     .o { color: #121; }
+  //     .mf { color: #103ffb; }
+  //     .mi { color: #103ffb; }
+  //     .kc { color: #103ffb; }
+  //   }
+  // }
+
+  // .objc {
+  //   .line {
+  //     font-size: 14px;
+
+  //     .k { color: #892462; }
+  //     .p { color: #000; }
+  //     .kt { color: #892462; }
+  //     .nf { color: #508187; }
+  //     .n { color: #6f41b1; }
+  //     .nl { color: #3d237f; }
+  //     .mf { color: #103ffb; }
+  //     .mi { color: #103ffb; }
+  //     .c1 { color: #2e7d35; }
+  //     .o { color: #000; }
+  //     .nv { color: #000; }
+  //     .nb { color: #892462; }
+  //     .s { color: #9b2320; }
+  //   }
+  // }
+// }

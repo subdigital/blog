@@ -1,3 +1,32 @@
 {% comment %}
   Add content to be output at the bottom of each page. (You might use this for analytics scripts, for example)
 {% endcomment %}
+
+<script type="text/javascript">
+  var _gauges = _gauges || [];
+  (function() {
+    var t   = document.createElement('script');
+    t.type  = 'text/javascript';
+    t.async = true;
+    t.id    = 'gauges-tracker';
+    t.setAttribute('data-site-id', '4f26d557844d525165000005');
+    t.src = '//secure.gaug.es/track.js';
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(t, s);
+  })();
+</script>
+
+<script type="text/javascript">
+  $("a.nav-toggle").click(function(e) {
+      e.preventDefault();
+      //$("nav").css({display: "block;"});
+      console.log("Click!");
+      if ( $("nav").attr("class").indexOf("nav-open") == -1 ) {
+        $("nav").css({display: "block"});
+        $("nav").addClass("nav-open");
+      } else {
+        $("nav").css({display: "none"});
+        $("nav").removeClass("nav-open");
+      }
+  });
+</script>
