@@ -8,6 +8,8 @@ categories:
 
 I'd put this off for far too long, but I finally released my [dotfiles on Github](https://github.com/subdigital/dotfiles).  Part of the reason it took me a while is I already had a syncing solution in Dropbox.  I'm still using Dropbox to synchronize between my own machines, but I now have them published on Github as well.  In addition, I wrote a handy script (with some inspiration from [Steve Harman's dotfile setup](https://github.com/stevenharman/config/blob/master/Rakefile)) that symlinks the files into the right spot on the target machine:
 
+<!-- more -->
+
 ```ruby
 require 'rubygems'
 require 'rake'
