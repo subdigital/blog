@@ -27,7 +27,7 @@ When on a server we have the same configuration so our processes run with rbenv 
 15 3 * * * cd /path/to/app && bundle exec rake do_stuff
 ```
 
-In this example we're trying to run the `do_stuff` rake task at 3:15 AM ever day.  This won't work because rake can't be found in the environment that cron runs under.  We can alter the command like this:
+In this example we're trying to run the `do_stuff` rake task at 3:15 AM every day.  This won't work because rake can't be found in the environment that cron runs under.  We can alter the command like this:
 
 ```
 15 3 * * * export PATH=/opt/rbenv/shims:/opt/rbenv/bin:/usr/bin:$PATH; eval "$(rbenv init -)"; cd /path/to/app && bundle exec rake do_stuff
