@@ -11,6 +11,8 @@ By now you've most likely heard about the [egregious SSL flaw](http://arstechnic
 Yesterday, Apple (finally) released 10.9.2 which addressed the flaw, as well as some other features.  Upon upgrading, I was 
 more than slightly frightened to see this error when trying to open [github.com](github.com):
 
+<!-- more -->
+
 ![](https://benpublic.s3.amazonaws.com/blog/github-ssl.png)
 
 Had I been compromised already?  I didn't see any other reports of this yesterday, so I just closed my laptop and hoped
