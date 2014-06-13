@@ -88,7 +88,7 @@ That just declares the operator's *position*, as in it's a operator *between* tw
 
 ```
 func =~ (input: String, pattern: String) -> Bool {
-  return Regex.new(pattern).test(input)
+  return Regex(pattern).test(input)
 }
 ```
 
