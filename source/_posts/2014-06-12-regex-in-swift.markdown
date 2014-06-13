@@ -32,7 +32,10 @@ This is much better than having to double escape backslashes (which are very com
 example with Objective-C:
 
 ```objc
-NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:@"\\s+\\w{4,10}\\s\\d+" options:0 error:nil];
+NSRegularExpression *regex = [NSRegularExpression 
+  regularExpressionWithPattern:@"\\s+\\w{4,10}\\s\\d+"
+                       options:0
+                         error:nil];
 ```
 
 Having to escape every backslash just hurts readability and I think that's reason enough to justify a literal syntax.  The other unfortunate part is the unecesary class creation. Surely when
@@ -94,8 +97,8 @@ The hard work was already done for us, all we had to do is wrap the elements and
 In the end, this results in a pretty damn readable regex test:
 
 ```
-let phone_number = "(800) 555-1111"
-if name =~ "(?\\d{3})?\\s\\d{3}-\\d{4}" {
+let phoneNumber = "(800) 555-1111"
+if phoneNumber =~ "(?\\d{3})?\\s\\d{3}-\\d{4}" {
   println("That looks like a valid US phone number")
 }
 ```
