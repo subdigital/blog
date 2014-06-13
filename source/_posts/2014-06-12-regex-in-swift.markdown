@@ -12,13 +12,16 @@ First off, the language is new and yes I've filed [a radar](http://openradar.app
 
 What I mean by regular expression literals is this (Ruby code):
 
-````ruby
+```ruby
 if name =~ /ski$/
   puts "#{name} is probably polish"
 end
 ```
 
-The idea is that if you just want a quick match, you can use the `=~` operator to just return the regex match given the following pattern.  The other aspect that is friendly is the `/pattern/` syntax
+<!-- more -->
+
+The idea is that if you just want a quick match, you can use the `=~` operator to just return the regex match given the following pattern. 
+The other aspect that is friendly is the `/pattern/` syntax
 which makes it very easy to type a regular expression without ceremony.  You don't have to escape anything except a literal forward slash, like this:
 
 ```ruby
@@ -42,7 +45,7 @@ Swift currently has no classes or syntax for regular expressions, which leaves y
 
 However, we can get close to what I describe above, using Swift's powerful operator support.  Consider a simple regular expression class like this:
 
-````swift
+```
 class Regex {
   let internalExpression: NSRegularExpression
   let pattern: String
@@ -58,11 +61,11 @@ class Regex {
     return matches.count > 0
   }
 }
-````
+```
 
 This is a dead simple wrapper around `NSRegularExpression` that makes a ton of assumptions, yes. Usage is way cleaner:
 
-```swift
+```
 if Regex("\\w{4}").test("ABCD") {
   println("matches pattern")
 }
@@ -74,27 +77,27 @@ We still have the unfortunate string representation of a pattern, but it's clean
 
 Given some prodding from [Step Christopher](https://twitter.com/RandomStep/status/476784959232163840) I decided to try to implement the operator myself. As it turns out, this is pretty simple:
 
-````swift
+```
 operator infix =~ {}
-````
+```
 
 That just declares the operator's *position*, as in it's a operator *between* two elements instead of before or after (like `++` might be). Next we declare a function using this operator:
 
-````swift
+```
 func =~ (input: String, pattern: String) -> Bool {
   return Regex.new(pattern).test(input)
 }
-````
+```
 
 The hard work was already done for us, all we had to do is wrap the elements and call the function we desired.
 
 In the end, this results in a pretty damn readable regex test:
 
-````swift
+```
 let phone_number = "(800) 555-1111"
 if name =~ "(?\\d{3})?\\s\\d{3}-\\d{4}" {
   println("That looks like a valid US phone number")
 }
-````
+```
 
 I think this is pretty awesome, and once Apple reads my radar and implements `/regex/` literal syntax, I'll be a happy camper.
