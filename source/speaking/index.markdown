@@ -11,11 +11,13 @@ footer: true
 
 ### Upcoming Presentations
 
-* [Mobile Developer Summit](http://www.developermarch.com/mds/) - Bangalore, India (Oct 10-11, 2013)
-* [CocoaConf Boston 2013](http://cocoaconf.com/boston-2013/home) (Oct 25-26, 2013)
+- [Philly Emerging Tech 2014](http://phillyemergingtech.com/2014), Philidelphia, PA - April 22-23, 2014
+- [CocoaConf Austin](http://cocoaconf.com/austin-2014/home), Austin, TX - April 4th-5th, 2014
 
 ### Past Presentations
 
+* CocoaConf Boston (October 2013)
+* Mobile Developer Summit (October 2013, Bangalore, India)
 * CocoaConf Portland (August 2013)
 * CocoaConf Dallas (April 2013)
 * CocoaConf Chicago (March 2013)
