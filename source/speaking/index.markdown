@@ -11,11 +11,14 @@ footer: true
 
 ### Upcoming Presentations
 
-- [Philly Emerging Tech 2014](http://phillyemergingtech.com/2014), Philidelphia, PA - April 22-23, 2014
-- [CocoaConf Austin](http://cocoaconf.com/austin-2014/home), Austin, TX - April 4th-5th, 2014
+- Houston iOS Meetup - Swift, 6/17
+- Cocoa Conf Boston 2014
+- Cocoa Conf Atlanta 2014
 
 ### Past Presentations
 
+- [Philly Emerging Tech 2014](http://phillyemergingtech.com/2014), Philidelphia, PA - April 22-23, 2014
+- [CocoaConf Austin](http://cocoaconf.com/austin-2014/home), Austin, TX - April 4th-5th, 2014
 * CocoaConf Boston (October 2013)
 * Mobile Developer Summit (October 2013, Bangalore, India)
 * CocoaConf Portland (August 2013)
