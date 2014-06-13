@@ -10,7 +10,7 @@ echo ""
 echo ""
 echo "===> Copying to server..."
 echo ""
-rsync -avz public/* void.flux88.com:/srv/www/benscheirman.com/
+rsync -avz public/* benscheirman.com:/srv/www/benscheirman.com/
 
 echo ""
 echo "===> Done."

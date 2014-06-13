@@ -38,7 +38,7 @@ NSRegularExpression *regex = [NSRegularExpression
                          error:nil];
 ```
 
-Having to escape every backslash just hurts readability and I think that's reason enough to justify a literal syntax.  The other unfortunate part is the unecesary class creation. Surely when
+Having to escape every backslash just hurts readability and I think that's reason enough to justify a literal syntax.  The other unfortunate part is the unnecesary class creation. Surely when
 you need more power it will be necessary to have a full class in place to support advanced needs.  But for common tasks (which are incredibly common in scripting languages) it seems
 overkill.
 
@@ -104,3 +104,16 @@ if phoneNumber =~ "(?\\d{3})?\\s\\d{3}-\\d{4}" {
 ```
 
 I think this is pretty awesome, and once Apple reads my radar and implements `/regex/` literal syntax, I'll be a happy camper.
+
+### Update
+
+A helpful [commenter on Hacker News](https://news.ycombinator.com/item?id=7890148) pointed me in a direction that is closer 
+to what I want, but using existing API:
+
+```
+if let match = name.rangeOfString("ski$", options: .RegularExpressionSearch) {
+  println("\(name) is probably polish")
+}
+```
+
+Indeed I was not aware of this, and looks quite helpful.
