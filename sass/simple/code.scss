@@ -9,6 +9,17 @@ code {
   color: $codeColor;
 }
 
+pre.shell {
+  font-family: Consolas, Inconsolata, monospace;
+  background-color: #333;
+  padding: 15px;
+  font-size: 0.8em;
+  color: #ddd;
+  line-height: 1.3em;
+  @include border-radius(4px);
+  margin-bottom: 10px;
+}
+
 div.highlight {
   background-color: #fff;
   position: relative;

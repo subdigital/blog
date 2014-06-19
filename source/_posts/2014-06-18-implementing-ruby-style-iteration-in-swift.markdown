@@ -6,8 +6,6 @@ comments: true
 categories: swift 
 ---
 
-# Ruby Style Iteration in Swift
-
 It's no secret I'm a fan of Ruby. Idiomatic Ruby iteration looks like this:
 
 ```ruby
@@ -18,13 +16,13 @@ end
 
 This outputs:
 
-```
+<pre class="shell">
 Iteration #1
 Iteration #2
 Iteration #3
 Iteration #4
 Iteration #5
-```
+</pre>
 
 You can also iterate over collections in this way:
 
@@ -38,11 +36,11 @@ end
 
 And of course the output is this:
 
-```
+<pre class="shell">
 Eating apples
 Eating bananas
 Eating cherries
-```
+</pre>
 
 In Swift, your main workhorse for iteration is the _for loop_. Using the same examples above, it would look like this in Swift:
 
@@ -85,7 +83,7 @@ That's pretty clean!  Let's implement the variant that yields `i` each time thro
 ```
 extension Int {
    func times...
-   
+
    func times(block: (Int) -> ()) -> Int {
      for i in 0..self {
        block(i)
@@ -110,7 +108,7 @@ Still pretty nice, and for simple loops, I give this a :thumbsup:.
 Using the same technique, we should be able to provide similar functionality to Arrays:
 
 ```
-extension Array<T> {
+extension Array {
 	func each(block: T -> ()) -> Array<T> {
 	  for item in self {
 	    block(item)
@@ -120,6 +118,8 @@ extension Array<T> {
 }
 ```
 
+_Note that the `T` type parameter comes from the initial `Array` definition._
+
 With that we can iterate over items like this:
 
 ```
@@ -127,5 +127,41 @@ With that we can iterate over items like this:
   println("House \(house)")
 }
 ```
-Pretty simple. But `Array` is not the only thing we can enumerate. What about other types that you can use in a `for` loop?
+Pretty simple. But `Array` is not the only thing we can enumerate. What about other types that you can use in a `for` loop, such as... `Dictionary`?
 
+Dictionaries have keys and values, so we'll iterate over the pair...
+
+```
+extension Dictionary {
+    func eachPair(block: (KeyType, ValueType) -> ()) -> Dictionary<KeyType, ValueType> {
+        for (key, val) in self {
+            block(key, val)
+        }
+        return self
+    }
+}
+```
+
+Note here that `KeyType` and `ValueType` come from the initial declaration of `Dictionary`. This is important because `KeyType` actually has a constraint on it that enforces that it complies to the `Hashable` protocol.
+
+With this you can iterate over dictionaries like this:
+
+```
+let mealPlan = [ "breakfast": "pancakes", "lunch": "burrito", "dinner": "steak"]
+
+mealPlan.eachPair {
+    meal, item in println("Having \(val) for \(key)")
+}
+
+```
+### Should you use this?
+
+This is all well and good, but should you use it? This post is more of an exercise of _what can we accomplish_ with Swift. Especially in the case of the dictionary, I actually prefer the for loop syntax:
+
+```
+for (meal, item) in mealPlan {
+  ...
+}
+```
+
+So I think these are best left as an exercise in *practice*, not necessarily a recommendation to make Swift behave just like Ruby. If you want that, [RubyMotion](http://rubymotion.com) is a fine choice.
