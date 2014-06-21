@@ -98,10 +98,10 @@ Note that this version also returns `self`, so you can assign the result of the 
 Usage here is slightly different:
 
 ```
-5.times { i in println("Iteration \(i)") }
+5.times { (i: Int) in println("Iteration \(i)") }
 ```
 
-Still pretty nice, and for simple loops, I give this a :thumbsup:.
+Still pretty nice, and for simple loops, I give this a :thumbsup:. The downside here is that you have to specify the type of `i` otherwise you get an ambiguous function error from the compiler, because it can't tell which version of the `times` method we're referring to.
 
 ### What about collections?
 
