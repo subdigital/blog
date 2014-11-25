@@ -81,7 +81,7 @@ We still have the unfortunate string representation of a pattern, but it's clean
 Given some prodding from [Step Christopher](https://twitter.com/RandomStep/status/476784959232163840) I decided to try to implement the operator myself. As it turns out, this is pretty simple:
 
 ```
-operator infix =~ {}
+infix operator =~ {}
 ```
 
 That just declares the operator's *position*, as in it's a operator *between* two elements instead of before or after (like `++` might be). Next we declare a function using this operator:
