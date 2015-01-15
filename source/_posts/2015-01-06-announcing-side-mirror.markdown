@@ -21,4 +21,4 @@ Why is this useful?
 - You can click through the preview window to the same position on the monitor, to avoid awkward mousing
 - You can stop craning your neck when doing live demos!
 
-Side Mirror will be available soon on the Mac App Store for $9.99.
+[Side Mirror](http://sidemirrorapp.com/) is available on the Mac App Store for just $9.99.
