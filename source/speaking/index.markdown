@@ -13,7 +13,6 @@ I enjoy speaking at developer conferences around the world on iOS, Rails, or gen
 
 ### Upcoming Speaking Events
 
-* [CocoaConf Chicago](http://cocoaconf.com/chicago-2015/home) - March 27-28, 2015
 * [CocoaConf DC](http://cocoaconf.com/dc-2015/home) - April 10-11, 2015
 * [CocoaConf Portland](http://cocoaconf.com/portland-2015/home) - May 8-9, 2015
 
