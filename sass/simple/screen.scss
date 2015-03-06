@@ -28,7 +28,7 @@ body {
   background-color: $bodyBgColor;
   color: $bodyTextColor;
   font-size: 20px;
-  font-family: 'Avenir', 'Helvetica Nueue', 'Helvetica', 'Arial', sans-serif;
+  font-family: 'Merriweather', serif;
   margin: 0em 3em 3em 0;
   line-height: 32px;
   max-width: 960px;
@@ -39,7 +39,10 @@ p {
 }
 
 h1 {
-  font-family: 'Helvetica Nueue', sans-serif;
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 700;
+  color: #4A4A4A;
+  letter-spacing: -1px;
 }
 
 h2 {
