@@ -1,0 +1,25 @@
+---
+layout: post
+title: Moving On
+date: 2015-03-06 09:52:36 +0100
+comments: true
+categories: 
+---
+
+I joined [ChaiOne](http://chaione.com) in February 2010, after having recently released my first iOS app (Pocket Tabs), and I distinctly remember telling my wife that I could see myself doing this full time. Doing so would mean leaving the world of .NET development where I was already successful.
+
+Switching from a big company to a small company, and switching from .NET to iOS and Rails was a huge change for me.  It was a bit scary, but in the end I’m glad I made that change. **It taught me to trust in my instincts**.
+
+ChaiOne is a fantastic place to work. I helped grow the company from 3 employees to over 50, and worked on some really great projects. I was intimately involved in fostering a company culture that I was proud of.
+
+But the impact I have on the company has been a series of diminishing returns. When a company is young and small, the changes you make have a large effect. As you grow, you have to learn to let go and let others make decisions and take control of various roles & responsibilities. Eventually I stepped back and had the realization that the company would be perfectly fine without me.
+
+There has also been this feeling that I’ve been experiencing for a while that I want to own my own destiny, and to do something on my own.
+
+These two factors drove my decision to try something new.
+
+After 5 great years at ChaiOne I’ve decided to move on.
+
+As for what’s next, I’ll be doing some teaching, some consulting, and focusing on growing [NSScreencast](http://nsscreencast). Learning to trust my instincts has made this decision to go out on my own a bit less scary.
+
+I’m going to miss my colleagues dearly, but I’m extremely excited for what’s next.
