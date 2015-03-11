@@ -8,6 +8,8 @@ categories:
 
 I joined [ChaiOne](http://chaione.com) in February 2010, after having recently released my first iOS app (Pocket Tabs), and I distinctly remember telling my wife that I could see myself doing this full time. Doing so would mean leaving the world of .NET development where I was already successful.
 
+<!-- more -->
+
 Switching from a big company to a small company, and switching from .NET to iOS and Rails was a huge change for me.  It was a bit scary, but in the end I’m glad I made that change. **It taught me to trust in my instincts**.
 
 ChaiOne is a fantastic place to work. I helped grow the company from 3 employees to over 50, and worked on some really great projects. I was intimately involved in fostering a company culture that I was proud of.
