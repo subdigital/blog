@@ -55,7 +55,9 @@ Also of note is the deliverables section of a contract. Usually for programmers 
 
 A key element in a contract is who owns the work you’re producing. Some work-for-hire contracts stipulate that the work you create is owned by the client.  If the client fails to pay (or is extremely late in paying) you cannot just retract the work.
 
-If you’re producing work for a client and it is stipulated int he contract that you own it until the client pays for it, then you have leverage over the
+If you’re producing work for a client and it is stipulated int he contract that you own it until the client pays for it, then you have leverage that helps them pay.
+
+“You don’t pay, you don’t get the software”.
 
 ## Have Your Own Contracts
 
