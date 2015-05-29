@@ -38,7 +38,7 @@ GEM
     rack-protection (1.5.0)
       rack
     rack-rewrite (1.4.01)
-    rake (0.9.6)
+    rake (10.4.2)
     rb-fsevent (0.9.1)
     rdiscount (2.0.7.3)
     rubypants (0.2.0)
@@ -68,7 +68,7 @@ DEPENDENCIES
   pry
   pygments.rb (~> 0.3.4)
   rack-rewrite
-  rake (~> 0.9)
+  rake
   rb-fsevent (~> 0.9)
   rdiscount (~> 2.0.7)
   rubypants (~> 0.2.0)
