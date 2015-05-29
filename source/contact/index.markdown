@@ -17,11 +17,7 @@ If you need to get in touch with me, you can reach me anywhere below:
   </tr>
   <tr>
     <td>Twitter</td>
-    <td><a href="http://twitter.com/subdigital"
-target="_blank">@subdigital</a></td>
-  <tr>
-    <td>Skype</td>
-    <td>benscheirman</td>
+    <td><a href="http://twitter.com/subdigital" target="_blank">@subdigital</a></td>
   </tr>
 </table>
 
