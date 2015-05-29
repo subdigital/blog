@@ -13,11 +13,12 @@ I enjoy speaking at developer conferences around the world on iOS, Rails, or gen
 
 ### Upcoming Speaking Events
 
-* [CocoaConf DC](http://cocoaconf.com/dc-2015/home) - April 10-11, 2015
-* [CocoaConf Portland](http://cocoaconf.com/portland-2015/home) - May 8-9, 2015
+- None scheduled
 
 ### Past Events
 
+* [CocoaConf DC](http://cocoaconf.com/dc-2015/home) - April 10-11, 2015
+* [CocoaConf Portland](http://cocoaconf.com/portland-2015/home) - May 8-9, 2015
 * [CocoaConf Atlanta 2014](http://cocoaconf.com/atlanta-2014/home) - December 2014
 * [CocoaConf Boston 2014](http://cocoaconf.com/boston-2014/home) - December 2014
 * [Pragma Mark](http://pragmamark.org/events/pragma-conference-2014/) - October 2014, Milan, Italy
