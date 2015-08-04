@@ -51,6 +51,11 @@ end
 #######################
 # Working with Jekyll #
 #######################
+#
+desc "Generates css from the sass source files"
+task :generate_css do
+
+end
 
 desc "Generate jekyll site"
 task :generate do
