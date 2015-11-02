@@ -1,22 +1,24 @@
 ---
 layout: post
-title: "User-Friendly Authentication on Apple TV"
+title: "Painless Authentication on Apple TV"
 date: 2015-11-01 22:34:28 -0600
 comments: true
 categories: tvOS
 ---
 
-The primary input mechanism for Apple TV text entry is a single thumb on a tiny trackpad. Needless to say, entering text is a nuissance. Entering comlpex passwords is painful. 
+The primary input mechanism for Apple TV text entry is a single thumb on a tiny trackpad. Needless to say, entering text is a nuissance. Entering complex passwords is downright _painful_. 
 
 So painful, in fact, that I'd expect most people to just drop out and never come back if you present them with a log in screen.
 
 <!-- more -->
 
-Apple recognized this and provided an automatic first-time set up using your iPhone. You wake up your phone and put it close to the device and it sets most things up for you automatically.
+Apple recognized this and provided an automatic first-time set up of your Apple TV using your iPhone. You wake up your phone and put it close to the device and it sets most things up for you automatically, using Bluetooth.
 
 For the [NSScreencast](http://nsscreencast.com) app I knew I had to provide a better mechanism for logging in than entering in an email address and password.
 
 I decided to follow the Youtube model, and have you activate the device using your web browser on a a phone or laptop.
+
+### Activate the Device with a Short Code
 
 When the app needs the user to authenticate, it requests a code from the server. Along with this request, it sends a UUID, unique to the device.
 
