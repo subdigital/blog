@@ -46,7 +46,7 @@ My first attempt was to play [Final Fantasy IV](https://itunes.apple.com/us/app/
 
 I went searching for "nimbus ios lag" and found a bunch of articles from the creators talking about how they achieved near-zero lag for this controller, so I assumed something was up.
 
-I Launched the companion Nimbus app, and it notified me that there was a firmware update and prompted me to install it on the controller. Neat!
+I launched the companion Nimbus app, and it notified me that there was a firmware update and prompted me to install it on the controller. Neat!
 
 ![Make sure you update your controller](/images/nimbus-update.jpeg)
 
@@ -82,7 +82,7 @@ With the controller, this game feels so much better. I'm definitely going to be 
 
 ## Provenance (tv)
 
-If you have a developer account, you can install Provenance, an emulator for GBA, NES, and SNES for iOS. They have an Apple TV target, so you can build & run and get it on your device.
+If you have a developer account, you can install [Provenance](https://github.com/jasarien/Provenance), an emulator for GBA, NES, and SNES for iOS. They have an Apple TV target, so you can build & run and get it on your device.
 
 Using this I was able to play Contra III, Aladdin, Secret of Mana, Mike Tyson's Punch Out, and a few other games. Controls are a little awkward (Left trigger is start...?). Mostly the input is too laggy to have much fun playing these games, which is disappointing.
 
