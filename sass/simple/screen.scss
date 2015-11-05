@@ -38,6 +38,36 @@ p {
   margin-bottom: 1.6em;
 }
 
+em {
+  font-style: italic;
+}
+
+strong {
+  font-weight: bold;
+}
+
+table {
+  border: solid 1px #ddd;
+  margin-bottom: 16px;
+
+  th {
+    font-weight: bold;
+    padding: 8px;
+    border-right: solid 1px #ddd;
+    background-color: #eee;
+  }
+
+  td {
+    padding: 8px;
+    border-right: solid 1px #ddd;
+  }
+
+  tr {
+    border-bottom: solid 1px #ddd;
+  }
+}
+
+
 h1 {
   font-family: 'Open Sans', sans-serif;
   font-weight: 700;
