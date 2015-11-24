@@ -46,6 +46,18 @@ strong {
   font-weight: bold;
 }
 
+.highlight > table {
+  border: none;
+  margin-bottom: 0;
+  tr {
+    border: none;
+  }
+  td {
+    padding: 0;
+    border: none;
+  }
+}
+
 table {
   border: solid 1px #ddd;
   margin-bottom: 16px;
