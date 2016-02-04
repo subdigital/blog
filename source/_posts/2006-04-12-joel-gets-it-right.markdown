@@ -1,8 +1,0 @@
---- 
-layout: post
-title: Joel gets it right
-date: 2006-4-12
-comments: true
-link: false
----
-<p>I read <a href="http://www.joelonsoftware.com/">Joel Spolsky</a> religiously.&nbsp; His posts are few-and-far-between, but the SNR (signal to noise ratio) is seriously high.&nbsp; His posts are worth waiting for because there is so much meat.</p><p>Anyway, since he frequently posts interesting articles, why am I blogging about this one?&nbsp; This one really hits the nail on the head with me, that&rsquo;s why.</p><p><a href="http://www.joelonsoftware.com/items/2006/04/11.html">http://www.joelonsoftware.com/items/2006/04/11.html</a></p><p>Programmers are good at programming.&nbsp; The time they spend learning tasks extraneous to their day-to-day skills is time not improving the developmental skills.&nbsp; I believe in being multi-faceted, but your developers shouldn&rsquo;t also be your system administrators.&nbsp; Your developers shouldn&rsquo;t spend time assembling desks or ordering/building computers.&nbsp; <strong>Taking your developers off of their high priority tasks to do phone tech support is a waste of his/her time</strong>.&nbsp; High morale and few distractions will lead to better software in the end.</p><p>I don&rsquo;t normally like to&nbsp;blog about a blog, but this post is worth reading.&nbsp; Go.&nbsp; Now.&nbsp; Read it.</p><p><strong>Now playing:</strong> <a href="http://phobos.apple.com/WebObjects/MZSearch.woa/wa/advancedSearchResults?artistTerm=Breaking Benjamin">Breaking Benjamin</a> - <a href="http://phobos.apple.com/WebObjects/MZSearch.woa/wa/advancedSearchResults?songTerm=Natural Life&amp;artistTerm=Breaking Benjamin">Natural Life</a></p>

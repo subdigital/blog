@@ -1,8 +1,0 @@
---- 
-layout: post
-title: doh! of the day
-date: 2005-11-7
-comments: true
-link: false
----
-<p>Holy crap.&nbsp; I can&rsquo;t believe I wasted 45 minutes on this stupid, stupid, mistake.</p><p>When dealing with .NET and IDbCommands, you can execute the command in various ways:</p><ul><li><strong>ExecuteReader()</strong> &ndash; which will execute the command and return an IDataReader with the resultset loaded.</li><li><strong>ExecuteScalar() </strong>&ndash; which will return a single value from the database, generally used for returning a <em>COUNT </em>or an <em>@@IDENTITY</em></li><li><strong>ExecuteNonQuery() &ndash; </strong>which is used for, well, just plain executing a query.&nbsp; This function DOES have a return value, though:&nbsp; the number of records affected.</li></ul><p>I just spent almost an hour trying to figure out why this:<font color="#0000ff" size="2"></p><p #333; 1px solid? border: aliceblue;><font color="#009f00">//Execute command and return the primary key of the item we just inserted</font><br />base</font><font size="2">._id = </font><font color="#008080" size="2">Convert</font><font size="2">.ToInt32(cmd.ExecuteNonQuery());</font></p><p><font size="2"><font size="3">was returning 1, always, even though the current primary key in that table is in the 90&rsquo;s.</font></font></p><p><font size="2">Looks like I need to get some sleep&hellip;</p></font><p><strong>Now playing:</strong> <a href="http://phobos.apple.com/WebObjects/MZSearch.woa/wa/advancedSearchResults?artistTerm=Staind">Staind</a> - <a href="http://phobos.apple.com/WebObjects/MZSearch.woa/wa/advancedSearchResults?songTerm=Mudshovel - Winamp *** 1514. Staind - Mudshovel&amp;artistTerm=Staind">Mudshovel - Winamp *** 1514. Staind - Mudshovel</a></p>

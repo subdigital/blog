@@ -1,8 +1,0 @@
---- 
-layout: post
-title: annoyances while combining VB.NET and C#
-date: 2005-2-26
-comments: true
-link: false
----
-<div style="clear:both;"></div>I ran across this annoyance today, probably a bug in Visual Studio.I have a custom collection that encapsulates an arraylist, and it basically has 5 different overloads for the Add() method.<br /><br />well this is written in VB.NET, while 1 of the instances of this class is in C#.When I added a new overload to the collection, I named it add() instead of Add() (VB.NET takes the first declared name as the correct case usage for variables and methods, so my other methods were changed as well, but the compiler doesn't actually show this change unless you visit the line again -- and hit a carriage return). <br /><br />My C# project complained no method named Add() existed.Hrm, so I use intellisense to find out that the method is now called add() -- weird.So I change it to add() to get it to compile, then go fix it.<br /><br />Well the compiler this time complained that there didn't exist an add() method.Ok, now I'm a little upset.This is just stupid.The compiler is obviously confused.I go back in to the VB.NET project, fix the case to read Add(), and I get ANOTHER compile error.This time saying that there was no Add() method.Arg!<br /><br />Viewing the object in intellisense must've slapped VS back into shape because it showed the correct method: Add().Rewriting the line verbatim solved the problem and compiled just fine.<br /><br />Ahh, that's why they say,"Where do you want to go today?" (one of my old professors used to say that....)<div style="clear:both; padding-bottom: 0.25em;"></div>
