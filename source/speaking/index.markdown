@@ -13,7 +13,7 @@ I enjoy speaking at developer conferences around the world on iOS, Rails, or gen
 
 ### Upcoming Speaking Events
 
-- None scheduled
+* [Pragma Conference](http://pragmaconference.com) - October 12-14, 2016, Verona Italy
 
 ### Past Events
 

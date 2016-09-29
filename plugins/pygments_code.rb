@@ -13,8 +13,9 @@ module HighlightCode
     lang = 'yaml' if lang == 'yml'
     begin
       str = pygments(str, lang).match(/<pre>(.+)<\/pre>/m)[1].to_s.gsub(/ *$/, '') #strip out divs <div class="highlight"> 
-    rescue
+    rescue e
       require 'pry'
+      puts "Error: #{e}"
       binding.pry
     end
     tableize_code(str, lang)
