@@ -6,11 +6,13 @@ comments: true
 categories: ios
 ---
 
-Downloading large files on iOS is straight forward. You configure a `URLSession` with a `URLSessionConfiguration`, create a `URLSessionDownloadTask` with the URL that you want to download, and then call `.resume()` on it.
+Downloading files on iOS is fairly straight forward. You configure a `URLSession` with a `URLSessionConfiguration`, create a `URLSessionDownloadTask` with the URL that you want to download, and then call `.resume()` on it.
 
 Later on, during the transfer, if you want to pause this request (or cancel it), you call `cancel(byProducingResumeData:)` and pass a block to it.  This block yields to you what is called "resume data". The docs describe it like this:
 
 > A data object that provides the data necessary to resume a download.
+
+<!-- more -->
 
 It is an opaque object of type `Data` that we're not really supposed to be concerned about, except that:
 
