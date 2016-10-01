@@ -57,7 +57,7 @@ Be careful though, as [resume data is currently broken on iOS 10](http://bensche
 
 ## Dealing with Cellular
 
-I didn't want to burn up anyone's data plan, so by default the `NSURLSessionConfiguration` has its `allowsCellularAccess` set to false by default. I then added a setting to toggle this flag, as some people have unlimited plans and might want to use it.
+I didn't want to burn up anyone's data plan, so by default the `NSURLSessionConfiguration` has its `allowsCellularAccess` set to false. I then added a setting to toggle this flag, as some people have unlimited plans and might want to use it.
 
 {%img center http://benpublic.s3.amazonaws.com/blog/large-file-downloads-cellular-setting.png 375 %}
 
