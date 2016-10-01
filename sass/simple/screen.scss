@@ -276,8 +276,10 @@ article {
 
   header {
     margin-bottom: 1em;
+    h1 {
+      line-height: 42px;
+    }
     h1 a {
-      line-height: 36px;
       transition: .25s;
       color: darken($navLinkColor, 20%);
     }
