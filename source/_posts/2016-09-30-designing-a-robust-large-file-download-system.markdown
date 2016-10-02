@@ -61,7 +61,7 @@ I didn't want to burn up anyone's data plan, so by default the `NSURLSessionConf
 
 {%img center http://benpublic.s3.amazonaws.com/blog/large-file-downloads-cellular-setting.png 375 %}
 
-Using [TK FX Reachability](https://github.com/nicklockwood/FXReachability) I monitor the status of the connection. If the user tries to download an episode while we're on cellular I prompt them to toggle the setting and allow the download to continue anyway.
+Using [FX Reachability](https://github.com/nicklockwood/FXReachability) I monitor the status of the connection. If the user tries to download an episode while we're on cellular I prompt them to toggle the setting and allow the download to continue anyway.
 
 ## Keeping the Model and Filesystem in Sync
 
