@@ -71,7 +71,7 @@ With this in place I have a fallback in case something goes wrong and the two st
 
 ## Background Downloads
 
-While seemingly straightforward, background downloads represent a significant source of confusion and complexity, and will be the topic of my next post.
+While seemingly straightforward, background downloads represent a significant source of confusion and complexity, and will be the topic of [my next post](http://benscheirman.com/2016/10/background-downloads).
 
 ## Just Add Offline Downloads, They Said
 
