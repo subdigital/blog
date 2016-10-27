@@ -13,10 +13,12 @@ I enjoy speaking at developer conferences around the world on iOS, Rails, or gen
 
 ### Upcoming Speaking Events
 
-* [Pragma Conference](http://pragmaconference.com) - October 12-14, 2016, Verona Italy
+* Guest Lecture - The Iron Yard - October 27th, 2016, Houston, TX
+* San Antonio iOS Meetup - November 9th, 2016
 
 ### Past Events
 
+* [Pragma Conference](http://pragmaconference.com) - October 12-14, 2016, Verona Italy
 * [CocoaConf DC](http://cocoaconf.com/dc-2015/home) - April 10-11, 2015
 * [CocoaConf Portland](http://cocoaconf.com/portland-2015/home) - May 8-9, 2015
 * [CocoaConf Atlanta 2014](http://cocoaconf.com/atlanta-2014/home) - December 2014
@@ -40,4 +42,3 @@ I enjoy speaking at developer conferences around the world on iOS, Rails, or gen
 * Lone Star Ruby Conference – Austin, TX (August 26-28th 2010)
 * iPhone/iPad Dev Con – San Diego, CA (September 27-29 2010)
 * Houston Tech Fest – Houston, TX (October 9, 2010)
-

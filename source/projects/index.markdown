@@ -18,3 +18,9 @@ Here are some of the personal projects I have built.
 * ### [GiggleTouch](http://giggletouch.com)
   A universal iOS app for toddlers, where touches spawn shapes & letters of various colors
   and laughter keeps the kiddos entertained.
+
+* ### [NSDateFormatter.com](http://nsdateformatter.com)
+  I created this website as a useful resource for iOS developers to quickly
+  lookup and test format strings for parsing dates & times. It was heavily inspired
+  by [foragoodstrftime](http://foragoodstrftime.com) in the Ruby world. This site
+  was built with open-source Swift and deployed to Linux. It is also [open-source](https://github.com/subdigital/nsdateformatter.com).
