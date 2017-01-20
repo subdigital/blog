@@ -1,7 +1,7 @@
 // remember in Yavascript that months are 0-indexed
 var events = [
-  { name: 'Guest Lecture @ The Iron Yard', url: 'https://www.theironyard.com/locations/houston.html?_ga=1.237302848.1734697495.1484928607', startDate: new Date(2016, 9, 27), location: 'Houston, TX'},
   { name: 'San Antonio iOS Meetup', url: 'https://www.meetup.com/San-Antonio-iOS-Developer-Meetup/', startDate: new Date(2016, 10, 9) },
+  { name: 'Guest Lecture @ The Iron Yard', url: 'https://www.theironyard.com/locations/houston.html?_ga=1.237302848.1734697495.1484928607', startDate: new Date(2016, 9, 27), location: 'Houston, TX'},
   { name: 'Pragma Conference', url: 'http://pragmaconference.com/', startDate: new Date(2016, 9, 12), endDate: new Date(2016, 9, 14), location: 'Verona, Italy'},
   { name: 'CocoaConf DC', url: 'http://cocoaconf.com/dc-2015/home', startDate: new Date(2016, 3, 10), endDate: new Date(2016, 3, 11), location: 'Washington, DC'},
   { name: 'CocoaConf Portland', url: "http://cocoaconf.com/portland-2015/home", startDate: new Date(2015, 4, 8), location: "Portland, OR" },
@@ -15,17 +15,17 @@ var events = [
   { name: 'Mobile Developer Summit', url: 'http://www.developermarch.com/mds/', startDate: new Date(2013, 9, 5), location: 'Bangalore, India' },
   { name: 'CocoaConf Portland', url: 'http://cocoaconf.com/portland-2013/home', startDate: new Date(2013, 7, 15), location: 'Portland, OR' },
   { name: 'CocoaConf Dallas', url: 'http://cocoaconf.com/dallas-2013/home', startDate: new Date(2013, 3, 4), location: 'Dallas, TX' },
-  { name: 'CocoaConf Chicago (March 2013)' },
-  { name: 'Mdevcon (March 2013, Amsterdam)' },
-  { name: 'DevTeach Vancouver (May 2011)' },
-  { name: 'Houston Tech Fest (October 15th, 2011)' },
-  { name: 'Houston Code Camp 2011 (August 20th, 2011)' },
-  { name: 'Lone Star Ruby Conference (August 16th, 2011)' },
-  { name: 'Houston iPhone Developer’s Meetup (July 2011)' },
-  { name: 'Phone Dev Con – Boston, MA (April 4-6, 2011)' },
-  { name: 'Lone Star Ruby Conference – Austin, TX (August 26-28th 2010)' },
-  { name: 'iPhone/iPad Dev Con – San Diego, CA (September 27-29 2010)' },
-  { name: 'Houston Tech Fest – Houston, TX (October 9, 2010)' }
+  { name: 'Mdevcon 2013', url: 'http://appdevcon.nl/', startDate: new Date(2013, 2, 16), location: 'Amsterdam' },
+  { name: 'CocoaConf Chicago', url: 'http://cocoaconf.com/chicago-2013/home', startDate: new Date(2013, 2, 7), location: 'Chicago, IL' },
+  { name: 'DevTeach Vancouver', url: 'http://www.devteach.com/Index.aspx', startDate: new Date(2011, 4, 1), location: 'Vancouver, B.C.' },
+  { name: 'Houston Tech Fest 2011', location: 'Houston, TX' },
+  { name: 'Lone Star Ruby Conference', startDate: new Date(2011, 7, 16), location: 'Austin, TX' },
+  { name: 'Houston Code Camp 2011', startDate: new Date(2011, 7, 20), location: 'Houston, TX' },
+  { name: 'Houston iPhone Developer’s Meetup (July 2011)', location: 'Houston, TX' },
+  { name: 'iPhone/iPad Dev Con', startDate: new Date(2011, 3, 4), location: 'Boston, MA' },
+  { name: 'Lone Star Ruby Conference', startDate: new Date(2011, 7, 26), location: 'Austin, TX' },
+  { name: 'iPhone/iPad Dev Con', startDate: new Date(2010, 8, 27), location: 'San Diego, CA' },
+  { name: 'Houston Tech Fest', startDate: new Date(2010, 9, 9), location: 'Houston, TX' }
 ];
 
 new Vue({
