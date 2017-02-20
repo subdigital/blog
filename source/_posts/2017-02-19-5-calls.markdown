@@ -1,0 +1,72 @@
+---
+layout: post
+title: "5 Calls"
+date: 2017-02-19 20:56:44 -0600
+comments: true
+categories: 
+---
+
+<img alt="5 Calls" src="https://5calls.org/img/5calls-logotype.png" width="400">
+
+I have become much more political  in the last year than I ever have before. Like many, completely dumbstruck by the outcome of the election, I have been struggling with how best to channel my frustration and anger.
+
+I decided to do something about it, and channel this energy into something I _do_ think will have a positive impact on our democracy.
+
+Arguing on Twitter, Facebook, etc is unlikely to affect real change (_shocker_). Our networks are largely echo chambers and it is difficult to influence those outside your network. Retweets won't save us.
+
+<!-- more -->
+
+As it turns out... your congressmen don't read or care what you post on social media (_who knew?_). They do, however, maintain a staff that has to answer the phone from constituents and record their position on various issues. Your feedback gets rolled up and sent to the representative so they get a sense of what their constituency thinks about a given issue.
+
+After seeing a few mentions of [5 Calls](https://5calls.org) on Twitter and started using it to call my representatives. On the site you see a listing of current issues, complete with the background and context for why a given issue is important and what it means for our future. You can enter in your location to see your representatives including contact info and a script to use to make it all easy.
+
+**Calling your representatives is one of the quickest and easiest ways we can all contribute and make a difference.**
+
+I got in touch with the creators of 5 Calls and offered up my services to build an iOS app. As it turns out, there was an Android app already in the works, and they accepted my offer. Shortly after making some commits to the [repo](https://github.com/5calls/ios), others noticed and offered their help as well. Two weeks later, we were ready for a release.
+
+<div style="text-align: center">
+<a href="https://itunes.apple.com/us/app/5-calls/id1202558609?mt=8" target="_blank">
+<img style="width: 675px" src="http://benpublic.s3.amazonaws.com/blog/5calls/issues-list-phone.png" alt="5 Calls - Issue List">
+</a>
+
+<a href="https://itunes.apple.com/us/app/5-calls/id1202558609?mt=8" target="_blank">
+<img style="width: 675px" src="http://benpublic.s3.amazonaws.com/blog/5calls/call-script-phone.png" alt="5 Calls - Call Script">
+</a>
+</div>
+
+The app shows current issues, shows you your representatives (including  contact info) and scirpts to use in case you need help making the call. It tracks which issues you've contacted them about so you can make your way down the list and avoid calling twice.
+
+5 Calls was released to the App Store on Monday, February 13th, 2017. **Since then it has been downloaded over 7,000 times.**  The first week on the store showed more than 1500 Daily Active Users. Watching this take off has been really interesting and rewarding.
+
+If you haven't yet, I encourage you to [download the app](https://itunes.apple.com/us/app/5-calls/id1202558609?mt=8) and make a few calls. Calling _really does_ make a difference. If you have downloaded it (thanks!) then the next step is to share it with someone you know or leave a review to help others find it.
+
+<div style="text-align: center">
+<a href="https://itunes.apple.com/us/app/5-calls/id1202558609?mt=8" target="_blank">
+ <img src="https://5calls.org/img/app-store.svg" height="40">
+</a>
+</div>
+
+> Don't have an iPhone? [Get the Android App here](https://play.google.com/store/apps/details?id=org.a5calls.android.a5calls&hl=en).
+
+The 5 Calls community have so far contributed **over 500,000 calls** to representatives to inform them of our stance on important issues. Just typing that number makes me proud to be a tiny part of it.
+
+I'm grateful to the organizers of 5 Calls for their tireless work issue writing, working on the website & API, sending out newsletters and interacting on social media. It is a truly wonderful sight seeing many volunteers all coming together to make a difference.
+
+The app was not built by me alone, rather it was a product of many people, donating their spare time to build features, fix issues, and make the app better.
+
+In particular, I'd like to thank:
+
+* [Patrick McCarron](https://twitter.com/mccarron)
+* [Chris Brandow](https://twitter.com/chrisbrandow)
+* [Ellen Shapiro](https://twitter.com/designatednerd)
+* [Jory Raphael](https://twitter.com/sensibleworld)
+* [Ben Gottlieb](https://twitter.com/bengottlieb)
+* [Brandon Titus](https://twitter.com/bjtitus)
+* [Erik Krietsch](https://twitter.com/erikkrietsch)
+* [Jillian Bush](https://twitter.com/iosjillian)
+* [Alex Argo](https://twitter.com/alexargo)
+* [Adam Wulf](https://twitter.com/adamwulf)
+* [Alex Robinson](https://github.com/alexanderjrobinson)
+* [Tom Burns](https://twitter.com/tomburns)
+
+Each of these people had a hand in making 5 Calls on iOS a reality. If you're interested in helping out, please check out the [github project](https://github.com/5calls/ios) and [get in touch](make5calls@gmail.com).
