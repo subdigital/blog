@@ -3,7 +3,7 @@ layout: post
 title: "5 Calls"
 date: 2017-02-19 20:56:44 -0600
 comments: true
-categories: 
+categories:
 ---
 
 <img alt="5 Calls" src="https://5calls.org/img/5calls-logotype.png" width="400">
@@ -69,4 +69,4 @@ In particular, I'd like to thank:
 * [Alex Robinson](https://github.com/alexanderjrobinson)
 * [Tom Burns](https://twitter.com/tomburns)
 
-Each of these people had a hand in making 5 Calls on iOS a reality. If you're interested in helping out, please check out the [github project](https://github.com/5calls/ios) and [get in touch](make5calls@gmail.com).
+Each of these people had a hand in making 5 Calls on iOS a reality. If you're interested in helping out, please check out the [github project](https://github.com/5calls/ios) and [get in touch](mailto:make5calls@gmail.com).
