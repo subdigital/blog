@@ -18,7 +18,7 @@ Arguing on Twitter, Facebook, etc is unlikely to affect real change (_shocker_).
 
 As it turns out... your congressmen don't read or care what you post on social media (_who knew?_). They do, however, maintain a staff that has to answer the phone from constituents and record their position on various issues. Your feedback gets rolled up and sent to the representative so they get a sense of what their constituency thinks about a given issue.
 
-After seeing a few mentions of [5 Calls](https://5calls.org) on Twitter and started using it to call my representatives. On the site you see a listing of current issues, complete with the background and context for why a given issue is important and what it means for our future. You can enter in your location to see your representatives including contact info and a script to use to make it all easy.
+After seeing a few mentions of [5 Calls](https://5calls.org) on Twitter I started using it to call my representatives. On the site you see a listing of current issues, complete with the background and context for why a given issue is important and what it means for our future. You can enter in your location to see your representatives including contact info and a script to use to make it all easy.
 
 **Calling your representatives is one of the quickest and easiest ways we can all contribute and make a difference.**
 
@@ -34,7 +34,7 @@ I got in touch with the creators of 5 Calls and offered up my services to build 
 </a>
 </div>
 
-The app shows current issues, shows you your representatives (including  contact info) and scirpts to use in case you need help making the call. It tracks which issues you've contacted them about so you can make your way down the list and avoid calling twice.
+The app shows current issues, shows you your representatives (including  contact info) and scripts to use in case you need help making the call. It tracks which issues you've contacted them about so you can make your way down the list and avoid calling twice.
 
 5 Calls was released to the App Store on Monday, February 13th, 2017. **Since then it has been downloaded over 7,000 times.**  The first week on the store showed more than 1500 Daily Active Users. Watching this take off has been really interesting and rewarding.
 
