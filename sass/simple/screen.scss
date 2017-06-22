@@ -229,6 +229,9 @@ blockquote {
   padding: 1em;
   font-size: 0.9em;
   color: $quoteTextColor;
+  p:last-child {
+    margin-bottom: 0;
+  }
 }
 
 #blog-archives {
