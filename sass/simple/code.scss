@@ -1,10 +1,9 @@
 @import "compass";
 @import "github";
 
-$codeColor: #444; // darken(#f77, 40%);
+$codeColor: #444;
 
 $codeFont: "SF Mono", Menlo, monospace, "SF Pro Icons";
-
 
 code {
   font-family: $codeFont;

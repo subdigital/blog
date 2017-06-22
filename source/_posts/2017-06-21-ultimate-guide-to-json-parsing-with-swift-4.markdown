@@ -134,7 +134,7 @@ encoder.outputFormatting = .prettyPrinted
 ## Handling Dates
 JSON has no data type to represent dates, so these are serialized into some representation that the client and server have to agree on. Typically this is done with [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date formatting and then serialized as a string.
 
-> Pro tip: [http://nsdateformatter.com](nsdateformatter.com) is a great place to snag the format string for various formats, including ISO 8601 format.
+> Pro tip: [nsdateformatter.com](http://nsdateformatter.com) is a great place to snag the format string for various formats, including ISO 8601 format.
 
 Other formats might be the number of seconds (or milliseconds) since a reference date, which would be serialized as a Number in the JSON document.
 
@@ -172,7 +172,7 @@ encoder.dateEncodingStrategy = .iso8601
 The other JSON date encoding strategies available are:
 
 * `.formatted(DateFormatter)`  - for when you have a non-standard date format string you need to support. Supply your own date formatter instance.
-* `.custom( (Date, Encoder) throws -> Void )` - for when you have something _really _ custom, you can pass a block here that will encode the date into the provided encoder.
+* `.custom( (Date, Encoder) throws -> Void )` - for when you have something _really_ custom, you can pass a block here that will encode the date into the provided encoder.
 * `.millisecondsSince1970` and `.secondsSince1970`, which aren’t very common in APIs. It is not really recommended to use a format like this as time zone information is completely absent from the encoded representation, which makes it easier for someone to make the wrong assumption.
 
 Decoding dates have essentially the same options, but for `.custom` it takes the shape of `.custom( (Decoder) throws -> Date ) `, so we are given a decoder and we are responsible for hydrating that into a date from whatever might be in the decoder.
