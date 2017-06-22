@@ -199,7 +199,8 @@ struct Numbers {
 decoder.nonConformingFloatDecodingStrategy =
   .convertFromString(
       positiveInfinity: "+Infinity",
-      negativeInfinity: "-Infinity",                                                            	    nan: "NaN")
+      negativeInfinity: "-Infinity",
+      nan: "NaN")
 
 let numbers = try! decoder.decode(Numbers.elf, from: jsonData)
 dump(numbers)
@@ -214,9 +215,12 @@ This gives us:
   - c: nan
 ```
 
+You can do the reverse with `JSONEncoder`'s `nonConformingFloatEncodingStrategy` as well.
+
 This is not likely something you’ll need in the majority case, but one day it might come in handy.
 
 ## Handling Data
+
 Sometimes you’ll find APIs that send small bits of data as base64 encoded strings.
 
 To handle this automatically, you can give `JSONEncoder` one of these encoding strategies:
