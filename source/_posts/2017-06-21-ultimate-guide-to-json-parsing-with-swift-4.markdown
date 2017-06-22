@@ -292,7 +292,7 @@ in the array is wrapped with a key.
 
 You could use the wrapping type approach above to capture this key, but an easier
 approach would be to recognize that this structure is already made of of strongly
-typed decodable implemetnations.
+typed decodable implemetations.
 
 Do you see it?
 
