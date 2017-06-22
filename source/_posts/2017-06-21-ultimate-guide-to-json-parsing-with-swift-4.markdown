@@ -438,8 +438,9 @@ var container = encoder.container(keyedBy: CodingKeys.self)
 ```
 
 Two things to note here:
-* the container has to be a mutable property, since we’ll be writing to it, so the variable must be declared with `var`
-* We have to specify the keys (and thus the property/key mapping) so it knows what keys we can encode into this container.
+
+- The container has to be a mutable property, since we’ll be writing to it, so the variable must be declared with `var`
+- We have to specify the keys (and thus the property/key mapping) so it knows what keys we can encode into this container
 
 That latter point turns out to be super powerful, as we’ll see.
 
