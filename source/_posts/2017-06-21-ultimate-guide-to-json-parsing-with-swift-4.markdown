@@ -988,4 +988,4 @@ Definitely take a look!
 
 This was a whirlwind tour of how to use the new Swift 4 Codable API. Have anything to add? Leave a comment below.
 
-Like this stuff? I think you’ll love NSScreencast as well.
+Like this stuff? I think you’ll love [NSScreencast](http://nsscreencast.com) as well.
