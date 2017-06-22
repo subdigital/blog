@@ -1,6 +1,8 @@
 // remember in Yavascript that months are 0-indexed
 var events = [
-  { name: 'San Antonio iOS Meetup', url: 'https://www.meetup.com/San-Antonio-iOS-Developer-Meetup/', startDate: new Date(2016, 10, 9) },
+  { name: 'try! Swift Bangalore', url: 'https://www.tryswift.co/events/2017/bangalore/', startDate: new Date(2017, 10, 16), endDate: new Date(2017, 10, 17), location: 'Bangalore, India' },
+  { name: 'NSBarcelona iOS Meetup', url: 'https://www.meetup.com/nsbarcelona/events/239126316/', startDate: new Date(2017, 03, 27), location: 'Barcelona, Spain' },
+  { name: 'San Antonio iOS Meetup', url: 'https://www.meetup.com/San-Antonio-iOS-Developer-Meetup/', startDate: new Date(2016, 10, 9), location: 'San Antonio, Texas' },
   { name: 'Guest Lecture @ The Iron Yard', url: 'https://www.theironyard.com/locations/houston.html?_ga=1.237302848.1734697495.1484928607', startDate: new Date(2016, 9, 27), location: 'Houston, TX'},
   { name: 'Pragma Conference', url: 'http://pragmaconference.com/', startDate: new Date(2016, 9, 12), endDate: new Date(2016, 9, 14), location: 'Verona, Italy'},
   { name: 'CocoaConf DC', url: 'http://cocoaconf.com/dc-2015/home', startDate: new Date(2016, 3, 10), endDate: new Date(2016, 3, 11), location: 'Washington, DC'},
@@ -34,7 +36,6 @@ new Vue({
     events: events
   },
   mounted: function() {
-    console.log(events);
   },
   methods: {
   },
