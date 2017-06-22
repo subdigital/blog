@@ -1,16 +1,20 @@
 @import "compass";
 @import "github";
 
-$codeColor: darken(#f77, 40%);
+$codeColor: #444; // darken(#f77, 40%);
+
+$codeFont: "SF Mono", Menlo, monospace, "SF Pro Icons";
+
 
 code {
-  font-family: Monaco, 'Consolas', monospace;
-  font-size: 0.8em;
+  font-family: $codeFont;
+  font-size: 1em;
+  font-weight: 400;
   color: $codeColor;
 }
 
 pre.shell {
-  font-family: Consolas, Inconsolata, monospace;
+  font-family: $codeFont;
   background-color: #333;
   padding: 15px;
   font-size: 0.8em;
@@ -23,20 +27,23 @@ pre.shell {
 div.highlight {
   background-color: #fff;
   position: relative;
-  font-size: 0.8em;
+  font-family: $codeFont;
+  font-size: 1.0em;
   line-height: 1.7em;
-  border: solid 1px #ddd;
   padding: 10px 12px;
   padding-left: 40px;
   overflow: auto;
   margin: 2em 0;
 
-  @include box-shadow(#ddd 0px 0px 8px);
+  // @include box-shadow(#ddd 0px 0px 8px);
+  // border: solid 1px #ddd;
+  background-color: #fbfbfb;
 
   table {
   }
 
   .gutter {
+    display: none;
     text-align: right;
     color: #999;
     font-family: Monaco, monospace;
