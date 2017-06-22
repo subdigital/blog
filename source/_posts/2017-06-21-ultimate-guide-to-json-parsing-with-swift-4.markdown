@@ -93,7 +93,7 @@ struct Beer : Codable {
 			case name
 			case abv = "alcohol_by_volume"
 			case brewery = "brewery_name"
-			case
+			case style
 	  }
 }
 ```
@@ -573,16 +573,16 @@ We’ll start by defining an enum for those nested keys (and removing them from 
 ```ruby
 struct Beer : Codable {
 	enum CodingKeys: String, CodingKey {
-		  case name
+      case name
       case brewery
       case createdAt = "created_at"
       case bottleSizes = "bottle_sizes"
       case comments
-		  case info // <-- NEW
+      case info // <-- NEW
 	}
 
   case InfoCodingKeys: String, CodingKey {
-  		case abv
+      case abv
       case style    
   }
 }
