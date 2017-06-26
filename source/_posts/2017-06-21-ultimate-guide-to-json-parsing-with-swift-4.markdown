@@ -8,6 +8,10 @@ categories: swift
 
 <img class="center" src="http://benpublic.s3.amazonaws.com/blog/swift-json/swift-json@2x.png" width="400">
 
+<div style="margin: 15px 0; padding: 12px; color: #31708F; background-color: #D9EDF7;  font-size: 1.2em; text-align: center">
+	This guide is now permalinked at <strong>http://swiftjson.guide</strong>
+</div>
+
 Swift 4 and Foundation has finally answered the question of how to parse JSON with Swift.
 
 There has been a number of great libraries for this, but it is quite refreshing to see a fully-supported solution that is easy to adopt but also provides the customization you need to encode and decode complex scenarios.
@@ -191,7 +195,7 @@ The default implementation is `.throw`, meaning if the decoder encounters these 
 ```
 
 ```ruby
-struct Numbers {
+struct Numbers : Decodable {
   let a: Float
   let b: Float
   let c: Float
@@ -202,7 +206,7 @@ decoder.nonConformingFloatDecodingStrategy =
       negativeInfinity: "-Infinity",
       nan: "NaN")
 
-let numbers = try! decoder.decode(Numbers.elf, from: jsonData)
+let numbers = try! decoder.decode(Numbers.self, from: jsonData)
 dump(numbers)
 ```
 
