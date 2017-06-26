@@ -8,7 +8,7 @@ categories: swift
 
 <img class="center" src="http://benpublic.s3.amazonaws.com/blog/swift-json/swift-json@2x.png" width="400">
 
-<div style="margin: 15px 0; padding: 12px; color: #31708F; background-color: #D9EDF7;  font-size: 1.2em; text-align: center">
+<div style="margin: 25px 0; padding: 12px; color: #31708F; background-color: #D9EDF7;  font-size: 1.2em; text-align: center">
 	This guide is now permalinked at <strong>http://swiftjson.guide</strong>
 </div>
 
