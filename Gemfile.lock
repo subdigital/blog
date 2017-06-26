@@ -2,6 +2,8 @@ GEM
   remote: https://rubygems.org/
   specs:
     RedCloth (4.2.9)
+    albino (1.3.3)
+      posix-spawn (>= 0.3.6)
     chunky_png (1.3.7)
     classifier (1.3.4)
       fast-stemmer (>= 1.0.0)
@@ -14,25 +16,25 @@ GEM
     fast-stemmer (1.0.2)
     fssm (0.2.10)
     haml (3.1.8)
-    jekyll (0.12.1)
+    jekyll (0.11.2)
+      albino (~> 1.3)
       classifier (~> 1.3)
       directory_watcher (~> 1.1)
-      kramdown (~> 0.14)
+      kramdown (~> 0.13)
       liquid (~> 2.3)
       maruku (~> 0.5)
-      pygments.rb (~> 0.3.2)
     kramdown (0.14.2)
     liquid (2.3.0)
-    maruku (0.7.2)
+    maruku (0.7.3)
     method_source (0.8.2)
     posix-spawn (0.3.13)
     pry (0.10.4)
       coderay (~> 1.1.0)
       method_source (~> 0.8.1)
       slop (~> 3.4)
-    pygments.rb (0.3.7)
+    pygments.rb (0.6.3)
       posix-spawn (~> 0.3.6)
-      yajl-ruby (~> 1.1.0)
+      yajl-ruby (~> 1.2.0)
     rack (1.6.4)
     rack-protection (1.5.3)
       rack
@@ -51,7 +53,7 @@ GEM
     slop (3.6.0)
     stringex (1.4.0)
     tilt (2.0.5)
-    yajl-ruby (1.1.0)
+    yajl-ruby (1.2.2)
 
 PLATFORMS
   ruby
@@ -61,10 +63,10 @@ DEPENDENCIES
   compass (~> 0.12.2)
   directory_watcher (= 1.4.1)
   haml (~> 3.1.7)
-  jekyll (~> 0.12)
+  jekyll
   liquid (~> 2.3.0)
   pry
-  pygments.rb (~> 0.3.4)
+  pygments.rb (~> 0.6.0)
   rack-rewrite
   rake
   rb-fsevent (~> 0.9)
