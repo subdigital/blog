@@ -36,7 +36,7 @@ Here’s an example JSON document for a beer:
 
 Our Swift data structure could look like this:
 
-```ruby
+```swift
 enum BeerStyle : String {
     case ipa
     case stout
@@ -57,7 +57,7 @@ To convert this JSON string to a `Beer` instance, we’ll mark our types as `Cod
 
 `Codable` comes with a default implementation, so for many cases you can just adopt this protocol and get useful default behavior **for free**.
 
-```ruby
+```swift
 enum BeerStyle : String, Codable {
    // ...
 }
@@ -69,7 +69,7 @@ struct Beer : Codable {
 
 Next we just need to create a decoder:
 
-```ruby
+```swift
 let jsonData = jsonString.data(encoding: .utf8)!
 let decoder = JSONDecoder()
 let beer = try! decoder.decode(Beer.self, for: jsonData)
@@ -90,7 +90,7 @@ Keys are handled automatically by a compiler-generated “`CodingKeys`” enumer
 
 To customize the keys we’ll have to write our own implementation of this. For the cases that diverge from the swift naming, we can provide a string value for the key:
 
-```ruby
+```swift
 struct Beer : Codable {
 		// ...
     	enum CodingKeys : String, CodingKey {
@@ -104,7 +104,7 @@ struct Beer : Codable {
 
 If we take our beer instance and try to encode it as JSON, we can see this new format in action:
 
-```ruby
+```swift
 let encoder = JSONEncoder()
 let data = try! encoder.encode(beer)
 print(String(data: data, encoding: .utf8)!)
@@ -120,7 +120,7 @@ The formatting here isn’t very human-friendly. We can customize the output for
 
 The default value is `.compact`, which produces the output above. We can change it to `.prettyPrinted` to get more readable output.
 
-```ruby
+```swift
 encoder.outputFormatting = .prettyPrinted
 ```
 
@@ -146,7 +146,7 @@ In the past we’d have to handle this ourselves, providing perhaps a string fie
 
 With the `JSONEncoder` and `JSONDecoder` this is all done for us. Check it out. By default, these will use `.deferToDate` as the style for handling dates, which looks like this:
 
-```ruby
+```swift
 struct Foo : Encodable {
     let date: Date
 }
@@ -163,7 +163,7 @@ try! encoder.encode(foo)
 
 We can change this to `.iso8601` formatting:
 
-```ruby
+```swift
 encoder.dateEncodingStrategy = .iso8601
 ```
 
@@ -194,7 +194,7 @@ The default implementation is `.throw`, meaning if the decoder encounters these 
 }
 ```
 
-```ruby
+```swift
 struct Numbers : Decodable {
   let a: Float
   let b: Float
@@ -212,7 +212,7 @@ dump(numbers)
 
 This gives us:
 
-```ruby
+```swift
 ▿ __lldb_expr_71.Numbers
   - a: inf
   - b: -inf
@@ -255,7 +255,7 @@ Something like this:
 
 To represent this in Swift, we can create a new type for this response:
 
-```ruby
+```swift
 struct BeerList : Codable {
     let beers: [Beer]
 }
@@ -267,7 +267,7 @@ That’s actually it! Since our key name matches up and `Beer` is already `Codab
 
 If the API is returning an array as the _root_ element, parsing the response looks like this:
 
-```ruby
+```swift
 let decoder = JSONDecoder()
 let beers = try decoder.decode([Beer].self, from: data)
 ```
@@ -300,26 +300,26 @@ typed decodable implemetations.
 
 Do you see it?
 
-```ruby
+```swift
 [[String:Beer]]
 ```
 
 Or perhaps more readable in this case:
 
-```ruby
+```swift
 Array<Dictionary<String, Beer>>
 ```
 
 Just like `Array<T>` is decodable, so is `Dictionary<K,T>` if both `K` and `T`
 are decodable.
 
-```ruby
+```swift
 let decoder = JSONDecoder()
 let beers = try decoder.decode([[String:Beer]].self, from: data)
 dump(beers)
 ```
 
-```ruby
+```swift
 ▿ 1 element
   ▿ 1 key/value pair
     ▿ (2 elements)
@@ -363,7 +363,7 @@ For example:
 We can actually nest types in Swift and have that structure present when we
 encode/decode json.
 
-```ruby
+```swift
 struct PagedBreweries : Codable {
     struct Meta : Codable {
         let page: Int
@@ -403,7 +403,7 @@ This will handle the majority of cases, but eventually you’ll have to drop dow
 
 To start, we’ll implement custom versions of what the compiler was giving us for free. We’ll start with encoding.
 
-```ruby
+```swift
 extension Beer {
     func encode(to encoder: Encoder) throws {
 
@@ -413,7 +413,7 @@ extension Beer {
 
 I also want to add a couple of new fields to our beer type, just to round out the example:
 
-```ruby
+```swift
 struct Beer : Coding {
     // ...
     let createdAt: Date
@@ -441,7 +441,7 @@ A container can be one of a few different types:
 
 In order to encode any of our properties we’ll first need to get a container. Looking at the JSON structure we started with at the top of this post, it’s clear we need a _keyed_ container:
 
-```ruby
+```swift
 var container = encoder.container(keyedBy: CodingKeys.self)
 ```
 
@@ -454,7 +454,7 @@ That latter point turns out to be super powerful, as we’ll see.
 
 Next we need to encode values into the container. Any of these calls might throw errors, so we’ll start each line with `try`:
 
-```ruby
+```swift
 try container.encode(name, forKey: .name)
 try container.encode(abv, forKey: .abv)
 try container.encode(brewery, forKey: .brewery)
@@ -468,7 +468,7 @@ For the comments field, the default implementation of `Encodable` uses `encodeIf
 
 Our `bottleSizes` value was encoded automatically as well, but if we needed to customize this for some reason, we have to create our own container. Here we are processing each item (by rounding the float) and adding it to the container in order:
 
-```ruby
+```swift
 var sizes = container.nestedUnkeyedContainer(
 		forKey: .bottleSizes)
 
@@ -504,7 +504,7 @@ Now we can do the reverse. Let’s write the implementation of the Decodable pro
 
 Decoding essentially means writing another initializer.
 
-```ruby
+```swift
 extension Beer {
     init(from decoder: Decoder) throws {
 
@@ -514,13 +514,13 @@ extension Beer {
 
 Again, we need to get a container from the decoder:
 
-```ruby
+```swift
 let container = try decoder.container(keyedBy: CodingKeys.self)
 ```
 
 We can decode all of the basic properties. In each case we have to specify the type to expect. If the type does not match, a `DecodingError.TypeMismatch` will be throw and have information we can use to figure out what happened.
 
-```ruby
+```swift
 
 let name = try container.decode(String.self, forKey: .name)
 let abv = try container.decode(Float.self, forKey: .abv)
@@ -536,7 +536,7 @@ let comments = try container.decodeIfPresent(String.self,
 
 We can use the same method for our `bottleSizes` array, but we can also process each value on the way in in a similar manner. Here we round values before storing them in the new instance:
 
-```ruby
+```swift
 var bottleSizesArray = try container.nestedUnkeyedContainer(forKey: .bottleSizes)
 var bottleSizes: [Float] = []
 while (!bottleSizesArray.isAtEnd) {
@@ -549,7 +549,7 @@ We’ll keep decoding values from the container until the container has no more 
 
 With all of these variables now defined, we have all the answers to call our default initializer:
 
-```ruby
+```swift
         self.init(name: name,
                   brewery: brewery,
                   abv: abv,
@@ -579,7 +579,7 @@ To work with this structure we’ll have to customize both the encoding and deco
 
 We’ll start by defining an enum for those nested keys (and removing them from the main `CodingKeys` enum:
 
-```ruby
+```swift
 struct Beer : Codable {
 	enum CodingKeys: String, CodingKey {
       case name
@@ -599,7 +599,7 @@ struct Beer : Codable {
 
 When we’re encoding the value, we’ll need to first get a reference to the `info` container, (which if you recall is a _keyed_ container).
 
-```ruby
+```swift
 func encode(to encoder: Encoder) throws {
 		var container = encoder.container(
 			keyedBy: CodingKeys.self)
@@ -614,7 +614,7 @@ func encode(to encoder: Encoder) throws {
 
 For the decodable implementation, we can do the reverse:
 
-```ruby
+```swift
 init(from decoder: Decoder) throws {
     let container = try decoder.container(
 			keyedBy: CodingKeys.self)
@@ -645,7 +645,7 @@ Let’s say that brewery is passed as a simple string instead, but we want to ke
 
 In this case, we again have to provide custom implementations of implementations of `encode(to encoder:)` and `init(from decoder:)`.
 
-```ruby
+```swift
 func encode(to encoder: Encoder) throws {
 		var container = encoder.container(keyedBy:
 			CodingKeys.self)
@@ -670,7 +670,7 @@ init(from decoder: Decoder) throws {
 
 Let’s say we have the following classes:
 
-```ruby
+```swift
 class Person : Codable {
     var name: String?
 }
@@ -682,7 +682,7 @@ class Employee : Person {
 
 We get the `Codable` conformance by inheriting from the `Person` class, but what happens if we try to encode an instance of `Employee`?
 
-```ruby
+```swift
 let employee = Employee()
 employee.employeeID = "emp123"
 employee.name = "Joe"
@@ -701,7 +701,7 @@ print(String(data: data, encoding: .utf8)!)
 
 Well that’s not what we wanted. As it turns out the auto-generated implementation doesn’t quite work with subclasses. So we’ll have to customize the encode/decode methods again.
 
-```ruby
+```swift
 class Person : Codable {
     var name: String?
 
@@ -718,7 +718,7 @@ class Person : Codable {
 
 We’ll do the same for the subclass:
 
-```ruby
+```swift
 class Employee : Person {
     var employeeID: String?
 
@@ -754,7 +754,7 @@ The reason is that the superclass could overwrite values we’ve set and we woul
 
 Instead, we can use a special method to get a super-class ready encoder that already has a container attached to it:
 
-```ruby
+```swift
 try super.encode(to: container.superEncoder())
 ```
 
@@ -771,7 +771,7 @@ Which gives us:
 
 This produces the super-class encoding underneath this new key: `”super”`. We can customize this key name if we want:
 
-```ruby
+```swift
 enum CodingKeys : String, CodingKey {
   case employeeID = "emp_id"
   case person
@@ -819,7 +819,7 @@ This is obviously not an ideal situation, but real-life happens and sometimes yo
 
 Let's define a special user info struct that will hold some important values for us:
 
-```ruby
+```swift
 struct CustomerCodingOptions {
 	enum ApiVersion {
 	    case v1
@@ -834,7 +834,7 @@ struct CustomerCodingOptions {
 
 We can now create an instance of this struct and pass it to an encoder or decoder:
 
-```ruby
+```swift
 let formatter = DateFormatter()
 formatter.dateFormat = "MMM-dd-yyyy"
 let options = CustomerCodingOptions(apiVersion: .v1, legacyDateFormatter: formatter)
@@ -846,7 +846,7 @@ encoder.userInfo = [ CustomerCodingOptions.key : options ]
 
 Inside the encode method:
 
-```ruby
+```swift
     func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
 
@@ -902,7 +902,7 @@ We could not represent _every possible case_ with an enum as it could change or 
 
 Instead, we can create a more dynamic implementation of `CodingKey` for this.
 
-```ruby
+```swift
 struct BeerStyles : Codable {
   struct BeerStyleKey : CodingKey {
     var stringValue: String
@@ -930,7 +930,7 @@ static key for the static `"description"` attribute, which won't change.
 
 Let's start with decoding.
 
-```ruby
+```swift
 init(from decoder: Decoder) throws {
     let container = try decoder.container(keyedBy: BeerStyleKey.self)
 
@@ -956,7 +956,7 @@ and add it to the array.
 
 How about encoding?
 
-```ruby
+```swift
 func encode(to encoder: Encoder) throws {
     var container = try encoder.container(keyedBy: BeerStyleKey.self)
     for style in beerStyles {
