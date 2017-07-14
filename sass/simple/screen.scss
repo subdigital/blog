@@ -35,7 +35,7 @@ body {
   font-weight: 400;
   margin: 0em 3em 3em 0;
   line-height: 1.8em;
-  max-width: 960px;
+  max-width: 1080px;
 }
 
 p {
@@ -221,13 +221,13 @@ a {
 }
 
 blockquote {
-  margin: 1em 2em;
+  margin: 0.75em 0.75em;
   font-style: italic;
-  border-left: solid 1px #eee;
-  background-color: darken(#fff, 2%);
+  // border-left: solid 1px #eee;
+  // background-color: darken(#fff, 2%);
   line-height: 1.4em;
   padding: 1em;
-  font-size: 0.9em;
+  font-size: 1.05em;
   color: $quoteTextColor;
   p:last-child {
     margin-bottom: 0;

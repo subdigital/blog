@@ -1,6 +1,6 @@
 $dateColor: #A4ADB6;
 $bodyTextColor: rgb(82, 99, 107);
-$quoteTextColor: lighten($bodyTextColor, 20%);
+$quoteTextColor: darken($bodyTextColor, 10%);
 $lineColor: lighten($dateColor, 25%);
 $metaColor: $dateColor;
 $navLinkColor: lighten(rgb(89, 95, 121), 15%);

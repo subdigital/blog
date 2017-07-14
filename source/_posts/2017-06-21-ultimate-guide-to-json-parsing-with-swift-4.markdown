@@ -175,11 +175,14 @@ encoder.dateEncodingStrategy = .iso8601
 
 The other JSON date encoding strategies available are:
 
-* `.formatted(DateFormatter)`  - for when you have a non-standard date format string you need to support. Supply your own date formatter instance.
-* `.custom( (Date, Encoder) throws -> Void )` - for when you have something _really_ custom, you can pass a block here that will encode the date into the provided encoder.
-* `.millisecondsSince1970` and `.secondsSince1970`, which aren’t very common in APIs. It is not really recommended to use a format like this as time zone information is completely absent from the encoded representation, which makes it easier for someone to make the wrong assumption.
+`.formatted(DateFormatter)`  - for when you have a non-standard date format string you need to support. Supply your own date formatter instance.
+
+`.custom( (Date, Encoder) throws -> Void )` - for when you have something _really_ custom, you can pass a block here that will encode the date into the provided encoder.
+
+`.millisecondsSince1970` and `.secondsSince1970`, which aren’t very common in APIs. It is not really recommended to use a format like this as time zone information is completely absent from the encoded representation, which makes it easier for someone to make the wrong assumption.
 
 Decoding dates have essentially the same options, but for `.custom` it takes the shape of `.custom( (Decoder) throws -> Date ) `, so we are given a decoder and we are responsible for hydrating that into a date from whatever might be in the decoder.
+
 
 ## Handling Floats
 Floats and are another area where JSON doesn’t quite match up with Swift’s `Float` type. What happens if the server returns an invalid `“NaN”` as a string? What about positive or negative `Infinity`? These do not map to any specific values in Swift.
@@ -590,7 +593,7 @@ struct Beer : Codable {
       case info // <-- NEW
 	}
 
-  case InfoCodingKeys: String, CodingKey {
+  enum InfoCodingKeys: String, CodingKey {
       case abv
       case style    
   }
@@ -743,7 +746,9 @@ This gives us:
 
 Well that’s not right either. We have to flow through to the super class implementation of `encode(to:)`.
 
-You might be tempted to just call super and pass in the encoder. This _should_ work, but as of the current snapshot this causes an `EXC_BAD_ACCESS`. I think this is a bug and will probably work in future snapshots.
+You might be tempted to just call super and pass in the encoder. This _should_ work, but as of the current snapshot this causes an `EXC_BAD_ACCESS`. ~~I think this is a bug and will probably work in future snapshots~~.
+
+<span style="color: red"><strong>Update:</strong> My <a href="https://bugs.swift.org/browse/SR-5277" target="_blank">bug report</a> for this was quickly addressed and should show up in the next Swift snapshot / Xcode beta</span>.
 
 If we did the above we’d get a merged set of attributes under the same container. However, the Swift team has this to say about re-using the same container for multiple types:
 
@@ -993,8 +998,17 @@ One of the great things about Swift being open source is we can just look at how
 Definitely take a look!
 - [Using JSON with Custom Types](https://developer.apple.com/documentation/foundation/archives_and_serialization/using_json_with_custom_types) - A sample playground from Apple that shows some more complex JSON parsing scenarios.
 
+## Like Videos?
+
+If like learning in screencast form, I produced two screencasts on all of this stuff:
+
+<a href="http://nsscreencast.com/episodes/278-swift-4-json-parsing">
+<img src="https://nsscreencast.imgix.net/278-swift-4-json-parsing/278-swift-4-json-parsing.png?w=300&dpr=2&corner-radius=4&mask=corners" width="300">
+</a>
+
+- [Swift 4 JSON Parsing](http://nsscreencast.com/episodes/278-swift-4-json-parsing)
+- [Advanced Swift 4 JSON](http://nsscreencast.com/episodes/279-advanced-swift-4-json)
+
 ## Conclusion
 
 This was a whirlwind tour of how to use the new Swift 4 Codable API. Have anything to add? Leave a comment below.
-
-Like this stuff? I think you’ll love [NSScreencast](http://nsscreencast.com) as well.
