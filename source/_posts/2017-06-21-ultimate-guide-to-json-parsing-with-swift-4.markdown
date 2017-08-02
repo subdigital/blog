@@ -243,6 +243,31 @@ To decode it, you can provide `JSONDecoder` with a decoding strategy:
 Obviously `.base64` will be the common choice here, but if you need to do anything
 custom you can use on of the block-based strategies.
 
+## Handling URLs
+
+For the most part URLs will work out of the box. If your object has a URL property,
+the matching key from the JSON document will be used to create the URL (provided it
+passes the `URL(string:)` initializer).
+
+Given this JSON:
+
+```json
+{
+	"title": "NSDateFormatter - Easy Skeezy Date Formatting...",
+	"url": "http://nsdateformatter.com"
+}
+```
+
+We could map this to an object with no customization:
+
+```swift
+struct Webpage : Codable {
+	let title: String
+	let url: URL
+}
+```
+
+_(Thanks to **Ryan** in the comments for suggesting this section.)_
 
 ## Wrapper Keys
 
