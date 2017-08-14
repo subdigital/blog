@@ -53,7 +53,7 @@ struct Beer {
 
 To convert this JSON string to a `Beer` instance, we’ll mark our types as `Codable`.
 
-`Codable` is actually a union type consisting of `Encodable & Decodable`, so if you only care about unidirectional conversion you can just adopt the appropriate protocol. This is a new feature of Swift 4.
+`Codable` is actually what Swift calls a _protocol composition type_, consisting of `Encodable & Decodable`, so if you only care about unidirectional conversion you can just adopt the appropriate protocol. This is a new feature of Swift 4.
 
 `Codable` comes with a default implementation, so for many cases you can just adopt this protocol and get useful default behavior **for free**.
 
@@ -771,11 +771,27 @@ This gives us:
 
 Well that’s not right either. We have to flow through to the super class implementation of `encode(to:)`.
 
-You might be tempted to just call super and pass in the encoder. This _should_ work, but as of the current snapshot this causes an `EXC_BAD_ACCESS`. ~~I think this is a bug and will probably work in future snapshots~~.
+You might be tempted to just call super and pass in the encoder. There was a bug that prevented this from working in earlier but my radar for this was quickly addressed. As of Xcode 9 Beta 5 (perhaps earlier) this is now supported:
 
-<span style="color: red"><strong>Update:</strong> My <a href="https://bugs.swift.org/browse/SR-5277" target="_blank">bug report</a> for this was quickly addressed and should show up in the next Swift snapshot / Xcode beta</span>.
+```swift
+    // Employee.swift
+    override func encode(to encoder: Encoder) throws {
+        try super.encode(to: encoder)
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(employeeID, forKey: .employeeID)
+    }
+```
 
-If we did the above we’d get a merged set of attributes under the same container. However, the Swift team has this to say about re-using the same container for multiple types:
+Which results in:
+
+```json
+{
+    "name": "Joe",
+    "emp_id": "emp123"
+}
+```
+
+Note that the items are flattened into the same container. The Swift team has this to say about re-using the same container for multiple types:
 
 > If a shared container is desired, it is still possible to call super.encode(to: encoder) and
 > super.init(from: decoder), but we recommend the safer containerized option.
