@@ -442,7 +442,7 @@ extension Beer {
 I also want to add a couple of new fields to our beer type, just to round out the example:
 
 ```swift
-struct Beer : Coding {
+struct Beer : Codable {
     // ...
     let createdAt: Date
     let bottleSizes: [Float]
