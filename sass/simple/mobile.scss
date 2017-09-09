@@ -108,4 +108,18 @@
     width:100%;
     max-width: 300px;
   }
+
+  code {
+    font-size: 0.8em;
+  }
+
+  figure.code {
+    margin-left: -20px;
+    margin-right: -20px;
+
+    div.highlight {
+      padding-left: 20px;
+    }
+  }
+
 }

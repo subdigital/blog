@@ -4,6 +4,8 @@
 @import 'includes';
 @import 'code';
 @import 'mobile';
+@import 'speaking';
+@import 'projects';
 
 @mixin roundGreyLink {
   display: inline-block;
@@ -27,11 +29,13 @@
 body {
   background-color: $bodyBgColor;
   color: $bodyTextColor;
-  font-size: 20px;
-  font-family: 'Merriweather', serif;
+  font-size: 17px;
+  font-family: "Whitney SSm A", "Whitney SSm B", sans-serif;
+  font-style: normal;
+  font-weight: 400;
   margin: 0em 3em 3em 0;
   line-height: 1.8em;
-  max-width: 960px;
+  max-width: 1080px;
 }
 
 p {
@@ -44,6 +48,23 @@ em {
 
 strong {
   font-weight: bold;
+}
+
+.highlight > table {
+  border: none;
+  margin-bottom: 0;
+  tr {
+    border: none;
+  }
+  td {
+    padding: 0;
+    border: none;
+  }
+}
+
+img.center {
+  display: block;
+  margin: auto;
 }
 
 table {
@@ -78,12 +99,16 @@ h1 {
 h2 {
   font-weight: bold;
   line-height: 1.5em;
-  font-size: 1.2em;
-  margin: .4em 0;
+  font-size: 1.5em;
+  margin: .6em 0;
+  border-bottom: dotted 1px #eee;
 }
 
 h3 {
   font-weight: bold;
+  font-size: 1.3em;
+  line-height: 1.3em;
+  margin: .4em 0;
 }
 
 header {
@@ -196,14 +221,17 @@ a {
 }
 
 blockquote {
-  margin: 1em 2em;
+  margin: 0.75em 0.75em;
   font-style: italic;
-  border-left: solid 1px #eee;
-  background-color: darken(#fff, 2%);
+  // border-left: solid 1px #eee;
+  // background-color: darken(#fff, 2%);
   line-height: 1.4em;
   padding: 1em;
-  font-size: 0.9em;
+  font-size: 1.05em;
   color: $quoteTextColor;
+  p:last-child {
+    margin-bottom: 0;
+  }
 }
 
 #blog-archives {
@@ -264,8 +292,10 @@ article {
 
   header {
     margin-bottom: 1em;
+    h1 {
+      line-height: 42px;
+    }
     h1 a {
-      line-height: 36px;
       transition: .25s;
       color: darken($navLinkColor, 20%);
     }

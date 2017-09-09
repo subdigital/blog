@@ -1,12 +1,12 @@
 $dateColor: #A4ADB6;
-$bodyTextColor: rgb(65, 65, 60);
-$quoteTextColor: lighten($bodyTextColor, 20%);
+$bodyTextColor: rgb(82, 99, 107);
+$quoteTextColor: darken($bodyTextColor, 10%);
 $lineColor: lighten($dateColor, 25%);
 $metaColor: $dateColor;
 $navLinkColor: lighten(rgb(89, 95, 121), 15%);
 $bodyBgColor: #fff;
 $bannerTextColor: #f44;
-$linkColor: blue;
+$linkColor: #185197;
 $linkHighlight: $bannerTextColor;
 $sidebarColor: #fff; //darken(#fff, 4%);
 $sidebarWidth: 200px;

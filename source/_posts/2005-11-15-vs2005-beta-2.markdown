@@ -1,8 +1,0 @@
---- 
-layout: post
-title: vs2005 beta 2
-date: "2005-11-15"
-comments: true
-link: false
----
-<p>Visual Studio 2005 Beta 2 is dying on me&hellip;&nbsp; I wonder if it knows that I am about to replace it with the RTM version.</p><p>Any time I <em>Rebuild All</em> or run my app and play with it for 1 or 2 minutes Visual Studio just exits, no error message, no restart, nothing.&nbsp; Makes it quite hard to develop, donchathink?</p><p>I am kind of reluctant to update to RTM too soon since we have apps in development under beta 2.</p><p>&nbsp;</p><p><strong>Now playing:</strong> <a href="http://phobos.apple.com/WebObjects/MZSearch.woa/wa/advancedSearchResults?artistTerm=Dave Matthews Band">Dave Matthews Band</a> - <a href="http://phobos.apple.com/WebObjects/MZSearch.woa/wa/advancedSearchResults?songTerm=All Along the Watchtower&amp;artistTerm=Dave Matthews Band">All Along the Watchtower</a></p>

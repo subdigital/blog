@@ -1,8 +1,0 @@
---- 
-layout: post
-title: Pardon The Dust
-date: 2007-5-16
-comments: true
-link: false
----
-<p>My blog has received a long overdue face-lift.</p><p>I was getting a little tired of the previous black background design and wanted something cleaner.&nbsp; I also upgraded to dasBlog 1.9, which proved to be more than just a walk in the park.&nbsp; Things are still a little broken around here, but I will get it resolved sooner or later.&nbsp; I hope you don&rsquo;t mind a few broken links and things while I settle this new design in.</p><p>During all of this I was really pondering switching to <a href="http://www.subtextproject.com/" target="_blank">Subtext</a>.&nbsp; It seems like a equivalent stature blogging enging on the ASP.NET 2.0 platform, however it supports databases.&nbsp; Das Blog is all about the file system, which makes it easy for people to host if they don&rsquo;t have access to a database.&nbsp; But since I have over 2 years of content up here, not only does it take a long time to transfer over ftp, but when I upgrade I cannot simply copy files over.&nbsp; I have to be very careful and selective and I usually end up messing up something.&nbsp; (This is why I always back it up before I start).</p><p>I know that database support is on the roadmap for Das Blog, but I don&rsquo;t know how long it will be.&nbsp; We shall see.</p><p>Until then, enjoy the new design <img src="/images/smile1_____________________.gif"   />.&nbsp; Please let me know what you think in the comments!</p><div class="bjtags">Tags:<a rel="tag" href="http://technorati.com/tag/blog">blog</a></div>

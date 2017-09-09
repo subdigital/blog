@@ -1,8 +1,13 @@
 --- 
 layout: post
-title: "Teaser\xE2\x80\xA6"
+title: Teaser
 date: 2009-7-13
-comments: true
+comments: false
 link: false
 ---
-<a href="http://flux88.com/files/media/image/WindowsLiveWriter/Teaser_EA10/pt_2.png"><img src="/images/pt_thumb.png" alt="pt"  height="203"  /></a>  <p>(coming soon to an iPhone near you…)</p>
+
+![][image-1]
+
+(coming soon to an iPhone near you...)
+
+[image-1]:	/images/pt_thumb.png

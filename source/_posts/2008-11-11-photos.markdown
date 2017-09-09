@@ -1,8 +1,0 @@
---- 
-layout: post
-title: Photos
-date: "2008-11-11"
-comments: true
-link: false
----
-<p><em>This album displays photos from my <a target="_blank" href="http://flickr.com/photos/bensilvia">Flickr</a> account.</em></p>
