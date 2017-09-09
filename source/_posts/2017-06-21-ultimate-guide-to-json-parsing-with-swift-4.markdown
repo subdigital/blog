@@ -632,8 +632,8 @@ func encode(to encoder: Encoder) throws {
 		var container = encoder.container(
 			keyedBy: CodingKeys.self)
 
-		var info = try encoder.nestedContainer(
-			keyedBy: InfoCodingKeys.self)
+		var info = try container.nestedContainer(
+			keyedBy: InfoCodingKeys.self, forKey: .info)
 		try info.encode(abv, forKey: .abv)
 		try info.encode(style, forKey: .style)
 
@@ -952,7 +952,7 @@ Instead, we can create a more dynamic implementation of `CodingKey` for this.
 struct BeerStyles : Codable {
   struct BeerStyleKey : CodingKey {
     var stringValue: String
-    init?(stringValue: String)? {
+    init?(stringValue: String) {
       self.stringValue = stringValue
     }
     var intValue: Int? { return nil }
