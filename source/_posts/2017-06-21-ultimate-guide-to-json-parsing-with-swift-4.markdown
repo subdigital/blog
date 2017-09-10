@@ -647,8 +647,8 @@ init(from decoder: Decoder) throws {
     let container = try decoder.container(
 			keyedBy: CodingKeys.self)
 
-    let info = try decoder.nestedContainer(
-			keyedBy: InfoCodingKeys.self)
+    let info = try container.nestedContainer(
+			keyedBy: InfoCodingKeys.self, forKey: .info)
     let abv = try info.decode(Float.self, forKey: .abv)
     let style = try info.decode(BeerStyle.self,
 			forKey: .style)
